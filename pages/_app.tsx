@@ -4,9 +4,10 @@ import { AppProps } from 'next/app'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import theme from '../src/theme'
 import createEmotionCache from '../src/createEmotionCache'
 import DebugBanner from '../components/DebugBanner'
+import { useMediaQuery } from '@mui/material'
+import themes from '../src/theme'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -21,6 +22,8 @@ export default function MyApp(props: MyAppProps) {
   const entorno = process.env.NODE_ENV
   console.log(`🚀 iniciando en modo ${entorno}`)
 
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -28,7 +31,9 @@ export default function MyApp(props: MyAppProps) {
         <title>Proyecto base</title>
       </Head>
       <DebugBanner />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider
+        theme={prefersDarkMode ? themes.darkTheme : themes.lightTheme}
+      >
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
