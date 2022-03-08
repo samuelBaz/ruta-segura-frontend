@@ -8,6 +8,7 @@ import ProTip from '../components/ProTip'
 import Copyright from '../components/Copyright'
 import { Button } from '@mui/material'
 import Link from 'next/link'
+import Types from '../components/Tipografias'
 
 const Home: NextPage = () => {
   return (
@@ -29,6 +30,8 @@ const Home: NextPage = () => {
             Go to the about page
           </Button>
         </Link>
+
+        <Types />
 
         <ProTip />
         <Copyright />

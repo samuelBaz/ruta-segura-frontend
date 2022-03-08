@@ -8,6 +8,7 @@ import createEmotionCache from '../src/createEmotionCache'
 import DebugBanner from '../components/DebugBanner'
 import { useMediaQuery } from '@mui/material'
 import themes from '../src/theme'
+import '@fontsource/poppins'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
