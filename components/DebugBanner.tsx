@@ -21,11 +21,12 @@ export default function DebugBanner() {
   return (
     <div
       style={{
-        background: 'red',
+        background: '#B71C1C',
         position: 'fixed',
         color: 'white',
         transform: 'rotate(-45deg)',
         fontFamily: 'system-ui, serif',
+        fontWeight: 'bold',
         width: '100px',
         textAlign: 'center',
         left: '-23px',
