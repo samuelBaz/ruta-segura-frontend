@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import {
   Box,
   Divider,
@@ -7,6 +7,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 
 import { UIContext } from '../../context/ui'
@@ -14,18 +16,32 @@ import Toolbar from '@mui/material/Toolbar'
 import * as React from 'react'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
-import { darkTheme } from '../../themes'
 
 const drawerWidth = 240
 
 export const Sidebar = () => {
-  const { sidemenuOpen, closeSideMenu } = useContext(UIContext)
+  const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+  const theme = useTheme()
+
+  let usm = useMediaQuery(theme.breakpoints.up('sm'))
+
+  useEffect(() => {
+    if (!usm) {
+      closeSideMenu()
+    } else {
+      openSideMenu()
+    }
+    //call your increment function here
+  }, [usm]) //and in the array tag the state you want to watch for
 
   return (
     <Drawer
-      variant="persistent"
+      variant={usm ? 'persistent' : 'temporary'}
       open={sidemenuOpen}
       onClose={closeSideMenu}
+      ModalProps={{
+        keepMounted: true, // Better open performance on mobile.
+      }}
       sx={{
         width: sidemenuOpen ? drawerWidth : `0`,
         flexShrink: 0,

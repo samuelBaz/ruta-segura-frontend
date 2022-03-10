@@ -3,24 +3,17 @@ import Head from 'next/head'
 import { FC, useContext } from 'react'
 import * as React from 'react'
 import { Navbar, Sidebar } from '../ui'
-import { styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
-
-import { UIContext } from '../../context/ui'
 
 interface Props {
   title?: string
 }
 
 export const Layout: FC<Props> = ({ title = 'Proyecto base', children }) => {
-  const { sidemenuOpen, closeSideMenu } = useContext(UIContext)
-  console.log(`layout: ${sidemenuOpen}`)
   return (
     <Box sx={{ display: 'flex' }}>
       <Head>
-        <title>
-          {title} {sidemenuOpen + ''}
-        </title>
+        <title>{title}</title>
       </Head>
 
       <Navbar />
