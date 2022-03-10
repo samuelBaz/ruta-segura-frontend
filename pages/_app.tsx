@@ -9,7 +9,7 @@ import { useMediaQuery } from '@mui/material'
 import { lightTheme, darkTheme } from '../themes'
 import '@fontsource/poppins'
 import { UIProvider } from '../context/ui'
-import { imprimir } from '../utils/imprimir'
+import { imprimir } from '../utils'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 

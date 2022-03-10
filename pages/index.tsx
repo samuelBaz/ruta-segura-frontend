@@ -1,11 +1,10 @@
 import * as React from 'react'
 import type { NextPage } from 'next'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import { Layout } from '../components/layouts'
 import { IconButton } from '@mui/material'
 import TouchApp from '@mui/icons-material/TouchApp'
-import { imprimir } from '../utils/imprimir'
+import { imprimir } from '../utils'
 
 function saludo() {
   imprimir('Hola mundo 🙌')

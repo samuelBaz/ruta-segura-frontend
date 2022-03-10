@@ -28,7 +28,7 @@ export const imprimir = (mensaje: any) => {
   if (entorno != 'production') {
     // eslint-disable-next-line no-console
     console.log(
-      `🖨${ocultarAnterior ? '' : `${funcionAnterior} -> `} ${mensaje}`
+      `🖨 ${ocultarAnterior ? '' : `${funcionAnterior} -> `} ${mensaje}`
     )
   }
 }
