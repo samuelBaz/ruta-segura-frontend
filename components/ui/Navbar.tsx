@@ -17,7 +17,6 @@ export const Navbar = () => {
           edge="start"
           color={'primary'}
           onClick={() => {
-            console.log(`valor: ${sidemenuOpen}`)
             if (!sidemenuOpen) {
               openSideMenu()
             } else {

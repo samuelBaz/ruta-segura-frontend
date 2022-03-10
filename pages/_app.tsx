@@ -9,6 +9,7 @@ import { useMediaQuery } from '@mui/material'
 import { lightTheme, darkTheme } from '../themes'
 import '@fontsource/poppins'
 import { UIProvider } from '../context/ui'
+import { imprimir } from '../utils/imprimir'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
@@ -20,7 +21,7 @@ export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   const entorno = process.env.NODE_ENV
-  console.log(`🚀 iniciando en modo ${entorno}`)
+  imprimir(`🚀 iniciando en modo ${entorno}`)
 
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
