@@ -24,13 +24,13 @@ export default function DebugBanner() {
         background: '#B71C1C',
         position: 'fixed',
         color: 'white',
-        transform: 'rotate(45deg)',
+        transform: 'rotate(-45deg)',
         fontFamily: 'system-ui, serif',
         fontWeight: 'bold',
         width: '100px',
         textAlign: 'center',
         right: '-23px',
-        top: '15px',
+        bottom: '15px',
         zIndex: 9999,
       }}
     >
