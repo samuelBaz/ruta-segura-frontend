@@ -3,11 +3,11 @@ import { UIContext, uiReducer } from './'
 
 export interface UIState {
   sidemenuOpen: boolean
-}
+} // Definición de estado
 
 const UI_INITIAL_STATE: UIState = {
   sidemenuOpen: false,
-}
+} // Definición de estado inicial
 
 export const UIProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE)

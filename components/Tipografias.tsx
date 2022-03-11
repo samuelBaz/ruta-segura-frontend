@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { fontWeight } from '@mui/system'
 
 export default function Types() {
   return (

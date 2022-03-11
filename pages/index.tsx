@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import Typography from '@mui/material/Typography'
 import { Layout } from '../components/layouts'
 import { IconButton } from '@mui/material'
-import TouchApp from '@mui/icons-material/TouchApp'
+import AssignmentTurnedIn from '@mui/icons-material/AssignmentTurnedIn'
 import { imprimir } from '../utils'
 
 function saludo() {
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
           saludo()
         }}
       >
-        <TouchApp />
+        <AssignmentTurnedIn />
       </IconButton>
     </Layout>
   )

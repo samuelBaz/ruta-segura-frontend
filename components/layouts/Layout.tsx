@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import Head from 'next/head'
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import * as React from 'react'
 import { Navbar, Sidebar } from '../ui'
 import Toolbar from '@mui/material/Toolbar'

@@ -1,15 +1,29 @@
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
+import {
+  AppBar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material'
+
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 
 import { UIContext } from '../../context/ui'
 import { useContext } from 'react'
+import { imprimir } from '../../utils'
 
 export const Navbar = () => {
   const { openSideMenu, sidemenuOpen, closeSideMenu } = useContext(UIContext)
+
   return (
     <AppBar
       position="fixed"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      style={{ borderBottom: 'thin solid rgba(0, 0, 0, 0.12)', padding: '0' }}
     >
       <Toolbar>
         <IconButton
@@ -23,13 +37,77 @@ export const Navbar = () => {
               closeSideMenu()
             }
           }}
+          aria-label="menu"
+          sx={{ mr: 2 }}
         >
           <MenuOutlinedIcon />
         </IconButton>
-
-        <Typography color={'primary'} sx={{ fontWeight: 'bold' }}>
+        <Typography
+          color={'primary'}
+          component="div"
+          sx={{ flexGrow: 1, fontWeight: 'bold' }}
+        >
           Frontend base
         </Typography>
+
+        <IconButton
+          size="large"
+          onClick={function () {
+            imprimir('Abrir modal con ayuda')
+          }}
+          color="primary"
+        >
+          <HelpOutlineOutlinedIcon />
+        </IconButton>
+        <IconButton
+          size="large"
+          onClick={function () {
+            imprimir('Cambiar a modo claro oscuro o de sistema')
+          }}
+          color="primary"
+        >
+          <LightModeOutlinedIcon />
+        </IconButton>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          // onClick={handleMenu}
+          onClick={function () {
+            imprimir('Abrir menu de cuenta')
+          }}
+          color="primary"
+        >
+          <AccountCircleOutlinedIcon />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          // anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          // open={Boolean(anchorEl)}
+          open={false}
+          // onClose={handleClose}
+        >
+          <MenuItem
+          // onClick={handleClose}
+          >
+            Profile
+          </MenuItem>
+          <MenuItem
+          // onClick={handleClose}
+          >
+            My account
+          </MenuItem>
+        </Menu>
       </Toolbar>
     </AppBar>
   )

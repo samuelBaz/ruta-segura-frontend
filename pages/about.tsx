@@ -34,7 +34,6 @@ export default function ClippedDrawer() {
             edge="start"
             color={'primary'}
             onClick={() => {
-              console.log(`valor: ${sidemenuOpen}`)
               if (!sidemenuOpen) {
                 openSideMenu()
               } else {
