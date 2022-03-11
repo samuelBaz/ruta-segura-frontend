@@ -2,22 +2,24 @@ import { Box } from '@mui/material'
 import Head from 'next/head'
 import { FC } from 'react'
 import * as React from 'react'
-import { Navbar, Sidebar } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
+import { NavbarLogin } from '../ui/NavbarLogin'
 
 interface Props {
   title?: string
 }
 
-export const Layout: FC<Props> = ({ title = 'Proyecto base', children }) => {
+export const LayoutLogin: FC<Props> = ({
+  title = 'Proyecto base',
+  children,
+}) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <Head>
         <title>{title}</title>
       </Head>
 
-      <Navbar />
-      <Sidebar />
+      <NavbarLogin />
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />

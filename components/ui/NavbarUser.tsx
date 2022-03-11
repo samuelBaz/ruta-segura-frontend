@@ -16,7 +16,7 @@ import { UIContext } from '../../context/ui'
 import { useContext } from 'react'
 import { imprimir } from '../../utils'
 
-export const Navbar = () => {
+export const NavbarUser = () => {
   const { openSideMenu, sidemenuOpen, closeSideMenu } = useContext(UIContext)
 
   return (
