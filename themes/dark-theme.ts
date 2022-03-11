@@ -30,5 +30,10 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+    },
   },
 })
