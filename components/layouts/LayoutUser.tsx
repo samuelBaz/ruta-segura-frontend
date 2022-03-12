@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const LayoutUser: FC<Props> = ({
-  title = 'Proyecto base',
+  title = 'Frontend base - NextJS',
   children,
 }) => {
   return (

@@ -7,10 +7,10 @@ export const lightTheme = createTheme({
       default: '#FFF',
     },
     primary: {
-      main: '#9C4052',
+      main: '#006876',
     },
     secondary: {
-      main: '#76565A',
+      main: '#4B6267',
     },
     error: {
       main: '#BA1B1B',
@@ -34,6 +34,9 @@ export const lightTheme = createTheme({
       defaultProps: {
         disableElevation: true,
       },
+    },
+    MuiTable: {
+      defaultProps: {},
     },
   },
 })

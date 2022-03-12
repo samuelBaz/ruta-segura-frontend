@@ -4,10 +4,11 @@ import { LayoutLogin } from '../components/layouts/LayoutLogin'
 import Grid from '@mui/material/Grid'
 import { Box, Button, Divider, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography'
+import { imprimir } from '../utils'
 
 const Home: NextPage = () => {
   return (
-    <LayoutLogin title={'Proyecto base'}>
+    <LayoutLogin title={'Frontend base - NextJS'}>
       <Grid container justifyContent="space-evenly" alignItems={'center'}>
         <Grid item xl={5} md={5} xs={12}>
           <Box
@@ -76,7 +77,14 @@ const Home: NextPage = () => {
               />
               <Typography sx={{ fontWeight: 'bold' }}>Contraseña</Typography>
               <TextField id="usuario" defaultValue="123" variant="outlined" />
-              <Button variant="contained">Ingresar</Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  imprimir('Intento de inicio de sesión')
+                }}
+              >
+                Ingresar
+              </Button>
             </Box>
           </Box>
         </Grid>

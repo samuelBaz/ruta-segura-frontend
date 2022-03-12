@@ -1,9 +1,7 @@
 import * as React from 'react'
 import type { NextPage } from 'next'
-import Typography from '@mui/material/Typography'
 import { LayoutUser } from '../components/layouts'
-import { IconButton } from '@mui/material'
-import AssignmentTurnedIn from '@mui/icons-material/AssignmentTurnedIn'
+import { IconButton, Typography } from '@mui/material'
 import { imprimir } from '../utils'
 
 function saludo() {
@@ -20,9 +18,7 @@ const Home: NextPage = () => {
         onClick={() => {
           saludo()
         }}
-      >
-        <AssignmentTurnedIn />
-      </IconButton>
+      />
     </LayoutUser>
   )
 }
