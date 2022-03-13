@@ -1,10 +1,9 @@
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
-import { imprimir } from '../../utils'
 import Box from '@mui/material/Box'
 import { CustomDialog } from './CustomDialog'
 import { useState } from 'react'
+import ThemeSwitcherButton from './ThemeSwitcherButton'
 
 export const NavbarLogin = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -43,15 +42,7 @@ export const NavbarLogin = () => {
           >
             <HelpOutlineOutlinedIcon />
           </IconButton>
-          <IconButton
-            size="large"
-            onClick={function () {
-              imprimir('Cambiar a modo claro oscuro o de sistema')
-            }}
-            color="primary"
-          >
-            <LightModeOutlinedIcon />
-          </IconButton>
+          <ThemeSwitcherButton />
         </Toolbar>
       </AppBar>
     </>

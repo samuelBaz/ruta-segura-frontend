@@ -16,6 +16,7 @@ import Toolbar from '@mui/material/Toolbar'
 import * as React from 'react'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
+import { imprimir } from '../../utils'
 
 const drawerWidth = 240
 
@@ -32,6 +33,7 @@ export const Sidebar = () => {
       openSideMenu()
     }
     //call your increment function here
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usm]) //and in the array tag the state you want to watch for
 
   return (

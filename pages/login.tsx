@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <LayoutLogin title={'Frontend base - NextJS'}>
       <Grid container justifyContent="space-evenly" alignItems={'center'}>
-        <Grid item xl={5} md={5} xs={12}>
+        <Grid item xl={6} md={5} xs={12}>
           <Box
             display={'flex'}
             justifyContent={'center'}
@@ -40,10 +40,15 @@ const Home: NextPage = () => {
             alignItems={'center'}
             minHeight={'80vh'}
           >
-            <Divider variant={'middle'} orientation="vertical" flexItem />
+            <Divider
+              variant={'middle'}
+              sx={{ marginTop: '60px', marginBottom: '60px' }}
+              orientation="vertical"
+              flexItem
+            />
           </Box>
         </Grid>
-        <Grid item xl={5} md={5} xs={12}>
+        <Grid item xl={4} md={5} xs={12}>
           <Box
             display={'flex'}
             justifyContent={'center'}
