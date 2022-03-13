@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { useContext, useEffect } from 'react'
 import {
   Box,
@@ -13,10 +14,8 @@ import {
 
 import { UIContext } from '../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
-import * as React from 'react'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
-import { imprimir } from '../../utils'
 
 const drawerWidth = 240
 

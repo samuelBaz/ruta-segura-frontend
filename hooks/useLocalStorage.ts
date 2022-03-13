@@ -11,6 +11,7 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
   // Read local storage the parse stored json or return initialValue
   const readStorage = (): T => {
     if (typeof window === 'undefined') {
+      imprimir(`🧨 retornando valor inicial ${initialValue}`)
       return initialValue
     }
     try {
@@ -30,6 +31,11 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
       )
     }
     try {
+      const item = window.localStorage.getItem('themeMode')
+      if (!item) {
+        imprimir(`Definiendo por primera vez 🧨: ${item} -> ${state}`)
+      }
+
       // Allow value to be a function so we have the same API as useState
       const newValue = value instanceof Function ? value(state) : value
 
@@ -48,13 +54,13 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
 
   // Once the component is mounted, read from localStorage and update state.
   useEffect(() => {
-    imprimir('useEffect 1')
+    imprimir(`useEffect 1, leyendo desde storage: ${readStorage()}`)
     setState(readStorage())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    imprimir('useEffect 2')
+    imprimir(`useEffect 2, cambio desde state: ${state}`)
     setStorage(state)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])

@@ -10,11 +10,11 @@ import {
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 
 import { UIContext } from '../../context/ui'
 import { useContext } from 'react'
 import { imprimir } from '../../utils'
+import ThemeSwitcherButton from './ThemeSwitcherButton'
 
 export const NavbarUser = () => {
   const { openSideMenu, sidemenuOpen, closeSideMenu } = useContext(UIContext)
@@ -59,15 +59,7 @@ export const NavbarUser = () => {
         >
           <HelpOutlineOutlinedIcon />
         </IconButton>
-        <IconButton
-          size="large"
-          onClick={function () {
-            imprimir('Cambiar a modo claro oscuro o de sistema')
-          }}
-          color="primary"
-        >
-          <LightModeOutlinedIcon />
-        </IconButton>
+        <ThemeSwitcherButton />
         <IconButton
           size="large"
           aria-label="account of current user"

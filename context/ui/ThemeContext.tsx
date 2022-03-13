@@ -3,6 +3,7 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react'
 import { ThemeProvider as MuiThemeProvider, useMediaQuery } from '@mui/material'
@@ -26,11 +27,14 @@ const useThemeContext = () => useContext(ThemeContext)
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const isDarkOS = useMediaQuery(DARK_SCHEME_QUERY)
 
-  const [primeraVezState, setPrimeraVezState] = useState(false)
+  imprimir(`isDarkOS inicial: ${isDarkOS}`)
+
+  const [primeraVezState, setPrimeraVezState] = useState(isDarkOS)
+  // Para recuperar de storage en la 2da vez
 
   const [themeMode, setThemeMode] = useLocalStorage<ThemeMode>(
     'themeMode',
-    isDarkOS ? 'light' : 'dark'
+    isDarkOS ? 'dark' : 'light'
   )
 
   const toggleTheme = () => {
@@ -50,10 +54,10 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    delay(isDarkOS ? 100 : 0).then(() => {
-      // Tarda en reconocer modo oscuro
+    delay(isDarkOS ? 100 : 100).then(() => {
+      // TODO: Tarda en reconocer ajuste de usuario claro en modo oscuro
       imprimir(`useEffect isDarkOS: ${isDarkOS}`)
-      if (primeraVezState) {
+      if (primeraVezState || isDarkOS) {
         setThemeMode(isDarkOS ? 'dark' : 'light')
       } else {
         setPrimeraVezState(true)
