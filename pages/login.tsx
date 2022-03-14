@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import { imprimir } from '../utils'
 import { Constantes } from '../config'
 import { Servicios } from '../services'
+import { Alertas } from '../components/ui'
 
 const Home: NextPage = () => {
   const iniciarSesion = async () => {
@@ -18,9 +19,11 @@ const Home: NextPage = () => {
         body: {},
         headers: {},
       })
+      Alertas.correcto(`respuesta correcta: ${respuesta}`)
       imprimir(`Se obtuvieron números aleatorios: ${JSON.stringify(respuesta)}`)
     } catch (e) {
       imprimir(`Error al obtener números aleatorios: ${e}`)
+      Alertas.error(`Error al obtener números aleatorios: ${e}`)
     }
   }
 
