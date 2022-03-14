@@ -4,28 +4,52 @@ import { LayoutLogin } from '../components/layouts/LayoutLogin'
 import Grid from '@mui/material/Grid'
 import { Box, Button, Divider, TextField } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { imprimir } from '../utils'
+import { imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
 import { Servicios } from '../services'
 import { Alertas } from '../components/ui'
+import { useEffect } from 'react'
 
 const Home: NextPage = () => {
+  const obtenerEstado = async () => {
+    try {
+      const respuesta = await Servicios.get({
+        url: `${Constantes.baseUrl}estado`,
+        body: {},
+        headers: {
+          accept: 'application/json',
+        },
+      })
+      imprimir(`Se obtuvo el estado 🙌: ${JSON.stringify(respuesta)}`)
+    } catch (e) {
+      imprimir(`Error al obtener estado: ${e}`)
+      Alertas.error(`${InterpreteMensajes(e)}`)
+    }
+  }
+
   const iniciarSesion = async () => {
     imprimir(`Intento de inicio de sesión: ${Constantes.randomNumbers}`)
 
     try {
-      const respuesta = await Servicios.get({
-        url: 'https://httpstat.us/200',
+      const respuesta = await Servicios.post({
+        url: `${Constantes.baseUrl}/auth`,
         body: {},
         headers: {},
       })
-      Alertas.correcto(`respuesta correcta: ${respuesta}`)
+      Alertas.correcto(
+        `Se obtuvieron números aleatorios: ${JSON.stringify(respuesta)}`
+      )
       imprimir(`Se obtuvieron números aleatorios: ${JSON.stringify(respuesta)}`)
     } catch (e) {
-      imprimir(`Error al obtener números aleatorios: ${e}`)
-      Alertas.error(`Error al obtener números aleatorios: ${e}`)
+      imprimir(`Error al iniciar sesión: ${JSON.stringify(e)}`)
+      Alertas.error(`${InterpreteMensajes(e)}`)
     }
   }
+
+  useEffect(() => {
+    imprimir('Primera petición 😨')
+    obtenerEstado().then(() => {})
+  }, [])
 
   return (
     <>

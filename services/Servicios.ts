@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders, Method } from 'axios'
+import axios, { AxiosError, AxiosRequestHeaders, Method } from 'axios'
 import { imprimir } from '../utils'
 
 interface peticionFormatoMetodo {
@@ -19,7 +19,11 @@ const estadosCorrectos: number[] = [200, 201, 202]
 class ServiciosClass {
   async peticion({ url, tipo = 'get', headers, body }: peticionFormatoMetodo) {
     try {
-      imprimir(`🌎 : ${url} - ${tipo}`)
+      imprimir(
+        `enviando 🌍 : ${JSON.stringify(
+          body
+        )} -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
+      )
       const response = await axios({
         method: tipo,
         url: url,
@@ -30,14 +34,17 @@ class ServiciosClass {
           return estadosCorrectos.some((estado: number) => status === estado)
         },
       })
+      imprimir(
+        `respuesta 📡 : ${JSON.stringify(
+          body
+        )} -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
+      )
       return response.data
-    } catch (e: import('axios').AxiosError | any) {
-      // TODO: El type de error se instancia aqui por un error de Eslint
-      imprimir(`Error en la petición: ${JSON.stringify(e)}`)
+    } catch (e: AxiosError | any) {
       if (e.code === 'ECONNABORTED') {
-        throw new Error('La petición está tardando demasiado ⏳')
+        throw new Error('La petición está tardando demasiado')
       } else {
-        throw e.data.response
+        throw e.response.data
       }
     }
   }

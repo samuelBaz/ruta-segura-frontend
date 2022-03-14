@@ -3,7 +3,7 @@ import { imprimir } from '../../utils'
 
 class AlertasClass {
   normal(mensaje: string) {
-    imprimir(`Alerta correcto: ${mensaje}`)
+    imprimir(`📣 ${mensaje}`)
     return toast.info(mensaje, {
       position: 'top-right',
       autoClose: 5000,
@@ -16,7 +16,7 @@ class AlertasClass {
   }
 
   correcto(mensaje: string) {
-    imprimir(`Alerta correcto: ${mensaje}`)
+    imprimir(`📣 ${mensaje}`)
     return toast.success(mensaje, {
       position: 'top-right',
       autoClose: 5000,
@@ -29,7 +29,7 @@ class AlertasClass {
   }
 
   error(mensaje: string) {
-    imprimir(`Alerta error: ${mensaje}`)
+    imprimir(`📣 ${mensaje}`)
     return toast.error(mensaje, {
       position: 'top-right',
       autoClose: 5000,
@@ -42,7 +42,7 @@ class AlertasClass {
   }
 
   advertencia(mensaje: string) {
-    imprimir(`Alerta advertencia : ${mensaje}`)
+    imprimir(`📣 ${mensaje}`)
     return toast.warn(mensaje, {
       position: 'top-right',
       autoClose: 5000,

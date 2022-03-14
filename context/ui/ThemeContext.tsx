@@ -3,12 +3,11 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from 'react'
 import { ThemeProvider as MuiThemeProvider, useMediaQuery } from '@mui/material'
 
-import { lightTheme, darkTheme } from '../../themes'
+import { darkTheme, lightTheme } from '../../themes'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import { imprimir } from '../../utils'
 
