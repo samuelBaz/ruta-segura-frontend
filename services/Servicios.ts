@@ -37,7 +37,9 @@ class ServiciosClass {
       imprimir(
         `respuesta 📡 : ${JSON.stringify(
           body
-        )} -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
+        )} -> ${tipo} - ${url} - con ${JSON.stringify(
+          headers
+        )} -->> ${JSON.stringify(response)}`
       )
       return response.data
     } catch (e: AxiosError | any) {
