@@ -4,11 +4,14 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
+  Slide,
   useMediaQuery,
   useTheme,
+  Zoom,
 } from '@mui/material'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
+import { TransitionProps } from '@mui/material/transitions'
 
 interface Props {
   isOpen: boolean
@@ -16,6 +19,24 @@ interface Props {
   title: string
   subtitle?: string
 }
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />
+})
+
+const TransitionZoom = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Zoom ref={ref} {...props} />
+})
 
 export const CustomDialog: FC<Props> = ({
   isOpen,
@@ -32,6 +53,7 @@ export const CustomDialog: FC<Props> = ({
       fullScreen={dsm}
       fullWidth={true}
       open={isOpen}
+      TransitionComponent={dsm ? Transition : TransitionZoom}
       onClose={handleClose}
     >
       <DialogTitle sx={{ m: 1, p: 2 }}>
