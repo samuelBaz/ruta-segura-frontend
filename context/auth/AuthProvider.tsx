@@ -8,12 +8,11 @@ import React, {
   useState,
 } from 'react'
 import Cookies from 'js-cookie'
-import { imprimir, InterpreteMensajes } from '../../utils'
+import { encodeBase64, imprimir, InterpreteMensajes } from '../../utils'
 import { Servicios } from '../../services'
 import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'
-import { Utilidades } from '../../utils/utilidades'
 
 interface ContextProps {
   isAuthenticated: boolean
@@ -42,6 +41,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   async function loadUserFromCookies() {
     const token = Cookies.get('token')
+
     if (token) {
       imprimir('Tenemos token, Obtendremos perfil')
 
@@ -53,7 +53,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
             Authorization: `Bearer ${token}`,
           },
         })
-        if (respuesta.datos) setUser(respuesta.datos)
+        if (respuesta.datos) {
+          setUser(respuesta.datos)
+        }
         await router.push({
           pathname: '/home',
         })
@@ -75,8 +77,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   useEffect(() => {
     loadUserFromCookies().finally(() => {
-      imprimir('Intento de login finalizado 👨‍💻')
+      imprimir('Verificación de login finalizada 👨‍💻')
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const login = async ({ usuario, contrasena }: LoginType) => {
@@ -84,7 +87,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       setLoading(true)
       const respuesta = await Servicios.post({
         url: `${Constantes.baseUrl}/auth`,
-        body: { usuario, contrasena: btoa(encodeURI(contrasena)) },
+        body: { usuario, contrasena: encodeBase64(encodeURI(contrasena)) },
         headers: {},
       })
 
@@ -114,7 +117,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         headers: {},
       })
     } catch (e) {
-      imprimir(`Error al iniciar sesión: ${JSON.stringify(e)}`)
+      imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
       Alertas.error(`${InterpreteMensajes(e)}`)
     } finally {
       Cookies.remove('token')

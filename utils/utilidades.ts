@@ -1,7 +1,10 @@
-class UtilidadesClass {
-  delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms))
-  }
+export const delay = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-export const Utilidades = new UtilidadesClass()
+export const encodeBase64 = (data: string) => {
+  return Buffer.from(data).toString('base64')
+}
+export const decodeBase64 = (data: string) => {
+  return Buffer.from(data, 'base64').toString('ascii')
+}
