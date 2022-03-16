@@ -11,7 +11,6 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
   // Read local storage the parse stored json or return initialValue
   const readStorage = (): T => {
     if (typeof window === 'undefined') {
-      imprimir(`🧨 retornando valor inicial ${initialValue}`)
       return initialValue
     }
     try {
