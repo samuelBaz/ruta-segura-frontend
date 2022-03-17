@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useContext, useEffect, useState } from 'react'
 import {
   Box,
@@ -9,7 +8,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import Icon from '@mui/material/Icon'
 
 import { useRouter } from 'next/router'
 import { UIContext } from '../../context/ui'
@@ -17,54 +15,32 @@ import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../context/auth'
 import { imprimir } from '../../utils'
 import Icono from './Icono'
+import { ModuloType, RoleType } from '../../types'
 
 const drawerWidth = 240
-
-export interface Propiedades {
-  icono: string
-  color_dark: string
-  color_light: string
-}
-
-export interface SubModulo {
-  id: string
-  label: string
-  url: string
-  nombre: string
-  propiedades: Propiedades
-  estado: string
-}
-
-export interface Modulo {
-  id: string
-  label: string
-  url: string
-  nombre: string
-  propiedades: Propiedades
-  estado: string
-  subModulo: SubModulo[]
-}
 
 export const Sidebar = () => {
   const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
-  const { user } = useAuth()
+  const { user, rolUsuario } = useAuth()
 
-  const [modulos, setModulos] = useState<Modulo[]>([])
+  const [modulos, setModulos] = useState<ModuloType[]>([])
 
   const theme = useTheme()
   const router = useRouter()
   let usm = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const interpretarRoles = () => {
-    imprimir(`Cambio en usuario: ${JSON.stringify(user)}`)
-    let roles = []
-    let rolSeleccionado: any = ''
+  const interpretarModulos = () => {
+    imprimir(`Cambio en modulos: ${JSON.stringify(user)}`)
+    let roles: RoleType[]
+    let rolSeleccionado: RoleType | undefined
     roles = user?.roles
     if (roles && roles.length > 0) {
-      rolSeleccionado = roles[0]
-      setModulos(rolSeleccionado.modulos)
-      imprimir(`cantidad: ${rolSeleccionado.modulos.length}`)
+      rolSeleccionado = roles.find((itemRol) => itemRol.idRol == rolUsuario)
+      if (rolSeleccionado) {
+        setModulos(rolSeleccionado.modulos)
+        imprimir(`cantidad: ${rolSeleccionado.modulos.length} modulos`)
+      }
     }
   }
 
@@ -86,9 +62,9 @@ export const Sidebar = () => {
   }, [usm])
 
   useEffect(() => {
-    interpretarRoles()
+    interpretarModulos()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [user, rolUsuario])
 
   return (
     <Drawer
