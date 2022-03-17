@@ -1,4 +1,3 @@
-import * as React from 'react'
 import type { NextPage } from 'next'
 import { Box, Typography } from '@mui/material'
 import { Alertas } from '../components/ui'

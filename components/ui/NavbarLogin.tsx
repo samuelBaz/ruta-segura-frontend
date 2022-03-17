@@ -22,14 +22,12 @@ export const NavbarLogin = () => {
         title={'Información'}
       >
         <Typography variant={'body2'}>
-          Esta es el login de una propuesta de Frontend Base elaborado con
-          NextJS y Typescript
+          Propuesta de Frontend Base Login elaborado con NextJS y Typescript
         </Typography>
       </CustomDialog>
       <AppBar
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        style={{ borderBottom: 'thin solid rgba(0, 0, 0, 0.12)', padding: '0' }}
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />

@@ -1,25 +1,14 @@
-import * as React from 'react'
-import { useEffect } from 'react'
 import type { NextPage } from 'next'
 import { Button, Grid, Typography } from '@mui/material'
 import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
-import { imprimir } from '../utils'
 
 const Home: NextPage = () => {
-  const { user, login, isLoading, logout, isAuthenticated } = useAuth()
+  const { user, logout } = useAuth()
 
   const cerrarSesion = async () => {
     await logout()
   }
-
-  const obtenerAlmacenamientoLocal = () => {
-    imprimir(`Usuario almacenado inicial: ${JSON.stringify(user)}`)
-  }
-
-  useEffect(() => {
-    obtenerAlmacenamientoLocal()
-  }, [])
 
   return (
     <LayoutUser>

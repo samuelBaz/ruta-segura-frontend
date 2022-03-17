@@ -1,5 +1,5 @@
 import Icon from '@mui/material/Icon'
-import * as React from 'react'
+
 import { FC } from 'react'
 
 interface Props {

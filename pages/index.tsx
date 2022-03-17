@@ -1,4 +1,3 @@
-import * as React from 'react'
 import type { NextPage } from 'next'
 import { LayoutUser } from '../components/layouts'
 import { IconButton, Typography } from '@mui/material'

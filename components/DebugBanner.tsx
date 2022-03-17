@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 export default function DebugBanner() {
   const entorno = process.env.NODE_ENV
 

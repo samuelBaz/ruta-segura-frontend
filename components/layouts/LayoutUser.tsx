@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import Head from 'next/head'
 import { FC } from 'react'
-import * as React from 'react'
+
 import { NavbarUser, Sidebar } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
 
