@@ -1,5 +1,3 @@
-// contexts/auth.js
-
 import React, {
   createContext,
   ReactNode,
@@ -13,10 +11,13 @@ import { Servicios } from '../../services'
 import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'
+import { UsuarioType } from '../../types'
 
 interface ContextProps {
   isAuthenticated: boolean
   user: any
+  rolUsuario: any
+  setRolUsuario: ({ idRol }: RolType) => void
   login: ({ usuario, contrasena }: LoginType) => Promise<void>
   isLoading: boolean
   logout: () => void
@@ -33,9 +34,14 @@ interface LoginType {
   contrasena: string
 }
 
+interface RolType {
+  idRol: string
+}
+
 export const AuthProvider = ({ children }: AuthContextType) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<UsuarioType | null>(null)
+  const [rol, setRol] = useState<string>()
+  const [loading, setLoading] = useState<boolean>(true)
 
   const router = useRouter()
 
@@ -55,6 +61,15 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         })
         if (respuesta.datos) {
           setUser(respuesta.datos)
+
+          if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
+            imprimir(
+              `rol encontrado en loadUserFromCookies 🚨: ${respuesta.datos.roles[0].idRol}`
+            )
+            AlmacenarRol({
+              idRol: Cookies.get('rol') ?? respuesta.datos.roles[0].idRol,
+            })
+          }
         }
         await router.push({
           pathname: '/home',
@@ -79,7 +94,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     loadUserFromCookies().finally(() => {
       imprimir('Verificación de login finalizada 👨‍💻')
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const login = async ({ usuario, contrasena }: LoginType) => {
@@ -97,6 +112,13 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
         setUser(respuesta.datos)
         imprimir(`Usuarios ✅: ${JSON.stringify(respuesta.datos)}`)
+
+        if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
+          imprimir(
+            `rol encontrado en login 🚨: ${respuesta.datos.roles[0].idRol}`
+          )
+          AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
+        }
 
         await router.push({
           pathname: '/home',
@@ -121,9 +143,16 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       Alertas.error(`${InterpreteMensajes(e)}`)
     } finally {
       Cookies.remove('token')
+      Cookies.remove('rol')
       setUser(null)
       window.location.pathname = '/login'
     }
+  }
+
+  const AlmacenarRol = ({ idRol }: RolType) => {
+    imprimir(`Almacenando rol 👮‍♂️: ${idRol}`)
+    setRol(idRol)
+    Cookies.set('rol', idRol)
   }
 
   return (
@@ -131,6 +160,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       value={{
         isAuthenticated: !!user,
         user,
+        rolUsuario: rol,
+        setRolUsuario: AlmacenarRol,
         login,
         isLoading: loading,
         logout,

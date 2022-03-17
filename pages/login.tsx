@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useEffect } from 'react'
 import type { NextPage } from 'next'
 import { LayoutLogin } from '../components/layouts/LayoutLogin'
@@ -127,7 +126,7 @@ const Home: NextPage = () => {
                   <Typography sx={{ fontWeight: 'bold' }}>Usuario</Typography>
                   <TextField
                     id="usuario"
-                    defaultValue="ADMINISTRADOR"
+                    defaultValue="ADMINISTRADOR-TECNICO"
                     disabled={isLoading}
                     variant="outlined"
                     {...register('usuario', {
