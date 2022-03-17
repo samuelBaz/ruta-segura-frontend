@@ -5,20 +5,18 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import Icon from '@mui/material/Icon'
 
 import { useRouter } from 'next/router'
 import { UIContext } from '../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
 import { useAuth } from '../../context/auth'
 import { imprimir } from '../../utils'
+import Icono from './Icono'
 
 const drawerWidth = 240
 
@@ -66,7 +64,7 @@ export const Sidebar = () => {
     if (roles && roles.length > 0) {
       rolSeleccionado = roles[0]
       setModulos(rolSeleccionado.modulos)
-      imprimir(`cantidad: ${JSON.stringify(modulos)}`)
+      imprimir(`cantidad: ${rolSeleccionado.modulos.length}`)
     }
   }
 
@@ -84,12 +82,12 @@ export const Sidebar = () => {
     } else {
       openSideMenu()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usm])
 
   useEffect(() => {
     interpretarRoles()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (
@@ -115,9 +113,22 @@ export const Sidebar = () => {
           {modulos.map((modulo, index) => (
             <div key={`div-${index}`}>
               <ListItem key={`modulo-${index}`}>
-                <ListItemText>
-                  <Typography variant={'body2'}>{`${modulo.label}`}</Typography>
-                </ListItemText>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    p: '1 2 3 4',
+                    m: 0,
+                    borderRadius: 1,
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box width={'10px'} />
+                  <Typography
+                    variant={'body2'}
+                    color={'secondary'}
+                  >{`${modulo.label}`}</Typography>
+                </Box>
               </ListItem>
               <List key={`submodulos-${index}`}>
                 {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
@@ -127,18 +138,24 @@ export const Sidebar = () => {
                     selected={rutaActiva(subModuloItem.url, router.pathname)}
                     onClick={() => navigateTo(subModuloItem.url)}
                   >
-                    <ListItemIcon>
-                      {indexSubModulo % 2 === 0 ? (
-                        <InboxIcon color={'primary'} />
-                      ) : (
-                        <MailIcon color={'primary'} />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        p: '1 2 3 4',
+                        m: 0,
+                        borderRadius: 1,
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Box width={'20px'} />
+                      <Icono>{subModuloItem.propiedades.icono}</Icono>
+
+                      <Box width={'20px'} />
                       <Typography
                         variant={'body2'}
                       >{`${subModuloItem.label}`}</Typography>
-                    </ListItemText>
+                    </Box>
                   </ListItem>
                 ))}
               </List>

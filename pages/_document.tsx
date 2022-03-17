@@ -15,6 +15,10 @@ export default class MyDocument extends Document {
 
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+          />
         </Head>
         <body>
           <Main />
