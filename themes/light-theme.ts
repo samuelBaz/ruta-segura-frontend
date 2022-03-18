@@ -35,8 +35,12 @@ export const lightTheme = createTheme({
         disableElevation: true,
       },
     },
-    MuiTable: {
-      defaultProps: {},
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#FFF',
+        },
+      },
     },
   },
 })

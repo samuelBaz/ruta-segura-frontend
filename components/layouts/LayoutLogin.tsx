@@ -14,17 +14,21 @@ export const LayoutLogin: FC<Props> = ({
   children,
 }) => {
   return (
-    <Box sx={{ display: 'flex' }}>
-      <Head>
-        <title>{title}</title>
-      </Head>
+    <>
+      {
+        <Box sx={{ display: 'flex' }}>
+          <Head>
+            <title>{title}</title>
+          </Head>
 
-      <NavbarLogin />
+          <NavbarLogin />
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        {children}
-      </Box>
-    </Box>
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Toolbar />
+            {children}
+          </Box>
+        </Box>
+      }
+    </>
   )
 }

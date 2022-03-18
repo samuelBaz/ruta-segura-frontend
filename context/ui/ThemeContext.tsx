@@ -26,7 +26,7 @@ const useThemeContext = () => useContext(ThemeContext)
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const isDarkOS = useMediaQuery(DARK_SCHEME_QUERY)
 
-  imprimir(`isDarkOS inicial: ${isDarkOS}`)
+  // imprimir(`isDarkOS inicial: ${isDarkOS}`)
 
   const [primeraVezState, setPrimeraVezState] = useState(isDarkOS)
   // Para recuperar de storage en la 2da vez
@@ -51,7 +51,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     delay(isDarkOS ? 100 : 100).then(() => {
       // TODO: Tarda en reconocer ajuste de usuario claro en modo oscuro
-      imprimir(`useEffect isDarkOS: ${isDarkOS}`)
+      // imprimir(`useEffect isDarkOS: ${isDarkOS}`)
       if (primeraVezState || isDarkOS) {
         setThemeMode(isDarkOS ? 'dark' : 'light')
       } else {
@@ -63,7 +63,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   }, [isDarkOS])
 
   useEffect(() => {
-    imprimir(`useEffect primeraVezState: ${primeraVezState}`)
+    // imprimir(`useEffect primeraVezState: ${primeraVezState}`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [primeraVezState])
 

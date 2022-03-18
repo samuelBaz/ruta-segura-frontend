@@ -23,19 +23,19 @@ import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { CustomDialog } from './CustomDialog'
 import Icono from './Icono'
 import { useAuth } from '../../context/auth'
-import { imprimir } from '../../utils'
+import { imprimir, titleCase } from '../../utils'
 import { RoleType } from '../../types'
 
 export const NavbarUser = () => {
-  const { openSideMenu, sidemenuOpen, closeSideMenu } = useContext(UIContext)
-
   const [modalAyuda, setModalAyuda] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const [roles, setRoles] = useState<RoleType[]>([])
 
-  const { user, rolUsuario, setRolUsuario, logout } = useAuth()
+  const { usuario, rolUsuario, setRolUsuario, logout } = useAuth()
+
+  const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
   const handleChangeRol = (event: React.ChangeEvent<HTMLInputElement>) => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
@@ -59,9 +59,9 @@ export const NavbarUser = () => {
   }
 
   const interpretarRoles = () => {
-    imprimir(`Cambio en roles: ${JSON.stringify(user)}`)
-    if (user?.roles && user?.roles.length > 0) {
-      setRoles(user?.roles)
+    imprimir(`Cambio en roles: ${JSON.stringify(usuario)}`)
+    if (usuario?.roles && usuario?.roles.length > 0) {
+      setRoles(usuario?.roles)
       imprimir(`cantidad de roles: ${roles.length}`)
     }
   }
@@ -70,7 +70,7 @@ export const NavbarUser = () => {
   useEffect(() => {
     interpretarRoles()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [usuario])
 
   return (
     <>
@@ -155,7 +155,9 @@ export const NavbarUser = () => {
             <MenuItem sx={{ p: 2 }} onClick={handleClose}>
               <Icono>person</Icono>
               <Box width={'20px'} />
-              <Typography variant={'body2'}>Perfil</Typography>
+              <Typography variant={'body2'}>
+                {`${titleCase(usuario?.persona.nombres ?? '')}`}
+              </Typography>
             </MenuItem>
             <MenuItem
               sx={{
@@ -168,7 +170,7 @@ export const NavbarUser = () => {
             >
               <Icono>switch_account</Icono>
               <Box width={'20px'} />
-              <Typography variant={'body2'}>Roles disponibles</Typography>
+              <Typography variant={'body2'}>Roles </Typography>
             </MenuItem>
             <List key={`roles`} sx={{ p: 0 }}>
               {roles.map((rol, indexRol) => (

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react'
 import Cookies from 'js-cookie'
-import { encodeBase64, imprimir, InterpreteMensajes } from '../../utils'
+import { delay, encodeBase64, imprimir, InterpreteMensajes } from '../../utils'
 import { Servicios } from '../../services'
 import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
@@ -15,10 +15,10 @@ import { UsuarioType } from '../../types'
 
 interface ContextProps {
   isAuthenticated: boolean
-  user: any
-  rolUsuario: any
+  usuario: UsuarioType | null
+  rolUsuario: string | undefined
   setRolUsuario: ({ idRol }: RolType) => void
-  login: ({ usuario, contrasena }: LoginType) => Promise<void>
+  ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
   isLoading: boolean
   logout: () => void
 }
@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       imprimir('Tenemos token, Obtendremos perfil')
 
       try {
+        await delay(1000)
         const respuesta = await Servicios.get({
           url: `${Constantes.baseUrl}usuarios/cuenta/perfil`,
           body: {},
@@ -71,6 +72,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
             })
           }
         }
+        await delay(1000)
         await router.push({
           pathname: '/home',
         })
@@ -83,6 +85,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         setLoading(false)
       }
     } else {
+      await delay(1000)
       await router.push({
         pathname: '/login',
       })
@@ -100,6 +103,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const login = async ({ usuario, contrasena }: LoginType) => {
     try {
       setLoading(true)
+      await delay(1000)
       const respuesta = await Servicios.post({
         url: `${Constantes.baseUrl}/auth`,
         body: { usuario, contrasena: encodeBase64(encodeURI(contrasena)) },
@@ -134,10 +138,12 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const logout = async () => {
     try {
-      await Servicios.get({
+      setLoading(true)
+      await delay(1000)
+      /*await Servicios.get({
         url: `${Constantes.baseUrl}/logout`,
         headers: {},
-      })
+      })*/
     } catch (e) {
       imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
       Alertas.error(`${InterpreteMensajes(e)}`)
@@ -145,7 +151,10 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       Cookies.remove('token')
       Cookies.remove('rol')
       setUser(null)
-      window.location.pathname = '/login'
+      setLoading(false)
+      await router.push({
+        pathname: '/login',
+      })
     }
   }
 
@@ -159,10 +168,10 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     <AuthContext.Provider
       value={{
         isAuthenticated: !!user,
-        user,
+        usuario: user,
         rolUsuario: rol,
         setRolUsuario: AlmacenarRol,
-        login,
+        ingresar: login,
         isLoading: loading,
         logout,
       }}

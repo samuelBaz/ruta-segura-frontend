@@ -35,5 +35,12 @@ export const darkTheme = createTheme({
         disableElevation: true,
       },
     },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#232226',
+        },
+      },
+    },
   },
 })

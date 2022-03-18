@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import { UIContext } from '../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../context/auth'
-import { imprimir } from '../../utils'
+import { delay, imprimir } from '../../utils'
 import Icono from './Icono'
 import { ModuloType, RoleType } from '../../types'
 
@@ -22,19 +22,20 @@ const drawerWidth = 240
 export const Sidebar = () => {
   const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
-  const { user, rolUsuario } = useAuth()
+  const { usuario, rolUsuario, isAuthenticated, isLoading } = useAuth()
 
   const [modulos, setModulos] = useState<ModuloType[]>([])
 
   const theme = useTheme()
   const router = useRouter()
+
   let usm = useMediaQuery(theme.breakpoints.up('sm'))
 
   const interpretarModulos = () => {
-    imprimir(`Cambio en modulos: ${JSON.stringify(user)}`)
+    imprimir(`Cambio en modulos: ${JSON.stringify(usuario)}`)
     let roles: RoleType[]
     let rolSeleccionado: RoleType | undefined
-    roles = user?.roles
+    roles = usuario?.roles ?? []
     if (roles && roles.length > 0) {
       rolSeleccionado = roles.find((itemRol) => itemRol.idRol == rolUsuario)
       if (rolSeleccionado) {
@@ -49,27 +50,32 @@ export const Sidebar = () => {
   }
 
   const navigateTo = async (url: string) => {
+    if (!usm) {
+      closeSideMenu()
+    }
     await router.push(url)
   }
 
   useEffect(() => {
+    imprimir(`Cambio de escala 📏: ${usm}`)
     if (!usm) {
       closeSideMenu()
     } else {
       openSideMenu()
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usm])
 
   useEffect(() => {
     interpretarModulos()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, rolUsuario])
+  }, [rolUsuario])
 
   return (
     <Drawer
       variant={usm ? 'persistent' : 'temporary'}
-      open={sidemenuOpen}
+      open={sidemenuOpen && isAuthenticated && modulos.length > 0 && !isLoading}
       onClose={closeSideMenu}
       ModalProps={{
         keepMounted: true, // Better open performance on mobile.
@@ -81,6 +87,7 @@ export const Sidebar = () => {
           width: drawerWidth,
           boxSizing: 'border-box',
         },
+        transition: 'all 0.1s ease-out',
       }}
     >
       <Toolbar />
@@ -93,7 +100,6 @@ export const Sidebar = () => {
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
-                    p: '1 2 3 4',
                     m: 0,
                     borderRadius: 1,
                     alignItems: 'center',
