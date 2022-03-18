@@ -25,6 +25,7 @@ import Icono from './Icono'
 import { useAuth } from '../../context/auth'
 import { imprimir, titleCase } from '../../utils'
 import { RoleType } from '../../types'
+import { Alertas } from './Alertas'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -41,6 +42,12 @@ export const NavbarUser = () => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
     setRolUsuario({ idRol: event.target.value })
     handleClose()
+    Alertas.normal(
+      `Cambio de rol a ${
+        usuario?.roles.find((rol) => rol.idRol == event.target.value)?.nombre ??
+        ''
+      }`
+    )
   }
 
   const abrirModalAyuda = () => {

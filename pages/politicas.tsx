@@ -13,14 +13,6 @@ import { useRouter } from 'next/router'
 const Home: NextPage = () => {
   const { usuario } = useAuth()
 
-  const theme = useTheme()
-
-  const xs = useMediaQuery(theme.breakpoints.only('xs'))
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
-  const md = useMediaQuery(theme.breakpoints.only('md'))
-  const lg = useMediaQuery(theme.breakpoints.only('lg'))
-  const xl = useMediaQuery(theme.breakpoints.only('xl'))
-
   return (
     <LayoutUser>
       <Grid
@@ -39,13 +31,8 @@ const Home: NextPage = () => {
             noWrap={true}
             alignItems={'center'}
           >
-            Hola {usuario?.persona?.nombres} ‍💻
+            Políticas {usuario?.persona?.nombres} 👩‍⚖️
           </Typography>
-          <Typography>xs {`${xs}`}</Typography>
-          <Typography>sm {`${sm}`}</Typography>
-          <Typography>md {`${md}`}</Typography>
-          <Typography>lg {`${lg}`}</Typography>
-          <Typography>xl {`${xl}`}</Typography>
         </Grid>
       </Grid>
     </LayoutUser>

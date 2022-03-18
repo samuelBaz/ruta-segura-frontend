@@ -1,4 +1,4 @@
-import { Box, Fade } from '@mui/material'
+import { Box, Fade, Grid, useMediaQuery, useTheme } from '@mui/material'
 import Head from 'next/head'
 import { FC, useContext } from 'react'
 
@@ -18,12 +18,23 @@ export const LayoutUser: FC<Props> = ({
 }) => {
   const { isLoading } = useAuth()
   const { sidemenuOpen } = useContext(UIContext)
+
+  const theme = useTheme()
+  let usm = useMediaQuery(theme.breakpoints.up('sm'))
+
   return (
     <>
       {isLoading ? (
         <FullScreenLoading />
       ) : (
-        <>
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          justifyItems={'center'}
+        >
           <Fade in={!isLoading} timeout={0}>
             <Box sx={{ display: 'flex' }}>
               <Head>
@@ -37,11 +48,10 @@ export const LayoutUser: FC<Props> = ({
               component="main"
               sx={{
                 width: sidemenuOpen ? '78%' : '100%',
+                // backgroundColor: 'primary.main',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
-                position: 'absolute',
-                ml: sidemenuOpen ? '22%' : '0%',
+                ml: sidemenuOpen ? '240px' : '0%',
                 transition: 'all 0.1s ease-out !important',
               }}
             >
@@ -49,7 +59,7 @@ export const LayoutUser: FC<Props> = ({
               {children}
             </Box>
           </Fade>
-        </>
+        </Grid>
       )}
       )
     </>
