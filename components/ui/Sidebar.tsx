@@ -29,8 +29,8 @@ export const Sidebar = () => {
   const theme = useTheme()
   const router = useRouter()
 
-  let sm = useMediaQuery(theme.breakpoints.only('sm'))
-  let xs = useMediaQuery(theme.breakpoints.only('xs'))
+  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const interpretarModulos = () => {
     imprimir(`Cambio en modulos: ${JSON.stringify(usuario)}`)

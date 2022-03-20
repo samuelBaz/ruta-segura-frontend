@@ -2,7 +2,15 @@ import { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { LayoutLogin } from '../components/layouts/LayoutLogin'
 import Grid from '@mui/material/Grid'
-import { Box, Button, Divider, Fade, TextField } from '@mui/material'
+import {
+  Box,
+  Button,
+  Divider,
+  Fade,
+  TextField,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
@@ -17,6 +25,10 @@ const Login: NextPage = () => {
   const { ingresar, progresoLogin, estaAutenticado } = useAuth()
 
   const [loading, setLoading] = useState<boolean>(true)
+
+  const theme = useTheme()
+  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   type FormData = {
     usuario: string
@@ -78,19 +90,19 @@ const Login: NextPage = () => {
                       display={'flex'}
                       justifyContent={'center'}
                       alignItems={'center'}
-                      minHeight={'80vh'}
+                      minHeight={sm || xs ? '30vh' : '80vh'}
                       color={'primary'}
                     >
                       <Box
                         display={'flex'}
                         justifyContent={'center'}
                         alignItems={'center'}
-                        minHeight={'80vh'}
                       >
                         <Typography
                           variant={'h4'}
                           component="h1"
                           color={'primary'}
+                          align={sm || xs ? 'center' : 'left'}
                         >
                           Frontend base con Next.js, MUI v5 y TypeScript
                         </Typography>
@@ -127,7 +139,6 @@ const Login: NextPage = () => {
                       display={'flex'}
                       justifyContent={'center'}
                       alignItems={'center'}
-                      minHeight={'80vh'}
                       color={'primary'}
                     >
                       <Box
