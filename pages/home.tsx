@@ -5,7 +5,7 @@ import { LayoutUser } from '../components/layouts'
 import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
-  const { usuario } = useAuth()
+  const { usuario, rolUsuario } = useAuth()
 
   return (
     <LayoutUser>
@@ -27,6 +27,7 @@ const Home: NextPage = () => {
           >
             Hola {usuario?.persona?.nombres} 🏠
           </Typography>
+          <Typography>{rolUsuario?.nombre}</Typography>
         </Grid>
       </Grid>
     </LayoutUser>

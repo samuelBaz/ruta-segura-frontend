@@ -11,16 +11,17 @@ import { Servicios } from '../../services'
 import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'
-import { UsuarioType } from '../../types'
+import { RoleType, UsuarioType } from '../../types'
 
 interface ContextProps {
-  isAuthenticated: boolean
+  estaAutenticado: boolean
   usuario: UsuarioType | null
-  rolUsuario: string | undefined
-  setRolUsuario: ({ idRol }: RolType) => void
+  idRolUsuario: string | undefined
+  rolUsuario: RoleType | undefined
+  setRolUsuario: ({ idRol }: idRolType) => void
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
-  isLoading: boolean
-  logout: () => void
+  progresoLogin: boolean
+  cerrarSesion: () => void
 }
 
 const AuthContext = createContext<ContextProps>({} as ContextProps)
@@ -34,13 +35,13 @@ interface LoginType {
   contrasena: string
 }
 
-interface RolType {
+interface idRolType {
   idRol: string
 }
 
 export const AuthProvider = ({ children }: AuthContextType) => {
   const [user, setUser] = useState<UsuarioType | null>(null)
-  const [rol, setRol] = useState<string>()
+  const [idRol, setIdRol] = useState<string>()
   const [loading, setLoading] = useState<boolean>(true)
 
   const router = useRouter()
@@ -158,22 +159,23 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
-  const AlmacenarRol = ({ idRol }: RolType) => {
+  const AlmacenarRol = ({ idRol }: idRolType) => {
     imprimir(`Almacenando rol 👮‍♂️: ${idRol}`)
-    setRol(idRol)
+    setIdRol(idRol)
     Cookies.set('rol', idRol)
   }
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: !!user,
+        estaAutenticado: !!user,
         usuario: user,
-        rolUsuario: rol,
+        idRolUsuario: idRol,
+        rolUsuario: user?.roles.find((rol) => rol.idRol == idRol),
         setRolUsuario: AlmacenarRol,
         ingresar: login,
-        isLoading: loading,
-        logout,
+        progresoLogin: loading,
+        cerrarSesion: logout,
       }}
     >
       {children}

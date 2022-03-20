@@ -53,7 +53,7 @@ const Home: NextPage = () => {
         justifyItems={'center'}
         style={{ minHeight: '80vh' }}
       >
-        <div style={{ height: '80vh', width: '95%' }}>
+        <div style={{ height: '75vh', width: '90%' }}>
           <>
             <Box height={'30px'} />
             <Grid

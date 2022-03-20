@@ -22,14 +22,15 @@ const drawerWidth = 240
 export const Sidebar = () => {
   const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
-  const { usuario, rolUsuario, isAuthenticated, isLoading } = useAuth()
+  const { usuario, idRolUsuario, estaAutenticado, progresoLogin } = useAuth()
 
   const [modulos, setModulos] = useState<ModuloType[]>([])
 
   const theme = useTheme()
   const router = useRouter()
 
-  let usm = useMediaQuery(theme.breakpoints.up('sm'))
+  let sm = useMediaQuery(theme.breakpoints.only('sm'))
+  let xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const interpretarModulos = () => {
     imprimir(`Cambio en modulos: ${JSON.stringify(usuario)}`)
@@ -37,7 +38,7 @@ export const Sidebar = () => {
     let rolSeleccionado: RoleType | undefined
     roles = usuario?.roles ?? []
     if (roles && roles.length > 0) {
-      rolSeleccionado = roles.find((itemRol) => itemRol.idRol == rolUsuario)
+      rolSeleccionado = roles.find((itemRol) => itemRol.idRol == idRolUsuario)
       if (rolSeleccionado) {
         setModulos(rolSeleccionado.modulos)
         imprimir(`cantidad: ${rolSeleccionado.modulos.length} modulos`)
@@ -50,41 +51,45 @@ export const Sidebar = () => {
   }
 
   const navigateTo = async (url: string) => {
-    if (!usm) {
+    if (sm || xs) {
       closeSideMenu()
     }
     await router.push(url)
   }
 
   useEffect(() => {
-    imprimir(`Cambio de escala 📏: ${usm}`)
-    if (!usm) {
+    imprimir(`Cambio de escala 📏: ${sm}`)
+    if (sm || xs) {
       closeSideMenu()
     } else {
       openSideMenu()
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usm])
+  }, [sm, xs])
 
   useEffect(() => {
     interpretarModulos()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rolUsuario])
+  }, [idRolUsuario])
 
   return (
     <Drawer
-      variant={usm ? 'persistent' : 'temporary'}
-      open={sidemenuOpen && isAuthenticated && modulos.length > 0 && !isLoading}
+      variant={sm || xs ? 'temporary' : 'persistent'}
+      open={
+        sidemenuOpen && estaAutenticado && modulos.length > 0 && !progresoLogin
+      }
       onClose={closeSideMenu}
       ModalProps={{
         keepMounted: true, // Better open performance on mobile.
       }}
       sx={{
         width: sidemenuOpen ? drawerWidth : `0`,
+        border: 'none',
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
+          borderWidth: 0.05,
           boxSizing: 'border-box',
         },
         transition: 'all 0.1s ease-out',

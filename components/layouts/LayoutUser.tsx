@@ -16,7 +16,7 @@ export const LayoutUser: FC<Props> = ({
   title = 'Frontend base - NextJS',
   children,
 }) => {
-  const { isLoading } = useAuth()
+  const { progresoLogin } = useAuth()
   const { sidemenuOpen } = useContext(UIContext)
 
   const theme = useTheme()
@@ -24,7 +24,7 @@ export const LayoutUser: FC<Props> = ({
 
   return (
     <>
-      {isLoading ? (
+      {progresoLogin ? (
         <FullScreenLoading />
       ) : (
         <Grid
@@ -35,7 +35,7 @@ export const LayoutUser: FC<Props> = ({
           justifyContent="center"
           justifyItems={'center'}
         >
-          <Fade in={!isLoading} timeout={0}>
+          <Fade in={!progresoLogin} timeout={0}>
             <Box sx={{ display: 'flex' }}>
               <Head>
                 <title>{title}</title>
@@ -43,7 +43,7 @@ export const LayoutUser: FC<Props> = ({
               <NavbarUser />
             </Box>
           </Fade>
-          <Fade in={!isLoading} timeout={200}>
+          <Fade in={!progresoLogin} timeout={200}>
             <Box
               component="main"
               sx={{
@@ -61,7 +61,6 @@ export const LayoutUser: FC<Props> = ({
           </Fade>
         </Grid>
       )}
-      )
     </>
   )
 }

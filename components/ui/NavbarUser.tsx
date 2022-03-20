@@ -26,6 +26,7 @@ import { useAuth } from '../../context/auth'
 import { imprimir, titleCase } from '../../utils'
 import { RoleType } from '../../types'
 import { Alertas } from './Alertas'
+import { useRouter } from 'next/router'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -34,20 +35,18 @@ export const NavbarUser = () => {
 
   const [roles, setRoles] = useState<RoleType[]>([])
 
-  const { usuario, rolUsuario, setRolUsuario, logout } = useAuth()
+  const { usuario, idRolUsuario, setRolUsuario, cerrarSesion, rolUsuario } =
+    useAuth()
 
   const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+
+  const router = useRouter()
 
   const handleChangeRol = (event: React.ChangeEvent<HTMLInputElement>) => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
     setRolUsuario({ idRol: event.target.value })
     handleClose()
-    Alertas.normal(
-      `Cambio de rol a ${
-        usuario?.roles.find((rol) => rol.idRol == event.target.value)?.nombre ??
-        ''
-      }`
-    )
+    Alertas.normal(`Cambio de rol a ${rolUsuario?.nombre ?? ''}`)
   }
 
   const abrirModalAyuda = () => {
@@ -73,6 +72,10 @@ export const NavbarUser = () => {
     }
   }
 
+  const abrirPerfil = async () => {
+    await router.push('/perfil')
+  }
+
   /// Interpretando roles desde estado
   useEffect(() => {
     interpretarRoles()
@@ -94,7 +97,7 @@ export const NavbarUser = () => {
       <AppBar
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        style={{ borderBottom: 'thin solid rgba(0, 0, 0, 0.12)', padding: '0' }}
+        style={{ borderBottom: 'thin solid rgba(0, 0, 0, 0.05)', padding: '0' }}
       >
         <Toolbar>
           <IconButton
@@ -159,7 +162,7 @@ export const NavbarUser = () => {
             }}
             autoFocus={false}
           >
-            <MenuItem sx={{ p: 2 }} onClick={handleClose}>
+            <MenuItem sx={{ p: 2 }} onClick={abrirPerfil}>
               <Icono>person</Icono>
               <Box width={'20px'} />
               <Typography variant={'body2'}>
@@ -195,7 +198,7 @@ export const NavbarUser = () => {
                       value={rol.idRol}
                       control={
                         <Radio
-                          checked={rolUsuario === rol.idRol}
+                          checked={idRolUsuario === rol.idRol}
                           onChange={handleChangeRol}
                           color={'success'}
                           size="small"
@@ -216,7 +219,7 @@ export const NavbarUser = () => {
               <Box width={'20px'} />
               <Typography variant={'body2'}>Cambiar contraseña</Typography>
             </MenuItem>
-            <MenuItem sx={{ p: 2 }} onClick={logout}>
+            <MenuItem sx={{ p: 2 }} onClick={cerrarSesion}>
               <Icono>logout</Icono>
               <Box width={'20px'} />
               <Typography variant={'body2'}>Cerrar sesión</Typography>

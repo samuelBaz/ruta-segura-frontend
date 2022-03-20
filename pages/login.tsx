@@ -14,7 +14,7 @@ import ProgresoLineal from '../components/ui/ProgresoLineal'
 import { FullScreenLoading } from '../components/ui/FullScreenLoading'
 
 const Login: NextPage = () => {
-  const { ingresar, isLoading, isAuthenticated } = useAuth()
+  const { ingresar, progresoLogin, estaAutenticado } = useAuth()
 
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -51,7 +51,7 @@ const Login: NextPage = () => {
 
   const iniciarSesion = async ({ usuario, contrasena }: FormData) => {
     await ingresar({ usuario, contrasena })
-    if (isAuthenticated) setLoading(false)
+    if (estaAutenticado) setLoading(false)
   }
 
   useEffect(() => {
@@ -154,7 +154,7 @@ const Login: NextPage = () => {
                         <TextField
                           id="usuario"
                           defaultValue="ADMINISTRADOR-TECNICO"
-                          disabled={isLoading}
+                          disabled={progresoLogin}
                           variant="outlined"
                           {...register('usuario', {
                             required: 'Este campo es requerido',
@@ -169,7 +169,7 @@ const Login: NextPage = () => {
                           id="contrasena"
                           type={'password'}
                           defaultValue="123"
-                          disabled={isLoading}
+                          disabled={progresoLogin}
                           variant="outlined"
                           {...register('contrasena', {
                             required: 'Este campo es requerido',
@@ -182,12 +182,12 @@ const Login: NextPage = () => {
                           helperText={errors.contrasena?.message}
                         />
 
-                        <ProgresoLineal mostrar={isLoading} />
+                        <ProgresoLineal mostrar={progresoLogin} />
 
                         <Button
                           type="submit"
                           variant="contained"
-                          disabled={isLoading}
+                          disabled={progresoLogin}
                         >
                           Ingresar
                         </Button>
