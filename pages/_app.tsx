@@ -10,7 +10,8 @@ import { ThemeProvider } from '../context/ui/ThemeContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthProvider } from '../context/auth'
-import { Sidebar } from '../components/ui' // importar estilos para mostrar alertas en toda la aplicación
+import { Sidebar } from '../components/ui'
+import { FullScreenLoadingProvider } from '../context/ui' // importar estilos para mostrar alertas en toda la aplicación
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
@@ -26,18 +27,20 @@ export default function MyApp(props: MyAppProps) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <DebugBanner />
-      <AuthProvider>
-        <UIProvider>
-          <ThemeProvider>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <Sidebar />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </UIProvider>
-        <ToastContainer />
-      </AuthProvider>
+      <FullScreenLoadingProvider>
+        <DebugBanner />
+        <AuthProvider>
+          <UIProvider>
+            <ThemeProvider>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <Sidebar />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </UIProvider>
+          <ToastContainer />
+        </AuthProvider>
+      </FullScreenLoadingProvider>
     </CacheProvider>
   )
 }

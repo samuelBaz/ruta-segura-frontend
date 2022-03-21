@@ -46,7 +46,7 @@ class ServiciosClass {
       if (e.code === 'ECONNABORTED') {
         throw new Error('La petición está tardando demasiado')
       } else {
-        throw e.response.data
+        throw e.response?.data || 'Ocurrio un error inesperado'
       }
     }
   }

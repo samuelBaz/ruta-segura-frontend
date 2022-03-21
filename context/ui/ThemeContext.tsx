@@ -3,14 +3,13 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useLayoutEffect,
   useState,
 } from 'react'
 import { ThemeProvider as MuiThemeProvider, useMediaQuery } from '@mui/material'
 
 import { darkTheme, lightTheme } from '../../themes'
 import useLocalStorage from '../../hooks/useLocalStorage'
-import { delay, imprimir } from '../../utils'
+import { delay } from '../../utils'
 
 const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)'
 
@@ -50,22 +49,23 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    imprimir(`😨 useEffect isDarkOS ${isDarkOS}`)
-    if (primeraVezState) {
-      setThemeMode(isDarkOS ? 'dark' : 'light')
-    } else {
-      imprimir(`🚨 no se ejecuta setThemeMode`)
-    }
+    delay(isDarkOS ? 100 : 100).then(() => {
+      // TODO: Tarda en reconocer ajuste de usuario claro en modo oscuro
+      // imprimir(`useEffect isDarkOS: ${isDarkOS}`)
+      if (primeraVezState || isDarkOS) {
+        setThemeMode(isDarkOS ? 'dark' : 'light')
+      } else {
+        setPrimeraVezState(true)
+      }
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDarkOS])
 
-  useLayoutEffect(() => {
-    const item = window.localStorage.getItem('themeMode')
-    imprimir(`😨 useLayoutEffect ${item}`)
-    setThemeMode(item ?? isDarkOS ? 'dark' : 'light')
-    delay(100).then(() => {
-      setPrimeraVezState(true)
-    })
-  }, [])
+  useEffect(() => {
+    // imprimir(`useEffect primeraVezState: ${primeraVezState}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [primeraVezState])
 
   return (
     <ThemeContext.Provider value={{ themeMode, toggleTheme }}>

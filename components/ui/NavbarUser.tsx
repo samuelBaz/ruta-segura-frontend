@@ -23,10 +23,11 @@ import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { CustomDialog } from './CustomDialog'
 import Icono from './Icono'
 import { useAuth } from '../../context/auth'
-import { imprimir, titleCase } from '../../utils'
+import { delay, imprimir, titleCase } from '../../utils'
 import { RoleType } from '../../types'
 import { Alertas } from './Alertas'
 import { useRouter } from 'next/router'
+import { useFullScreenLoadingContext } from '../../context/ui'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -35,18 +36,21 @@ export const NavbarUser = () => {
 
   const [roles, setRoles] = useState<RoleType[]>([])
 
-  const { usuario, idRolUsuario, setRolUsuario, cerrarSesion, rolUsuario } =
-    useAuth()
+  const { usuario, idRolUsuario, setRolUsuario, cerrarSesion } = useAuth()
 
   const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+
   const router = useRouter()
 
-  const handleChangeRol = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const cambiarRol = async (event: React.ChangeEvent<HTMLInputElement>) => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
+    cerrarMenu()
+    mostrarFullScreen(`Cambiando de rol..`)
+    await delay(1500)
     setRolUsuario({ idRol: event.target.value })
-    handleClose()
-    Alertas.normal(`Cambio de rol a ${rolUsuario?.nombre ?? ''}`)
+    ocultarFullScreen()
   }
 
   const abrirModalAyuda = () => {
@@ -56,12 +60,18 @@ export const NavbarUser = () => {
     setModalAyuda(false)
   }
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const desplegarMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
+  const cerrarMenu = () => {
     setAnchorEl(null)
+  }
+
+  const cerrarMenuSesion = async () => {
+    cerrarMenu()
+    await delay(100)
+    cerrarSesion()
   }
 
   const interpretarRoles = () => {
@@ -139,7 +149,7 @@ export const NavbarUser = () => {
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="false"
-            onClick={handleMenu}
+            onClick={desplegarMenu}
             color="primary"
           >
             <AccountCircleOutlinedIcon />
@@ -156,7 +166,7 @@ export const NavbarUser = () => {
               horizontal: 'right',
             }}
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            onClose={cerrarMenu}
             MenuListProps={{
               'aria-labelledby': 'basic-button',
             }}
@@ -199,7 +209,7 @@ export const NavbarUser = () => {
                       control={
                         <Radio
                           checked={idRolUsuario === rol.idRol}
-                          onChange={handleChangeRol}
+                          onChange={cambiarRol}
                           color={'success'}
                           size="small"
                           value={rol.idRol}
@@ -214,12 +224,12 @@ export const NavbarUser = () => {
                 </ListItem>
               ))}
             </List>
-            <MenuItem sx={{ p: 2 }} onClick={handleClose}>
+            <MenuItem sx={{ p: 2 }} onClick={cerrarMenu}>
               <Icono>vpn_key</Icono>
               <Box width={'20px'} />
               <Typography variant={'body2'}>Cambiar contraseña</Typography>
             </MenuItem>
-            <MenuItem sx={{ p: 2 }} onClick={cerrarSesion}>
+            <MenuItem sx={{ p: 2 }} onClick={cerrarMenuSesion}>
               <Icono>logout</Icono>
               <Box width={'20px'} />
               <Typography variant={'body2'}>Cerrar sesión</Typography>

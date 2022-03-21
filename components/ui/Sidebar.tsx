@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 
 import { useRouter } from 'next/router'
-import { UIContext } from '../../context/ui'
+import { UIContext, useFullScreenLoadingContext } from '../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../context/auth'
 import { delay, imprimir } from '../../utils'
@@ -31,6 +31,8 @@ export const Sidebar = () => {
 
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  const { estadoFullScreen } = useFullScreenLoadingContext()
 
   const interpretarModulos = () => {
     imprimir(`Cambio en modulos: ${JSON.stringify(usuario)}`)
@@ -77,7 +79,11 @@ export const Sidebar = () => {
     <Drawer
       variant={sm || xs ? 'temporary' : 'persistent'}
       open={
-        sidemenuOpen && estaAutenticado && modulos.length > 0 && !progresoLogin
+        sidemenuOpen &&
+        estaAutenticado &&
+        modulos.length > 0 &&
+        !progresoLogin &&
+        !estadoFullScreen
       }
       onClose={closeSideMenu}
       ModalProps={{

@@ -12,6 +12,7 @@ import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'
 import { RoleType, UsuarioType } from '../../types'
+import { useFullScreenLoadingContext } from '../ui'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -44,6 +45,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const [idRol, setIdRol] = useState<string>()
   const [loading, setLoading] = useState<boolean>(true)
 
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+
   const router = useRouter()
 
   async function loadUserFromCookies() {
@@ -53,6 +56,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       imprimir('Tenemos token, Obtendremos perfil')
 
       try {
+        mostrarFullScreen()
         await delay(1000)
         const respuesta = await Servicios.get({
           url: `${Constantes.baseUrl}usuarios/cuenta/perfil`,
@@ -86,12 +90,13 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         setLoading(false)
       }
     } else {
-      await delay(1000)
       await router.push({
         pathname: '/login',
       })
+      await delay(1000)
     }
     setLoading(false)
+    ocultarFullScreen()
   }
 
   useEffect(() => {
@@ -104,6 +109,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const login = async ({ usuario, contrasena }: LoginType) => {
     try {
       setLoading(true)
+
       await delay(1000)
       const respuesta = await Servicios.post({
         url: `${Constantes.baseUrl}/auth`,
@@ -125,6 +131,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
           AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
         }
 
+        mostrarFullScreen()
+        await delay(1000)
         await router.push({
           pathname: '/home',
         })
@@ -134,12 +142,14 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       Alertas.error(`${InterpreteMensajes(e)}`)
     } finally {
       setLoading(false)
+      ocultarFullScreen()
     }
   }
 
   const logout = async () => {
     try {
       setLoading(true)
+      mostrarFullScreen()
       await delay(1000)
       /*await Servicios.get({
         url: `${Constantes.baseUrl}/logout`,
@@ -153,6 +163,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       Cookies.remove('rol')
       setUser(null)
       setLoading(false)
+      ocultarFullScreen()
       await router.push({
         pathname: '/login',
       })
