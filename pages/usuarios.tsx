@@ -163,6 +163,39 @@ const Usuarios: NextPage = () => {
     ]
   )
 
+  const acciones: Array<ReactNode> = [
+    <Tooltip title={'Agregar'}>
+      <IconButton
+        aria-label="close"
+        onClick={function () {}}
+        color={'primary'}
+        sx={{}}
+      >
+        <Icono>add</Icono>
+      </IconButton>
+    </Tooltip>,
+    <Tooltip title={'Buscar'}>
+      <IconButton
+        aria-label="close"
+        onClick={function () {}}
+        color={'primary'}
+        sx={{}}
+      >
+        <Icono>search</Icono>
+      </IconButton>
+    </Tooltip>,
+    <Tooltip title={'Actualizar'}>
+      <IconButton
+        aria-label="close"
+        onClick={function () {}}
+        color={'primary'}
+        sx={{}}
+      >
+        <Icono>refresh</Icono>
+      </IconButton>
+    </Tooltip>,
+  ]
+
   return (
     <LayoutUser title={'Usuarios'}>
       <Grid
@@ -181,36 +214,9 @@ const Usuarios: NextPage = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Tooltip title={'Agregar'}>
-              <IconButton
-                aria-label="close"
-                onClick={function () {}}
-                color={'primary'}
-                sx={{}}
-              >
-                <Icono>add</Icono>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={'Buscar'}>
-              <IconButton
-                aria-label="close"
-                onClick={function () {}}
-                color={'primary'}
-                sx={{}}
-              >
-                <Icono>search</Icono>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={'Actualizar'}>
-              <IconButton
-                aria-label="close"
-                onClick={function () {}}
-                color={'primary'}
-                sx={{}}
-              >
-                <Icono>refresh</Icono>
-              </IconButton>
-            </Tooltip>
+            {acciones.map((accion, index) => (
+              <div key={`accion-id-${index}`}>{accion}</div>
+            ))}
           </Grid>
         </Typography>
       </Grid>
@@ -239,6 +245,7 @@ const Usuarios: NextPage = () => {
                   <TableCell key={`celda-id-${index}`}>
                     {contenidoFila.map((contenido, indexContenido) => (
                       <Grid
+                        key={`Grid-id-${index}-${indexContenido}`}
                         container
                         direction="row"
                         justifyContent="space-between"
