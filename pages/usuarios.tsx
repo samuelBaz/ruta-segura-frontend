@@ -1,46 +1,170 @@
 import type { NextPage } from 'next'
-import { Box, Grid, IconButton, Tooltip, Typography } from '@mui/material'
+import {
+  Box,
+  Grid,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { LayoutUser } from '../components/layouts'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Icono from '../components/ui/Icono'
-import React from 'react'
+import React, { ReactNode } from 'react'
+import { ColumnaType, UsuarioCRUDType } from '../types'
 
-const Home: NextPage = () => {
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
+const Usuarios: NextPage = () => {
+  const usuariosData: UsuarioCRUDType[] = [
     {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 90,
+      id: 'a3701a6b-af01-534d-a4f3-7811ba0ae9af',
+      usuario: 'ADMINISTRADOR-TECNICO',
+      ciudadaniaDigital: false,
+      correoElectronico: 'agepic-1765251@yopmail.com',
+      estado: 'ACTIVO',
+      usuarioRol: [
+        {
+          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioCreacion: '1',
+          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioActualizacion: null,
+          id: '77f2d5b9-e372-4fe8-bbea-b972d6fbedcb',
+          estado: 'ACTIVO',
+          rol: {
+            id: 'd5de12df-3cc3-5a58-a742-be24030482d8',
+            rol: 'ADMINISTRADOR',
+          },
+        },
+        {
+          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioCreacion: '1',
+          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioActualizacion: null,
+          id: '918f4825-9a36-4720-9c89-7ed1fba4a136',
+          estado: 'ACTIVO',
+          rol: {
+            id: 'a9d1a5cc-4590-5c67-a0b2-a4b37b862802',
+            rol: 'TECNICO',
+          },
+        },
+      ],
+      persona: {
+        nombres: 'MARIA',
+        primerApellido: 'PEREZ',
+        segundoApellido: 'PEREZ',
+        tipoDocumento: 'CI',
+        nroDocumento: '1765251',
+        fechaNacimiento: '2002-02-09',
+      },
     },
     {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+      id: 'd5de12df-3cc3-5a58-a742-be24030482d8',
+      usuario: 'ADMINISTRADOR',
+      ciudadaniaDigital: false,
+      correoElectronico: 'agepic-9270815@yopmail.com',
+      estado: 'ACTIVO',
+      usuarioRol: [
+        {
+          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioCreacion: '1',
+          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioActualizacion: null,
+          id: '99356d2a-8941-4735-82e5-5c1efe562764',
+          estado: 'ACTIVO',
+          rol: {
+            id: 'd5de12df-3cc3-5a58-a742-be24030482d8',
+            rol: 'ADMINISTRADOR',
+          },
+        },
+      ],
+      persona: {
+        nombres: 'JUAN',
+        primerApellido: 'PEREZ',
+        segundoApellido: 'PEREZ',
+        tipoDocumento: 'CI',
+        nroDocumento: '9270815',
+        fechaNacimiento: '2002-02-09',
+      },
+    },
+    {
+      id: 'a9d1a5cc-4590-5c67-a0b2-a4b37b862802',
+      usuario: 'TECNICO',
+      ciudadaniaDigital: false,
+      correoElectronico: 'agepic-6114767@yopmail.com',
+      estado: 'ACTIVO',
+      usuarioRol: [
+        {
+          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioCreacion: '1',
+          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
+          usuarioActualizacion: null,
+          id: '3d049518-d8b6-43b1-85dc-5c04fe2bba10',
+          estado: 'ACTIVO',
+          rol: {
+            id: 'a9d1a5cc-4590-5c67-a0b2-a4b37b862802',
+            rol: 'TECNICO',
+          },
+        },
+      ],
+      persona: {
+        nombres: 'PEDRO',
+        primerApellido: 'PEREZ',
+        segundoApellido: 'PEREZ',
+        tipoDocumento: 'CI',
+        nroDocumento: '6114767',
+        fechaNacimiento: '2002-02-09',
+      },
     },
   ]
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  const theme = useTheme()
+  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  const columnas: Array<ColumnaType> = [
+    { campo: 'usuario', nombre: 'Usuario', ordenar: true },
+    { campo: 'correo', nombre: 'Correo', ordenar: true },
+    { campo: 'estado', nombre: 'Estado', ordenar: true },
+    { campo: 'acciones', nombre: 'Acciones', ordenar: false },
   ]
+
+  const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
+    (usuarioData) => [
+      <>{usuarioData.usuario}</>,
+      <>{usuarioData.correoElectronico}</>,
+      <>{usuarioData.estado}</>,
+      <Grid>
+        <Tooltip title={'Editar'}>
+          <IconButton
+            aria-label="close"
+            onClick={() => {}}
+            color={'primary'}
+            sx={{}}
+          >
+            <Icono>edit</Icono>
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={'Restablecer contraseña'}>
+          <IconButton
+            aria-label="close"
+            onClick={() => {}}
+            color={'primary'}
+            sx={{}}
+          >
+            <Icono>vpn_key</Icono>
+          </IconButton>
+        </Tooltip>
+      </Grid>,
+    ]
+  )
 
   return (
-    <LayoutUser>
+    <LayoutUser title={'Usuarios'}>
       <Grid
         container
         direction="row"
@@ -91,13 +215,63 @@ const Home: NextPage = () => {
         </Typography>
       </Grid>
       <Box height={'30px'} />
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-      />
+      {/*Contenedor de la tabla*/}
+      <TableContainer>
+        <Table>
+          {sm || xs ? (
+            <TableHead />
+          ) : (
+            <TableHead>
+              <TableRow>
+                {columnas.map((columna, index) => (
+                  <TableCell key={`cabecera-id-${index}`}>
+                    {columna.nombre}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+          )}
+
+          {sm || xs ? (
+            <TableBody>
+              {contenidoTabla.map((contenidoFila, index) => (
+                <TableRow key={`row-id-${index}`}>
+                  <TableCell key={`celda-id-${index}`}>
+                    {contenidoFila.map((contenido, indexContenido) => (
+                      <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Typography>
+                          {columnas[indexContenido].nombre}
+                        </Typography>
+                        <Typography>{contenido}</Typography>
+                      </Grid>
+                    ))}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          ) : (
+            <TableBody>
+              {contenidoTabla.map((contenidoFila, indexContenidoTabla) => (
+                <TableRow key={`row-id-${indexContenidoTabla}`}>
+                  {contenidoFila.map((contenido, indexContenidoFila) => (
+                    <TableCell
+                      key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
+                    >
+                      {contenido}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
     </LayoutUser>
   )
 }
-export default Home
+export default Usuarios
