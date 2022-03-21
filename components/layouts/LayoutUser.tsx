@@ -1,6 +1,6 @@
 import { Box, Grid } from '@mui/material'
 import Head from 'next/head'
-import { FC, useContext } from 'react'
+import React, { FC, useContext } from 'react'
 
 import { NavbarUser } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
@@ -43,7 +43,20 @@ export const LayoutUser: FC<Props> = ({
         }}
       >
         <Toolbar />
-        {children}
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="initial"
+          justifyItems={'center'}
+          style={{ minHeight: '80vh' }}
+        >
+          <div style={{ height: '75vh', width: '90%' }}>
+            <Box height={'30px'} />
+            {children}
+          </div>
+        </Grid>
       </Box>
     </Grid>
   )

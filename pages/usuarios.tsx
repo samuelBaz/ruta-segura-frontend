@@ -1,12 +1,9 @@
 import type { NextPage } from 'next'
 import { Box, Grid, IconButton, Tooltip, Typography } from '@mui/material'
-import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import Icono from '../components/ui/Icono'
 import React from 'react'
-import CloseIcon from '@mui/icons-material/Close'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 
 const Home: NextPage = () => {
   const columns: GridColDef[] = [
@@ -46,76 +43,60 @@ const Home: NextPage = () => {
     <LayoutUser>
       <Grid
         container
-        spacing={0}
-        direction="column"
+        direction="row"
+        justifyContent="space-between"
         alignItems="center"
-        justifyContent="initial"
-        justifyItems={'center'}
-        style={{ minHeight: '80vh' }}
       >
-        <div style={{ height: '75vh', width: '90%' }}>
-          <>
-            <Box height={'30px'} />
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
-                Usuarios
-              </Typography>
-              <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Tooltip title={'Agregar'}>
-                    <IconButton
-                      aria-label="close"
-                      onClick={function () {}}
-                      color={'primary'}
-                      sx={{}}
-                    >
-                      <Icono>add</Icono>
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={'Buscar'}>
-                    <IconButton
-                      aria-label="close"
-                      onClick={function () {}}
-                      color={'primary'}
-                      sx={{}}
-                    >
-                      <Icono>search</Icono>
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={'Actualizar'}>
-                    <IconButton
-                      aria-label="close"
-                      onClick={function () {}}
-                      color={'primary'}
-                      sx={{}}
-                    >
-                      <Icono>refresh</Icono>
-                    </IconButton>
-                  </Tooltip>
-                </Grid>
-              </Typography>
-            </Grid>
-
-            <Box height={'30px'} />
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10]}
-            />
-          </>
-        </div>
+        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
+          Usuarios
+        </Typography>
+        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Tooltip title={'Agregar'}>
+              <IconButton
+                aria-label="close"
+                onClick={function () {}}
+                color={'primary'}
+                sx={{}}
+              >
+                <Icono>add</Icono>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={'Buscar'}>
+              <IconButton
+                aria-label="close"
+                onClick={function () {}}
+                color={'primary'}
+                sx={{}}
+              >
+                <Icono>search</Icono>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={'Actualizar'}>
+              <IconButton
+                aria-label="close"
+                onClick={function () {}}
+                color={'primary'}
+                sx={{}}
+              >
+                <Icono>refresh</Icono>
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Typography>
       </Grid>
+      <Box height={'30px'} />
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
+      />
     </LayoutUser>
   )
 }
