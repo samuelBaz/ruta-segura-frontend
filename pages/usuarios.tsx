@@ -1,21 +1,7 @@
 import type { NextPage } from 'next'
-import {
-  Box,
-  Grid,
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tooltip,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Grid, IconButton, Tooltip, Typography } from '@mui/material'
 import { LayoutUser } from '../components/layouts'
-import Icono from '../components/ui/Icono'
+import { Icono, CustomDataTable, IconoTooltip } from '../components/ui/'
 import React, { ReactNode } from 'react'
 import { ColumnaType, UsuarioCRUDType } from '../types'
 
@@ -122,10 +108,6 @@ const Usuarios: NextPage = () => {
     },
   ]
 
-  const theme = useTheme()
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
-  const xs = useMediaQuery(theme.breakpoints.only('xs'))
-
   const columnas: Array<ColumnaType> = [
     { campo: 'usuario', nombre: 'Usuario', ordenar: true },
     { campo: 'correo', nombre: 'Correo', ordenar: true },
@@ -135,149 +117,36 @@ const Usuarios: NextPage = () => {
 
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
     (usuarioData) => [
-      <>{usuarioData.usuario}</>,
-      <>{usuarioData.correoElectronico}</>,
-      <>{usuarioData.estado}</>,
+      <Typography variant={'body2'}>{usuarioData.usuario}</Typography>,
+      <Typography variant={'body2'}>
+        {usuarioData.correoElectronico}
+      </Typography>,
+      <Typography>{usuarioData.estado}</Typography>,
       <Grid>
-        <Tooltip title={'Editar'}>
-          <IconButton
-            aria-label="close"
-            onClick={() => {}}
-            color={'primary'}
-            sx={{}}
-          >
-            <Icono>edit</Icono>
-          </IconButton>
-        </Tooltip>
-        <Tooltip title={'Restablecer contraseña'}>
-          <IconButton
-            aria-label="close"
-            onClick={() => {}}
-            color={'primary'}
-            sx={{}}
-          >
-            <Icono>vpn_key</Icono>
-          </IconButton>
-        </Tooltip>
+        <IconoTooltip titulo={'Editar'} accion={() => {}} icono={'edit'} />
+        <IconoTooltip
+          titulo={'Restablecer contraseña'}
+          accion={() => {}}
+          icono={'vpn_key'}
+        />
       </Grid>,
     ]
   )
 
   const acciones: Array<ReactNode> = [
-    <Tooltip title={'Agregar'}>
-      <IconButton
-        aria-label="close"
-        onClick={function () {}}
-        color={'primary'}
-        sx={{}}
-      >
-        <Icono>add</Icono>
-      </IconButton>
-    </Tooltip>,
-    <Tooltip title={'Buscar'}>
-      <IconButton
-        aria-label="close"
-        onClick={function () {}}
-        color={'primary'}
-        sx={{}}
-      >
-        <Icono>search</Icono>
-      </IconButton>
-    </Tooltip>,
-    <Tooltip title={'Actualizar'}>
-      <IconButton
-        aria-label="close"
-        onClick={function () {}}
-        color={'primary'}
-        sx={{}}
-      >
-        <Icono>refresh</Icono>
-      </IconButton>
-    </Tooltip>,
+    <IconoTooltip titulo={'Agregar usuario'} accion={() => {}} icono={'add'} />,
+    <IconoTooltip titulo={'Buscar'} accion={() => {}} icono={'search'} />,
+    <IconoTooltip titulo={'Actualizar'} accion={() => {}} icono={'refresh'} />,
   ]
 
   return (
     <LayoutUser title={'Usuarios'}>
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
-          Usuarios
-        </Typography>
-        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            {acciones.map((accion, index) => (
-              <div key={`accion-id-${index}`}>{accion}</div>
-            ))}
-          </Grid>
-        </Typography>
-      </Grid>
-      <Box height={'30px'} />
-      {/*Contenedor de la tabla*/}
-      <TableContainer>
-        <Table>
-          {sm || xs ? (
-            <TableHead />
-          ) : (
-            <TableHead>
-              <TableRow>
-                {columnas.map((columna, index) => (
-                  <TableCell key={`cabecera-id-${index}`}>
-                    {columna.nombre}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-          )}
-
-          {sm || xs ? (
-            <TableBody>
-              {contenidoTabla.map((contenidoFila, index) => (
-                <TableRow key={`row-id-${index}`}>
-                  <TableCell key={`celda-id-${index}`}>
-                    {contenidoFila.map((contenido, indexContenido) => (
-                      <Grid
-                        key={`Grid-id-${index}-${indexContenido}`}
-                        container
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Typography>
-                          {columnas[indexContenido].nombre}
-                        </Typography>
-                        <Typography>{contenido}</Typography>
-                      </Grid>
-                    ))}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          ) : (
-            <TableBody>
-              {contenidoTabla.map((contenidoFila, indexContenidoTabla) => (
-                <TableRow key={`row-id-${indexContenidoTabla}`}>
-                  {contenidoFila.map((contenido, indexContenidoFila) => (
-                    <TableCell
-                      key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
-                    >
-                      {contenido}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          )}
-        </Table>
-      </TableContainer>
+      <CustomDataTable
+        titulo={'Usuarios'}
+        acciones={acciones}
+        columnas={columnas}
+        contenidoTabla={contenidoTabla}
+      />
     </LayoutUser>
   )
 }
