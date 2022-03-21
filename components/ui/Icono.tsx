@@ -15,12 +15,10 @@ interface Props {
     | 'warning'
 }
 
-const Icono: FC<Props> = ({ color = 'primary', children }) => {
+export const Icono: FC<Props> = ({ color = 'primary', children }) => {
   return (
     <Icon color={`${color}`} className={'material-icons-outlined'}>
       {children}
     </Icon>
   )
 }
-
-export default Icono

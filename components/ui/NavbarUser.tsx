@@ -16,18 +16,18 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
-import { UIContext } from '../../context/ui'
+import { UIContext, useFullScreenLoadingContext } from '../../context/ui'
 
 import React, { useContext, useEffect, useState } from 'react'
 import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { CustomDialog } from './CustomDialog'
-import Icono from './Icono'
+
 import { useAuth } from '../../context/auth'
 import { delay, imprimir, titleCase } from '../../utils'
 import { RoleType } from '../../types'
-import { Alertas } from './Alertas'
 import { useRouter } from 'next/router'
-import { useFullScreenLoadingContext } from '../../context/ui'
+import { Icono } from './Icono'
+import { IconoTooltip } from './IconoTooltip'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -134,15 +134,13 @@ export const NavbarUser = () => {
             Frontend base
           </Typography>
 
-          <IconButton
-            size="large"
-            onClick={() => {
+          <IconoTooltip
+            titulo={'Ayuda'}
+            accion={() => {
               abrirModalAyuda()
             }}
-            color="primary"
-          >
-            <HelpOutlineOutlinedIcon />
-          </IconButton>
+            icono={'help_outline'}
+          />
           <ThemeSwitcherButton />
           <IconButton
             size="large"
