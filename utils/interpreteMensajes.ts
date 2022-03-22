@@ -1,9 +1,19 @@
 export const InterpreteMensajes = (mensaje: any): string => {
   try {
+    let nuevoMensaje: string = ''
+
     if (mensaje instanceof Error) {
-      return mensaje.message
+      nuevoMensaje = mensaje.message
+    } else if (typeof mensaje === 'string') {
+      nuevoMensaje = mensaje
+    } else {
+      nuevoMensaje =
+        mensaje.message ||
+        mensaje.mensaje ||
+        mensaje.error ||
+        'Solicitud erronea'
     }
-    return mensaje.message ?? mensaje.mensaje ?? mensaje.error
+    return nuevoMensaje
   } catch (e) {
     return `${mensaje}`
   }

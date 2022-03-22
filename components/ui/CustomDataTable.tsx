@@ -83,7 +83,9 @@ export const CustomDataTable = ({
                   <TableRow>
                     {columnas.map((columna, index) => (
                       <TableCell key={`cabecera-id-${index}`}>
-                        {columna.nombre}
+                        <Typography variant={'caption'}>
+                          {columna.nombre}
+                        </Typography>
                       </TableCell>
                     ))}
                   </TableRow>
@@ -105,7 +107,7 @@ export const CustomDataTable = ({
                             justifyContent="space-between"
                             alignItems="center"
                           >
-                            <Typography>
+                            <Typography variant={'subtitle2'}>
                               {columnas[indexContenido].nombre}
                             </Typography>
                             {contenido}

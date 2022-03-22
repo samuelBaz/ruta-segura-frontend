@@ -27,7 +27,7 @@ const Usuarios: NextPage = () => {
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
     (usuarioData) => [
       <Typography variant={'body2'}>
-        {usuarioData.persona.nroDocumento}
+        {`${usuarioData.persona.tipoDocumento} ${usuarioData.persona.nroDocumento}`}
       </Typography>,
       <Typography variant={'body2'}>
         {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
@@ -78,6 +78,7 @@ const Usuarios: NextPage = () => {
       setUsuariosData(respuesta.datos?.filas)
       setErrorUsuariosData(null)
     } catch (e) {
+      imprimir(`Error al obtener usuarios: ${e}`)
       setErrorUsuariosData(e)
     } finally {
       setLoading(false)
