@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Grid, Typography } from '@mui/material'
+import { Button, Chip, Grid, Typography } from '@mui/material'
 import { LayoutUser } from '../components/layouts'
 import { Alertas, CustomDataTable, IconoTooltip } from '../components/ui/'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -7,11 +7,22 @@ import { ColumnaType, UsuarioCRUDType } from '../types'
 import { Constantes } from '../config'
 import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { useAuth } from '../context/auth'
+import { CustomDialog } from '../components/ui/CustomDialog'
+
+export interface ModalUsuarioType {
+  usuario?: UsuarioCRUDType
+}
 
 const Usuarios: NextPage = () => {
   const [usuariosData, setUsuariosData] = useState<UsuarioCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [errorUsuariosData, setErrorUsuariosData] = useState<any>()
+
+  const [modalUsuario, setModalUsuario] = useState(false)
+
+  const [usuarioEdicion, setUsuarioEdicion] = useState<
+    UsuarioCRUDType | undefined
+  >()
 
   const { sesionPeticion } = useAuth()
 
@@ -19,7 +30,7 @@ const Usuarios: NextPage = () => {
     { campo: 'nro_documento', nombre: 'Nro. Documento', ordenar: true },
     { campo: 'persona', nombre: 'Persona', ordenar: true },
     { campo: 'usuario', nombre: 'Usuario', ordenar: true },
-    { campo: 'correo', nombre: 'Correo', ordenar: true },
+    { campo: 'rol', nombre: 'Roles', ordenar: true },
     { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones', ordenar: false },
   ]
@@ -33,15 +44,22 @@ const Usuarios: NextPage = () => {
         {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
       </Typography>,
       <Typography variant={'body2'}>{usuarioData.usuario}</Typography>,
-      <Typography variant={'body2'}>
-        {usuarioData.correoElectronico}
+      <Grid>
+        {usuarioData.usuarioRol.map((itemUsuarioRol) => (
+          <Chip label={itemUsuarioRol.rol.rol} />
+        ))}
+      </Grid>,
+      <Typography>
+        <Button variant="outlined" sx={{ borderRadius: 12 }}>
+          {usuarioData.estado}
+        </Button>
       </Typography>,
-      <Typography>{usuarioData.estado}</Typography>,
       <Grid>
         <IconoTooltip
           titulo={'Editar'}
           accion={() => {
             imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
+            editarUsuarioModal(usuarioData)
           }}
           icono={'edit'}
         />
@@ -57,7 +75,13 @@ const Usuarios: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <IconoTooltip titulo={'Agregar usuario'} accion={() => {}} icono={'add'} />,
+    <IconoTooltip
+      titulo={'Agregar usuario'}
+      accion={() => {
+        agregarUsuarioModal()
+      }}
+      icono={'add'}
+    />,
     <IconoTooltip titulo={'Buscar'} accion={() => {}} icono={'search'} />,
     <IconoTooltip
       titulo={'Actualizar'}
@@ -86,21 +110,51 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
+    return (
+      <Typography>
+        {usuario ? `Usuario: ${JSON.stringify(usuario)}` : 'Nuevo usuario'}
+      </Typography>
+    )
+  }
+
+  const agregarUsuarioModal = () => {
+    setModalUsuario(true)
+  }
+  const editarUsuarioModal = (usuario: UsuarioCRUDType) => {
+    setUsuarioEdicion(usuario)
+    setModalUsuario(true)
+  }
+
+  const cerrarModalUsuario = () => {
+    setUsuarioEdicion(undefined)
+    setModalUsuario(false)
+  }
+
   useEffect(() => {
     obtenerUsuarios().finally(() => {})
   }, [])
 
   return (
-    <LayoutUser title={'Usuarios'}>
-      <CustomDataTable
-        titulo={'Usuarios'}
-        error={!!errorUsuariosData}
-        cargando={loading}
-        acciones={acciones}
-        columnas={columnas}
-        contenidoTabla={contenidoTabla}
-      />
-    </LayoutUser>
+    <>
+      <CustomDialog
+        isOpen={modalUsuario}
+        handleClose={cerrarModalUsuario}
+        title={'Información'}
+      >
+        <VistaModalUsuario usuario={usuarioEdicion} />
+      </CustomDialog>
+      <LayoutUser title={'Usuarios - Fronted Base'}>
+        <CustomDataTable
+          titulo={'Usuarios'}
+          error={!!errorUsuariosData}
+          cargando={loading}
+          acciones={acciones}
+          columnas={columnas}
+          contenidoTabla={contenidoTabla}
+        />
+      </LayoutUser>
+    </>
   )
 }
 export default Usuarios
