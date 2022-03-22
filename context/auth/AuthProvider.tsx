@@ -5,14 +5,27 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import Cookies from 'js-cookie'
-import { delay, encodeBase64, imprimir, InterpreteMensajes } from '../../utils'
-import { Servicios } from '../../services'
+import {
+  delay,
+  eliminarCookie,
+  encodeBase64,
+  guardarCookie,
+  imprimir,
+  InterpreteMensajes,
+  leerCookie,
+} from '../../utils'
+import {
+  estadosSinPermiso,
+  peticionFormatoMetodo,
+  Servicios,
+} from '../../services'
 import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'
 import { RoleType, UsuarioType } from '../../types'
 import { useFullScreenLoadingContext } from '../ui'
+import { AxiosError } from 'axios'
+import { decodeToken } from 'react-jwt'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -23,6 +36,12 @@ interface ContextProps {
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
   progresoLogin: boolean
   cerrarSesion: () => void
+  sesionPeticion: ({
+    url,
+    tipo,
+    headers,
+    body,
+  }: peticionFormatoMetodo) => Promise<any>
 }
 
 const AuthContext = createContext<ContextProps>({} as ContextProps)
@@ -50,17 +69,20 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const router = useRouter()
 
   async function loadUserFromCookies() {
-    const token = Cookies.get('token')
+    const token = leerCookie('token')
 
     if (token) {
-      imprimir('Tenemos token, Obtendremos perfil')
+      const myDecodedToken: any = decodeToken(token)
+
+      if (myDecodedToken) {
+        imprimir(`Token 🔐 : expira en ${new Date(myDecodedToken.exp * 1000)}`)
+      }
 
       try {
         mostrarFullScreen()
         await delay(1000)
         const respuesta = await Servicios.get({
           url: `${Constantes.baseUrl}usuarios/cuenta/perfil`,
-          body: {},
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -70,10 +92,10 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
           if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
             imprimir(
-              `rol encontrado en loadUserFromCookies 🚨: ${respuesta.datos.roles[0].idRol}`
+              `rol encontrado en loadUserFromCookies 👨‍💻: ${respuesta.datos.roles[0].idRol}`
             )
             AlmacenarRol({
-              idRol: Cookies.get('rol') ?? respuesta.datos.roles[0].idRol,
+              idRol: leerCookie('rol') ?? respuesta.datos.roles[0].idRol,
             })
           }
         }
@@ -82,7 +104,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
           pathname: '/home',
         })
       } catch (error) {
-        Cookies.remove('token')
+        eliminarCookie('token')
         await router.push({
           pathname: '/login',
         })
@@ -118,7 +140,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       })
 
       if (respuesta.datos?.access_token) {
-        Cookies.set('token', respuesta.datos?.access_token, { expires: 60 })
+        guardarCookie('token', respuesta.datos?.access_token, { expires: 60 })
         imprimir(`Token ✅: ${respuesta.datos?.access_token}`)
 
         setUser(respuesta.datos)
@@ -126,7 +148,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
         if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
           imprimir(
-            `rol encontrado en login 🚨: ${respuesta.datos.roles[0].idRol}`
+            `rol encontrado en login 👨‍💻: ${respuesta.datos.roles[0].idRol}`
           )
           AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
         }
@@ -146,6 +168,43 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
+  const sesionPeticion = async ({
+    url,
+    tipo = 'get',
+    headers = {
+      accept: 'application/json',
+      Authorization: `Bearer ${leerCookie('token') ?? ''}`,
+    },
+    body,
+  }: peticionFormatoMetodo) => {
+    try {
+      imprimir(
+        `enviando 🔐🌍 : ${
+          body ? JSON.stringify(body) : '{}'
+        } -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
+      )
+      const response = await Servicios.peticionHTTP({
+        url,
+        tipo,
+        headers,
+        body,
+      })
+      imprimir(
+        `respuesta 🔐📡 : ${
+          body ? JSON.stringify(body) : '{}'
+        } -> ${tipo} - ${url} - con ${JSON.stringify(
+          headers
+        )} -->> ${JSON.stringify(response)}`
+      )
+      return response.data
+    } catch (e: AxiosError | any) {
+      if (estadosSinPermiso.includes(e.response?.status)) {
+        await logout()
+      }
+      throw e.response?.data
+    }
+  }
+
   const logout = async () => {
     try {
       setLoading(true)
@@ -159,8 +218,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
       Alertas.error(`${InterpreteMensajes(e)}`)
     } finally {
-      Cookies.remove('token')
-      Cookies.remove('rol')
+      eliminarCookie('token')
+      eliminarCookie('rol')
       setUser(null)
       setLoading(false)
       ocultarFullScreen()
@@ -173,7 +232,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const AlmacenarRol = ({ idRol }: idRolType) => {
     imprimir(`Almacenando rol 👮‍♂️: ${idRol}`)
     setIdRol(idRol)
-    Cookies.set('rol', idRol)
+    guardarCookie('rol', idRol)
   }
 
   return (
@@ -187,6 +246,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         ingresar: login,
         progresoLogin: loading,
         cerrarSesion: logout,
+        sesionPeticion: sesionPeticion,
       }}
     >
       {children}

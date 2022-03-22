@@ -1,9 +1,13 @@
 import type { NextPage } from 'next'
-import { Grid, IconButton, Tooltip, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { LayoutUser } from '../components/layouts'
-import { Icono, CustomDataTable, IconoTooltip } from '../components/ui/'
+import { CustomDataTable, IconoTooltip } from '../components/ui/'
 import React, { ReactNode } from 'react'
 import { ColumnaType, UsuarioCRUDType } from '../types'
+import useSWR from 'swr'
+import { Constantes } from '../config'
+import { imprimir, InterpreteMensajes } from '../utils'
+import { useAuth } from '../context/auth'
 
 const Usuarios: NextPage = () => {
   const usuariosData: UsuarioCRUDType[] = [
@@ -123,10 +127,18 @@ const Usuarios: NextPage = () => {
       </Typography>,
       <Typography>{usuarioData.estado}</Typography>,
       <Grid>
-        <IconoTooltip titulo={'Editar'} accion={() => {}} icono={'edit'} />
+        <IconoTooltip
+          titulo={'Editar'}
+          accion={() => {
+            imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
+          }}
+          icono={'edit'}
+        />
         <IconoTooltip
           titulo={'Restablecer contraseña'}
-          accion={() => {}}
+          accion={() => {
+            imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
+          }}
           icono={'vpn_key'}
         />
       </Grid>,
@@ -139,14 +151,65 @@ const Usuarios: NextPage = () => {
     <IconoTooltip titulo={'Actualizar'} accion={() => {}} icono={'refresh'} />,
   ]
 
+  const { sesionPeticion } = useAuth()
+
+  const address = `${Constantes.baseUrl}/usuarios`
+  const fetcher = async (url: string) =>
+    await sesionPeticion({ url: url }).then((res) => res.datos)
+  const { data, error } = useSWR(address, fetcher)
+
   return (
     <LayoutUser title={'Usuarios'}>
-      <CustomDataTable
-        titulo={'Usuarios'}
-        acciones={acciones}
-        columnas={columnas}
-        contenidoTabla={contenidoTabla}
-      />
+      {error ? (
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          justifyItems={'center'}
+          style={{ minHeight: '80vh' }}
+        >
+          <Grid item xs={3} xl={4}>
+            <Typography
+              variant={'body1'}
+              component="h1"
+              noWrap={true}
+              alignItems={'center'}
+            >
+              {`${InterpreteMensajes(error)}`}
+            </Typography>
+          </Grid>
+        </Grid>
+      ) : !data ? (
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          justifyItems={'center'}
+          style={{ minHeight: '80vh' }}
+        >
+          <Grid item xs={3} xl={4}>
+            <Typography
+              variant={'body1'}
+              component="h1"
+              noWrap={true}
+              alignItems={'center'}
+            >
+              Cargando..
+            </Typography>
+          </Grid>
+        </Grid>
+      ) : (
+        <CustomDataTable
+          titulo={'Usuarios'}
+          acciones={acciones}
+          columnas={columnas}
+          contenidoTabla={contenidoTabla}
+        />
+      )}
     </LayoutUser>
   )
 }

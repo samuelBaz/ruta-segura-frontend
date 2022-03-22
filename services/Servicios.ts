@@ -1,43 +1,53 @@
 import axios, { AxiosError, AxiosRequestHeaders, Method } from 'axios'
 import { imprimir } from '../utils'
 
-interface peticionFormatoMetodo {
+export interface peticionFormatoMetodo {
   url: string
-  tipo: Method
+  tipo?: Method
+  headers?: AxiosRequestHeaders
+  body?: object
+}
+
+export interface peticionFormato {
+  url: string
   headers: AxiosRequestHeaders
   body?: object
 }
 
-interface peticionFormato {
-  url: string
-  headers: AxiosRequestHeaders
-  body?: object
-}
-
-const estadosCorrectos: number[] = [200, 201, 202]
+export const estadosCorrectos: number[] = [200, 201, 202]
+export const estadosSinPermiso: number[] = [401, 403]
 
 class ServiciosClass {
+  async peticionHTTP({
+    url,
+    tipo = 'get',
+    headers,
+    body,
+  }: peticionFormatoMetodo) {
+    return axios({
+      method: tipo,
+      url: url,
+      headers: headers,
+      timeout: 5000,
+      data: body,
+      validateStatus(status) {
+        return estadosCorrectos.some((estado: number) => status === estado)
+      },
+    })
+  }
+
   async peticion({ url, tipo = 'get', headers, body }: peticionFormatoMetodo) {
     try {
       imprimir(
-        `enviando 🌍 : ${JSON.stringify(
-          body
-        )} -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
+        `enviando 🌍 : ${
+          body ? JSON.stringify(body) : '{}'
+        } -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
       )
-      const response = await axios({
-        method: tipo,
-        url: url,
-        headers: headers,
-        timeout: 5000,
-        data: body,
-        validateStatus(status) {
-          return estadosCorrectos.some((estado: number) => status === estado)
-        },
-      })
+      const response = await this.peticionHTTP({ url, tipo, headers, body })
       imprimir(
-        `respuesta 📡 : ${JSON.stringify(
-          body
-        )} -> ${tipo} - ${url} - con ${JSON.stringify(
+        `respuesta 📡 : ${
+          body ? JSON.stringify(body) : '{}'
+        } -> ${tipo} - ${url} - con ${JSON.stringify(
           headers
         )} -->> ${JSON.stringify(response)}`
       )
