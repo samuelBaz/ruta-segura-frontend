@@ -2,115 +2,18 @@ import type { NextPage } from 'next'
 import { Grid, Typography } from '@mui/material'
 import { LayoutUser } from '../components/layouts'
 import { CustomDataTable, IconoTooltip } from '../components/ui/'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType, UsuarioCRUDType } from '../types'
-import useSWR from 'swr'
 import { Constantes } from '../config'
-import { imprimir, InterpreteMensajes } from '../utils'
+import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { useAuth } from '../context/auth'
 
 const Usuarios: NextPage = () => {
-  const usuariosData: UsuarioCRUDType[] = [
-    {
-      id: 'a3701a6b-af01-534d-a4f3-7811ba0ae9af',
-      usuario: 'ADMINISTRADOR-TECNICO',
-      ciudadaniaDigital: false,
-      correoElectronico: 'agepic-1765251@yopmail.com',
-      estado: 'ACTIVO',
-      usuarioRol: [
-        {
-          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioCreacion: '1',
-          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioActualizacion: null,
-          id: '77f2d5b9-e372-4fe8-bbea-b972d6fbedcb',
-          estado: 'ACTIVO',
-          rol: {
-            id: 'd5de12df-3cc3-5a58-a742-be24030482d8',
-            rol: 'ADMINISTRADOR',
-          },
-        },
-        {
-          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioCreacion: '1',
-          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioActualizacion: null,
-          id: '918f4825-9a36-4720-9c89-7ed1fba4a136',
-          estado: 'ACTIVO',
-          rol: {
-            id: 'a9d1a5cc-4590-5c67-a0b2-a4b37b862802',
-            rol: 'TECNICO',
-          },
-        },
-      ],
-      persona: {
-        nombres: 'MARIA',
-        primerApellido: 'PEREZ',
-        segundoApellido: 'PEREZ',
-        tipoDocumento: 'CI',
-        nroDocumento: '1765251',
-        fechaNacimiento: '2002-02-09',
-      },
-    },
-    {
-      id: 'd5de12df-3cc3-5a58-a742-be24030482d8',
-      usuario: 'ADMINISTRADOR',
-      ciudadaniaDigital: false,
-      correoElectronico: 'agepic-9270815@yopmail.com',
-      estado: 'ACTIVO',
-      usuarioRol: [
-        {
-          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioCreacion: '1',
-          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioActualizacion: null,
-          id: '99356d2a-8941-4735-82e5-5c1efe562764',
-          estado: 'ACTIVO',
-          rol: {
-            id: 'd5de12df-3cc3-5a58-a742-be24030482d8',
-            rol: 'ADMINISTRADOR',
-          },
-        },
-      ],
-      persona: {
-        nombres: 'JUAN',
-        primerApellido: 'PEREZ',
-        segundoApellido: 'PEREZ',
-        tipoDocumento: 'CI',
-        nroDocumento: '9270815',
-        fechaNacimiento: '2002-02-09',
-      },
-    },
-    {
-      id: 'a9d1a5cc-4590-5c67-a0b2-a4b37b862802',
-      usuario: 'TECNICO',
-      ciudadaniaDigital: false,
-      correoElectronico: 'agepic-6114767@yopmail.com',
-      estado: 'ACTIVO',
-      usuarioRol: [
-        {
-          fechaCreacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioCreacion: '1',
-          fechaActualizacion: new Date('2022-03-20T11:02:21.950Z'),
-          usuarioActualizacion: null,
-          id: '3d049518-d8b6-43b1-85dc-5c04fe2bba10',
-          estado: 'ACTIVO',
-          rol: {
-            id: 'a9d1a5cc-4590-5c67-a0b2-a4b37b862802',
-            rol: 'TECNICO',
-          },
-        },
-      ],
-      persona: {
-        nombres: 'PEDRO',
-        primerApellido: 'PEREZ',
-        segundoApellido: 'PEREZ',
-        tipoDocumento: 'CI',
-        nroDocumento: '6114767',
-        fechaNacimiento: '2002-02-09',
-      },
-    },
-  ]
+  const [usuariosData, setUsuariosData] = useState<UsuarioCRUDType[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [errorUsuariosData, setErrorUsuariosData] = useState<any>()
+
+  const { sesionPeticion } = useAuth()
 
   const columnas: Array<ColumnaType> = [
     { campo: 'usuario', nombre: 'Usuario', ordenar: true },
@@ -148,19 +51,38 @@ const Usuarios: NextPage = () => {
   const acciones: Array<ReactNode> = [
     <IconoTooltip titulo={'Agregar usuario'} accion={() => {}} icono={'add'} />,
     <IconoTooltip titulo={'Buscar'} accion={() => {}} icono={'search'} />,
-    <IconoTooltip titulo={'Actualizar'} accion={() => {}} icono={'refresh'} />,
+    <IconoTooltip
+      titulo={'Actualizar'}
+      accion={async () => {
+        await obtenerUsuarios()
+      }}
+      icono={'refresh'}
+    />,
   ]
 
-  const { sesionPeticion } = useAuth()
+  const obtenerUsuarios = async () => {
+    try {
+      setLoading(true)
+      await delay(1000)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/usuarios`,
+      })
+      setUsuariosData(respuesta.datos?.filas)
+      setErrorUsuariosData(null)
+    } catch (e) {
+      setErrorUsuariosData(e)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  const address = `${Constantes.baseUrl}/usuarios`
-  const fetcher = async (url: string) =>
-    await sesionPeticion({ url: url }).then((res) => res.datos)
-  const { data, error } = useSWR(address, fetcher)
+  useEffect(() => {
+    obtenerUsuarios().finally(() => {})
+  }, [])
 
   return (
     <LayoutUser title={'Usuarios'}>
-      {error ? (
+      {errorUsuariosData ? (
         <Grid
           container
           spacing={0}
@@ -177,33 +99,13 @@ const Usuarios: NextPage = () => {
               noWrap={true}
               alignItems={'center'}
             >
-              {`${InterpreteMensajes(error)}`}
-            </Typography>
-          </Grid>
-        </Grid>
-      ) : !data ? (
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          justifyItems={'center'}
-          style={{ minHeight: '80vh' }}
-        >
-          <Grid item xs={3} xl={4}>
-            <Typography
-              variant={'body1'}
-              component="h1"
-              noWrap={true}
-              alignItems={'center'}
-            >
-              Cargando..
+              {`${InterpreteMensajes(errorUsuariosData)}`}
             </Typography>
           </Grid>
         </Grid>
       ) : (
         <CustomDataTable
+          cargando={loading}
           titulo={'Usuarios'}
           acciones={acciones}
           columnas={columnas}

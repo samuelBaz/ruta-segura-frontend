@@ -4,14 +4,13 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '../src/createEmotionCache'
 import DebugBanner from '../components/DebugBanner'
 import '@fontsource/poppins'
-import { UIProvider } from '../context/ui'
+import { FullScreenLoadingProvider, UIProvider } from '../context/ui'
 import { imprimir } from '../utils'
 import { ThemeProvider } from '../context/ui/ThemeContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthProvider } from '../context/auth'
 import { Sidebar } from '../components/ui'
-import { FullScreenLoadingProvider } from '../context/ui' // importar estilos para mostrar alertas en toda la aplicación
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
