@@ -71,7 +71,6 @@ const Login: NextPage = () => {
   }
 
   useEffect(() => {
-    imprimir('Primera petición 😨')
     obtenerEstado().then(() => {})
   }, [])
 
