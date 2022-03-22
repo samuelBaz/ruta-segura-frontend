@@ -8,8 +8,20 @@ import {
 } from '@mui/material'
 import React from 'react'
 
-export const CustomSkeleton = () => {
-  return <Skeleton />
+export interface ListSkeletonType {
+  filas: number
+}
+
+export const ListSkeleton = ({ filas }: ListSkeletonType) => {
+  return (
+    <>
+      {Array(filas)
+        .fill(0)
+        .map((e, i) => (
+          <Skeleton key={`$skeleton-${i}`} height={'120px'} />
+        ))}
+    </>
+  )
 }
 
 export interface TableSkeletonType {
@@ -34,7 +46,7 @@ export const TableSkeleton = ({ filas, columnas }: TableSkeletonType) => {
                         <Skeleton
                           key={`$skeleton-${fila}-${columna}`}
                           variant={'text'}
-                          height={'20px'}
+                          height={'30px'}
                         />
                       </TableCell>
                     ))}

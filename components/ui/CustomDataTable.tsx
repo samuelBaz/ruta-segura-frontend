@@ -14,7 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { TableSkeleton } from './CustomSkeleton'
+import { ListSkeleton, TableSkeleton } from './CustomSkeleton'
 
 export interface CustomDataTableType {
   titulo: string
@@ -66,7 +66,11 @@ export const CustomDataTable = ({
 
       {cargando ? (
         <>
-          <TableSkeleton filas={5} columnas={5} />
+          {sm || xs ? (
+            <ListSkeleton filas={5} />
+          ) : (
+            <TableSkeleton filas={5} columnas={5} />
+          )}
         </>
       ) : (
         <Fade in={!cargando} timeout={1000}>
@@ -96,6 +100,8 @@ export const CustomDataTable = ({
                             key={`Grid-id-${index}-${indexContenido}`}
                             container
                             direction="row"
+                            paddingTop={'5px'}
+                            paddingBottom={'5px'}
                             justifyContent="space-between"
                             alignItems="center"
                           >
