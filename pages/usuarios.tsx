@@ -16,6 +16,8 @@ const Usuarios: NextPage = () => {
   const { sesionPeticion } = useAuth()
 
   const columnas: Array<ColumnaType> = [
+    { campo: 'nro_documento', nombre: 'Nro. Documento', ordenar: true },
+    { campo: 'persona', nombre: 'Persona', ordenar: true },
     { campo: 'usuario', nombre: 'Usuario', ordenar: true },
     { campo: 'correo', nombre: 'Correo', ordenar: true },
     { campo: 'estado', nombre: 'Estado', ordenar: true },
@@ -24,6 +26,12 @@ const Usuarios: NextPage = () => {
 
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
     (usuarioData) => [
+      <Typography variant={'body2'}>
+        {usuarioData.persona.nroDocumento}
+      </Typography>,
+      <Typography variant={'body2'}>
+        {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
+      </Typography>,
       <Typography variant={'body2'}>{usuarioData.usuario}</Typography>,
       <Typography variant={'body2'}>
         {usuarioData.correoElectronico}
@@ -105,8 +113,8 @@ const Usuarios: NextPage = () => {
         </Grid>
       ) : (
         <CustomDataTable
-          cargando={loading}
           titulo={'Usuarios'}
+          cargando={loading}
           acciones={acciones}
           columnas={columnas}
           contenidoTabla={contenidoTabla}
