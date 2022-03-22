@@ -198,7 +198,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       )
       return response.data
     } catch (e: AxiosError | any) {
-      if (estadosSinPermiso.includes(e.response?.status)) {
+      if (Servicios.isNetworkError(e))
+        throw new Error('Error en la conexión 🌎')
+      else if (estadosSinPermiso.includes(e.response?.status)) {
         await logout()
       }
       throw e.response?.data || 'Ocurrio un error desconocido'

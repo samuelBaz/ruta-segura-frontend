@@ -36,6 +36,10 @@ class ServiciosClass {
     })
   }
 
+  isNetworkError(err: AxiosError | any) {
+    return !!err.isAxiosError && !err.response
+  }
+
   async peticion({ url, tipo = 'get', headers, body }: peticionFormatoMetodo) {
     try {
       imprimir(
@@ -53,7 +57,8 @@ class ServiciosClass {
       )
       return response.data
     } catch (e: AxiosError | any) {
-      if (e.code === 'ECONNABORTED') {
+      if (this.isNetworkError(e)) throw new Error('Error en la conexión 🌎')
+      else if (e.code === 'ECONNABORTED') {
         throw new Error('La petición está tardando demasiado')
       } else {
         throw e.response?.data || 'Ocurrio un error inesperado'
