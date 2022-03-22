@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { Grid, Typography } from '@mui/material'
 import { LayoutUser } from '../components/layouts'
-import { CustomDataTable, IconoTooltip } from '../components/ui/'
+import { Alertas, CustomDataTable, IconoTooltip } from '../components/ui/'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType, UsuarioCRUDType } from '../types'
 import { Constantes } from '../config'
@@ -80,6 +80,7 @@ const Usuarios: NextPage = () => {
     } catch (e) {
       imprimir(`Error al obtener usuarios: ${e}`)
       setErrorUsuariosData(e)
+      Alertas.error(InterpreteMensajes(e))
     } finally {
       setLoading(false)
     }
@@ -91,36 +92,14 @@ const Usuarios: NextPage = () => {
 
   return (
     <LayoutUser title={'Usuarios'}>
-      {errorUsuariosData ? (
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          justifyItems={'center'}
-          style={{ minHeight: '80vh' }}
-        >
-          <Grid item xs={3} xl={4}>
-            <Typography
-              variant={'body1'}
-              component="h1"
-              noWrap={true}
-              alignItems={'center'}
-            >
-              {`${InterpreteMensajes(errorUsuariosData)}`}
-            </Typography>
-          </Grid>
-        </Grid>
-      ) : (
-        <CustomDataTable
-          titulo={'Usuarios'}
-          cargando={loading}
-          acciones={acciones}
-          columnas={columnas}
-          contenidoTabla={contenidoTabla}
-        />
-      )}
+      <CustomDataTable
+        titulo={'Usuarios'}
+        error={!!errorUsuariosData}
+        cargando={loading}
+        acciones={acciones}
+        columnas={columnas}
+        contenidoTabla={contenidoTabla}
+      />
     </LayoutUser>
   )
 }

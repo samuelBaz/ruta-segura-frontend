@@ -201,7 +201,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       if (estadosSinPermiso.includes(e.response?.status)) {
         await logout()
       }
-      throw e.response?.data || 'Ocurrio un error durante la sesión'
+      throw e.response?.data || 'Ocurrio un error desconocido'
     }
   }
 

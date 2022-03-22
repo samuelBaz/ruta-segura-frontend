@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react'
 import { ColumnaType } from '../../types'
 import {
   Box,
+  Button,
   Fade,
   Grid,
   Table,
@@ -15,9 +16,11 @@ import {
   useTheme,
 } from '@mui/material'
 import { ListSkeleton, TableSkeleton } from './CustomSkeleton'
+import { imprimir } from '../../utils'
 
 export interface CustomDataTableType {
   titulo: string
+  error: boolean
   cargando?: boolean
   acciones: Array<ReactNode>
   columnas: Array<ColumnaType>
@@ -26,6 +29,7 @@ export interface CustomDataTableType {
 
 export const CustomDataTable = ({
   titulo,
+  error = false,
   cargando = false,
   acciones,
   columnas,
@@ -46,7 +50,7 @@ export const CustomDataTable = ({
         <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
           {`${titulo}`}
         </Typography>
-        <Fade in={!cargando} timeout={500}>
+        <Fade in={!cargando} timeout={0}>
           <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
             <Grid
               container
@@ -74,69 +78,120 @@ export const CustomDataTable = ({
         </>
       ) : (
         <Fade in={!cargando} timeout={1000}>
-          <TableContainer>
-            <Table>
-              {sm || xs ? (
-                <TableHead />
-              ) : (
-                <TableHead>
-                  <TableRow>
-                    {columnas.map((columna, index) => (
-                      <TableCell key={`cabecera-id-${index}`}>
-                        <Typography variant={'caption'}>
-                          {columna.nombre}
-                        </Typography>
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-              )}
-
-              {sm || xs ? (
-                <TableBody>
-                  {contenidoTabla.map((contenidoFila, index) => (
-                    <TableRow key={`row-id-${index}`} hover={true}>
-                      <TableCell key={`celda-id-${index}`}>
-                        {contenidoFila.map((contenido, indexContenido) => (
-                          <Grid
-                            key={`Grid-id-${index}-${indexContenido}`}
-                            container
-                            direction="row"
-                            paddingTop={'5px'}
-                            paddingBottom={'5px'}
-                            justifyContent="space-between"
-                            alignItems="center"
-                          >
-                            <Typography variant={'subtitle2'}>
-                              {columnas[indexContenido].nombre}
-                            </Typography>
-                            {contenido}
-                          </Grid>
-                        ))}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              ) : (
-                <TableBody>
-                  {contenidoTabla.map((contenidoFila, indexContenidoTabla) => (
-                    <TableRow
-                      key={`row-id-${indexContenidoTabla}`}
-                      hover={true}
+          {error ? (
+            <TableContainer>
+              <Table>
+                <TableRow>
+                  <TableCell />
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Grid
+                      container
+                      spacing={0}
+                      direction="column"
+                      alignItems="center"
+                      justifyContent="center"
+                      justifyItems={'center'}
                     >
-                      {contenidoFila.map((contenido, indexContenidoFila) => (
-                        <TableCell
-                          key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
+                      <Grid item xs={3} xl={4}>
+                        <Typography
+                          variant={'body1'}
+                          component="h1"
+                          noWrap={true}
+                          alignItems={'center'}
                         >
-                          {contenido}
+                          {`Error obteniendo información`}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </TableCell>
+                </TableRow>
+              </Table>
+            </TableContainer>
+          ) : (
+            <TableContainer>
+              <Table>
+                {sm || xs ? (
+                  <TableHead />
+                ) : (
+                  <TableHead>
+                    <TableRow>
+                      {columnas.map((columna, index) => (
+                        <TableCell key={`cabecera-id-${index}`}>
+                          {columna.ordenar ? (
+                            <Button
+                              variant="text"
+                              color={'inherit'}
+                              style={{ textTransform: 'none' }}
+                              onClick={() => {
+                                imprimir(`cambio orden ${index}`)
+                              }}
+                            >
+                              <Typography variant={'caption'}>
+                                {columna.nombre}
+                              </Typography>
+                            </Button>
+                          ) : (
+                            <Typography variant={'caption'}>
+                              {columna.nombre}
+                            </Typography>
+                          )}
                         </TableCell>
                       ))}
                     </TableRow>
-                  ))}
-                </TableBody>
-              )}
-            </Table>
-          </TableContainer>
+                  </TableHead>
+                )}
+                {sm || xs ? (
+                  <TableBody>
+                    {contenidoTabla.map((contenidoFila, index) => (
+                      <TableRow key={`row-id-${index}`} hover={true}>
+                        <TableCell key={`celda-id-${index}`}>
+                          {contenidoFila.map((contenido, indexContenido) => (
+                            <Grid
+                              key={`Grid-id-${index}-${indexContenido}`}
+                              container
+                              direction="row"
+                              paddingTop={'5px'}
+                              paddingBottom={'5px'}
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <Typography variant={'subtitle2'}>
+                                {columnas[indexContenido].nombre}
+                              </Typography>
+                              {contenido}
+                            </Grid>
+                          ))}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                ) : (
+                  <TableBody>
+                    {contenidoTabla.map(
+                      (contenidoFila, indexContenidoTabla) => (
+                        <TableRow
+                          key={`row-id-${indexContenidoTabla}`}
+                          hover={true}
+                        >
+                          {contenidoFila.map(
+                            (contenido, indexContenidoFila) => (
+                              <TableCell
+                                key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
+                              >
+                                {contenido}
+                              </TableCell>
+                            )
+                          )}
+                        </TableRow>
+                      )
+                    )}
+                  </TableBody>
+                )}
+              </Table>
+            </TableContainer>
+          )}
         </Fade>
       )}
     </div>
