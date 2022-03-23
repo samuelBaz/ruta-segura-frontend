@@ -93,3 +93,12 @@ export interface UsuarioCRUDType {
   usuarioRol: UsuarioRolCRUDType[]
   persona: PersonaCRUDType
 }
+
+/// CRUD de parametros
+
+export interface ParametroCRUDType {
+  id: string
+  codigo: string
+  nombre: string
+  grupo: string
+}
