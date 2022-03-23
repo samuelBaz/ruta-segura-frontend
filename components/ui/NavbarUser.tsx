@@ -52,7 +52,7 @@ export const NavbarUser = () => {
     cerrarMenu()
     mostrarFullScreen(`Cambiando de rol..`)
     await delay(1500)
-    await router.push({
+    await router.replace({
       pathname: '/home',
     })
     setRolUsuario({ idRol: event.target.value })
@@ -137,7 +137,7 @@ export const NavbarUser = () => {
             <MenuOutlinedIcon />
           </IconButton>
           <Typography
-            color={'primary'}
+            color={'text.secondary'}
             component="div"
             sx={{ flexGrow: 1, fontWeight: 'bold' }}
           >

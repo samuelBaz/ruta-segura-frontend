@@ -100,19 +100,19 @@ export const AuthProvider = ({ children }: AuthContextType) => {
           }
         }
         await delay(1000)
-        await router.push({
+        await router.replace({
           pathname: '/home',
         })
       } catch (error) {
         eliminarCookie('token')
-        await router.push({
+        await router.replace({
           pathname: '/login',
         })
       } finally {
         setLoading(false)
       }
     } else {
-      await router.push({
+      await router.replace({
         pathname: '/login',
       })
       await delay(1000)
@@ -155,7 +155,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
         mostrarFullScreen()
         await delay(1000)
-        await router.push({
+        await router.replace({
           pathname: '/home',
         })
       }
@@ -224,7 +224,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       eliminarCookie('rol')
       setUser(null)
       setLoading(false)
-      await router.push({
+      await router.replace({
         pathname: '/login',
       })
       ocultarFullScreen()

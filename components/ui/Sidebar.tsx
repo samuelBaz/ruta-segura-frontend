@@ -119,7 +119,7 @@ export const Sidebar = () => {
                   <Box width={'10px'} />
                   <Typography
                     variant={'body2'}
-                    color={'secondary'}
+                    color={'text.secondary'}
                   >{`${modulo.label}`}</Typography>
                 </Box>
               </ListItem>

@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   return (
-    <LayoutUser>
+    <LayoutUser title={`Perfil - ${titleCase(usuario?.persona.nombres ?? '')}`}>
       <Grid
         container
         direction="row"

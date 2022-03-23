@@ -45,8 +45,11 @@ const Usuarios: NextPage = () => {
       </Typography>,
       <Typography variant={'body2'}>{usuarioData.usuario}</Typography>,
       <Grid>
-        {usuarioData.usuarioRol.map((itemUsuarioRol) => (
-          <Chip label={itemUsuarioRol.rol.rol} />
+        {usuarioData.usuarioRol.map((itemUsuarioRol, indexUsuarioRol) => (
+          <Chip
+            key={`usuario-rol-${indexUsuarioRol}`}
+            label={itemUsuarioRol.rol.rol}
+          />
         ))}
       </Grid>,
       <Typography>

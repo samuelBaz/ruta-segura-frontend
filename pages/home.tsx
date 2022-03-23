@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const router = useRouter()
 
   return (
-    <LayoutUser>
+    <LayoutUser title={'Home - Frontend Base'}>
       <Grid
         container
         direction="row"
@@ -27,7 +27,13 @@ const Home: NextPage = () => {
         alignItems="center"
       >
         <Grid>
-          <Typography variant={'h5'} component="h1" noWrap={true}>
+          <Typography
+            variant={'h5'}
+            component="h1"
+            noWrap={true}
+            color={'text.secondary'}
+            sx={{ flexGrow: 1, fontWeight: 'bold' }}
+          >
             Bienveni@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}
             {titleCase(
               usuario?.persona?.primerApellido ??

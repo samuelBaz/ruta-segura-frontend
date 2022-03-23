@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react'
 import { ColumnaType } from '../../types'
 import {
   Box,
-  Button,
   Fade,
   Grid,
   Table,
@@ -16,7 +15,6 @@ import {
   useTheme,
 } from '@mui/material'
 import { ListSkeleton, TableSkeleton } from './CustomSkeleton'
-import { imprimir } from '../../utils'
 
 export interface CustomDataTableType {
   titulo: string
@@ -47,7 +45,11 @@ export const CustomDataTable = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
+        <Typography
+          variant={'h5'}
+          sx={{ fontWeight: 'bold' }}
+          color={'text.secondary'}
+        >
           {`${titulo}`}
         </Typography>
         <Fade in={!cargando} timeout={0}>
