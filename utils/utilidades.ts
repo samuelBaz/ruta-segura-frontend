@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -17,4 +19,12 @@ export const titleCase = (word: string) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')
   else word.toUpperCase()
+}
+
+export const formatoFecha = (
+  fecha: string,
+  formatoInicial: string,
+  formatoNuevo: string
+) => {
+  return dayjs(fecha, formatoInicial, true).format(formatoNuevo)
 }

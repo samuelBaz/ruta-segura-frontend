@@ -48,7 +48,7 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#F7F7F8',
         },
       },
     },

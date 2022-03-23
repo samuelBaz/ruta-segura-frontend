@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Button,
   FormControlLabel,
   IconButton,
   List,
@@ -10,6 +11,8 @@ import {
   Radio,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
@@ -85,6 +88,7 @@ export const NavbarUser = () => {
   }
 
   const abrirPerfil = async () => {
+    cerrarMenu()
     await router.push('/perfil')
   }
 
@@ -93,6 +97,10 @@ export const NavbarUser = () => {
     interpretarRoles()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario])
+
+  const theme = useTheme()
+  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   return (
     <>
@@ -135,7 +143,6 @@ export const NavbarUser = () => {
           >
             Frontend base
           </Typography>
-
           <IconoTooltip
             titulo={'Ayuda'}
             accion={() => {
@@ -143,17 +150,22 @@ export const NavbarUser = () => {
             }}
             icono={'help_outline'}
           />
-          <ThemeSwitcherButton />
-          <IconButton
+          {!(sm || xs) && <ThemeSwitcherButton />}
+          <Button
             size="large"
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="false"
             onClick={desplegarMenu}
             color="primary"
+            style={{ textTransform: 'none' }}
           >
             <AccountCircleOutlinedIcon />
-          </IconButton>
+            <Box width={'10px'} />
+            <Typography variant={'body2'}>
+              {`${titleCase(usuario?.persona.nombres ?? '')}`}
+            </Typography>
+          </Button>
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -175,9 +187,7 @@ export const NavbarUser = () => {
             <MenuItem sx={{ p: 2 }} onClick={abrirPerfil}>
               <Icono>person</Icono>
               <Box width={'20px'} />
-              <Typography variant={'body2'}>
-                {`${titleCase(usuario?.persona.nombres ?? '')}`}
-              </Typography>
+              <Typography variant={'body2'}>Perfil</Typography>
             </MenuItem>
             <MenuItem
               sx={{
@@ -224,11 +234,6 @@ export const NavbarUser = () => {
                 </ListItem>
               ))}
             </List>
-            <MenuItem sx={{ p: 2 }} onClick={cerrarMenu}>
-              <Icono>vpn_key</Icono>
-              <Box width={'20px'} />
-              <Typography variant={'body2'}>Cambiar contraseña</Typography>
-            </MenuItem>
             <MenuItem sx={{ p: 2 }} onClick={cerrarMenuSesion}>
               <Icono>logout</Icono>
               <Box width={'20px'} />

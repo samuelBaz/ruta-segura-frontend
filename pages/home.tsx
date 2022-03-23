@@ -11,6 +11,7 @@ import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
 import { Icono } from '../components/ui'
 import { useRouter } from 'next/router'
+import { titleCase } from '../utils'
 
 const Home: NextPage = () => {
   const { usuario, rolUsuario, idRolUsuario } = useAuth()
@@ -27,8 +28,12 @@ const Home: NextPage = () => {
       >
         <Grid>
           <Typography variant={'h5'} component="h1" noWrap={true}>
-            Bienveni@ {usuario?.persona?.nombres}{' '}
-            {usuario?.persona?.primerApellido}
+            Bienveni@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}
+            {titleCase(
+              usuario?.persona?.primerApellido ??
+                usuario?.persona?.segundoApellido ??
+                ''
+            )}
           </Typography>
           <Typography variant={'subtitle2'} color="text.secondary">
             {rolUsuario?.nombre}

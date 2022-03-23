@@ -27,19 +27,19 @@ const Politicas: NextPage = () => {
   const { sesionPeticion } = useAuth()
 
   const columnas: Array<ColumnaType> = [
-    { campo: 'app', nombre: 'App' },
+    { campo: 'sujeto', nombre: 'Sujeto' },
     { campo: 'objeto', nombre: 'Objeto' },
     { campo: 'accion', nombre: 'Acción' },
-    { campo: 'sujeto', nombre: 'Sujeto' },
+    { campo: 'app', nombre: 'App' },
     { campo: 'acciones', nombre: 'Acciones' },
   ]
 
   const contenidoTabla: Array<Array<ReactNode>> = politicasData.map(
     (politicaData) => [
-      <Typography variant={'body2'}>{`${politicaData.app}`}</Typography>,
+      <Typography variant={'body2'}>{`${politicaData.sujeto}`}</Typography>,
       <Typography variant={'body2'}>{`${politicaData.objeto}`}</Typography>,
       <Typography variant={'body2'}>{`${politicaData.accion}`}</Typography>,
-      <Typography variant={'body2'}>{`${politicaData.sujeto}`}</Typography>,
+      <Typography variant={'body2'}>{`${politicaData.app}`}</Typography>,
 
       <Grid>
         <IconoTooltip

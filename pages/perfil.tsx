@@ -1,6 +1,9 @@
 import type { NextPage } from 'next'
 import {
+  Box,
   Button,
+  Card,
+  Chip,
   Grid,
   Typography,
   useMediaQuery,
@@ -8,44 +11,148 @@ import {
 } from '@mui/material'
 import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
-import { useRouter } from 'next/router'
+import React from 'react'
+import { formatoFecha, titleCase } from '../utils'
+import { Icono } from '../components/ui'
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
 const Home: NextPage = () => {
   const { usuario } = useAuth()
 
   const theme = useTheme()
-
-  const xs = useMediaQuery(theme.breakpoints.only('xs'))
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
-  const md = useMediaQuery(theme.breakpoints.only('md'))
-  const lg = useMediaQuery(theme.breakpoints.only('lg'))
-  const xl = useMediaQuery(theme.breakpoints.only('xl'))
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   return (
     <LayoutUser>
       <Grid
         container
-        spacing={0}
-        direction="column"
+        direction="row"
+        justifyContent="space-between"
         alignItems="center"
-        justifyContent="center"
-        justifyItems={'center'}
-        style={{ minHeight: '80vh' }}
       >
-        <Grid item xs={3} xl={4}>
-          <Typography
-            variant={'body1'}
-            component="h1"
-            noWrap={true}
-            alignItems={'center'}
-          >
-            Hola {usuario?.persona?.nombres} ‍💻
-          </Typography>
-          <Typography>xs {`${xs}`}</Typography>
-          <Typography>sm {`${sm}`}</Typography>
-          <Typography>md {`${md}`}</Typography>
-          <Typography>lg {`${lg}`}</Typography>
-          <Typography>xl {`${xl}`}</Typography>
+        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
+          Perfil
+        </Typography>
+      </Grid>
+      <Box height={'20px'} />
+      <Grid container>
+        <Grid item xl={6} md={6} xs={12}>
+          <Box>
+            <Card sx={{ borderRadius: 3 }}>
+              <Box
+                display={'flex'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                sx={{
+                  width: '100%',
+                  height: sm || xs ? '' : 370,
+                  // backgroundColor: 'primary.main',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'all 0.1s ease-out !important',
+                  p: 2,
+                }}
+              >
+                <AccountCircleOutlinedIcon
+                  sx={{ fontSize: 100, color: 'text.secondary' }}
+                />
+
+                <Typography variant={'body1'} color="text.secondary">
+                  {titleCase(
+                    `${usuario?.persona.nombres} ${usuario?.persona.primerApellido} ${usuario?.persona.segundoApellido}`
+                  )}
+                </Typography>
+              </Box>
+            </Card>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xl={6}
+          md={6}
+          xs={12}
+          sx={{ pl: sm || xs ? 0 : 6, pr: sm || xs ? 0 : 6 }}
+        >
+          <Box justifyContent={'center'} alignItems={'center'}>
+            <Box justifyContent={'center'} alignItems={'center'}>
+              <Grid container direction={'column'}>
+                <Box height={'20px'} />
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  direction={'column'}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Usuario</Typography>
+                  <Typography sx={{}}>{`@${usuario?.usuario}`}</Typography>
+                </Grid>
+                <Box height={'20px'} />
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  direction={'column'}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    Número de documento
+                  </Typography>
+                  <Typography variant={'body1'}>
+                    {`${usuario?.persona.tipoDocumento} ${usuario?.persona.nroDocumento}`}
+                  </Typography>
+                </Grid>
+                <Box height={'20px'} />
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  direction={'column'}
+                >
+                  {usuario?.persona.fechaNacimiento && (
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      Fecha de nacimiento
+                    </Typography>
+                  )}
+                  {usuario?.persona.fechaNacimiento && (
+                    <Typography variant={'body1'}>
+                      {`${formatoFecha(
+                        usuario?.persona.fechaNacimiento,
+                        'DD-MM-YYYY',
+                        'DD/MM/YYYY'
+                      )}`}
+                    </Typography>
+                  )}
+                </Grid>
+                <Box height={'20px'} />
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  direction={'column'}
+                >
+                  <Typography sx={{ fontWeight: 'bold' }}>Roles</Typography>
+                  <Grid>
+                    {usuario?.roles.map((itemUsuarioRol) => (
+                      <Chip label={itemUsuarioRol.rol} />
+                    ))}
+                  </Grid>
+                </Grid>
+
+                <Box height={'30px'} />
+                <Box display={'flex'}>
+                  <Button
+                    size="large"
+                    onClick={() => {}}
+                    color="primary"
+                    variant="contained"
+                    style={{ textTransform: 'none' }}
+                  >
+                    <Icono color={'inherit'}>vpn_key</Icono>
+                    <Box width={'10px'} />
+                    <Typography sx={{ fontWeight: 'bold' }} variant={'body2'}>
+                      Cambiar contraseña
+                    </Typography>
+                  </Button>
+                </Box>
+              </Grid>
+            </Box>
+          </Box>
         </Grid>
       </Grid>
     </LayoutUser>
