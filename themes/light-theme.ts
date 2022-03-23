@@ -42,5 +42,15 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiCard: {
+      defaultProps: {
+        elevation: 0,
+      },
+      styleOverrides: {
+        root: {
+          backgroundColor: '#F2F2F2',
+        },
+      },
+    },
   },
 })

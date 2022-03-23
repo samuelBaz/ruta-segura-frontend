@@ -224,10 +224,10 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       eliminarCookie('rol')
       setUser(null)
       setLoading(false)
-      ocultarFullScreen()
       await router.push({
         pathname: '/login',
       })
+      ocultarFullScreen()
     }
   }
 

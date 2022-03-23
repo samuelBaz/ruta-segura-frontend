@@ -1,33 +1,112 @@
 import type { NextPage } from 'next'
-import { Button, Grid, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  Grid,
+  Typography,
+} from '@mui/material'
 import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
+import { Icono } from '../components/ui'
 import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
-  const { usuario, rolUsuario } = useAuth()
+  const { usuario, rolUsuario, idRolUsuario } = useAuth()
+
+  const router = useRouter()
 
   return (
     <LayoutUser>
       <Grid
         container
-        spacing={0}
-        direction="column"
+        direction="row"
+        justifyContent="space-between"
         alignItems="center"
-        justifyContent="center"
-        justifyItems={'center'}
-        style={{ minHeight: '90vh' }}
       >
-        <Grid item xs={3} xl={4}>
-          <Typography
-            variant={'body1'}
-            component="h1"
-            noWrap={true}
-            alignItems={'center'}
-          >
-            Hola {usuario?.persona?.nombres} 🏠
+        <Grid>
+          <Typography variant={'h5'} component="h1" noWrap={true}>
+            Bienveni@ {usuario?.persona?.nombres}{' '}
+            {usuario?.persona?.primerApellido}
           </Typography>
-          <Typography>{rolUsuario?.nombre}</Typography>
+          <Typography variant={'subtitle2'} color="text.secondary">
+            {rolUsuario?.nombre}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid>
+        <Box height={'20px'} />
+        <Typography color="text.secondary" sx={{ fontSize: 14 }}>
+          Puedes ver los siguientes modulos:
+        </Typography>
+        <Box height={'10px'} />
+      </Grid>
+
+      <Grid container direction="row" alignItems="center">
+        <Grid container direction="row">
+          {usuario?.roles
+            .filter((ur) => ur.idRol == idRolUsuario)
+            .map((rolUsuario, index) => (
+              <>
+                {rolUsuario.modulos.map((modulo, index1) => (
+                  <Grid container direction="row">
+                    <Grid>
+                      <Box height={'20px'} />
+                      <Typography
+                        color="text.secondary"
+                        sx={{ fontSize: 14, fontWeight: 'bold' }}
+                      >
+                        {modulo.label}
+                      </Typography>
+                      <Box height={'20px'} />
+                    </Grid>
+                    <Grid
+                      container
+                      direction="row"
+                      spacing={{ xs: 2, md: 3 }}
+                      columns={{ xs: 4, sm: 8, md: 12, xl: 12 }}
+                    >
+                      {modulo.subModulo.map((subModulo, index2) => (
+                        <Grid
+                          item
+                          xs={2}
+                          sm={4}
+                          md={4}
+                          key={`$subModulo-${index}-${index1}-${index2}`}
+                        >
+                          <CardActionArea
+                            sx={{ borderRadius: 3 }}
+                            onClick={async () => {
+                              await router.push(subModulo.url)
+                            }}
+                          >
+                            <Card>
+                              <CardContent>
+                                <Grid container direction="row">
+                                  <Icono>{subModulo.propiedades.icono}</Icono>
+                                  <Box height={'30px'} width={'10px'} />
+                                  <Typography
+                                    sx={{ fontSize: 14 }}
+                                    color="text.secondary"
+                                    gutterBottom
+                                  >
+                                    {`${subModulo.label}`}
+                                  </Typography>
+                                </Grid>
+                                <Typography variant="body2">
+                                  {`${subModulo.propiedades.descripcion}`}
+                                </Typography>
+                              </CardContent>
+                            </Card>
+                          </CardActionArea>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Grid>
+                ))}
+              </>
+            ))}
         </Grid>
       </Grid>
     </LayoutUser>

@@ -26,7 +26,7 @@ export const darkTheme = createTheme({
       },
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#232226', // '#353436',
+          backgroundColor: '#232226',
         },
       },
     },
@@ -39,6 +39,16 @@ export const darkTheme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: '#232226',
+        },
+      },
+    },
+    MuiCard: {
+      defaultProps: {
+        elevation: 0,
+      },
+      styleOverrides: {
+        root: {
+          backgroundColor: '#353436',
         },
       },
     },

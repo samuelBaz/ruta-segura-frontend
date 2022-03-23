@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React, { FC } from 'react'
 
 interface Props {
@@ -13,7 +13,9 @@ export const FullScreenLoading: FC<Props> = ({ mensaje }) => {
       alignItems="center"
       minHeight="100vh"
     >
-      {mensaje ? <Typography variant={'body2'}>{mensaje}</Typography> : null}
+      {mensaje ? (
+        <Typography variant={'subtitle2'}>{mensaje}</Typography>
+      ) : null}
       <Box width={'10px'} />
       <div className="spinner">
         <div className="bar1" />

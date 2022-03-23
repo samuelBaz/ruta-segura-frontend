@@ -2,6 +2,7 @@
 
 export interface PropiedadesType {
   icono: string
+  descripcion: string
   color_dark: string
   color_light: string
 }
@@ -55,7 +56,6 @@ export interface UsuarioType {
 export interface ColumnaType {
   campo: string
   nombre: string
-  ordenar: boolean
 }
 
 // Lista de usuarios en CRUD de usuarios
