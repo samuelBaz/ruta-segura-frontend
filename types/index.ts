@@ -102,3 +102,12 @@ export interface ParametroCRUDType {
   nombre: string
   grupo: string
 }
+
+/// CRUD de politicas
+
+export interface PoliticaCRUDType {
+  sujeto: string
+  objeto: string
+  accion: string
+  app: string
+}
