@@ -119,24 +119,9 @@ export const CustomDataTable = ({
                     <TableRow>
                       {columnas.map((columna, index) => (
                         <TableCell key={`cabecera-id-${index}`}>
-                          {columna.ordenar ? (
-                            <Button
-                              variant="text"
-                              color={'inherit'}
-                              style={{ textTransform: 'none' }}
-                              onClick={() => {
-                                imprimir(`cambio orden ${index}`)
-                              }}
-                            >
-                              <Typography variant={'caption'}>
-                                {columna.nombre}
-                              </Typography>
-                            </Button>
-                          ) : (
-                            <Typography variant={'caption'}>
-                              {columna.nombre}
-                            </Typography>
-                          )}
+                          <Typography variant={'caption'}>
+                            {columna.nombre}
+                          </Typography>
                         </TableCell>
                       ))}
                     </TableRow>
@@ -157,7 +142,10 @@ export const CustomDataTable = ({
                               justifyContent="space-between"
                               alignItems="center"
                             >
-                              <Typography variant={'subtitle2'}>
+                              <Typography
+                                color="text.secondary"
+                                variant={'subtitle2'}
+                              >
                                 {columnas[indexContenido].nombre}
                               </Typography>
                               {contenido}

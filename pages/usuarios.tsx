@@ -27,12 +27,12 @@ const Usuarios: NextPage = () => {
   const { sesionPeticion } = useAuth()
 
   const columnas: Array<ColumnaType> = [
-    { campo: 'nro_documento', nombre: 'Nro. Documento', ordenar: true },
-    { campo: 'persona', nombre: 'Persona', ordenar: true },
-    { campo: 'usuario', nombre: 'Usuario', ordenar: true },
-    { campo: 'rol', nombre: 'Roles', ordenar: true },
-    { campo: 'estado', nombre: 'Estado', ordenar: true },
-    { campo: 'acciones', nombre: 'Acciones', ordenar: false },
+    { campo: 'nro_documento', nombre: 'Nro. Documento' },
+    { campo: 'persona', nombre: 'Persona' },
+    { campo: 'usuario', nombre: 'Usuario' },
+    { campo: 'rol', nombre: 'Roles' },
+    { campo: 'estado', nombre: 'Estado' },
+    { campo: 'acciones', nombre: 'Acciones' },
   ]
 
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
