@@ -15,7 +15,7 @@ import { useAuth } from '../context/auth'
 import { CustomDialog } from '../components/ui'
 
 export interface ModalUsuarioType {
-  usuario?: UsuarioCRUDType
+  usuario?: UsuarioCRUDType | undefined | null
 }
 
 const Usuarios: NextPage = () => {
@@ -24,10 +24,11 @@ const Usuarios: NextPage = () => {
   const [errorUsuariosData, setErrorUsuariosData] = useState<any>()
 
   const [modalUsuario, setModalUsuario] = useState(false)
-  const [alertaEstadoUsuario, setAlertaEstadoUsuario] = useState(false)
+  const [mostrarAlertaEstadoUsuario, setMostrarAlertaEstadoUsuario] =
+    useState(false)
 
   const [usuarioEdicion, setUsuarioEdicion] = useState<
-    UsuarioCRUDType | undefined
+    UsuarioCRUDType | undefined | null
   >()
 
   const { sesionPeticion } = useAuth()
@@ -59,19 +60,30 @@ const Usuarios: NextPage = () => {
         ))}
       </Grid>,
       <Typography>
-        <Button variant="outlined" sx={{ borderRadius: 12 }}>
+        <Button
+          variant="outlined"
+          sx={{ borderRadius: 12 }}
+          color={
+            usuarioData.estado == 'ACTIVO'
+              ? 'success'
+              : usuarioData.estado == 'INACTIVO'
+              ? 'error'
+              : 'info'
+          }
+        >
           {usuarioData.estado}
         </Button>
       </Typography>,
       <Grid>
         <IconoTooltip
           titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-          color={'success'}
-          accion={() => {
+          color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
+          accion={async () => {
             imprimir(`estado: ${usuarioData.estado}`)
-            editarEstadoUsuarioModal(usuarioData)
+            await editarEstadoUsuarioModal(usuarioData)
           }}
-          icono={'toggle_on'}
+          desactivado={usuarioData.estado == 'PENDIENTE'}
+          icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
         />
         <IconoTooltip
           titulo={'Restablecer contraseña'}
@@ -105,13 +117,13 @@ const Usuarios: NextPage = () => {
     <IconoTooltip
       titulo={'Actualizar'}
       accion={async () => {
-        await obtenerUsuarios()
+        await obtenerUsuariosPeticion()
       }}
       icono={'refresh'}
     />,
   ]
 
-  const obtenerUsuarios = async () => {
+  const obtenerUsuariosPeticion = async () => {
     try {
       setLoading(true)
       await delay(1000)
@@ -123,6 +135,26 @@ const Usuarios: NextPage = () => {
     } catch (e) {
       imprimir(`Error al obtener usuarios: ${e}`)
       setErrorUsuariosData(e)
+      Alertas.error(InterpreteMensajes(e))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const cambiarEstadoUsuarioPeticion = async (usuario: UsuarioCRUDType) => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/usuarios/${usuario.id}/${
+          usuario.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
+        }`,
+        tipo: 'patch',
+      })
+      imprimir(`respuesta inactivar usuario: ${respuesta}`)
+      Alertas.correcto(InterpreteMensajes(respuesta))
+      await obtenerUsuariosPeticion()
+    } catch (e) {
+      imprimir(`Error al inactivar usuarios: ${e}`)
       Alertas.error(InterpreteMensajes(e))
     } finally {
       setLoading(false)
@@ -148,35 +180,37 @@ const Usuarios: NextPage = () => {
   }
 
   const cerrarModalUsuario = () => {
-    setUsuarioEdicion(undefined)
+    setUsuarioEdicion(null)
     setModalUsuario(false)
   }
 
   /// Métodos para alerta de cambiar de estado
 
-  const editarEstadoUsuarioModal = (usuario: UsuarioCRUDType) => {
-    setUsuarioEdicion(usuario)
-    setAlertaEstadoUsuario(true)
+  const editarEstadoUsuarioModal = async (usuario: UsuarioCRUDType) => {
+    setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
+    setMostrarAlertaEstadoUsuario(true) // para mostrar alerta de usuarios
   }
 
   const cancelarAlertaEstadoUsuario = () => {
-    Alertas.error(`cancelado: ${usuarioEdicion?.persona.nombres}`)
-    setAlertaEstadoUsuario(false)
+    setUsuarioEdicion(null)
+    setMostrarAlertaEstadoUsuario(false)
   }
 
-  const aceptarAlertaEstadoUsuario = () => {
-    Alertas.correcto(`aceptado: ${usuarioEdicion?.persona.nombres}`)
-    setAlertaEstadoUsuario(false)
+  const aceptarAlertaEstadoUsuario = async () => {
+    setMostrarAlertaEstadoUsuario(false)
+    if (usuarioEdicion) {
+      await cambiarEstadoUsuarioPeticion(usuarioEdicion)
+    }
   }
 
   useEffect(() => {
-    obtenerUsuarios().finally(() => {})
+    obtenerUsuariosPeticion().finally(() => {})
   }, [])
 
   return (
     <>
       <AlertDialog
-        isOpen={alertaEstadoUsuario}
+        isOpen={mostrarAlertaEstadoUsuario}
         titulo={'Alerta'}
         texto={`¿Está seguro de ${
           usuarioEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
