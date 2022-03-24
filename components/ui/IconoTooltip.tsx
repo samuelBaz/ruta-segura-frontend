@@ -16,6 +16,7 @@ interface Props {
   titulo: string
   icono: ReactNode
   accion: () => void
+  desactivado?: boolean
 }
 
 export const IconoTooltip: FC<Props> = ({
@@ -23,11 +24,20 @@ export const IconoTooltip: FC<Props> = ({
   icono,
   titulo,
   accion,
+  desactivado = false,
 }) => {
   return (
     <Tooltip title={titulo}>
-      <IconButton aria-label={titulo} onClick={accion}>
-        <Icono color={color}> {icono}</Icono>
+      <IconButton
+        disabled={desactivado}
+        classes={{
+          root: 'icon-button-root',
+          disabled: 'icon-button-disabled',
+        }}
+        aria-label={titulo}
+        onClick={accion}
+      >
+        <Icono color={desactivado ? 'disabled' : color}> {icono}</Icono>
       </IconButton>
     </Tooltip>
   )
