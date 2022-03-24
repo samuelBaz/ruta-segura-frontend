@@ -16,7 +16,6 @@ import {
 } from '@mui/material'
 
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
 import { UIContext, useFullScreenLoadingContext } from '../../context/ui'
@@ -31,6 +30,7 @@ import { RoleType } from '../../types'
 import { useRouter } from 'next/router'
 import { Icono } from './Icono'
 import { IconoTooltip } from './IconoTooltip'
+import { AlertDialog } from './AlertDialog'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -44,6 +44,9 @@ export const NavbarUser = () => {
   const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+
+  const [mostrarAlertaCerrarSesion, setMostrarAlertaCerrarSesion] =
+    useState(false)
 
   const router = useRouter()
 
@@ -102,8 +105,35 @@ export const NavbarUser = () => {
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
+  const accionMostrarAlertaCerrarSesion = () => {
+    cerrarMenu()
+    setMostrarAlertaCerrarSesion(true)
+  }
+
   return (
     <>
+      <AlertDialog
+        isOpen={mostrarAlertaCerrarSesion}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de cerrar sesión ?`}
+      >
+        <Button
+          onClick={() => {
+            setMostrarAlertaCerrarSesion(false)
+          }}
+        >
+          Cancelar
+        </Button>
+        <Button
+          sx={{ fontWeight: 'bold' }}
+          onClick={async () => {
+            setMostrarAlertaCerrarSesion(false)
+            await cerrarMenuSesion()
+          }}
+        >
+          Aceptar
+        </Button>
+      </AlertDialog>
       <CustomDialog
         isOpen={modalAyuda}
         handleClose={cerrarModalAyuda}
@@ -234,7 +264,7 @@ export const NavbarUser = () => {
                 </ListItem>
               ))}
             </List>
-            <MenuItem sx={{ p: 2 }} onClick={cerrarMenuSesion}>
+            <MenuItem sx={{ p: 2 }} onClick={accionMostrarAlertaCerrarSesion}>
               <Icono>logout</Icono>
               <Box width={'20px'} />
               <Typography variant={'body2'}>Cerrar sesión</Typography>

@@ -1,13 +1,18 @@
 import type { NextPage } from 'next'
-import { Button, Chip, Grid, Typography } from '@mui/material'
+import { Button, Chip, DialogActions, Grid, Typography } from '@mui/material'
 import { LayoutUser } from '../components/layouts'
-import { Alertas, CustomDataTable, IconoTooltip } from '../components/ui/'
+import {
+  Alertas,
+  AlertDialog,
+  CustomDataTable,
+  IconoTooltip,
+} from '../components/ui/'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType, UsuarioCRUDType } from '../types'
 import { Constantes } from '../config'
-import { delay, imprimir, InterpreteMensajes } from '../utils'
+import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
-import { CustomDialog } from '../components/ui/CustomDialog'
+import { CustomDialog } from '../components/ui'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType
@@ -19,6 +24,7 @@ const Usuarios: NextPage = () => {
   const [errorUsuariosData, setErrorUsuariosData] = useState<any>()
 
   const [modalUsuario, setModalUsuario] = useState(false)
+  const [alertaEstadoUsuario, setAlertaEstadoUsuario] = useState(false)
 
   const [usuarioEdicion, setUsuarioEdicion] = useState<
     UsuarioCRUDType | undefined
@@ -59,19 +65,29 @@ const Usuarios: NextPage = () => {
       </Typography>,
       <Grid>
         <IconoTooltip
+          titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+          color={'success'}
+          accion={() => {
+            imprimir(`estado: ${usuarioData.estado}`)
+            editarEstadoUsuarioModal(usuarioData)
+          }}
+          icono={'toggle_on'}
+        />
+        <IconoTooltip
+          titulo={'Restablecer contraseña'}
+          color={'info'}
+          accion={() => {
+            imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
+          }}
+          icono={'vpn_key'}
+        />
+        <IconoTooltip
           titulo={'Editar'}
           accion={() => {
             imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
             editarUsuarioModal(usuarioData)
           }}
           icono={'edit'}
-        />
-        <IconoTooltip
-          titulo={'Restablecer contraseña'}
-          accion={() => {
-            imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
-          }}
-          icono={'vpn_key'}
         />
       </Grid>,
     ]
@@ -121,6 +137,8 @@ const Usuarios: NextPage = () => {
     )
   }
 
+  /// Métodos para agregar, editar usuarios
+
   const agregarUsuarioModal = () => {
     setModalUsuario(true)
   }
@@ -134,16 +152,43 @@ const Usuarios: NextPage = () => {
     setModalUsuario(false)
   }
 
+  /// Métodos para alerta de cambiar de estado
+
+  const editarEstadoUsuarioModal = (usuario: UsuarioCRUDType) => {
+    setUsuarioEdicion(usuario)
+    setAlertaEstadoUsuario(true)
+  }
+
+  const cancelarAlertaEstadoUsuario = () => {
+    Alertas.error(`cancelado: ${usuarioEdicion?.persona.nombres}`)
+    setAlertaEstadoUsuario(false)
+  }
+
+  const aceptarAlertaEstadoUsuario = () => {
+    Alertas.correcto(`aceptado: ${usuarioEdicion?.persona.nombres}`)
+    setAlertaEstadoUsuario(false)
+  }
+
   useEffect(() => {
     obtenerUsuarios().finally(() => {})
   }, [])
 
   return (
     <>
+      <AlertDialog
+        isOpen={alertaEstadoUsuario}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de ${
+          usuarioEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
+        } a ${titleCase(usuarioEdicion?.persona.nombres ?? '')} ?`}
+      >
+        <Button onClick={cancelarAlertaEstadoUsuario}>Cancelar</Button>
+        <Button onClick={aceptarAlertaEstadoUsuario}>Aceptar</Button>
+      </AlertDialog>
       <CustomDialog
         isOpen={modalUsuario}
         handleClose={cerrarModalUsuario}
-        title={'Información'}
+        title={usuarioEdicion ? 'Editar usuario' : 'Nuevo usuario'}
       >
         <VistaModalUsuario usuario={usuarioEdicion} />
       </CustomDialog>
