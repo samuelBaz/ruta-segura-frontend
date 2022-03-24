@@ -67,8 +67,8 @@ export const CustomDialog: FC<Props> = ({
           color={'primary'}
           sx={{
             position: 'absolute',
-            right: 8,
-            top: 8,
+            right: 10,
+            top: 17,
           }}
         >
           <CloseIcon />

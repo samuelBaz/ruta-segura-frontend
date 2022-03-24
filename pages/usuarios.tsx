@@ -230,6 +230,9 @@ const Usuarios: NextPage = () => {
             <CampoNombre name={'Datos de usuario'} />
             <Box height={'10px'} />
             <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+              <Grid item xs={12} sm={12} md={4}>
+                <CampoNombre name={'Roles'}></CampoNombre>
+              </Grid>
               <Grid item xs={12} sm={12} md={8}>
                 <CampoNombre name={'Correo electrónico'}>
                   <TextField
@@ -238,14 +241,18 @@ const Usuarios: NextPage = () => {
                   />
                 </CampoNombre>
               </Grid>
-              <Grid item xs={12} sm={12} md={4}>
-                <CampoNombre name={'Roles'}></CampoNombre>
-              </Grid>
             </Grid>
           </Grid>
           <Box height={'10px'} />
           <DialogActions
-            sx={{ justifyContent: { lg: 'flex-end', sm: 'center' } }}
+            sx={{
+              justifyContent: {
+                lg: 'flex-end',
+                md: 'flex-end',
+                xs: 'center',
+                sm: 'center',
+              },
+            }}
           >
             <Button variant={'outlined'}>Cancelar</Button>
             <Button variant={'contained'}>Aceptar</Button>
