@@ -28,17 +28,19 @@ export const IconoTooltip: FC<Props> = ({
 }) => {
   return (
     <Tooltip title={titulo}>
-      <IconButton
-        disabled={desactivado}
-        classes={{
-          root: 'icon-button-root',
-          disabled: 'icon-button-disabled',
-        }}
-        aria-label={titulo}
-        onClick={accion}
-      >
-        <Icono color={desactivado ? 'disabled' : color}> {icono}</Icono>
-      </IconButton>
+      <span>
+        <IconButton
+          disabled={desactivado}
+          classes={{
+            root: 'icon-button-root',
+            disabled: 'icon-button-disabled',
+          }}
+          aria-label={titulo}
+          onClick={accion}
+        >
+          <Icono color={desactivado ? 'disabled' : color}> {icono}</Icono>
+        </IconButton>
+      </span>
     </Tooltip>
   )
 }

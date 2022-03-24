@@ -56,7 +56,10 @@ export const CustomDialog: FC<Props> = ({
       TransitionComponent={dsm ? Transition : TransitionZoom}
       onClose={handleClose}
     >
-      <DialogTitle sx={{ m: 1, p: 2 }}>
+      <DialogTitle
+        sx={{ m: 1, p: 2 }}
+        style={{ borderBottom: 'thin solid rgba(0, 0, 0, 0.1)' }}
+      >
         {title}
         <IconButton
           aria-label="close"

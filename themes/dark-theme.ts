@@ -52,5 +52,11 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
+        margin: 'dense',
+      },
+    },
   },
 })

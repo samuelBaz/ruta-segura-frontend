@@ -59,9 +59,13 @@ const Home: NextPage = () => {
           {usuario?.roles
             .filter((ur) => ur.idRol == idRolUsuario)
             .map((rolUsuario, index) => (
-              <>
+              <div key={`usuario-${index}`}>
                 {rolUsuario.modulos.map((modulo, index1) => (
-                  <Grid container direction="row">
+                  <Grid
+                    container
+                    direction="row"
+                    key={`rolUsuario-${index}-${index1}`}
+                  >
                     <Grid>
                       <Box height={'20px'} />
                       <Typography
@@ -116,7 +120,7 @@ const Home: NextPage = () => {
                     </Grid>
                   </Grid>
                 ))}
-              </>
+              </div>
             ))}
         </Grid>
       </Grid>

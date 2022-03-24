@@ -1,5 +1,13 @@
 import type { NextPage } from 'next'
-import { Button, Chip, DialogActions, Grid, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Chip,
+  DialogActions,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { LayoutUser } from '../components/layouts'
 import {
   Alertas,
@@ -13,6 +21,7 @@ import { Constantes } from '../config'
 import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
 import { CustomDialog } from '../components/ui'
+import { CampoNombre } from '../components/ui/CampoNombre'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
@@ -162,10 +171,87 @@ const Usuarios: NextPage = () => {
   }
 
   const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
+    const usuarioNuevo = !!usuario
     return (
-      <Typography>
-        {usuario ? `Usuario: ${JSON.stringify(usuario)}` : 'Nuevo usuario'}
-      </Typography>
+      <>
+        <Grid container direction={'column'} justifyContent="space-evenly">
+          <Box height={'10px'} />
+          <Typography
+            color="text.secondary"
+            sx={{ fontSize: 14, fontWeight: 'bold' }}
+          >
+            Datos personales
+          </Typography>
+          <Box height={'10px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={4}>
+              <CampoNombre name={'Nro. documento'}>
+                <TextField
+                  sx={{ width: '100%' }}
+                  defaultValue={usuario?.persona.nroDocumento}
+                />
+              </CampoNombre>
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <CampoNombre name={'Nombre'}>
+                <TextField
+                  sx={{ width: '100%' }}
+                  defaultValue={usuario?.persona.nombres}
+                />
+              </CampoNombre>
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <CampoNombre name={'Primer apellido'}>
+                <TextField
+                  sx={{ width: '100%' }}
+                  defaultValue={usuario?.persona.segundoApellido}
+                />
+              </CampoNombre>
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <CampoNombre name={'Segundo apellido'}>
+                <TextField
+                  sx={{ width: '100%' }}
+                  defaultValue={usuario?.persona.segundoApellido}
+                />
+              </CampoNombre>
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <CampoNombre name={'Fecha de nacimiento'}>
+                <TextField
+                  sx={{ width: '100%' }}
+                  defaultValue={usuario?.persona.fechaNacimiento}
+                />
+              </CampoNombre>
+            </Grid>
+          </Grid>
+          <Grid>
+            <Box height={'10px'} />
+            <CampoNombre name={'Datos de usuario'} />
+            <Box height={'10px'} />
+            <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+              <Grid item xs={12} sm={12} md={8}>
+                <CampoNombre name={'Correo electrónico'}>
+                  <TextField
+                    sx={{ width: '100%' }}
+                    defaultValue={usuario?.correoElectronico}
+                  />
+                </CampoNombre>
+              </Grid>
+              <Grid item xs={12} sm={12} md={4}>
+                <CampoNombre name={'Roles'}></CampoNombre>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Box height={'10px'} />
+          <DialogActions
+            sx={{ justifyContent: { lg: 'flex-end', sm: 'center' } }}
+          >
+            <Button variant={'outlined'}>Cancelar</Button>
+            <Button variant={'contained'}>Aceptar</Button>
+          </DialogActions>
+        </Grid>
+      </>
     )
   }
 
