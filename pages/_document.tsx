@@ -1,6 +1,7 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
 import createEmotionCache from '../src/createEmotionCache'
+import { commitDate, commitID, imprimir, nombreRama } from '../utils'
 
 export default class MyDocument extends Document {
   render() {
@@ -17,6 +18,12 @@ export default class MyDocument extends Document {
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+          />
+          <meta name={'br'} content={`${(this.props as any).branch}`} />
+          <meta name={'c-id'} content={`${(this.props as any).commitId}`} />
+          <meta
+            name={'c-dt'}
+            content={`${(this.props as any).lastCommitDate}`}
           />
         </Head>
         <body>
@@ -81,8 +88,18 @@ MyDocument.getInitialProps = async (ctx) => {
     />
   ))
 
+  const branch = await nombreRama()
+  imprimir(`🌴 branch: ${branch}`)
+  const commitId = await commitID()
+  imprimir(`🆔 commit-id: ${commitId}`)
+  const lastCommitDate = await commitDate()
+  imprimir(`🕙 commit-date: ${lastCommitDate}`)
+
   return {
     ...initialProps,
     emotionStyleTags,
+    branch,
+    commitId,
+    lastCommitDate,
   }
 }

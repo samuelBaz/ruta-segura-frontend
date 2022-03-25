@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
 
+import childProcess from 'child_process'
+
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -19,6 +21,22 @@ export const titleCase = (word: string) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')
   else word.toUpperCase()
+}
+
+export const execChildProcess = async (comando: string) => {
+  const childProcess = require('child_process')
+  return await new Promise((resolve, reject) => {
+    childProcess.exec(
+      comando,
+      (error: childProcess.ExecException, stdout: string, stderr: string) => {
+        if (error) {
+          reject(stderr)
+        } else {
+          resolve(stdout)
+        }
+      }
+    )
+  })
 }
 
 export const formatoFecha = (
