@@ -22,9 +22,19 @@ import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
 import { CustomDialog } from '../components/ui'
 import { CampoNombre } from '../components/ui/CampoNombre'
+import { useForm } from 'react-hook-form'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
+}
+
+type FormData = {
+  nroDocumento: string
+  nombres: string
+  primerApellido: string
+  segundoApellido: string
+  fechaNacimiento: string
+  correoElectronico: string
 }
 
 const Usuarios: NextPage = () => {
@@ -40,6 +50,12 @@ const Usuarios: NextPage = () => {
     UsuarioCRUDType | undefined | null
   >()
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>()
+
   const { sesionPeticion } = useAuth()
 
   const columnas: Array<ColumnaType> = [
@@ -52,15 +68,26 @@ const Usuarios: NextPage = () => {
   ]
 
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
-    (usuarioData) => [
-      <Typography variant={'body2'}>
+    (usuarioData, indexUsuario) => [
+      <Typography
+        key={`${usuarioData.id}-${indexUsuario}-tipoDoc`}
+        variant={'body2'}
+      >
         {`${usuarioData.persona.tipoDocumento} ${usuarioData.persona.nroDocumento}`}
       </Typography>,
-      <Typography variant={'body2'}>
+      <Typography
+        key={`${usuarioData.id}-${indexUsuario}-nombres`}
+        variant={'body2'}
+      >
         {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
       </Typography>,
-      <Typography variant={'body2'}>{usuarioData.usuario}</Typography>,
-      <Grid>
+      <Typography
+        key={`${usuarioData.id}-${indexUsuario}-usuario`}
+        variant={'body2'}
+      >
+        {usuarioData.usuario}
+      </Typography>,
+      <Grid key={`${usuarioData.id}-${indexUsuario}-roles`}>
         {usuarioData.usuarioRol.map((itemUsuarioRol, indexUsuarioRol) => (
           <Chip
             key={`usuario-rol-${indexUsuarioRol}`}
@@ -68,7 +95,7 @@ const Usuarios: NextPage = () => {
           />
         ))}
       </Grid>,
-      <Typography>
+      <Typography key={`${usuarioData.id}-${indexUsuario}-estado`}>
         <Button
           variant="outlined"
           sx={{ borderRadius: 12 }}
@@ -83,7 +110,7 @@ const Usuarios: NextPage = () => {
           {usuarioData.estado}
         </Button>
       </Typography>,
-      <Grid>
+      <Grid key={`${usuarioData.id}-${indexUsuario}-acciones`}>
         <IconoTooltip
           titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
           color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
@@ -117,14 +144,21 @@ const Usuarios: NextPage = () => {
   const acciones: Array<ReactNode> = [
     <IconoTooltip
       titulo={'Agregar usuario'}
+      key={`accionAgregarUsuario`}
       accion={() => {
         agregarUsuarioModal()
       }}
       icono={'add'}
     />,
-    <IconoTooltip titulo={'Buscar'} accion={() => {}} icono={'search'} />,
+    <IconoTooltip
+      titulo={'Buscar'}
+      key={`accionBuscarUsuario`}
+      accion={() => {}}
+      icono={'search'}
+    />,
     <IconoTooltip
       titulo={'Actualizar'}
+      key={`accionActualizarUsuario`}
       accion={async () => {
         await obtenerUsuariosPeticion()
       }}
@@ -171,9 +205,12 @@ const Usuarios: NextPage = () => {
   }
 
   const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
-    const usuarioNuevo = !!usuario
     return (
-      <>
+      <form
+        onSubmit={handleSubmit((data) => {
+          imprimir(data)
+        })}
+      >
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Box height={'10px'} />
           <Typography
@@ -189,6 +226,11 @@ const Usuarios: NextPage = () => {
                 <TextField
                   sx={{ width: '100%' }}
                   defaultValue={usuario?.persona.nroDocumento}
+                  {...register('nroDocumento', {
+                    required: 'Este campo es requerido',
+                  })}
+                  error={!!errors.nroDocumento}
+                  helperText={errors.nroDocumento?.message}
                 />
               </CampoNombre>
             </Grid>
@@ -197,6 +239,11 @@ const Usuarios: NextPage = () => {
                 <TextField
                   sx={{ width: '100%' }}
                   defaultValue={usuario?.persona.nombres}
+                  {...register('nombres', {
+                    required: 'Este campo es requerido',
+                  })}
+                  error={!!errors.nombres}
+                  helperText={errors.nombres?.message}
                 />
               </CampoNombre>
             </Grid>
@@ -204,7 +251,12 @@ const Usuarios: NextPage = () => {
               <CampoNombre name={'Primer apellido'}>
                 <TextField
                   sx={{ width: '100%' }}
-                  defaultValue={usuario?.persona.segundoApellido}
+                  defaultValue={usuario?.persona.primerApellido}
+                  {...register('primerApellido', {
+                    required: 'Este campo es requerido',
+                  })}
+                  error={!!errors.primerApellido}
+                  helperText={errors.primerApellido?.message}
                 />
               </CampoNombre>
             </Grid>
@@ -213,6 +265,11 @@ const Usuarios: NextPage = () => {
                 <TextField
                   sx={{ width: '100%' }}
                   defaultValue={usuario?.persona.segundoApellido}
+                  {...register('segundoApellido', {
+                    required: 'Este campo es requerido',
+                  })}
+                  error={!!errors.segundoApellido}
+                  helperText={errors.segundoApellido?.message}
                 />
               </CampoNombre>
             </Grid>
@@ -221,6 +278,11 @@ const Usuarios: NextPage = () => {
                 <TextField
                   sx={{ width: '100%' }}
                   defaultValue={usuario?.persona.fechaNacimiento}
+                  {...register('fechaNacimiento', {
+                    required: 'Este campo es requerido',
+                  })}
+                  error={!!errors.fechaNacimiento}
+                  helperText={errors.fechaNacimiento?.message}
                 />
               </CampoNombre>
             </Grid>
@@ -238,6 +300,11 @@ const Usuarios: NextPage = () => {
                   <TextField
                     sx={{ width: '100%' }}
                     defaultValue={usuario?.correoElectronico}
+                    {...register('correoElectronico', {
+                      required: 'Este campo es requerido',
+                    })}
+                    error={!!errors.correoElectronico}
+                    helperText={errors.correoElectronico?.message}
                   />
                 </CampoNombre>
               </Grid>
@@ -258,7 +325,7 @@ const Usuarios: NextPage = () => {
             <Button variant={'contained'}>Aceptar</Button>
           </DialogActions>
         </Grid>
-      </>
+      </form>
     )
   }
 
@@ -298,6 +365,7 @@ const Usuarios: NextPage = () => {
 
   useEffect(() => {
     obtenerUsuariosPeticion().finally(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

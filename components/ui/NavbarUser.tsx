@@ -139,7 +139,7 @@ export const NavbarUser = () => {
         handleClose={cerrarModalAyuda}
         title={'Información'}
       >
-        <Typography variant={'body2'}>
+        <Typography variant={'body2'} sx={{ pt: 2, pb: 2 }}>
           Propuesta de Frontend Base Administrador elaborado con NextJS y
           Typescript
         </Typography>

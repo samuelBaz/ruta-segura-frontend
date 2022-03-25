@@ -35,13 +35,25 @@ const Politicas: NextPage = () => {
   ]
 
   const contenidoTabla: Array<Array<ReactNode>> = politicasData.map(
-    (politicaData) => [
-      <Typography variant={'body2'}>{`${politicaData.sujeto}`}</Typography>,
-      <Typography variant={'body2'}>{`${politicaData.objeto}`}</Typography>,
-      <Typography variant={'body2'}>{`${politicaData.accion}`}</Typography>,
-      <Typography variant={'body2'}>{`${politicaData.app}`}</Typography>,
+    (politicaData, indexPolitica) => [
+      <Typography
+        key={`${politicaData.sujeto}-${indexPolitica}-sujeto`}
+        variant={'body2'}
+      >{`${politicaData.sujeto}`}</Typography>,
+      <Typography
+        key={`${politicaData.objeto}-${indexPolitica}-objeto`}
+        variant={'body2'}
+      >{`${politicaData.objeto}`}</Typography>,
+      <Typography
+        key={`${politicaData.accion}-${indexPolitica}-accion`}
+        variant={'body2'}
+      >{`${politicaData.accion}`}</Typography>,
+      <Typography
+        key={`${politicaData.accion}-${indexPolitica}-app`}
+        variant={'body2'}
+      >{`${politicaData.app}`}</Typography>,
 
-      <Grid>
+      <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
         <IconoTooltip
           titulo={'Editar'}
           accion={() => {
@@ -57,14 +69,21 @@ const Politicas: NextPage = () => {
   const acciones: Array<ReactNode> = [
     <IconoTooltip
       titulo={'Agregar política'}
+      key={`accionAgregarPolitica`}
       accion={() => {
         agregarPoliticaModal()
       }}
       icono={'add'}
     />,
-    <IconoTooltip titulo={'Buscar'} accion={() => {}} icono={'search'} />,
+    <IconoTooltip
+      titulo={'Buscar'}
+      key={`accionBuscarPolitica`}
+      accion={() => {}}
+      icono={'search'}
+    />,
     <IconoTooltip
       titulo={'Actualizar'}
+      key={`accionActualizarPolitica`}
       accion={async () => {
         await obtenerPoliticas()
       }}
@@ -113,6 +132,7 @@ const Politicas: NextPage = () => {
 
   useEffect(() => {
     obtenerPoliticas().finally(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

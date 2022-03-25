@@ -128,8 +128,8 @@ const Home: NextPage = () => {
                 >
                   <Typography sx={{ fontWeight: 'bold' }}>Roles</Typography>
                   <Grid>
-                    {usuario?.roles.map((itemUsuarioRol) => (
-                      <Chip label={itemUsuarioRol.rol} />
+                    {usuario?.roles.map((itemUsuarioRol, index) => (
+                      <Chip key={`${index}-idRol`} label={itemUsuarioRol.rol} />
                     ))}
                   </Grid>
                 </Grid>

@@ -17,7 +17,6 @@ interface Props {
   isOpen: boolean
   handleClose: () => void
   title: string
-  subtitle?: string
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -42,7 +41,6 @@ export const CustomDialog: FC<Props> = ({
   isOpen,
   handleClose,
   title,
-  subtitle,
   children,
 }) => {
   const theme = useTheme()
@@ -74,10 +72,7 @@ export const CustomDialog: FC<Props> = ({
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
-        <DialogContentText>{subtitle}</DialogContentText>
-        {children}
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
     </Dialog>
   )
 }

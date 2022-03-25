@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import type { NextPage } from 'next'
 import { LayoutLogin } from '../components/layouts/LayoutLogin'
 import Grid from '@mui/material/Grid'
@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Divider,
-  Fade,
   TextField,
   useMediaQuery,
   useTheme,
@@ -22,9 +21,7 @@ import ProgresoLineal from '../components/ui/ProgresoLineal'
 import { useFullScreenLoadingContext } from '../context/ui'
 
 const Login: NextPage = () => {
-  const { ingresar, progresoLogin, estaAutenticado } = useAuth()
-
-  const [loading, setLoading] = useState<boolean>(true)
+  const { ingresar, progresoLogin } = useAuth()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
@@ -45,7 +42,6 @@ const Login: NextPage = () => {
 
   const obtenerEstado = async () => {
     try {
-      setLoading(true)
       mostrarFullScreen()
       await delay(1000)
       const respuesta = await Servicios.get({
@@ -60,18 +56,17 @@ const Login: NextPage = () => {
       imprimir(`Error al obtener estado: ${e}`)
       Alertas.error(`${InterpreteMensajes(e)}`)
     } finally {
-      setLoading(false)
       ocultarFullScreen()
     }
   }
 
   const iniciarSesion = async ({ usuario, contrasena }: FormData) => {
     await ingresar({ usuario, contrasena })
-    if (estaAutenticado) setLoading(false)
   }
 
   useEffect(() => {
     obtenerEstado().then(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -157,7 +152,6 @@ const Login: NextPage = () => {
                   id="usuario"
                   defaultValue="ADMINISTRADOR-TECNICO"
                   disabled={progresoLogin}
-                  variant="outlined"
                   {...register('usuario', {
                     required: 'Este campo es requerido',
                   })}
@@ -170,7 +164,6 @@ const Login: NextPage = () => {
                   type={'password'}
                   defaultValue="123"
                   disabled={progresoLogin}
-                  variant="outlined"
                   {...register('contrasena', {
                     required: 'Este campo es requerido',
                     minLength: {

@@ -34,12 +34,22 @@ const Parametros: NextPage = () => {
   ]
 
   const contenidoTabla: Array<Array<ReactNode>> = parametrosData.map(
-    (parametroData) => [
-      <Typography variant={'body2'}>{`${parametroData.nombre}`}</Typography>,
-      <Typography variant={'body2'}>{`${parametroData.codigo}`}</Typography>,
-      <Typography variant={'body2'}>{`${parametroData.grupo}`}</Typography>,
-
-      <Grid>
+    (parametroData, indexParametro) => [
+      <Typography
+        key={`${parametroData.id}-${indexParametro}-nombre`}
+        variant={'body2'}
+      >
+        {`${parametroData.nombre}`}
+      </Typography>,
+      <Typography
+        key={`${parametroData.id}-${indexParametro}-codigo`}
+        variant={'body2'}
+      >{`${parametroData.codigo}`}</Typography>,
+      <Typography
+        key={`${parametroData.id}-${indexParametro}-grupo`}
+        variant={'body2'}
+      >{`${parametroData.grupo}`}</Typography>,
+      <Grid key={`${parametroData.id}-${indexParametro}-accion`}>
         <IconoTooltip
           titulo={'Editar'}
           accion={() => {
@@ -55,14 +65,21 @@ const Parametros: NextPage = () => {
   const acciones: Array<ReactNode> = [
     <IconoTooltip
       titulo={'Agregar parámetro'}
+      key={`accionAgregarParametro`}
       accion={() => {
         agregarParametroModal()
       }}
       icono={'add'}
     />,
-    <IconoTooltip titulo={'Buscar'} accion={() => {}} icono={'search'} />,
+    <IconoTooltip
+      titulo={'Buscar'}
+      key={`accionBuscarParametro`}
+      accion={() => {}}
+      icono={'search'}
+    />,
     <IconoTooltip
       titulo={'Actualizar'}
+      key={`accionActualizarParametro`}
       accion={async () => {
         await obtenerParametros()
       }}
@@ -113,6 +130,7 @@ const Parametros: NextPage = () => {
 
   useEffect(() => {
     obtenerParametros().finally(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
