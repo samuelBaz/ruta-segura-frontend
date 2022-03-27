@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "preinstall": "mkdir -p node_modules; touch ./node_modules/.metadata_never_index"
   },
   "dependencies": {
     "@emotion/cache": "latest",
