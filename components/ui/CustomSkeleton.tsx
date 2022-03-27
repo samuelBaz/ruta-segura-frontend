@@ -47,6 +47,7 @@ export const TableSkeleton = ({ filas, columnas }: TableSkeletonType) => {
                           key={`$skeleton-${fila}-${columna}`}
                           variant={'text'}
                           height={'30px'}
+                          animation={'wave'}
                         />
                       </TableCell>
                     ))}

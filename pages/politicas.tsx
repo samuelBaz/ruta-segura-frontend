@@ -1,13 +1,19 @@
 import type { NextPage } from 'next'
-import { Grid, Typography } from '@mui/material'
+import { Grid, TextField, Typography } from '@mui/material'
 import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType, PoliticaCRUDType } from '../types'
-import { Alertas, CustomDataTable, IconoTooltip } from '../components/ui'
+import {
+  Alertas,
+  CampoNombre,
+  CustomDataTable,
+  CustomDialog,
+  IconoTooltip,
+} from '../components/ui'
 import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
-import { CustomDialog } from '../components/ui/CustomDialog'
+import { Paginacion } from '../components/ui/Paginacion'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType
@@ -17,12 +23,13 @@ const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [errorPoliticasData, setErrorPoliticasData] = useState<any>()
-
   const [modalPolitica, setModalPolitica] = useState(false)
-
   const [politicaEdicion, setPoliticaEdicion] = useState<
     PoliticaCRUDType | undefined
   >()
+  const [limite, setLimite] = useState<number>(10)
+  const [pagina, setPagina] = useState<number>(1)
+  const [total, setTotal] = useState<number>(0)
 
   const { sesionPeticion } = useAuth()
 
@@ -76,12 +83,6 @@ const Politicas: NextPage = () => {
       icono={'add'}
     />,
     <IconoTooltip
-      titulo={'Buscar'}
-      key={`accionBuscarPolitica`}
-      accion={() => {}}
-      icono={'search'}
-    />,
-    <IconoTooltip
       titulo={'Actualizar'}
       key={`accionActualizarPolitica`}
       accion={async () => {
@@ -91,14 +92,30 @@ const Politicas: NextPage = () => {
     />,
   ]
 
+  const filtros: Array<ReactNode> = [
+    <CampoNombre key={`filtro1`} name={'Sujeto'}>
+      <TextField sx={{ width: '100%' }} />
+    </CampoNombre>,
+    <CampoNombre key={`filtro2`} name={'Objeto'}>
+      <TextField sx={{ width: '100%' }} />
+    </CampoNombre>,
+    <CampoNombre key={`filtro3`} name={'Acción'}>
+      <TextField sx={{ width: '100%' }} />
+    </CampoNombre>,
+    <CampoNombre key={`filtro4`} name={'App'}>
+      <TextField sx={{ width: '100%' }} />
+    </CampoNombre>,
+  ]
+
   const obtenerPoliticas = async () => {
     try {
       setLoading(true)
       await delay(1000)
       const respuesta = await sesionPeticion({
-        url: `${Constantes.baseUrl}/autorizacion/politicas`,
+        url: `${Constantes.baseUrl}/autorizacion/politicas?limite=${limite}&pagina=${pagina}`,
       })
       setPoliticasData(respuesta.datos?.filas)
+      setTotal(respuesta.datos?.total)
       setErrorPoliticasData(null)
     } catch (e) {
       imprimir(`Error al obtener políticas: ${e}`)
@@ -130,6 +147,29 @@ const Politicas: NextPage = () => {
     setModalPolitica(false)
   }
 
+  const cambiarPagina = async (pagina: number) => {
+    setPagina(pagina)
+  }
+
+  const cambiarLimite = async (limite: number) => {
+    setLimite(limite)
+  }
+
+  useEffect(() => {
+    obtenerPoliticas().finally(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagina, limite])
+
+  const paginacion = (
+    <Paginacion
+      pagina={pagina}
+      limite={limite}
+      total={total}
+      cambioPagina={cambiarPagina}
+      cambioLimite={cambiarLimite}
+    />
+  )
+
   useEffect(() => {
     obtenerPoliticas().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,7 +180,7 @@ const Politicas: NextPage = () => {
       <CustomDialog
         isOpen={modalPolitica}
         handleClose={cerrarModalPolitica}
-        title={'Información'}
+        title={politicaEdicion ? 'Editar política' : 'Nueva política'}
       >
         <VistaModalPolitica politica={politicaEdicion} />
       </CustomDialog>
@@ -151,7 +191,9 @@ const Politicas: NextPage = () => {
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
+          filtros={filtros}
           contenidoTabla={contenidoTabla}
+          paginacion={paginacion}
         />
       </LayoutUser>
     </>

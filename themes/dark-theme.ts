@@ -56,6 +56,7 @@ export const darkTheme = createTheme({
       defaultProps: {
         variant: 'outlined',
         margin: 'dense',
+        size: 'small',
       },
     },
   },

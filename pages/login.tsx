@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography'
 import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
 import { Servicios } from '../services'
-import { Alertas } from '../components/ui'
+import { Alertas, CampoNombre } from '../components/ui'
 import { useAuth } from '../context/auth'
 import { useForm } from 'react-hook-form'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
@@ -147,33 +147,39 @@ const Login: NextPage = () => {
                   Ingresa con el usuario y contraseña. Si estas en el frontend
                   base son ADMINISTRADOR / 123
                 </Typography>
-                <Typography sx={{ fontWeight: 'bold' }}>Usuario</Typography>
-                <TextField
-                  id="usuario"
-                  defaultValue="ADMINISTRADOR-TECNICO"
-                  disabled={progresoLogin}
-                  {...register('usuario', {
-                    required: 'Este campo es requerido',
-                  })}
-                  error={!!errors.usuario}
-                  helperText={errors.usuario?.message}
-                />
-                <Typography sx={{ fontWeight: 'bold' }}>Contraseña</Typography>
-                <TextField
-                  id="contrasena"
-                  type={'password'}
-                  defaultValue="123"
-                  disabled={progresoLogin}
-                  {...register('contrasena', {
-                    required: 'Este campo es requerido',
-                    minLength: {
-                      value: 3,
-                      message: 'Mínimo 3 caracteres',
-                    },
-                  })}
-                  error={!!errors.contrasena}
-                  helperText={errors.contrasena?.message}
-                />
+                <CampoNombre name={'Usuario'}>
+                  <TextField
+                    id="usuario"
+                    defaultValue="ADMINISTRADOR-TECNICO"
+                    size={'medium'}
+                    disabled={progresoLogin}
+                    {...register('usuario', {
+                      required: 'Este campo es requerido',
+                    })}
+                    sx={{ width: '100%' }}
+                    error={!!errors.usuario}
+                    helperText={errors.usuario?.message}
+                  />
+                </CampoNombre>
+                <CampoNombre name={'Contraseña'}>
+                  <TextField
+                    id="contrasena"
+                    type={'password'}
+                    defaultValue="123"
+                    size={'medium'}
+                    disabled={progresoLogin}
+                    {...register('contrasena', {
+                      required: 'Este campo es requerido',
+                      minLength: {
+                        value: 3,
+                        message: 'Mínimo 3 caracteres',
+                      },
+                    })}
+                    sx={{ width: '100%' }}
+                    error={!!errors.contrasena}
+                    helperText={errors.contrasena?.message}
+                  />
+                </CampoNombre>
 
                 <ProgresoLineal mostrar={progresoLogin} />
 

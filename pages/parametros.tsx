@@ -4,10 +4,14 @@ import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType, ParametroCRUDType } from '../types'
-import { Alertas, CustomDataTable, IconoTooltip } from '../components/ui'
+import {
+  Alertas,
+  CustomDataTable,
+  CustomDialog,
+  IconoTooltip,
+} from '../components/ui'
 import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
-import { CustomDialog } from '../components/ui/CustomDialog'
 
 export interface ModalParametroType {
   parametro?: ParametroCRUDType
@@ -70,12 +74,6 @@ const Parametros: NextPage = () => {
         agregarParametroModal()
       }}
       icono={'add'}
-    />,
-    <IconoTooltip
-      titulo={'Buscar'}
-      key={`accionBuscarParametro`}
-      accion={() => {}}
-      icono={'search'}
     />,
     <IconoTooltip
       titulo={'Actualizar'}

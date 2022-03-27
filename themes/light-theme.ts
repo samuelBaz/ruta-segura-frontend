@@ -56,6 +56,7 @@ export const lightTheme = createTheme({
       defaultProps: {
         variant: 'outlined',
         margin: 'dense',
+        size: 'small',
       },
     },
   },

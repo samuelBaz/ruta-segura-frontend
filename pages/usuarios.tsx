@@ -151,12 +151,6 @@ const Usuarios: NextPage = () => {
       icono={'add'}
     />,
     <IconoTooltip
-      titulo={'Buscar'}
-      key={`accionBuscarUsuario`}
-      accion={() => {}}
-      icono={'search'}
-    />,
-    <IconoTooltip
       titulo={'Actualizar'}
       key={`accionActualizarUsuario`}
       accion={async () => {

@@ -7,7 +7,7 @@ interface customTextFieldType {
 
 export const CampoNombre: FC<customTextFieldType> = ({ name, children }) => {
   return (
-    <Box sx={{ pb: 1 }}>
+    <Box sx={{ pb: 0 }}>
       <Typography
         color={'text.secondary'}
         sx={{ fontSize: 14, fontWeight: 'bold' }}
