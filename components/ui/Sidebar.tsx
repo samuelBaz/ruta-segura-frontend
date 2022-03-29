@@ -83,7 +83,8 @@ export const Sidebar = () => {
         estaAutenticado &&
         modulos.length > 0 &&
         !progresoLogin &&
-        !estadoFullScreen
+        !estadoFullScreen &&
+        !modulos.find((modulo) => rutaActiva(modulo.url, router.pathname))
       }
       onClose={closeSideMenu}
       ModalProps={{

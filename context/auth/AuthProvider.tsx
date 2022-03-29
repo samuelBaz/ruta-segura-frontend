@@ -100,9 +100,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
           }
         }
         await delay(1000)
-        await router.replace({
-          pathname: '/home',
-        })
       } catch (error) {
         eliminarCookie('token')
         await router.replace({

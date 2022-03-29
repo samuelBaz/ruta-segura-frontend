@@ -1,10 +1,13 @@
 import { Box, Grid } from '@mui/material'
 import Head from 'next/head'
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 
 import { NavbarUser } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
 import { UIContext } from '../../context/ui'
+import { imprimir } from '../../utils'
+import { useRouter } from 'next/router'
+import { useAuth } from '../../context/auth'
 
 interface Props {
   title?: string
@@ -15,6 +18,20 @@ export const LayoutUser: FC<Props> = ({
   children,
 }) => {
   const { sidemenuOpen } = useContext(UIContext)
+  const router = useRouter()
+  const { estaAutenticado, cerrarSesion, progresoLogin } = useAuth()
+
+  useEffect(() => {
+    imprimir(
+      `🎨 useEffect LayoutUser: ${router.pathname} - autenticado: ${estaAutenticado} - loading: ${progresoLogin}`
+    )
+    if (!progresoLogin)
+      if (!estaAutenticado) {
+        imprimir(`🥾 Cerrando sesión desde ${router.pathname}`)
+        cerrarSesion()
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progresoLogin])
 
   return (
     <Grid

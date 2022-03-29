@@ -12,12 +12,12 @@ import {
 import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
 import React from 'react'
-import { formatoFecha, titleCase } from '../utils'
+import { formatoFecha, imprimir, titleCase } from '../utils'
 import { Icono } from '../components/ui'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
-const Home: NextPage = () => {
-  const { usuario } = useAuth()
+const Perfil: NextPage = () => {
+  const { usuario, estaAutenticado } = useAuth()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
@@ -138,7 +138,9 @@ const Home: NextPage = () => {
                 <Box display={'flex'}>
                   <Button
                     size="large"
-                    onClick={() => {}}
+                    onClick={() => {
+                      imprimir(`estaAutenticado: ${estaAutenticado}`)
+                    }}
                     color="primary"
                     variant="contained"
                     style={{ textTransform: 'none' }}
@@ -158,4 +160,5 @@ const Home: NextPage = () => {
     </LayoutUser>
   )
 }
-export default Home
+
+export default Perfil
