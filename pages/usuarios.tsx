@@ -18,7 +18,7 @@ import {
 import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType, UsuarioCRUDType } from '../types'
 import { Constantes } from '../config'
-import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
+import { imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
 import { CustomDialog } from '../components/ui'
 import { CampoNombre } from '../components/ui/CampoNombre'
@@ -148,7 +148,7 @@ const Usuarios: NextPage = () => {
       accion={() => {
         agregarUsuarioModal()
       }}
-      icono={'add'}
+      icono={'add_circle_outline'}
     />,
     <IconoTooltip
       titulo={'Actualizar'}
@@ -163,7 +163,7 @@ const Usuarios: NextPage = () => {
   const obtenerUsuariosPeticion = async () => {
     try {
       setLoading(true)
-      await delay(1000)
+
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios`,
       })

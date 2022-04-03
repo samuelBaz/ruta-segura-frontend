@@ -11,7 +11,7 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../components/ui'
-import { delay, imprimir, InterpreteMensajes } from '../utils'
+import { imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
 import { Paginacion } from '../components/ui/Paginacion'
 
@@ -80,7 +80,7 @@ const Politicas: NextPage = () => {
       accion={() => {
         agregarPoliticaModal()
       }}
-      icono={'add'}
+      icono={'add_circle_outline'}
     />,
     <IconoTooltip
       titulo={'Actualizar'}
@@ -110,7 +110,7 @@ const Politicas: NextPage = () => {
   const obtenerPoliticas = async () => {
     try {
       setLoading(true)
-      await delay(1000)
+
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/politicas?limite=${limite}&pagina=${pagina}`,
       })

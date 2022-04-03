@@ -16,6 +16,7 @@ import {
 } from '@mui/material'
 
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
+import MenuOpenOutlined from '@mui/icons-material/MenuOpenOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
 import { UIContext, useFullScreenLoadingContext } from '../../context/ui'
@@ -164,7 +165,7 @@ export const NavbarUser = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuOutlinedIcon />
+            {sidemenuOpen ? <MenuOpenOutlined /> : <MenuOutlinedIcon />}
           </IconButton>
           <Typography
             color={'text.secondary'}

@@ -10,7 +10,7 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../components/ui'
-import { delay, imprimir, InterpreteMensajes } from '../utils'
+import { imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
 
 export interface ModalParametroType {
@@ -73,7 +73,7 @@ const Parametros: NextPage = () => {
       accion={() => {
         agregarParametroModal()
       }}
-      icono={'add'}
+      icono={'add_circle_outline'}
     />,
     <IconoTooltip
       titulo={'Actualizar'}
@@ -88,7 +88,7 @@ const Parametros: NextPage = () => {
   const obtenerParametros = async () => {
     try {
       setLoading(true)
-      await delay(1000)
+
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros`,
       })
