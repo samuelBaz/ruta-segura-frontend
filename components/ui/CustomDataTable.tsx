@@ -3,7 +3,6 @@ import { ColumnaType } from '../../types'
 import {
   Box,
   Card,
-  CardActionArea,
   CardContent,
   Collapse,
   Fade,
@@ -189,7 +188,7 @@ export const CustomDataTable = ({
                   {sm || xs ? (
                     <TableBody>
                       {contenidoTabla.map((contenidoFila, index) => (
-                        <CardActionArea
+                        <Card // en lugar de CardActionArea para no usar hover en movil
                           sx={{
                             borderRadius: 3,
                             mb: 2,
@@ -226,7 +225,7 @@ export const CustomDataTable = ({
                               )}
                             </CardContent>
                           </Card>
-                        </CardActionArea>
+                        </Card>
                       ))}
                     </TableBody>
                   ) : (

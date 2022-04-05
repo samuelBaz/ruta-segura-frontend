@@ -55,11 +55,11 @@ export const LayoutUser: FC<Props> = ({
       <Box
         component="main"
         sx={{
-          width: sidemenuOpen ? '78%' : '100%',
+          width: sm || xs ? '100%' : sidemenuOpen ? '78%' : '100%',
           // backgroundColor: 'primary.main',
           display: 'flex',
           flexDirection: 'column',
-          ml: sidemenuOpen ? '240px' : '0%',
+          ml: sm || xs ? '0%' : sidemenuOpen ? '240px' : '0%',
           transition: 'all 0.1s ease-out !important',
         }}
       >
