@@ -133,41 +133,82 @@ export const CustomDataTable = ({
           {error ? (
             <TableContainer>
               <Table>
-                <TableRow>
-                  <TableCell />
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <Grid
-                      container
-                      spacing={0}
-                      direction="column"
-                      alignItems="center"
-                      justifyContent="center"
-                      justifyItems={'center'}
-                    >
-                      <Grid item xs={3} xl={4}>
-                        <Typography
-                          variant={'body1'}
-                          component="h1"
-                          noWrap={true}
-                          alignItems={'center'}
-                        >
-                          {`Error obteniendo información`}
-                        </Typography>
+                <TableBody>
+                  <TableRow>
+                    <TableCell />
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        justifyItems={'center'}
+                      >
+                        <Grid item xs={3} xl={4}>
+                          <Typography
+                            variant={'body1'}
+                            component="h1"
+                            noWrap={true}
+                            alignItems={'center'}
+                          >
+                            {`Error obteniendo información`}
+                          </Typography>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </TableCell>
-                </TableRow>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
               </Table>
             </TableContainer>
           ) : (
             <Box>
-              <TableContainer>
-                <Table>
-                  {xs ? (
-                    <TableHead />
-                  ) : (
+              {xs ? (
+                <div>
+                  {contenidoTabla.map((contenidoFila, index) => (
+                    <Card // en lugar de CardActionArea para no usar hover en movil
+                      sx={{
+                        borderRadius: 3,
+                        mb: 2,
+                      }}
+                      key={`row-id-${index}`}
+                    >
+                      <Card
+                        key={`celda-id-${index}`}
+                        sx={{
+                          borderRadius: 3,
+                        }}
+                      >
+                        <CardContent>
+                          {contenidoFila.map((contenido, indexContenido) => (
+                            <Grid
+                              key={`Grid-id-${index}-${indexContenido}`}
+                              container
+                              direction="row"
+                              paddingTop={'5px'}
+                              paddingBottom={'5px'}
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <Typography
+                                color="text.secondary"
+                                variant={'subtitle2'}
+                              >
+                                {columnas[indexContenido].nombre}
+                              </Typography>
+                              {contenido}
+                            </Grid>
+                          ))}
+                        </CardContent>
+                      </Card>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <TableContainer>
+                  <Table>
                     <TableHead>
                       <TableRow>
                         {columnas.map((columna, index) => (
@@ -179,51 +220,6 @@ export const CustomDataTable = ({
                         ))}
                       </TableRow>
                     </TableHead>
-                  )}
-                  {xs ? (
-                    <TableBody>
-                      {contenidoTabla.map((contenidoFila, index) => (
-                        <Card // en lugar de CardActionArea para no usar hover en movil
-                          sx={{
-                            borderRadius: 3,
-                            mb: 2,
-                          }}
-                          key={`row-id-${index}`}
-                        >
-                          <Card
-                            key={`celda-id-${index}`}
-                            sx={{
-                              borderRadius: 3,
-                            }}
-                          >
-                            <CardContent>
-                              {contenidoFila.map(
-                                (contenido, indexContenido) => (
-                                  <Grid
-                                    key={`Grid-id-${index}-${indexContenido}`}
-                                    container
-                                    direction="row"
-                                    paddingTop={'5px'}
-                                    paddingBottom={'5px'}
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                  >
-                                    <Typography
-                                      color="text.secondary"
-                                      variant={'subtitle2'}
-                                    >
-                                      {columnas[indexContenido].nombre}
-                                    </Typography>
-                                    {contenido}
-                                  </Grid>
-                                )
-                              )}
-                            </CardContent>
-                          </Card>
-                        </Card>
-                      ))}
-                    </TableBody>
-                  ) : (
                     <TableBody>
                       {contenidoTabla.map(
                         (contenidoFila, indexContenidoTabla) => (
@@ -244,9 +240,9 @@ export const CustomDataTable = ({
                         )
                       )}
                     </TableBody>
-                  )}
-                </Table>
-              </TableContainer>
+                  </Table>
+                </TableContainer>
+              )}
               {paginacion}
             </Box>
           )}
