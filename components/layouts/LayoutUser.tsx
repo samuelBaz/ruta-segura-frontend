@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, useMediaQuery, useTheme } from '@mui/material'
 import Head from 'next/head'
 import React, { FC, useContext, useEffect } from 'react'
 
@@ -32,6 +32,10 @@ export const LayoutUser: FC<Props> = ({
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progresoLogin])
+
+  const theme = useTheme()
+  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   return (
     <Grid
@@ -69,7 +73,12 @@ export const LayoutUser: FC<Props> = ({
           justifyItems={'center'}
           style={{ minHeight: '80vh' }}
         >
-          <div style={{ height: '75vh', width: '95%' }}>
+          <div
+            style={{
+              height: '75vh',
+              width: xs || sm ? '90%' : '95%',
+            }}
+          >
             <Box height={'30px'} />
             {children}
           </div>
