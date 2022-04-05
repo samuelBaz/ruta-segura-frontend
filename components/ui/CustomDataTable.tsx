@@ -81,6 +81,7 @@ export const CustomDataTable = ({
                       setMostrarFiltro(!mostrarFiltro)
                     }}
                     icono={mostrarFiltro ? 'filter_list_off' : 'filter_list'}
+                    name={mostrarFiltro ? 'Ocultar filtros' : 'Mostrar filtros'}
                   />
                 </div>
               )}

@@ -1,9 +1,9 @@
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { CustomDialog } from './CustomDialog'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import ThemeSwitcherButton from './ThemeSwitcherButton'
+import { IconoTooltip } from './IconoTooltip'
 
 export const NavbarLogin = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -31,15 +31,14 @@ export const NavbarLogin = () => {
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton
-            size="large"
-            onClick={() => {
+          <IconoTooltip
+            titulo={'Ayuda'}
+            accion={() => {
               abrirModalAyuda()
             }}
-            color="primary"
-          >
-            <HelpOutlineOutlinedIcon />
-          </IconButton>
+            icono={'help_outline'}
+            name={'Ayuda'}
+          />
           <ThemeSwitcherButton />
         </Toolbar>
       </AppBar>

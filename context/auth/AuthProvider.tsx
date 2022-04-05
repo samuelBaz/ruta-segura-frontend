@@ -99,6 +99,13 @@ export const AuthProvider = ({ children }: AuthContextType) => {
             })
           }
         }
+
+        if (router.pathname == '/login' || router.pathname == '/')
+          // TODO: Verificar si el usuario tiene permiso de acceder a la ruta
+          await router.replace({
+            pathname: '/home',
+          })
+
         await delay(1000)
       } catch (error) {
         eliminarCookie('token')

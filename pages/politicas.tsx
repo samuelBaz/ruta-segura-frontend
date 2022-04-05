@@ -68,6 +68,7 @@ const Politicas: NextPage = () => {
             editarPoliticaModal(politicaData)
           }}
           icono={'edit'}
+          name={'Editar política'}
         />
       </Grid>,
     ]
@@ -81,6 +82,7 @@ const Politicas: NextPage = () => {
         agregarPoliticaModal()
       }}
       icono={'add_circle_outline'}
+      name={'Agregar política'}
     />,
     <IconoTooltip
       titulo={'Actualizar'}
@@ -89,6 +91,7 @@ const Politicas: NextPage = () => {
         await obtenerPoliticas()
       }}
       icono={'refresh'}
+      name={'Actualizar lista de políticas'}
     />,
   ]
 

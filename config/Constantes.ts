@@ -1,7 +1,7 @@
 const _baseUrl = {
-  test: `http://localhost:3000`,
-  development: 'https://proyecto-base.test.gtic.gob.bo/ws/api/',
-  production: 'https://your-production-url.com/',
+  development: 'http://localhost:3000',
+  test: `https://proyecto-base.test.gtic.gob.bo/ws/api/`,
+  production: 'https://proyecto-base.test.gtic.gob.bo/ws/api/',
 }
 
 export const Constantes = {

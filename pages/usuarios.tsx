@@ -120,6 +120,11 @@ const Usuarios: NextPage = () => {
           }}
           desactivado={usuarioData.estado == 'PENDIENTE'}
           icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+          name={
+            usuarioData.estado == 'ACTIVO'
+              ? 'Inactivar Usuario'
+              : 'Activar Usuario'
+          }
         />
         <IconoTooltip
           titulo={'Restablecer contraseña'}
@@ -128,6 +133,7 @@ const Usuarios: NextPage = () => {
             imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
           }}
           icono={'vpn_key'}
+          name={'Restablecer contraseña'}
         />
         <IconoTooltip
           titulo={'Editar'}
@@ -136,6 +142,7 @@ const Usuarios: NextPage = () => {
             editarUsuarioModal(usuarioData)
           }}
           icono={'edit'}
+          name={'Editar usuario'}
         />
       </Grid>,
     ]
@@ -149,6 +156,7 @@ const Usuarios: NextPage = () => {
         agregarUsuarioModal()
       }}
       icono={'add_circle_outline'}
+      name={'Agregar usuario'}
     />,
     <IconoTooltip
       titulo={'Actualizar'}
@@ -157,6 +165,7 @@ const Usuarios: NextPage = () => {
         await obtenerUsuariosPeticion()
       }}
       icono={'refresh'}
+      name={'Actualizar lista de usuario'}
     />,
   ]
 

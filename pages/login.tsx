@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import {
   Box,
   Button,
+  Card,
   Divider,
   TextField,
   useMediaQuery,
@@ -65,13 +66,17 @@ const Login: NextPage = () => {
   }
 
   useEffect(() => {
-    obtenerEstado().then(() => {})
+    // obtenerEstado().then(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <LayoutLogin title={'Frontend base - NextJS'}>
-      <form onSubmit={handleSubmit(iniciarSesion)} noValidate>
+      <form
+        onSubmit={handleSubmit(iniciarSesion)}
+        name={'Formulario de inicio de sesión'}
+        noValidate
+      >
         <Grid container justifyContent="space-evenly" alignItems={'center'}>
           <Grid item xl={6} md={5} xs={12}>
             <Box
@@ -123,75 +128,77 @@ const Login: NextPage = () => {
             </Box>
           </Grid>
           <Grid item xl={4} md={5} xs={12}>
-            <Box
-              display={'flex'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              color={'primary'}
-            >
+            <Card sx={{ borderRadius: 4, p: 4 }}>
               <Box
-                display={'grid'}
+                display={'flex'}
                 justifyContent={'center'}
                 alignItems={'center'}
-                height={400}
-                maxWidth={450}
+                color={'primary'}
               >
-                <Typography
-                  align={'center'}
-                  color={'primary'}
-                  sx={{ flexGrow: 1, fontWeight: 'bold' }}
+                <Box
+                  display={'grid'}
+                  justifyContent={'center'}
+                  alignItems={'center'}
+                  height={400}
+                  maxWidth={450}
                 >
-                  Iniciar Sesión
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Ingresa con el usuario y contraseña. Si estas en el frontend
-                  base son ADMINISTRADOR / 123
-                </Typography>
-                <CampoNombre name={'Usuario'}>
-                  <TextField
-                    id="usuario"
-                    defaultValue="ADMINISTRADOR-TECNICO"
-                    size={'medium'}
-                    disabled={progresoLogin}
-                    {...register('usuario', {
-                      required: 'Este campo es requerido',
-                    })}
-                    sx={{ width: '100%' }}
-                    error={!!errors.usuario}
-                    helperText={errors.usuario?.message}
-                  />
-                </CampoNombre>
-                <CampoNombre name={'Contraseña'}>
-                  <TextField
-                    id="contrasena"
-                    type={'password'}
-                    defaultValue="123"
-                    size={'medium'}
-                    disabled={progresoLogin}
-                    {...register('contrasena', {
-                      required: 'Este campo es requerido',
-                      minLength: {
-                        value: 3,
-                        message: 'Mínimo 3 caracteres',
-                      },
-                    })}
-                    sx={{ width: '100%' }}
-                    error={!!errors.contrasena}
-                    helperText={errors.contrasena?.message}
-                  />
-                </CampoNombre>
+                  <Typography
+                    align={'center'}
+                    color={'primary'}
+                    sx={{ flexGrow: 1, fontWeight: 'bold' }}
+                  >
+                    Iniciar Sesión
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    Este es un ejemplo de Login, las credenciales estan
+                    predefinidas en los campos de texto
+                  </Typography>
+                  <CampoNombre name={'Usuario'}>
+                    <TextField
+                      id="usuario"
+                      defaultValue="ADMINISTRADOR-TECNICO"
+                      size={'medium'}
+                      disabled={progresoLogin}
+                      {...register('usuario', {
+                        required: 'Este campo es requerido',
+                      })}
+                      sx={{ width: '100%' }}
+                      error={!!errors.usuario}
+                      helperText={errors.usuario?.message}
+                    />
+                  </CampoNombre>
+                  <CampoNombre name={'Contraseña'}>
+                    <TextField
+                      id="contrasena"
+                      type={'password'}
+                      defaultValue="123"
+                      size={'medium'}
+                      disabled={progresoLogin}
+                      {...register('contrasena', {
+                        required: 'Este campo es requerido',
+                        minLength: {
+                          value: 3,
+                          message: 'Mínimo 3 caracteres',
+                        },
+                      })}
+                      sx={{ width: '100%' }}
+                      error={!!errors.contrasena}
+                      helperText={errors.contrasena?.message}
+                    />
+                  </CampoNombre>
 
-                <ProgresoLineal mostrar={progresoLogin} />
+                  <ProgresoLineal mostrar={progresoLogin} />
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={progresoLogin}
-                >
-                  Ingresar
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={progresoLogin}
+                  >
+                    Ingresar
+                  </Button>
+                </Box>
               </Box>
-            </Box>
+            </Card>
           </Grid>
         </Grid>
       </form>

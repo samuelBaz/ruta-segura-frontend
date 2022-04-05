@@ -31,7 +31,6 @@ const Home: NextPage = () => {
             variant={'h5'}
             component="h1"
             noWrap={true}
-            color={'text.secondary'}
             sx={{ flexGrow: 1, fontWeight: 'bold' }}
           >
             Bienveni@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}
@@ -91,12 +90,18 @@ const Home: NextPage = () => {
                           key={`$subModulo-${index}-${index1}-${index2}`}
                         >
                           <CardActionArea
-                            sx={{ borderRadius: 3 }}
+                            sx={{
+                              borderRadius: 3,
+                            }}
                             onClick={async () => {
                               await router.push(subModulo.url)
                             }}
                           >
-                            <Card>
+                            <Card
+                              sx={{
+                                borderRadius: 3,
+                              }}
+                            >
                               <CardContent>
                                 <Grid container direction="row">
                                   <Icono>{subModulo.propiedades.icono}</Icono>

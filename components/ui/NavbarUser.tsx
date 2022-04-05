@@ -153,6 +153,7 @@ export const NavbarUser = () => {
         <Toolbar>
           <IconButton
             size="large"
+            name={sidemenuOpen ? 'Cerrar menú lateral' : 'Abrir menú lateral'}
             edge="start"
             color={'primary'}
             onClick={() => {
@@ -180,6 +181,7 @@ export const NavbarUser = () => {
               abrirModalAyuda()
             }}
             icono={'help_outline'}
+            name={'Ayuda'}
           />
           {!(sm || xs) && <ThemeSwitcherButton />}
           <Button

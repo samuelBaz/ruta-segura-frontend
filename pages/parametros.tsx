@@ -61,6 +61,7 @@ const Parametros: NextPage = () => {
             editarParametroModal(parametroData)
           }}
           icono={'edit'}
+          name={'Parámetros'}
         />
       </Grid>,
     ]
@@ -74,6 +75,7 @@ const Parametros: NextPage = () => {
         agregarParametroModal()
       }}
       icono={'add_circle_outline'}
+      name={'Agregar parámetro'}
     />,
     <IconoTooltip
       titulo={'Actualizar'}
@@ -82,6 +84,7 @@ const Parametros: NextPage = () => {
         await obtenerParametros()
       }}
       icono={'refresh'}
+      name={'Actualizar lista de parámetros'}
     />,
   ]
 

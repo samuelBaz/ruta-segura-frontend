@@ -25,6 +25,11 @@ export default class MyDocument extends Document {
             name={'c-dt'}
             content={`${(this.props as any).lastCommitDate}`}
           />
+
+          <meta
+            name="description"
+            content="Frontend base con Next.js, MUI v5 y TypeScript"
+          />
         </Head>
         <body>
           <Main />

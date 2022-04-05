@@ -119,6 +119,7 @@ export const Paginacion: FC<Props> = ({
               await cambioPagina(pagina - 1)
             }}
             icono={'chevron_left'}
+            name={'Anterior página'}
           />
           <IconoTooltip
             desactivado={pagina * limite >= total}
@@ -127,6 +128,7 @@ export const Paginacion: FC<Props> = ({
               await cambioPagina(pagina + 1)
             }}
             icono={'chevron_right'}
+            name={'Siguiente página'}
           />
         </Box>
       </Grid>

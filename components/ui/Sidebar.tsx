@@ -96,7 +96,7 @@ export const Sidebar = () => {
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
-          borderWidth: 0.05,
+          borderWidth: 0.0,
           boxSizing: 'border-box',
         },
         transition: 'all 0.1s ease-out',
