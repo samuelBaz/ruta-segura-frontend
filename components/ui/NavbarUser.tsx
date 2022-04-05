@@ -169,7 +169,7 @@ export const NavbarUser = () => {
             {sidemenuOpen ? <MenuOpenOutlined /> : <MenuOutlinedIcon />}
           </IconButton>
           <Typography
-            color={'text.secondary'}
+            color={'text.primary'}
             component="div"
             sx={{ flexGrow: 1, fontWeight: 'bold' }}
           >

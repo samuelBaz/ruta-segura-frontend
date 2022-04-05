@@ -42,7 +42,7 @@ export const CustomDataTable = ({
   paginacion,
 }: CustomDataTableType) => {
   const theme = useTheme()
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  // const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const [mostrarFiltro, setMostrarFiltro] = useState(false)
@@ -51,17 +51,16 @@ export const CustomDataTable = ({
       sx={{
         borderRadius: 4,
         pt: 3,
-        pl: { md: 5, xl: 5 },
-        pr: { md: 5, xl: 5 },
-        pb: { md: 5, xl: 5 },
-        mb: { md: 5, xl: 5 },
-        backgroundColor:
-          xs || sm
-            ? {
-                sm: 'inherit',
-                xs: 'inherit',
-              }
-            : {},
+        pl: { sm: 3, md: 3, xl: 3 },
+        pr: { sm: 3, md: 3, xl: 3 },
+        pb: { sm: 3, md: 3, xl: 3 },
+        mb: { sm: 3, md: 3, xl: 3 },
+        backgroundColor: xs
+          ? {
+              sm: 'inherit',
+              xs: 'inherit',
+            }
+          : {},
       }}
     >
       {/*titulo y acciones*/}
@@ -71,11 +70,7 @@ export const CustomDataTable = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography
-          variant={'h5'}
-          sx={{ fontWeight: 'bold' }}
-          color={'text.secondary'}
-        >
+        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
           {`${titulo}`}
         </Typography>
         <Fade in={!cargando} timeout={0}>
@@ -107,7 +102,7 @@ export const CustomDataTable = ({
           </Typography>
         </Fade>
       </Grid>
-      <Box height={'30px'} />
+      <Box height={'10px'} />
       {/* filtros */}
       <Collapse in={mostrarFiltro}>
         <Grid
@@ -127,7 +122,7 @@ export const CustomDataTable = ({
       {/*Contenedor de la tabla*/}
       {cargando ? (
         <>
-          {sm || xs ? (
+          {xs ? (
             <ListSkeleton filas={5} />
           ) : (
             <TableSkeleton filas={5} columnas={5} />
@@ -170,7 +165,7 @@ export const CustomDataTable = ({
             <Box>
               <TableContainer>
                 <Table>
-                  {sm || xs ? (
+                  {xs ? (
                     <TableHead />
                   ) : (
                     <TableHead>
@@ -185,7 +180,7 @@ export const CustomDataTable = ({
                       </TableRow>
                     </TableHead>
                   )}
-                  {sm || xs ? (
+                  {xs ? (
                     <TableBody>
                       {contenidoTabla.map((contenidoFila, index) => (
                         <Card // en lugar de CardActionArea para no usar hover en movil
