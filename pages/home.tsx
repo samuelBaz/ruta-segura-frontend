@@ -40,9 +40,7 @@ const Home: NextPage = () => {
                 ''
             )}
           </Typography>
-          <Typography variant={'subtitle2'} color="text.secondary">
-            {rolUsuario?.nombre}
-          </Typography>
+          <Typography variant={'subtitle2'}>{rolUsuario?.nombre}</Typography>
         </Grid>
       </Grid>
       <Grid>
@@ -67,10 +65,7 @@ const Home: NextPage = () => {
                   >
                     <Grid>
                       <Box height={'20px'} />
-                      <Typography
-                        color="text.secondary"
-                        sx={{ fontSize: 14, fontWeight: 'bold' }}
-                      >
+                      <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
                         {modulo.label}
                       </Typography>
                       <Box height={'20px'} />
@@ -108,7 +103,6 @@ const Home: NextPage = () => {
                                   <Box height={'30px'} width={'10px'} />
                                   <Typography
                                     sx={{ fontSize: 14 }}
-                                    color="text.secondary"
                                     gutterBottom
                                   >
                                     {`${subModulo.label}`}

@@ -102,7 +102,7 @@ export const CustomDataTable = ({
           </Typography>
         </Fade>
       </Grid>
-      <Box height={'10px'} />
+      <Box height={xs ? '30px' : '10px'} />
       {/* filtros */}
       <Collapse in={mostrarFiltro}>
         <Grid
