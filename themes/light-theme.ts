@@ -4,13 +4,13 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: '#FFF',
+      default: '#F6F6F7',
     },
     primary: {
-      main: '#006874',
+      main: '#3C5BA9',
     },
     secondary: {
-      main: '#4A6266',
+      main: '#585E71',
     },
     error: {
       main: '#BA1B1B',
@@ -48,7 +48,7 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: '#F7F7F8',
+          backgroundColor: '#FFFFFF',
         },
       },
     },
