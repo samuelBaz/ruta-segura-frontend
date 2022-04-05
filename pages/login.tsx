@@ -106,10 +106,10 @@ const Login: NextPage = () => {
             item
             sx={{
               display: {
-                xs: 'none',
-                xl: 'block',
-                md: 'block',
                 sm: 'none',
+                xs: 'none',
+                md: 'block',
+                xl: 'block',
               },
             }}
           >

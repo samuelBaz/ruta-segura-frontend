@@ -69,7 +69,7 @@ export const LayoutUser: FC<Props> = ({
           justifyItems={'center'}
           style={{ minHeight: '80vh' }}
         >
-          <div style={{ height: '75vh', width: '90%' }}>
+          <div style={{ height: '75vh', width: '95%' }}>
             <Box height={'30px'} />
             {children}
           </div>

@@ -47,7 +47,7 @@ const Home: NextPage = () => {
       </Grid>
       <Grid>
         <Box height={'20px'} />
-        <Typography color="text.secondary" sx={{ fontSize: 14 }}>
+        <Typography sx={{ fontSize: 14 }}>
           Puedes ver los siguientes modulos:
         </Typography>
         <Box height={'10px'} />

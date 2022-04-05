@@ -2,6 +2,9 @@ import React, { ReactNode, useState } from 'react'
 import { ColumnaType } from '../../types'
 import {
   Box,
+  Card,
+  CardActionArea,
+  CardContent,
   Collapse,
   Fade,
   Grid,
@@ -45,7 +48,23 @@ export const CustomDataTable = ({
 
   const [mostrarFiltro, setMostrarFiltro] = useState(false)
   return (
-    <div>
+    <Card
+      sx={{
+        borderRadius: 4,
+        pt: 3,
+        pl: { md: 5, xl: 5 },
+        pr: { md: 5, xl: 5 },
+        pb: { md: 5, xl: 5 },
+        mb: { md: 5, xl: 5 },
+        backgroundColor:
+          xs || sm
+            ? {
+                sm: 'inherit',
+                xs: 'inherit',
+              }
+            : {},
+      }}
+    >
       {/*titulo y acciones*/}
       <Grid
         container
@@ -170,29 +189,44 @@ export const CustomDataTable = ({
                   {sm || xs ? (
                     <TableBody>
                       {contenidoTabla.map((contenidoFila, index) => (
-                        <TableRow key={`row-id-${index}`} hover={true}>
-                          <TableCell key={`celda-id-${index}`}>
-                            {contenidoFila.map((contenido, indexContenido) => (
-                              <Grid
-                                key={`Grid-id-${index}-${indexContenido}`}
-                                container
-                                direction="row"
-                                paddingTop={'5px'}
-                                paddingBottom={'5px'}
-                                justifyContent="space-between"
-                                alignItems="center"
-                              >
-                                <Typography
-                                  color="text.secondary"
-                                  variant={'subtitle2'}
-                                >
-                                  {columnas[indexContenido].nombre}
-                                </Typography>
-                                {contenido}
-                              </Grid>
-                            ))}
-                          </TableCell>
-                        </TableRow>
+                        <CardActionArea
+                          sx={{
+                            borderRadius: 3,
+                            mb: 2,
+                          }}
+                          key={`row-id-${index}`}
+                        >
+                          <Card
+                            key={`celda-id-${index}`}
+                            sx={{
+                              borderRadius: 3,
+                            }}
+                          >
+                            <CardContent>
+                              {contenidoFila.map(
+                                (contenido, indexContenido) => (
+                                  <Grid
+                                    key={`Grid-id-${index}-${indexContenido}`}
+                                    container
+                                    direction="row"
+                                    paddingTop={'5px'}
+                                    paddingBottom={'5px'}
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                  >
+                                    <Typography
+                                      color="text.secondary"
+                                      variant={'subtitle2'}
+                                    >
+                                      {columnas[indexContenido].nombre}
+                                    </Typography>
+                                    {contenido}
+                                  </Grid>
+                                )
+                              )}
+                            </CardContent>
+                          </Card>
+                        </CardActionArea>
                       ))}
                     </TableBody>
                   ) : (
@@ -224,6 +258,6 @@ export const CustomDataTable = ({
           )}
         </Fade>
       )}
-    </div>
+    </Card>
   )
 }

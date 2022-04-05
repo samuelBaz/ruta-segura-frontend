@@ -1,5 +1,5 @@
 const _baseUrl = {
-  development: 'http://localhost:3000',
+  development: `https://proyecto-base.test.gtic.gob.bo/ws/api/`,
   test: `https://proyecto-base.test.gtic.gob.bo/ws/api/`,
   production: 'https://proyecto-base.test.gtic.gob.bo/ws/api/',
 }
