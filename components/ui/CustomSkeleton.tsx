@@ -32,7 +32,7 @@ export interface TableSkeletonType {
 export const TableSkeleton = ({ filas, columnas }: TableSkeletonType) => {
   return (
     <>
-      <TableContainer>
+      <TableContainer sx={{ pt: 2 }}>
         <Table>
           <TableBody>
             {Array(filas)

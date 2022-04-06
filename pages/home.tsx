@@ -93,6 +93,7 @@ const Home: NextPage = () => {
                             }}
                           >
                             <Card
+                              variant={'outlined'}
                               sx={{
                                 borderRadius: 3,
                               }}

@@ -47,22 +47,7 @@ export const CustomDataTable = ({
 
   const [mostrarFiltro, setMostrarFiltro] = useState(false)
   return (
-    <Card
-      sx={{
-        borderRadius: 4,
-        pt: 3,
-        pl: { sm: 3, md: 3, xl: 3 },
-        pr: { sm: 3, md: 3, xl: 3 },
-        pb: { sm: 3, md: 3, xl: 3 },
-        mb: { sm: 3, md: 3, xl: 3 },
-        backgroundColor: xs
-          ? {
-              sm: 'inherit',
-              xs: 'inherit',
-            }
-          : {},
-      }}
-    >
+    <Box sx={{ pb: 2 }}>
       {/*titulo y acciones*/}
       <Grid
         container
@@ -102,152 +87,180 @@ export const CustomDataTable = ({
           </Typography>
         </Fade>
       </Grid>
-      <Box height={xs ? '30px' : '10px'} />
+      <Box height={xs ? '20px' : '20px'} />
       {/* filtros */}
-      <Collapse in={mostrarFiltro}>
-        <Grid
-          container
-          direction="row"
-          spacing={{ xs: 1, md: 3 }}
-          columns={{ xs: 1, sm: 12, md: 12, xl: 12 }}
-          sx={{ pb: 2 }}
+      <Collapse in={mostrarFiltro} sx={{}}>
+        <Card
+          sx={{
+            borderRadius: 4,
+            pt: 2,
+            pb: 1,
+            pl: 3,
+            pr: 3,
+            mb: mostrarFiltro ? 3 : 0,
+          }}
         >
-          {filtros.map((filtro, index) => (
-            <Grid item xs={2} sm={4} md={3} key={`filtro-id-${index}`}>
-              {filtro}
-            </Grid>
-          ))}
-        </Grid>
+          <Grid
+            container
+            direction="row"
+            spacing={{ xs: 1, md: 3 }}
+            columns={{ xs: 1, sm: 12, md: 12, xl: 12 }}
+            sx={{ pb: 1 }}
+          >
+            {filtros.map((filtro, index) => (
+              <Grid item xs={2} sm={4} md={3} key={`filtro-id-${index}`}>
+                {filtro}
+              </Grid>
+            ))}
+          </Grid>
+        </Card>
       </Collapse>
       {/*Contenedor de la tabla*/}
-      {cargando ? (
-        <>
-          {xs ? (
-            <ListSkeleton filas={5} />
-          ) : (
-            <TableSkeleton filas={5} columnas={5} />
-          )}
-        </>
-      ) : (
-        <Fade in={!cargando} timeout={1000}>
-          {error ? (
-            <TableContainer>
-              <Table>
-                <TableBody>
-                  <TableRow>
-                    <TableCell />
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Grid
-                        container
-                        spacing={0}
-                        direction="column"
-                        alignItems="center"
-                        justifyContent="center"
-                        justifyItems={'center'}
-                      >
-                        <Grid item xs={3} xl={4}>
-                          <Typography
-                            variant={'body1'}
-                            component="h1"
-                            noWrap={true}
-                            alignItems={'center'}
-                          >
-                            {`Error obteniendo información`}
-                          </Typography>
+      <Card
+        sx={{
+          borderRadius: 4,
+          pt: 0,
+          pl: { sm: 3, md: 3, xl: 3 },
+          pr: { sm: 3, md: 3, xl: 3 },
+          pb: { sm: 3, md: 3, xl: 3 },
+          mb: { sm: 3, md: 3, xl: 3 },
+          backgroundColor: xs
+            ? {
+                sm: 'inherit',
+                xs: 'inherit',
+              }
+            : {},
+        }}
+      >
+        {cargando ? (
+          <>
+            {xs ? (
+              <ListSkeleton filas={5} />
+            ) : (
+              <TableSkeleton filas={5} columnas={5} />
+            )}
+          </>
+        ) : (
+          <Fade in={!cargando} timeout={1000}>
+            {error ? (
+              <TableContainer>
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell />
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>
+                        <Grid
+                          container
+                          spacing={0}
+                          direction="column"
+                          alignItems="center"
+                          justifyContent="center"
+                          justifyItems={'center'}
+                        >
+                          <Grid item xs={3} xl={4}>
+                            <Typography
+                              variant={'body1'}
+                              component="h1"
+                              noWrap={true}
+                              alignItems={'center'}
+                            >
+                              {`Error obteniendo información`}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          ) : (
-            <Box>
-              {xs ? (
-                <div>
-                  {contenidoTabla.map((contenidoFila, index) => (
-                    <Card // en lugar de CardActionArea para no usar hover en movil
-                      sx={{
-                        borderRadius: 3,
-                        mb: 2,
-                      }}
-                      key={`row-id-${index}`}
-                    >
-                      <Card
-                        key={`celda-id-${index}`}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <Box>
+                {xs ? (
+                  <div>
+                    {contenidoTabla.map((contenidoFila, index) => (
+                      <Card // en lugar de CardActionArea para no usar hover en movil
                         sx={{
                           borderRadius: 3,
+                          mb: 2,
                         }}
+                        key={`row-id-${index}`}
                       >
-                        <CardContent>
-                          {contenidoFila.map((contenido, indexContenido) => (
-                            <Grid
-                              key={`Grid-id-${index}-${indexContenido}`}
-                              container
-                              direction="row"
-                              paddingTop={'5px'}
-                              paddingBottom={'5px'}
-                              justifyContent="space-between"
-                              alignItems="center"
-                            >
-                              <Typography
-                                color="text.secondary"
-                                variant={'subtitle2'}
+                        <Card
+                          key={`celda-id-${index}`}
+                          sx={{
+                            borderRadius: 3,
+                          }}
+                        >
+                          <CardContent>
+                            {contenidoFila.map((contenido, indexContenido) => (
+                              <Grid
+                                key={`Grid-id-${index}-${indexContenido}`}
+                                container
+                                direction="row"
+                                paddingTop={'5px'}
+                                paddingBottom={'5px'}
+                                justifyContent="space-between"
+                                alignItems="center"
                               >
-                                {columnas[indexContenido].nombre}
-                              </Typography>
-                              {contenido}
-                            </Grid>
-                          ))}
-                        </CardContent>
-                      </Card>
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <TableContainer>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        {columnas.map((columna, index) => (
-                          <TableCell key={`cabecera-id-${index}`}>
-                            <Typography variant={'caption'}>
-                              {columna.nombre}
-                            </Typography>
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {contenidoTabla.map(
-                        (contenidoFila, indexContenidoTabla) => (
-                          <TableRow
-                            key={`row-id-${indexContenidoTabla}`}
-                            hover={true}
-                          >
-                            {contenidoFila.map(
-                              (contenido, indexContenidoFila) => (
-                                <TableCell
-                                  key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
+                                <Typography
+                                  color="text.secondary"
+                                  variant={'subtitle2'}
                                 >
-                                  {contenido}
-                                </TableCell>
-                              )
-                            )}
-                          </TableRow>
-                        )
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              )}
-              {paginacion}
-            </Box>
-          )}
-        </Fade>
-      )}
-    </Card>
+                                  {columnas[indexContenido].nombre}
+                                </Typography>
+                                {contenido}
+                              </Grid>
+                            ))}
+                          </CardContent>
+                        </Card>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          {columnas.map((columna, index) => (
+                            <TableCell key={`cabecera-id-${index}`}>
+                              <Typography variant={'caption'}>
+                                {columna.nombre}
+                              </Typography>
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {contenidoTabla.map(
+                          (contenidoFila, indexContenidoTabla) => (
+                            <TableRow
+                              key={`row-id-${indexContenidoTabla}`}
+                              hover={true}
+                            >
+                              {contenidoFila.map(
+                                (contenido, indexContenidoFila) => (
+                                  <TableCell
+                                    key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
+                                  >
+                                    {contenido}
+                                  </TableCell>
+                                )
+                              )}
+                            </TableRow>
+                          )
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+                {paginacion}
+              </Box>
+            )}
+          </Fade>
+        )}
+      </Card>
+    </Box>
   )
 }
