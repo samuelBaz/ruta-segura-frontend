@@ -72,20 +72,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     const token = leerCookie('token')
 
     if (token) {
-      const myDecodedToken: any = decodeToken(token)
-
-      if (myDecodedToken) {
-        imprimir(`Token 🔐 : expira en ${new Date(myDecodedToken.exp * 1000)}`)
-      }
-
       try {
         mostrarFullScreen()
         await delay(1000)
-        const respuesta = await Servicios.get({
-          url: `${Constantes.baseUrl}usuarios/cuenta/perfil`,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const respuesta = await sesionPeticion({
+          url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
         })
         if (respuesta.datos) {
           setUser(respuesta.datos)
@@ -172,6 +163,15 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
+  const verificarToken = (): boolean => {
+    const myDecodedToken: any = decodeToken(leerCookie('token') ?? '')
+    const caducidad = new Date(myDecodedToken.exp * 1000)
+
+    imprimir(`Token 🔐 : expira en ${caducidad}`)
+
+    return new Date().getTime() - caducidad.getTime() > 0
+  }
+
   const sesionPeticion = async ({
     url,
     tipo = 'get',
@@ -182,6 +182,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     body,
   }: peticionFormatoMetodo) => {
     try {
+      if (verificarToken()) {
+        imprimir(`Token caducado ⏳`)
+        // TODO: implementar refresh token
+      }
+
       imprimir(
         `enviando 🔐🌍 : ${
           body ? JSON.stringify(body) : '{}'

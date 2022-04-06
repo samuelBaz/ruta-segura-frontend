@@ -31,7 +31,7 @@ const Politicas: NextPage = () => {
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
-  const { sesionPeticion } = useAuth()
+  const { sesionPeticion, estaAutenticado } = useAuth()
 
   const columnas: Array<ColumnaType> = [
     { campo: 'sujeto', nombre: 'Sujeto' },
@@ -159,7 +159,7 @@ const Politicas: NextPage = () => {
   }
 
   useEffect(() => {
-    obtenerPoliticas().finally(() => {})
+    if (estaAutenticado) obtenerPoliticas().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagina, limite])
 
@@ -172,11 +172,6 @@ const Politicas: NextPage = () => {
       cambioLimite={cambiarLimite}
     />
   )
-
-  useEffect(() => {
-    obtenerPoliticas().finally(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <>

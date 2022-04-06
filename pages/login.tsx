@@ -46,7 +46,7 @@ const Login: NextPage = () => {
       mostrarFullScreen()
       await delay(1000)
       const respuesta = await Servicios.get({
-        url: `${Constantes.baseUrl}estado`,
+        url: `${Constantes.baseUrl}/estado`,
         body: {},
         headers: {
           accept: 'application/json',
@@ -205,4 +205,10 @@ const Login: NextPage = () => {
     </LayoutLogin>
   )
 }
+
+Login.getInitialProps = async ({ req }) => {
+  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
+  return { userAgent }
+}
+
 export default Login

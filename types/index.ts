@@ -58,7 +58,7 @@ export interface ColumnaType {
   nombre: string
 }
 
-// Lista de usuarios en CRUD de usuarios
+// CRUD de usuarios
 
 export interface RolCRUDType {
   id: string
@@ -92,6 +92,14 @@ export interface UsuarioCRUDType {
   estado: string
   usuarioRol: UsuarioRolCRUDType[]
   persona: PersonaCRUDType
+}
+
+/// Tipo rol transversal
+
+export interface RolType {
+  id: string
+  rol: string
+  nombre: string
 }
 
 /// CRUD de parametros

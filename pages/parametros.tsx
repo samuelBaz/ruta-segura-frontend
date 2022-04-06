@@ -28,7 +28,7 @@ const Parametros: NextPage = () => {
     ParametroCRUDType | undefined
   >()
 
-  const { sesionPeticion } = useAuth()
+  const { sesionPeticion, estaAutenticado } = useAuth()
 
   const columnas: Array<ColumnaType> = [
     { campo: 'nombre', nombre: 'Nombre' },
@@ -130,7 +130,7 @@ const Parametros: NextPage = () => {
   }
 
   useEffect(() => {
-    obtenerParametros().finally(() => {})
+    if (estaAutenticado) obtenerParametros().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

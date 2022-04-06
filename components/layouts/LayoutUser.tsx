@@ -19,7 +19,7 @@ export const LayoutUser: FC<Props> = ({
 }) => {
   const { sidemenuOpen } = useContext(UIContext)
   const router = useRouter()
-  const { estaAutenticado, cerrarSesion, progresoLogin } = useAuth()
+  const { estaAutenticado, progresoLogin } = useAuth()
 
   useEffect(() => {
     imprimir(
@@ -28,7 +28,11 @@ export const LayoutUser: FC<Props> = ({
     if (!progresoLogin)
       if (!estaAutenticado) {
         imprimir(`🥾 Cerrando sesión desde ${router.pathname}`)
-        cerrarSesion()
+        router
+          .replace({
+            pathname: '/login',
+          })
+          .finally(() => {})
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progresoLogin])
