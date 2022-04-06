@@ -103,7 +103,7 @@ export const NavbarUser = () => {
   }, [usuario])
 
   const theme = useTheme()
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  // const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const accionMostrarAlertaCerrarSesion = () => {
@@ -183,7 +183,7 @@ export const NavbarUser = () => {
             icono={'help_outline'}
             name={'Ayuda'}
           />
-          {!(sm || xs) && <ThemeSwitcherButton />}
+          {!xs && <ThemeSwitcherButton />}
           <Button
             size="large"
             aria-label="account of current user"
