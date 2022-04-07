@@ -16,13 +16,13 @@ import {
   IconoTooltip,
 } from '../components/ui/'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { ColumnaType, UsuarioCRUDType } from '../types'
+import { ColumnaType, RolType, UsuarioCRUDType } from '../types'
 import { Constantes } from '../config'
 import { imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
-import { CustomDialog } from '../components/ui'
-import { CampoNombre } from '../components/ui/CampoNombre'
+import { CampoNombre, CustomDialog } from '../components/ui'
 import { useForm } from 'react-hook-form'
+import { useFirstMountState } from 'react-use'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
@@ -38,17 +38,32 @@ type FormData = {
 }
 
 const Usuarios: NextPage = () => {
+  // data de usuarios
   const [usuariosData, setUsuariosData] = useState<UsuarioCRUDType[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [errorUsuariosData, setErrorUsuariosData] = useState<any>()
 
+  // Flag que indica que hay un proceso cargando visualmente
+  const [loading, setLoading] = useState<boolean>(true)
+
+  /// Indicador de error en una petición
+  const [errorData, setErrorData] = useState<any>()
+
+  /// Indicador para mostrar una ventana modal de usuario
   const [modalUsuario, setModalUsuario] = useState(false)
+
+  /// Indicador para mostrar una vista de alerta
   const [mostrarAlertaEstadoUsuario, setMostrarAlertaEstadoUsuario] =
     useState(false)
 
+  /// Variable que contiene el estado del usuario que se esta editando
   const [usuarioEdicion, setUsuarioEdicion] = useState<
     UsuarioCRUDType | undefined | null
   >()
+
+  // Roles de usuario
+  const [rolesData, setRolesData] = useState<RolType[]>([])
+
+  // Verificar primer render
+  const isFirstMount = useFirstMountState()
 
   const {
     register,
@@ -56,10 +71,10 @@ const Usuarios: NextPage = () => {
     formState: { errors },
   } = useForm<FormData>()
 
-  const { sesionPeticion } = useAuth()
+  const { sesionPeticion, estaAutenticado } = useAuth()
 
   const columnas: Array<ColumnaType> = [
-    { campo: 'nro_documento', nombre: 'Nro. Documento' },
+    { campo: 'nro_documento', nombre: 'Nroa. Documento' },
     { campo: 'persona', nombre: 'Persona' },
     { campo: 'usuario', nombre: 'Usuario' },
     { campo: 'rol', nombre: 'Roles' },
@@ -169,6 +184,18 @@ const Usuarios: NextPage = () => {
     />,
   ]
 
+  const filtros: Array<ReactNode> = [
+    <CampoNombre key={`filtro1`} name={'Nro. Documento'}>
+      <TextField sx={{ width: '100%' }} />
+    </CampoNombre>,
+    <CampoNombre key={`filtro2`} name={'Datos personales'}>
+      <TextField sx={{ width: '100%' }} />
+    </CampoNombre>,
+    <CampoNombre key={`filtro3`} name={'Roles'}>
+      <TextField sx={{ width: '100%' }} />
+    </CampoNombre>,
+  ]
+
   const obtenerUsuariosPeticion = async () => {
     try {
       setLoading(true)
@@ -177,10 +204,27 @@ const Usuarios: NextPage = () => {
         url: `${Constantes.baseUrl}/usuarios`,
       })
       setUsuariosData(respuesta.datos?.filas)
-      setErrorUsuariosData(null)
+      setErrorData(null)
     } catch (e) {
       imprimir(`Error al obtener usuarios: ${e}`)
-      setErrorUsuariosData(e)
+      setErrorData(e)
+      Alertas.error(InterpreteMensajes(e))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const obtenerRolesPeticion = async () => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/autorizacion/roles`,
+      })
+      setRolesData(respuesta.datos)
+      setErrorData(null)
+    } catch (e) {
+      imprimir(`Error al obtener roles: ${e}`)
+      setErrorData(e)
       Alertas.error(InterpreteMensajes(e))
     } finally {
       setLoading(false)
@@ -296,7 +340,7 @@ const Usuarios: NextPage = () => {
             <Box height={'10px'} />
             <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
               <Grid item xs={12} sm={12} md={4}>
-                <CampoNombre name={'Roles'}></CampoNombre>
+                <CampoNombre name={'Roles'} />
               </Grid>
               <Grid item xs={12} sm={12} md={8}>
                 <CampoNombre name={'Correo electrónico'}>
@@ -367,9 +411,19 @@ const Usuarios: NextPage = () => {
   }
 
   useEffect(() => {
-    obtenerUsuariosPeticion().finally(() => {})
+    if (estaAutenticado)
+      if (isFirstMount)
+        obtenerRolesPeticion()
+          .then(() => {
+            obtenerUsuariosPeticion()
+              .catch(() => {})
+              .finally(() => {})
+          })
+          .catch(() => {})
+          .finally(() => {})
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [estaAutenticado])
 
   return (
     <>
@@ -393,14 +447,16 @@ const Usuarios: NextPage = () => {
       <LayoutUser title={'Usuarios - Fronted Base'}>
         <CustomDataTable
           titulo={'Usuarios'}
-          error={!!errorUsuariosData}
+          error={!!errorData}
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
+          filtros={filtros}
           contenidoTabla={contenidoTabla}
         />
       </LayoutUser>
     </>
   )
 }
+
 export default Usuarios

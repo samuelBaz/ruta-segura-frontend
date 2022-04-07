@@ -12,6 +12,7 @@ import {
 } from '../components/ui'
 import { imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
+import { useFirstMountState } from 'react-use'
 
 export interface ModalParametroType {
   parametro?: ParametroCRUDType
@@ -27,6 +28,9 @@ const Parametros: NextPage = () => {
   const [parametroEdicion, setParametroEdicion] = useState<
     ParametroCRUDType | undefined
   >()
+
+  // Verificar primer render
+  const isFirstMount = useFirstMountState()
 
   const { sesionPeticion, estaAutenticado } = useAuth()
 
@@ -130,7 +134,7 @@ const Parametros: NextPage = () => {
   }
 
   useEffect(() => {
-    if (estaAutenticado) obtenerParametros().finally(() => {})
+    if (estaAutenticado) if (isFirstMount) obtenerParametros().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

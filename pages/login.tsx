@@ -20,6 +20,7 @@ import { useAuth } from '../context/auth'
 import { useForm } from 'react-hook-form'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
 import { useFullScreenLoadingContext } from '../context/ui'
+import { useEffectOnce, useFirstMountState } from 'react-use'
 
 const Login: NextPage = () => {
   const { ingresar, progresoLogin } = useAuth()
@@ -27,6 +28,8 @@ const Login: NextPage = () => {
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  const isFirstMount = useFirstMountState()
 
   type FormData = {
     usuario: string
@@ -65,10 +68,9 @@ const Login: NextPage = () => {
     await ingresar({ usuario, contrasena })
   }
 
-  useEffect(() => {
-    // obtenerEstado().then(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useEffectOnce(() => {
+    if (isFirstMount) obtenerEstado().then(() => {})
+  })
 
   return (
     <LayoutLogin title={'Frontend base - NextJS'}>

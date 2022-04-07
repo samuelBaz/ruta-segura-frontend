@@ -14,6 +14,7 @@ import {
 import { imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
 import { Paginacion } from '../components/ui/Paginacion'
+import { useFirstMountState } from 'react-use'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType
@@ -30,6 +31,9 @@ const Politicas: NextPage = () => {
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
+
+  // Verificar primer render
+  const isFirstMount = useFirstMountState()
 
   const { sesionPeticion, estaAutenticado } = useAuth()
 
@@ -159,7 +163,7 @@ const Politicas: NextPage = () => {
   }
 
   useEffect(() => {
-    if (estaAutenticado) obtenerPoliticas().finally(() => {})
+    if (estaAutenticado) if (isFirstMount) obtenerPoliticas().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagina, limite])
 
