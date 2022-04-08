@@ -55,7 +55,7 @@ export const CustomDataTable = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
+        <Typography variant={'h5'} sx={{ fontWeight: 'bold', pl: 1 }}>
           {`${titulo}`}
         </Typography>
         <Fade in={!cargando} timeout={0}>

@@ -9,7 +9,7 @@ import { FormHelperText } from '@mui/material'
 export interface FormInputTextProps {
   id: string
   name: string
-  control?: Control<any>
+  control: Control<any>
   label: string
   size?: 'small' | 'medium'
   rules?: RegisterOptions

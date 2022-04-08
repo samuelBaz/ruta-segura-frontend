@@ -1,25 +1,29 @@
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import AdapterDateFns from '@mui/lab/AdapterDayjs'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { Controller } from 'react-hook-form'
 import DatePicker from '@mui/lab/DatePicker'
-import { TextField, Typography } from '@mui/material'
+import { FormHelperText, TextField, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import { Control } from 'react-hook-form/dist/types/form'
+import dayjs from 'dayjs'
 
 export interface FormDatePickerProps {
   id: string
   name: string
-  control: any
+  control: Control<any>
   label: string
   size?: 'small' | 'medium'
+  format?: string
   rules?: RegisterOptions
 }
 
 export const FormInputDate = ({
   id,
   name,
+  control,
   label,
   size = 'small',
-  control,
+  format = 'YYYY-MM-DD',
   rules,
 }: FormDatePickerProps) => {
   return (
@@ -28,26 +32,43 @@ export const FormInputDate = ({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onChange, value, ref }, fieldState }) => (
+        render={({
+          field: { onChange, value, ref },
+          fieldState: { error },
+        }) => (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               onChange={onChange}
               value={value}
               ref={ref}
+              mask={'____-__-__'}
+              inputFormat={format}
               renderInput={(params) => (
-                <TextField
-                  id={id}
-                  sx={{ width: '100%' }}
-                  size={size}
-                  {...params}
-                  error={Boolean(fieldState.error)}
-                  helperText={fieldState?.error?.message}
-                />
+                <>
+                  <TextField
+                    id={id}
+                    sx={{ width: '100%' }}
+                    size={size}
+                    {...params}
+                    error={!!error}
+                  />
+                  {!!error && (
+                    <FormHelperText error>{error?.message}</FormHelperText>
+                  )}
+                </>
               )}
             />
           </LocalizationProvider>
         )}
-        rules={rules}
+        rules={{
+          ...rules,
+          ...{
+            validate: (val: string) => {
+              if (!dayjs(val, format).isValid()) return 'La fecha no es válida'
+            },
+          },
+        }}
+        defaultValue={''}
       />
     </div>
   )
