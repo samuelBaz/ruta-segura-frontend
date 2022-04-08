@@ -2,14 +2,16 @@ import TextField from '@mui/material/TextField'
 import { Controller } from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
 
 export interface FormInputTextProps {
   id: string
   name: string
-  control: any
+  control?: any
   label: string
   size?: 'small' | 'medium'
   rules?: RegisterOptions
+  onChange?: StandardInputProps['onChange']
 }
 
 export const FormInputText = ({
@@ -19,6 +21,7 @@ export const FormInputText = ({
   label,
   size = 'small',
   rules,
+  onChange,
 }: FormInputTextProps) => {
   return (
     <div>
@@ -26,15 +29,15 @@ export const FormInputText = ({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
+        render={({ field, fieldState: { error } }) => (
           <TextField
             id={id}
             sx={{ width: '100%' }}
             size={size}
             error={!!error}
             helperText={error?.message}
-            onChange={onChange}
-            value={value}
+            onChange={onChange || field.onChange}
+            value={field.value}
           />
         )}
         rules={rules}

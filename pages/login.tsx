@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
 import { useFullScreenLoadingContext } from '../context/ui'
 import { useEffectOnce, useFirstMountState } from 'react-use'
-import { FormInputText } from '../components/ui/form/FormInputText'
+import { FormInputText } from '../components/ui/form'
 
 const Login: NextPage = () => {
   const { ingresar, progresoLogin } = useAuth()
