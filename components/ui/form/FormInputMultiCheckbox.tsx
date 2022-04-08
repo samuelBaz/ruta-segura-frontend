@@ -52,6 +52,7 @@ export const FormInputMultiCheckbox = ({
   // we are setting form value manually here
   useEffect(() => {
     setValue(name, selectedItems)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedItems])
 
   return (

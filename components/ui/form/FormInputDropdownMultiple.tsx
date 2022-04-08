@@ -1,6 +1,7 @@
 import { Controller } from 'react-hook-form'
 import { Box, Chip, MenuItem, Select, Typography } from '@mui/material'
 import { FormInputDropdownProps } from './FormInputDropdown'
+import { FormHelperText } from '@mui/material'
 
 export const FormInputDropdownMultiple = ({
   id,
@@ -28,29 +29,34 @@ export const FormInputDropdownMultiple = ({
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <Select
-            id={id}
-            sx={{ width: '100%' }}
-            size={size}
-            error={!!error}
-            renderValue={(selecteds: string[]) => (
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selecteds.map((selected) => (
-                  <Chip
-                    key={selected}
-                    label={
-                      options.find((option) => option.value == selected)?.label
-                    }
-                  />
-                ))}
-              </Box>
-            )}
-            onChange={field.onChange}
-            value={field.value}
-            multiple
-          >
-            {generateSelectOptions()}
-          </Select>
+          <>
+            <Select
+              id={id}
+              sx={{ width: '100%' }}
+              size={size}
+              error={!!error}
+              renderValue={(selecteds: string[]) => (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {selecteds.map((selected) => (
+                    <Chip
+                      key={selected}
+                      label={
+                        options.find((option) => option.value == selected)
+                          ?.label
+                      }
+                    />
+                  ))}
+                </Box>
+              )}
+              onChange={field.onChange}
+              value={field.value}
+              multiple
+            >
+              {generateSelectOptions()}
+            </Select>
+
+            {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
+          </>
         )}
         defaultValue={[]}
         rules={rules}

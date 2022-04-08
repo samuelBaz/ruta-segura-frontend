@@ -94,6 +94,25 @@ export interface UsuarioCRUDType {
   persona: PersonaCRUDType
 }
 
+// Crear usuario
+
+export interface CrearPersonaType {
+  nombres: string
+  primerApellido: string
+  segundoApellido: string
+  nroDocumento: string
+  fechaNacimiento: string
+}
+
+export interface CrearEditarUsuarioType {
+  usuario?: any
+  persona: CrearPersonaType
+  ciudadaniaDigital: boolean
+  roles: string[]
+  estado: string
+  correoElectronico: string
+}
+
 /// Tipo rol transversal
 
 export interface RolType {

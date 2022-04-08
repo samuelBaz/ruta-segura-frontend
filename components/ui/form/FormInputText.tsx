@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
 import { Control } from 'react-hook-form/dist/types/form'
+import { FormHelperText } from '@mui/material'
 
 export interface FormInputTextProps {
   id: string
@@ -31,16 +32,19 @@ export const FormInputText = ({
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <TextField
-            id={id}
-            sx={{ width: '100%' }}
-            size={size}
-            error={!!error}
-            helperText={error?.message}
-            onChange={onChange || field.onChange}
-            value={field.value}
-          />
+          <>
+            <TextField
+              id={id}
+              sx={{ width: '100%' }}
+              size={size}
+              error={!!error}
+              onChange={onChange || field.onChange}
+              value={field.value}
+            />
+            {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
+          </>
         )}
+        defaultValue={''}
         rules={rules}
       />
     </div>
