@@ -5,7 +5,6 @@ import {
   Chip,
   DialogActions,
   Grid,
-  TextField,
   Typography,
 } from '@mui/material'
 import { LayoutUser } from '../components/layouts'
@@ -16,25 +15,23 @@ import {
   IconoTooltip,
 } from '../components/ui/'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { ColumnaType, RolType, UsuarioCRUDType } from '../types'
+import {
+  ColumnaType,
+  CrearEditarUsuarioType,
+  RolType,
+  UsuarioCRUDType,
+} from '../types'
 import { Constantes } from '../config'
 import { imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
 import { CampoNombre, CustomDialog } from '../components/ui'
 import { useForm } from 'react-hook-form'
 import { useFirstMountState } from 'react-use'
+import { FormInputText } from '../components/ui/form'
+import { FormInputDropdownMultiple } from '../components/ui/form'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
-}
-
-type FormData = {
-  nroDocumento: string
-  nombres: string
-  primerApellido: string
-  segundoApellido: string
-  fechaNacimiento: string
-  correoElectronico: string
 }
 
 const Usuarios: NextPage = () => {
@@ -64,12 +61,6 @@ const Usuarios: NextPage = () => {
 
   // Verificar primer render
   const isFirstMount = useFirstMountState()
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>()
 
   const { sesionPeticion, estaAutenticado } = useAuth()
 
@@ -240,127 +231,126 @@ const Usuarios: NextPage = () => {
   }
 
   const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
+    const { handleSubmit, control } = useForm<CrearEditarUsuarioType>({
+      defaultValues: {
+        usuario: usuario?.usuario,
+        roles: usuario?.usuarioRol.map((rol) => rol.rol.id),
+        estado: usuario?.estado,
+        correoElectronico: usuario?.correoElectronico,
+        persona: usuario?.persona,
+        ciudadaniaDigital: usuario?.ciudadaniaDigital,
+      },
+    })
+
+    const onSubmit = (data: CrearEditarUsuarioType) =>
+      imprimir(JSON.stringify(data))
+
     return (
-      <form
-        onSubmit={handleSubmit((data) => {
-          imprimir(data)
-        })}
-      >
-        <Grid container direction={'column'} justifyContent="space-evenly">
+      <Grid container direction={'column'} justifyContent="space-evenly">
+        <Box height={'10px'} />
+        <Typography
+          color="text.secondary"
+          sx={{ fontSize: 14, fontWeight: 'bold' }}
+        >
+          Datos personales
+        </Typography>
+        <Box height={'10px'} />
+        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+          <Grid item xs={12} sm={12} md={4}>
+            <FormInputText
+              id={'nroDocumento'}
+              control={control}
+              name="persona.nroDocumento"
+              label="Nro. Documento"
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <FormInputText
+              id={'nroDocumento'}
+              control={control}
+              name="persona.nombres"
+              label="Nombre"
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <FormInputText
+              id={'primerApellido'}
+              control={control}
+              name="persona.primerApellido"
+              label="Primer Apellido"
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <FormInputText
+              id={'segundoApellido'}
+              control={control}
+              name="persona.segundoApellido"
+              label="Segundo apellido"
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <FormInputText
+              id={'fechaNacimiento'}
+              control={control}
+              name="persona.fechaNacimiento"
+              label="Fecha de nacimiento"
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+        </Grid>
+        <Grid>
           <Box height={'10px'} />
-          <Typography
-            color="text.secondary"
-            sx={{ fontSize: 14, fontWeight: 'bold' }}
-          >
-            Datos personales
-          </Typography>
+          <CampoNombre name={'Datos de usuario'} />
           <Box height={'10px'} />
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
             <Grid item xs={12} sm={12} md={4}>
-              <CampoNombre name={'Nro. documento'}>
-                <TextField
-                  sx={{ width: '100%' }}
-                  defaultValue={usuario?.persona.nroDocumento}
-                  {...register('nroDocumento', {
-                    required: 'Este campo es requerido',
-                  })}
-                  error={!!errors.nroDocumento}
-                  helperText={errors.nroDocumento?.message}
-                />
-              </CampoNombre>
+              <FormInputDropdownMultiple
+                id={'roles'}
+                name="roles"
+                control={control}
+                label="Roles"
+                options={rolesData.map((rol) => ({
+                  key: rol.id,
+                  value: rol.id,
+                  label: rol.nombre,
+                }))}
+                rules={{ required: 'Este campo es requerido' }}
+              />
             </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <CampoNombre name={'Nombre'}>
-                <TextField
-                  sx={{ width: '100%' }}
-                  defaultValue={usuario?.persona.nombres}
-                  {...register('nombres', {
-                    required: 'Este campo es requerido',
-                  })}
-                  error={!!errors.nombres}
-                  helperText={errors.nombres?.message}
-                />
-              </CampoNombre>
-            </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <CampoNombre name={'Primer apellido'}>
-                <TextField
-                  sx={{ width: '100%' }}
-                  defaultValue={usuario?.persona.primerApellido}
-                  {...register('primerApellido', {
-                    required: 'Este campo es requerido',
-                  })}
-                  error={!!errors.primerApellido}
-                  helperText={errors.primerApellido?.message}
-                />
-              </CampoNombre>
-            </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <CampoNombre name={'Segundo apellido'}>
-                <TextField
-                  sx={{ width: '100%' }}
-                  defaultValue={usuario?.persona.segundoApellido}
-                  {...register('segundoApellido', {
-                    required: 'Este campo es requerido',
-                  })}
-                  error={!!errors.segundoApellido}
-                  helperText={errors.segundoApellido?.message}
-                />
-              </CampoNombre>
-            </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <CampoNombre name={'Fecha de nacimiento'}>
-                <TextField
-                  sx={{ width: '100%' }}
-                  defaultValue={usuario?.persona.fechaNacimiento}
-                  {...register('fechaNacimiento', {
-                    required: 'Este campo es requerido',
-                  })}
-                  error={!!errors.fechaNacimiento}
-                  helperText={errors.fechaNacimiento?.message}
-                />
-              </CampoNombre>
+            <Grid item xs={12} sm={12} md={8}>
+              <FormInputText
+                id={'correoElectronico'}
+                control={control}
+                name="correoElectronico"
+                label="Correo electrónico"
+                rules={{ required: 'Este campo es requerido' }}
+              />
             </Grid>
           </Grid>
-          <Grid>
-            <Box height={'10px'} />
-            <CampoNombre name={'Datos de usuario'} />
-            <Box height={'10px'} />
-            <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-              <Grid item xs={12} sm={12} md={4}>
-                <CampoNombre name={'Roles'} />
-              </Grid>
-              <Grid item xs={12} sm={12} md={8}>
-                <CampoNombre name={'Correo electrónico'}>
-                  <TextField
-                    sx={{ width: '100%' }}
-                    defaultValue={usuario?.correoElectronico}
-                    {...register('correoElectronico', {
-                      required: 'Este campo es requerido',
-                    })}
-                    error={!!errors.correoElectronico}
-                    helperText={errors.correoElectronico?.message}
-                  />
-                </CampoNombre>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Box height={'10px'} />
-          <DialogActions
-            sx={{
-              justifyContent: {
-                lg: 'flex-end',
-                md: 'flex-end',
-                xs: 'center',
-                sm: 'center',
-              },
-            }}
-          >
-            <Button variant={'outlined'}>Cancelar</Button>
-            <Button variant={'contained'}>Aceptar</Button>
-          </DialogActions>
         </Grid>
-      </form>
+        <Box height={'10px'} />
+        <DialogActions
+          sx={{
+            justifyContent: {
+              lg: 'flex-end',
+              md: 'flex-end',
+              xs: 'center',
+              sm: 'center',
+            },
+          }}
+        >
+          <Button variant={'outlined'} onClick={cerrarModalUsuario}>
+            Cancelar
+          </Button>
+          <Button variant={'contained'} onClick={handleSubmit(onSubmit)}>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Grid>
     )
   }
 
