@@ -27,8 +27,9 @@ import { useAuth } from '../context/auth'
 import { CampoNombre, CustomDialog } from '../components/ui'
 import { useForm } from 'react-hook-form'
 import { useFirstMountState } from 'react-use'
-import { FormInputText } from '../components/ui/form'
+import { FormInputDate, FormInputText } from '../components/ui/form'
 import { FormInputDropdownMultiple } from '../components/ui/form'
+import { isValidEmail } from '../utils/validations'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
@@ -81,12 +82,14 @@ const Usuarios: NextPage = () => {
       >
         {`${usuarioData.persona.tipoDocumento} ${usuarioData.persona.nroDocumento}`}
       </Typography>,
-      <Typography
-        key={`${usuarioData.id}-${indexUsuario}-nombres`}
-        variant={'body2'}
-      >
-        {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
-      </Typography>,
+      <div key={`${usuarioData.id}-${indexUsuario}-nombres`}>
+        <Typography variant={'body2'}>
+          {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
+        </Typography>
+        <Typography variant={'body2'}>
+          {`${usuarioData.persona.fechaNacimiento}`}
+        </Typography>
+      </div>,
       <Typography
         key={`${usuarioData.id}-${indexUsuario}-usuario`}
         variant={'body2'}
@@ -193,6 +196,24 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  const guardarActualizarUsuariosPeticion = async (
+    usuario: CrearEditarUsuarioType
+  ) => {
+    try {
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/usuarios/${usuario.id ?? ''}`,
+        tipo: !!usuario.id ? 'patch' : 'post',
+        body: usuario,
+      })
+      Alertas.correcto(InterpreteMensajes(respuesta))
+      cerrarModalUsuario()
+    } catch (e) {
+      imprimir(`Error al crear o actualizar usuario: ${e}`)
+      Alertas.error(InterpreteMensajes(e))
+    } finally {
+    }
+  }
+
   const obtenerRolesPeticion = async () => {
     try {
       setLoading(true)
@@ -233,6 +254,7 @@ const Usuarios: NextPage = () => {
   const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
     const { handleSubmit, control } = useForm<CrearEditarUsuarioType>({
       defaultValues: {
+        id: usuario?.id,
         usuario: usuario?.usuario,
         roles: usuario?.usuarioRol.map((rol) => rol.rol.id),
         estado: usuario?.estado,
@@ -242,8 +264,9 @@ const Usuarios: NextPage = () => {
       },
     })
 
-    const onSubmit = (data: CrearEditarUsuarioType) =>
-      imprimir(JSON.stringify(data))
+    const guardarActualizarUsuario = async (data: CrearEditarUsuarioType) => {
+      await guardarActualizarUsuariosPeticion(data)
+    }
 
     return (
       <Grid container direction={'column'} justifyContent="space-evenly">
@@ -293,7 +316,7 @@ const Usuarios: NextPage = () => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <FormInputText
+            <FormInputDate
               id={'fechaNacimiento'}
               control={control}
               name="persona.fechaNacimiento"
@@ -327,7 +350,12 @@ const Usuarios: NextPage = () => {
                 control={control}
                 name="correoElectronico"
                 label="Correo electrónico"
-                rules={{ required: 'Este campo es requerido' }}
+                rules={{
+                  required: 'Este campo es requerido',
+                  validate: (value) => {
+                    if (!isValidEmail(value)) return 'No es un correo válido'
+                  },
+                }}
               />
             </Grid>
           </Grid>
@@ -346,7 +374,10 @@ const Usuarios: NextPage = () => {
           <Button variant={'outlined'} onClick={cerrarModalUsuario}>
             Cancelar
           </Button>
-          <Button variant={'contained'} onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant={'contained'}
+            onClick={handleSubmit(guardarActualizarUsuario)}
+          >
             Aceptar
           </Button>
         </DialogActions>
@@ -377,8 +408,8 @@ const Usuarios: NextPage = () => {
   }
 
   const cancelarAlertaEstadoUsuario = () => {
-    setUsuarioEdicion(null)
     setMostrarAlertaEstadoUsuario(false)
+    setUsuarioEdicion(null)
   }
 
   const aceptarAlertaEstadoUsuario = async () => {

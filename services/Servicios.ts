@@ -15,7 +15,7 @@ export interface peticionFormato {
 }
 
 export const estadosCorrectos: number[] = [200, 201, 202]
-export const estadosSinPermiso: number[] = [401, 403]
+export const estadosSinPermiso: number[] = [401]
 
 class ServiciosClass {
   async peticionHTTP({
