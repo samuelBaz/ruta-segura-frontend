@@ -7,14 +7,21 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import { UseFormSetValue } from 'react-hook-form/dist/types/form'
+
+export interface multiOptionType {
+  key: string
+  value: string
+  label: string
+}
 
 export interface FormInputMultiCheckboxProps {
   id: string
   name: string
   control: any
   label: string
-  setValue: any
-  options: any[]
+  setValue: UseFormSetValue<any>
+  options: multiOptionType[]
   size?: 'small' | 'medium'
   rules?: RegisterOptions
 }

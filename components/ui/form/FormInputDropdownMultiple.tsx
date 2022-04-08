@@ -1,29 +1,6 @@
 import { Controller } from 'react-hook-form'
-import {
-  Box,
-  Chip,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Typography,
-} from '@mui/material'
-import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-
-export interface optionType {
-  key: string
-  value: string
-  label: string
-}
-
-export interface FormInputDropdownProps {
-  id: string
-  name: string
-  control: any
-  label: string
-  size?: 'small' | 'medium'
-  rules?: RegisterOptions
-  options: optionType[]
-}
+import { Box, Chip, MenuItem, Select, Typography } from '@mui/material'
+import { FormInputDropdownProps } from './FormInputDropdown'
 
 export const FormInputDropdownMultiple = ({
   id,
@@ -56,7 +33,6 @@ export const FormInputDropdownMultiple = ({
             sx={{ width: '100%' }}
             size={size}
             error={!!error}
-            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
             renderValue={(selecteds: string[]) => (
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                 {selecteds.map((selected) => (

@@ -16,6 +16,7 @@ interface Props {
   isOpen: boolean
   handleClose: () => void
   title: string
+  fullScreen?: boolean
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -41,13 +42,14 @@ export const CustomDialog: FC<Props> = ({
   handleClose,
   title,
   children,
+  fullScreen = false,
 }) => {
   const theme = useTheme()
   let dsm = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <Dialog
-      fullScreen={dsm}
+      fullScreen={fullScreen || dsm}
       fullWidth={true}
       open={isOpen}
       TransitionComponent={dsm ? Transition : TransitionZoom}
