@@ -22,7 +22,7 @@ import {
   UsuarioCRUDType,
 } from '../types'
 import { Constantes } from '../config'
-import { imprimir, InterpreteMensajes, titleCase } from '../utils'
+import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
 import { CampoNombre, CustomDialog } from '../components/ui'
 import { useForm } from 'react-hook-form'
@@ -30,6 +30,7 @@ import { useFirstMountState } from 'react-use'
 import { FormInputDate, FormInputText } from '../components/ui/form'
 import { FormInputDropdownMultiple } from '../components/ui/form'
 import { isValidEmail } from '../utils/validations'
+import ProgresoLineal from '../components/ui/ProgresoLineal'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
@@ -47,6 +48,9 @@ const Usuarios: NextPage = () => {
 
   /// Indicador para mostrar una ventana modal de usuario
   const [modalUsuario, setModalUsuario] = useState(false)
+
+  // Flag que indica que hay un proceso en ventana modal cargando visualmente
+  const [loadingModal, setLoadingModal] = useState<boolean>(false)
 
   /// Indicador para mostrar una vista de alerta
   const [mostrarAlertaEstadoUsuario, setMostrarAlertaEstadoUsuario] =
@@ -200,6 +204,8 @@ const Usuarios: NextPage = () => {
     usuario: CrearEditarUsuarioType
   ) => {
     try {
+      setLoadingModal(true)
+      await delay(1000)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios/${usuario.id ?? ''}`,
         tipo: !!usuario.id ? 'patch' : 'post',
@@ -207,10 +213,12 @@ const Usuarios: NextPage = () => {
       })
       Alertas.correcto(InterpreteMensajes(respuesta))
       cerrarModalUsuario()
+      obtenerUsuariosPeticion().finally()
     } catch (e) {
       imprimir(`Error al crear o actualizar usuario: ${e}`)
       Alertas.error(InterpreteMensajes(e))
     } finally {
+      setLoadingModal(false)
     }
   }
 
@@ -285,6 +293,7 @@ const Usuarios: NextPage = () => {
               control={control}
               name="persona.nroDocumento"
               label="Nro. Documento"
+              disabled={loadingModal}
               rules={{ required: 'Este campo es requerido' }}
             />
           </Grid>
@@ -294,6 +303,7 @@ const Usuarios: NextPage = () => {
               control={control}
               name="persona.nombres"
               label="Nombre"
+              disabled={loadingModal}
               rules={{ required: 'Este campo es requerido' }}
             />
           </Grid>
@@ -303,6 +313,7 @@ const Usuarios: NextPage = () => {
               control={control}
               name="persona.primerApellido"
               label="Primer Apellido"
+              disabled={loadingModal}
               rules={{ required: 'Este campo es requerido' }}
             />
           </Grid>
@@ -312,6 +323,7 @@ const Usuarios: NextPage = () => {
               control={control}
               name="persona.segundoApellido"
               label="Segundo apellido"
+              disabled={loadingModal}
               rules={{ required: 'Este campo es requerido' }}
             />
           </Grid>
@@ -321,6 +333,7 @@ const Usuarios: NextPage = () => {
               control={control}
               name="persona.fechaNacimiento"
               label="Fecha de nacimiento"
+              disabled={loadingModal}
               rules={{ required: 'Este campo es requerido' }}
             />
           </Grid>
@@ -336,6 +349,7 @@ const Usuarios: NextPage = () => {
                 name="roles"
                 control={control}
                 label="Roles"
+                disabled={loadingModal}
                 options={rolesData.map((rol) => ({
                   key: rol.id,
                   value: rol.id,
@@ -350,6 +364,7 @@ const Usuarios: NextPage = () => {
                 control={control}
                 name="correoElectronico"
                 label="Correo electrónico"
+                disabled={loadingModal}
                 rules={{
                   required: 'Este campo es requerido',
                   validate: (value) => {
@@ -361,6 +376,8 @@ const Usuarios: NextPage = () => {
           </Grid>
         </Grid>
         <Box height={'10px'} />
+        <ProgresoLineal mostrar={loadingModal} />
+        <Box height={'5px'} />
         <DialogActions
           sx={{
             justifyContent: {
@@ -371,11 +388,16 @@ const Usuarios: NextPage = () => {
             },
           }}
         >
-          <Button variant={'outlined'} onClick={cerrarModalUsuario}>
+          <Button
+            variant={'outlined'}
+            disabled={loadingModal}
+            onClick={cerrarModalUsuario}
+          >
             Cancelar
           </Button>
           <Button
             variant={'contained'}
+            disabled={loadingModal}
             onClick={handleSubmit(guardarActualizarUsuario)}
           >
             Aceptar

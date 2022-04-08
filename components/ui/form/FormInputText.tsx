@@ -13,6 +13,7 @@ export interface FormInputTextProps {
   label: string
   size?: 'small' | 'medium'
   rules?: RegisterOptions
+  disabled?: boolean
   onChange?: StandardInputProps['onChange']
 }
 
@@ -23,6 +24,7 @@ export const FormInputText = ({
   label,
   size = 'small',
   rules,
+  disabled,
   onChange,
 }: FormInputTextProps) => {
   return (
@@ -40,6 +42,7 @@ export const FormInputText = ({
               error={!!error}
               onChange={onChange || field.onChange}
               value={field.value}
+              disabled={disabled}
             />
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
           </>

@@ -15,6 +15,7 @@ export interface FormInputDropdownProps {
   label: string
   size?: 'small' | 'medium'
   rules?: RegisterOptions
+  disabled?: boolean
   options: optionType[]
 }
 
@@ -25,6 +26,7 @@ export const FormInputDropdown = ({
   label,
   size = 'small',
   rules,
+  disabled,
   options,
 }: FormInputDropdownProps) => {
   const generateSelectOptions = () => {
@@ -49,6 +51,7 @@ export const FormInputDropdown = ({
             sx={{ width: '100%' }}
             size={size}
             error={!!error}
+            disabled={disabled}
             onChange={field.onChange}
             value={field.value}
           >

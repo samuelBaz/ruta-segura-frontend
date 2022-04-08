@@ -14,6 +14,7 @@ export interface FormDatePickerProps {
   label: string
   size?: 'small' | 'medium'
   format?: string
+  disabled?: boolean
   rules?: RegisterOptions
 }
 
@@ -24,6 +25,7 @@ export const FormInputDate = ({
   label,
   size = 'small',
   format = 'YYYY-MM-DD',
+  disabled,
   rules,
 }: FormDatePickerProps) => {
   return (
@@ -43,6 +45,7 @@ export const FormInputDate = ({
               ref={ref}
               mask={'____-__-__'}
               inputFormat={format}
+              disabled={disabled}
               renderInput={(params) => (
                 <>
                   <TextField
