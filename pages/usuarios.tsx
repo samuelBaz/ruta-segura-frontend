@@ -74,7 +74,7 @@ const Usuarios: NextPage = () => {
   const { sesionPeticion, estaAutenticado } = useAuth()
 
   const columnas: Array<ColumnaType> = [
-    { campo: 'nro_documento', nombre: 'Nroa. Documento' },
+    { campo: 'nro_documento', nombre: 'Nro. Documento' },
     { campo: 'persona', nombre: 'Persona' },
     { campo: 'usuario', nombre: 'Usuario' },
     { campo: 'rol', nombre: 'Roles' },
@@ -182,18 +182,6 @@ const Usuarios: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de usuario'}
     />,
-  ]
-
-  const filtros: Array<ReactNode> = [
-    <CampoNombre key={`filtro1`} name={'Nro. Documento'}>
-      <TextField sx={{ width: '100%' }} />
-    </CampoNombre>,
-    <CampoNombre key={`filtro2`} name={'Datos personales'}>
-      <TextField sx={{ width: '100%' }} />
-    </CampoNombre>,
-    <CampoNombre key={`filtro3`} name={'Roles'}>
-      <TextField sx={{ width: '100%' }} />
-    </CampoNombre>,
   ]
 
   const obtenerUsuariosPeticion = async () => {
@@ -451,7 +439,6 @@ const Usuarios: NextPage = () => {
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
-          filtros={filtros}
           contenidoTabla={contenidoTabla}
         />
       </LayoutUser>

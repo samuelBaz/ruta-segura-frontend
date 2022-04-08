@@ -26,7 +26,7 @@ export interface CustomDataTableType {
   cargando?: boolean
   acciones: Array<ReactNode>
   columnas: Array<ColumnaType>
-  filtros?: Array<ReactNode>
+  filtros?: ReactNode
   contenidoTabla: Array<Array<ReactNode>>
   paginacion?: ReactNode
 }
@@ -37,7 +37,7 @@ export const CustomDataTable = ({
   cargando = false,
   acciones,
   columnas,
-  filtros = [],
+  filtros,
   contenidoTabla,
   paginacion,
 }: CustomDataTableType) => {
@@ -69,7 +69,7 @@ export const CustomDataTable = ({
               {acciones.map((accion, index) => (
                 <div key={`accion-id-${index}`}>{accion}</div>
               ))}
-              {filtros?.length > 0 && (
+              {!!filtros && (
                 <div key={`accion-filtro`}>
                   <IconoTooltip
                     titulo={
@@ -94,25 +94,13 @@ export const CustomDataTable = ({
           sx={{
             borderRadius: 4,
             pt: 2,
-            pb: 1,
+            pb: 2,
             pl: 3,
             pr: 3,
             mb: mostrarFiltro ? 3 : 0,
           }}
         >
-          <Grid
-            container
-            direction="row"
-            spacing={{ xs: 1, md: 3 }}
-            columns={{ xs: 1, sm: 12, md: 12, xl: 12 }}
-            sx={{ pb: 1 }}
-          >
-            {filtros.map((filtro, index) => (
-              <Grid item xs={2} sm={4} md={3} key={`filtro-id-${index}`}>
-                {filtro}
-              </Grid>
-            ))}
-          </Grid>
+          {filtros}
         </Card>
       </Collapse>
       {/*Contenedor de la tabla*/}

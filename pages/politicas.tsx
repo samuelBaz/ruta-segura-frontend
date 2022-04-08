@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
-import { Grid, TextField, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType, PoliticaCRUDType } from '../types'
 import {
   Alertas,
-  CampoNombre,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
@@ -99,21 +98,6 @@ const Politicas: NextPage = () => {
     />,
   ]
 
-  const filtros: Array<ReactNode> = [
-    <CampoNombre key={`filtro1`} name={'Sujeto'}>
-      <TextField sx={{ width: '100%' }} />
-    </CampoNombre>,
-    <CampoNombre key={`filtro2`} name={'Objeto'}>
-      <TextField sx={{ width: '100%' }} />
-    </CampoNombre>,
-    <CampoNombre key={`filtro3`} name={'Acción'}>
-      <TextField sx={{ width: '100%' }} />
-    </CampoNombre>,
-    <CampoNombre key={`filtro4`} name={'App'}>
-      <TextField sx={{ width: '100%' }} />
-    </CampoNombre>,
-  ]
-
   const obtenerPoliticas = async () => {
     try {
       setLoading(true)
@@ -193,7 +177,6 @@ const Politicas: NextPage = () => {
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
-          filtros={filtros}
           contenidoTabla={contenidoTabla}
           paginacion={paginacion}
         />
