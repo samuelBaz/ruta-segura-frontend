@@ -142,14 +142,6 @@ const Politicas: NextPage = () => {
     setModalPolitica(false)
   }
 
-  const cambiarPagina = async (pagina: number) => {
-    setPagina(pagina)
-  }
-
-  const cambiarLimite = async (limite: number) => {
-    setLimite(limite)
-  }
-
   useEffect(() => {
     if (estaAutenticado) obtenerPoliticas().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,8 +152,8 @@ const Politicas: NextPage = () => {
       pagina={pagina}
       limite={limite}
       total={total}
-      cambioPagina={cambiarPagina}
-      cambioLimite={cambiarLimite}
+      cambioPagina={setPagina}
+      cambioLimite={setLimite}
     />
   )
 

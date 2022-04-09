@@ -411,7 +411,7 @@ const Usuarios: NextPage = () => {
             disabled={loadingModal}
             onClick={handleSubmit(guardarActualizarUsuario)}
           >
-            Aceptar
+            Guardar
           </Button>
         </DialogActions>
       </Grid>
@@ -450,14 +450,6 @@ const Usuarios: NextPage = () => {
     if (usuarioEdicion) {
       await cambiarEstadoUsuarioPeticion(usuarioEdicion)
     }
-  }
-
-  const cambiarPagina = async (pagina: number) => {
-    setPagina(pagina)
-  }
-
-  const cambiarLimite = async (limite: number) => {
-    setLimite(limite)
   }
 
   useEffect(() => {
