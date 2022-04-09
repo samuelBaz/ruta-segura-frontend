@@ -13,6 +13,7 @@ import {
 import { imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
 import { useFirstMountState } from 'react-use'
+import { Paginacion } from '../components/ui/Paginacion'
 
 export interface ModalParametroType {
   parametro?: ParametroCRUDType
@@ -32,11 +33,17 @@ const Parametros: NextPage = () => {
   // Verificar primer render
   const isFirstMount = useFirstMountState()
 
+  // Variables de páginado
+  const [limite, setLimite] = useState<number>(10)
+  const [pagina, setPagina] = useState<number>(1)
+  const [total, setTotal] = useState<number>(0)
+
   const { sesionPeticion, estaAutenticado } = useAuth()
 
   const columnas: Array<ColumnaType> = [
-    { campo: 'nombre', nombre: 'Nombre' },
     { campo: 'codigo', nombre: 'Código' },
+    { campo: 'nombre', nombre: 'Nombre' },
+    { campo: 'descripcion', nombre: 'Descripción' },
     { campo: 'grupo', nombre: 'Grupo' },
     { campo: 'acciones', nombre: 'Acciones' },
   ]
@@ -44,15 +51,19 @@ const Parametros: NextPage = () => {
   const contenidoTabla: Array<Array<ReactNode>> = parametrosData.map(
     (parametroData, indexParametro) => [
       <Typography
+        key={`${parametroData.id}-${indexParametro}-codigo`}
+        variant={'body2'}
+      >{`${parametroData.codigo}`}</Typography>,
+      <Typography
         key={`${parametroData.id}-${indexParametro}-nombre`}
         variant={'body2'}
       >
         {`${parametroData.nombre}`}
       </Typography>,
       <Typography
-        key={`${parametroData.id}-${indexParametro}-codigo`}
+        key={`${parametroData.id}-${indexParametro}-descripcion`}
         variant={'body2'}
-      >{`${parametroData.codigo}`}</Typography>,
+      >{`${parametroData.descripcion}`}</Typography>,
       <Typography
         key={`${parametroData.id}-${indexParametro}-grupo`}
         variant={'body2'}
@@ -98,8 +109,13 @@ const Parametros: NextPage = () => {
 
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros`,
+        params: {
+          pagina: pagina,
+          limite: limite,
+        },
       })
       setParametrosData(respuesta.datos?.filas)
+      setTotal(respuesta.datos?.total)
       setErrorParametrosData(null)
     } catch (e) {
       imprimir(`Error al obtener parametros: ${e}`)
@@ -134,9 +150,19 @@ const Parametros: NextPage = () => {
   }
 
   useEffect(() => {
-    if (estaAutenticado) if (isFirstMount) obtenerParametros().finally(() => {})
+    if (estaAutenticado) obtenerParametros().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [estaAutenticado, pagina, limite])
+
+  const paginacion = (
+    <Paginacion
+      pagina={pagina}
+      limite={limite}
+      total={total}
+      cambioPagina={setPagina}
+      cambioLimite={setLimite}
+    />
+  )
 
   return (
     <>
@@ -155,6 +181,7 @@ const Parametros: NextPage = () => {
           acciones={acciones}
           columnas={columnas}
           contenidoTabla={contenidoTabla}
+          paginacion={paginacion}
         />
       </LayoutUser>
     </>

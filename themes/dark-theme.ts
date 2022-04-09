@@ -38,7 +38,7 @@ export const darkTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#373635',
+          backgroundColor: '#302F2E',
         },
       },
     },

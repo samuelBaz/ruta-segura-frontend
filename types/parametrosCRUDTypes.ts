@@ -5,4 +5,5 @@ export interface ParametroCRUDType {
   codigo: string
   nombre: string
   grupo: string
+  descripcion: string
 }

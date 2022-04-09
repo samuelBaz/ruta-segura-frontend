@@ -6,12 +6,14 @@ export interface peticionFormatoMetodo {
   tipo?: Method
   headers?: AxiosRequestHeaders
   body?: object
+  params?: any
 }
 
 export interface peticionFormato {
   url: string
   headers: AxiosRequestHeaders
   body?: object
+  params?: any
 }
 
 export const estadosCorrectos: number[] = [200, 201, 202]
@@ -23,6 +25,7 @@ class ServiciosClass {
     tipo = 'get',
     headers,
     body,
+    params,
   }: peticionFormatoMetodo) {
     return axios({
       method: tipo,
@@ -30,6 +33,7 @@ class ServiciosClass {
       headers: headers,
       timeout: 5000,
       data: body,
+      params: params,
       validateStatus(status) {
         return estadosCorrectos.some((estado: number) => status === estado)
       },

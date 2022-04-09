@@ -41,6 +41,7 @@ interface ContextProps {
     tipo,
     headers,
     body,
+    params,
   }: peticionFormatoMetodo) => Promise<any>
 }
 
@@ -180,6 +181,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       Authorization: `Bearer ${leerCookie('token') ?? ''}`,
     },
     body,
+    params,
   }: peticionFormatoMetodo) => {
     try {
       if (verificarToken()) {
@@ -197,6 +199,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         tipo,
         headers,
         body,
+        params,
       })
       imprimir(
         `respuesta 🔐📡 : ${

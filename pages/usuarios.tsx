@@ -31,6 +31,7 @@ import { FormInputDate, FormInputText } from '../components/ui/form'
 import { FormInputDropdownMultiple } from '../components/ui/form'
 import { isValidEmail } from '../utils/validations'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
+import { Paginacion } from '../components/ui/Paginacion'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
@@ -63,6 +64,11 @@ const Usuarios: NextPage = () => {
 
   // Verificar primer render
   const isFirstMount = useFirstMountState()
+
+  // Variables de páginado
+  const [limite, setLimite] = useState<number>(10)
+  const [pagina, setPagina] = useState<number>(1)
+  const [total, setTotal] = useState<number>(0)
 
   const { sesionPeticion, estaAutenticado } = useAuth()
 
@@ -185,8 +191,13 @@ const Usuarios: NextPage = () => {
 
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios`,
+        params: {
+          pagina: pagina,
+          limite: limite,
+        },
       })
       setUsuariosData(respuesta.datos?.filas)
+      setTotal(respuesta.datos?.total)
       setErrorData(null)
     } catch (e) {
       imprimir(`Error al obtener usuarios: ${e}`)
@@ -441,20 +452,37 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  const cambiarPagina = async (pagina: number) => {
+    setPagina(pagina)
+  }
+
+  const cambiarLimite = async (limite: number) => {
+    setLimite(limite)
+  }
+
   useEffect(() => {
     if (estaAutenticado)
-      if (isFirstMount)
-        obtenerRolesPeticion()
-          .then(() => {
-            obtenerUsuariosPeticion()
-              .catch(() => {})
-              .finally(() => {})
-          })
-          .catch(() => {})
-          .finally(() => {})
+      obtenerRolesPeticion()
+        .then(() => {
+          obtenerUsuariosPeticion()
+            .catch(() => {})
+            .finally(() => {})
+        })
+        .catch(() => {})
+        .finally(() => {})
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado])
+  }, [estaAutenticado, pagina, limite])
+
+  const paginacion = (
+    <Paginacion
+      pagina={pagina}
+      limite={limite}
+      total={total}
+      cambioPagina={setPagina}
+      cambioLimite={setLimite}
+    />
+  )
 
   return (
     <>
@@ -483,6 +511,7 @@ const Usuarios: NextPage = () => {
           acciones={acciones}
           columnas={columnas}
           contenidoTabla={contenidoTabla}
+          paginacion={paginacion}
         />
       </LayoutUser>
     </>

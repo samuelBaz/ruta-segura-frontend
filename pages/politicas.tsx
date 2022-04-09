@@ -103,7 +103,11 @@ const Politicas: NextPage = () => {
       setLoading(true)
 
       const respuesta = await sesionPeticion({
-        url: `${Constantes.baseUrl}/autorizacion/politicas?limite=${limite}&pagina=${pagina}`,
+        url: `${Constantes.baseUrl}/autorizacion/politicas`,
+        params: {
+          pagina: pagina,
+          limite: limite,
+        },
       })
       setPoliticasData(respuesta.datos?.filas)
       setTotal(respuesta.datos?.total)
@@ -147,9 +151,9 @@ const Politicas: NextPage = () => {
   }
 
   useEffect(() => {
-    if (estaAutenticado) if (isFirstMount) obtenerPoliticas().finally(() => {})
+    if (estaAutenticado) obtenerPoliticas().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagina, limite])
+  }, [estaAutenticado, pagina, limite])
 
   const paginacion = (
     <Paginacion
