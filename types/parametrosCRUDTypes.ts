@@ -7,3 +7,11 @@ export interface ParametroCRUDType {
   grupo: string
   descripcion: string
 }
+
+export interface CrearEditarParametroCRUDType {
+  id?: string
+  codigo: string
+  nombre: string
+  grupo: string
+  descripcion: string
+}
