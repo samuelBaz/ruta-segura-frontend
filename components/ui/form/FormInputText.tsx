@@ -37,10 +37,16 @@ export const FormInputText = ({
           <>
             <TextField
               id={id}
+              name={name}
               sx={{ width: '100%' }}
               size={size}
               error={!!error}
-              onChange={onChange || field.onChange}
+              onChange={(event) => {
+                if (onChange) {
+                  onChange(event)
+                }
+                field.onChange(event)
+              }}
               value={field.value}
               disabled={disabled}
             />

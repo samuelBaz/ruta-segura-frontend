@@ -49,9 +49,6 @@ const Usuarios: NextPage = () => {
   /// Indicador para mostrar una ventana modal de usuario
   const [modalUsuario, setModalUsuario] = useState(false)
 
-  // Flag que indica que hay un proceso en ventana modal cargando visualmente
-  const [loadingModal, setLoadingModal] = useState<boolean>(false)
-
   /// Indicador para mostrar una vista de alerta
   const [mostrarAlertaEstadoUsuario, setMostrarAlertaEstadoUsuario] =
     useState(false)
@@ -200,28 +197,6 @@ const Usuarios: NextPage = () => {
     }
   }
 
-  const guardarActualizarUsuariosPeticion = async (
-    usuario: CrearEditarUsuarioType
-  ) => {
-    try {
-      setLoadingModal(true)
-      await delay(1000)
-      const respuesta = await sesionPeticion({
-        url: `${Constantes.baseUrl}/usuarios/${usuario.id ?? ''}`,
-        tipo: !!usuario.id ? 'patch' : 'post',
-        body: usuario,
-      })
-      Alertas.correcto(InterpreteMensajes(respuesta))
-      cerrarModalUsuario()
-      obtenerUsuariosPeticion().finally()
-    } catch (e) {
-      imprimir(`Error al crear o actualizar usuario: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
-    } finally {
-      setLoadingModal(false)
-    }
-  }
-
   const obtenerRolesPeticion = async () => {
     try {
       setLoading(true)
@@ -260,6 +235,9 @@ const Usuarios: NextPage = () => {
   }
 
   const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
+    // Flag que indica que hay un proceso en ventana modal cargando visualmente
+    const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
     const { handleSubmit, control } = useForm<CrearEditarUsuarioType>({
       defaultValues: {
         id: usuario?.id,
@@ -274,6 +252,28 @@ const Usuarios: NextPage = () => {
 
     const guardarActualizarUsuario = async (data: CrearEditarUsuarioType) => {
       await guardarActualizarUsuariosPeticion(data)
+    }
+
+    const guardarActualizarUsuariosPeticion = async (
+      usuario: CrearEditarUsuarioType
+    ) => {
+      try {
+        setLoadingModal(true)
+        await delay(1000)
+        const respuesta = await sesionPeticion({
+          url: `${Constantes.baseUrl}/usuarios/${usuario.id ?? ''}`,
+          tipo: !!usuario.id ? 'patch' : 'post',
+          body: usuario,
+        })
+        Alertas.correcto(InterpreteMensajes(respuesta))
+        cerrarModalUsuario()
+        obtenerUsuariosPeticion().finally()
+      } catch (e) {
+        imprimir(`Error al crear o actualizar usuario: ${e}`)
+        Alertas.error(InterpreteMensajes(e))
+      } finally {
+        setLoadingModal(false)
+      }
     }
 
     return (
