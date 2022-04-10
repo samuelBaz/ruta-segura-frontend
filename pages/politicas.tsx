@@ -1,19 +1,27 @@
 import type { NextPage } from 'next'
-import { Grid, Typography } from '@mui/material'
+import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
 import { useAuth } from '../context/auth'
 import { LayoutUser } from '../components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { ColumnaType, PoliticaCRUDType } from '../types'
+import {
+  ColumnaType,
+  CrearEditarPoliticaCRUDType,
+  CrearEditarParametroCRUDType,
+  PoliticaCRUDType,
+} from '../types'
 import {
   Alertas,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
 } from '../components/ui'
-import { imprimir, InterpreteMensajes } from '../utils'
+import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
 import { Paginacion } from '../components/ui/Paginacion'
 import { useFirstMountState } from 'react-use'
+import { useForm } from 'react-hook-form'
+import { FormInputText } from '../components/ui/form'
+import ProgresoLineal from '../components/ui/ProgresoLineal'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType
@@ -66,6 +74,7 @@ const Politicas: NextPage = () => {
       <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
         <IconoTooltip
           titulo={'Editar'}
+          color={'success'}
           accion={() => {
             imprimir(`Editaremos : ${JSON.stringify(politicaData)}`)
             editarPoliticaModal(politicaData)
@@ -91,14 +100,14 @@ const Politicas: NextPage = () => {
       titulo={'Actualizar'}
       key={`accionActualizarPolitica`}
       accion={async () => {
-        await obtenerPoliticas()
+        await obtenerPoliticasPeticion()
       }}
       icono={'refresh'}
       name={'Actualizar lista de políticas'}
     />,
   ]
 
-  const obtenerPoliticas = async () => {
+  const obtenerPoliticasPeticion = async () => {
     try {
       setLoading(true)
 
@@ -122,14 +131,126 @@ const Politicas: NextPage = () => {
   }
 
   const VistaModalPolitica = ({ politica }: ModalPoliticaType) => {
+    const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
+    const { handleSubmit, control } = useForm<CrearEditarPoliticaCRUDType>({
+      defaultValues: {
+        app: politica?.app,
+        accion: politica?.accion,
+        objeto: politica?.objeto,
+        sujeto: politica?.sujeto,
+      },
+    })
+
+    const guardarActualizarPolitica = async (
+      data: CrearEditarPoliticaCRUDType
+    ) => {
+      await guardarActualizarPoliticaPeticion(data)
+    }
+
+    const guardarActualizarPoliticaPeticion = async (
+      parametro: CrearEditarPoliticaCRUDType
+    ) => {
+      try {
+        setLoadingModal(true)
+        await delay(1000)
+        const respuesta = await sesionPeticion({
+          url: `${Constantes.baseUrl}/autorizacion/politicas/`,
+          tipo: 'patch',
+          body: parametro,
+        })
+        Alertas.correcto(InterpreteMensajes(respuesta))
+        cerrarModalPolitica()
+        obtenerPoliticasPeticion().finally()
+      } catch (e) {
+        imprimir(`Error al crear o actualizar política: ${e}`)
+        Alertas.error(InterpreteMensajes(e))
+      } finally {
+        setLoadingModal(false)
+      }
+    }
+
     return (
-      <Typography>
-        {politica ? `Politica: ${JSON.stringify(politica)}` : 'Nueva politica'}
-      </Typography>
+      <Grid container direction={'column'} justifyContent="space-evenly">
+        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+          <Grid item xs={12} sm={12} md={6}>
+            <FormInputText
+              id={'sujeto'}
+              control={control}
+              name="sujeto"
+              label="Sujeto"
+              disabled={loadingModal}
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <FormInputText
+              id={'objeto'}
+              control={control}
+              name="objeto"
+              label="Objeto"
+              disabled={loadingModal}
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+        </Grid>
+        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+          <Grid item xs={12} sm={12} md={6}>
+            <FormInputText
+              id={'accion'}
+              control={control}
+              name="accion"
+              label="Acción"
+              disabled={loadingModal}
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <FormInputText
+              id={'app'}
+              control={control}
+              name="app"
+              label="App"
+              disabled={loadingModal}
+              rules={{ required: 'Este campo es requerido' }}
+            />
+          </Grid>
+        </Grid>
+        <Box height={'10px'} />
+        <ProgresoLineal mostrar={loadingModal} />
+        <Box height={'5px'} />
+        <DialogActions
+          sx={{
+            justifyContent: {
+              lg: 'flex-end',
+              md: 'flex-end',
+              xs: 'center',
+              sm: 'center',
+            },
+            pt: 2,
+          }}
+        >
+          <Button
+            variant={'outlined'}
+            disabled={loadingModal}
+            onClick={cerrarModalPolitica}
+          >
+            Cancelar
+          </Button>
+          <Button
+            variant={'contained'}
+            disabled={loadingModal}
+            onClick={handleSubmit(guardarActualizarPolitica)}
+          >
+            Guardar
+          </Button>
+        </DialogActions>
+      </Grid>
     )
   }
 
   const agregarPoliticaModal = () => {
+    setPoliticaEdicion(undefined)
     setModalPolitica(true)
   }
   const editarPoliticaModal = (politica: PoliticaCRUDType) => {
@@ -143,7 +264,7 @@ const Politicas: NextPage = () => {
   }
 
   useEffect(() => {
-    if (estaAutenticado) obtenerPoliticas().finally(() => {})
+    if (estaAutenticado) obtenerPoliticasPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
