@@ -6,16 +6,16 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import {
   ColumnaType,
   CrearEditarPoliticaCRUDType,
-  CrearEditarParametroCRUDType,
   PoliticaCRUDType,
 } from '../types'
 import {
   Alertas,
+  AlertDialog,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
 } from '../components/ui'
-import { delay, imprimir, InterpreteMensajes } from '../utils'
+import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { Constantes } from '../config'
 import { Paginacion } from '../components/ui/Paginacion'
 import { useFirstMountState } from 'react-use'
@@ -32,6 +32,11 @@ const Politicas: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [errorPoliticasData, setErrorPoliticasData] = useState<any>()
   const [modalPolitica, setModalPolitica] = useState(false)
+
+  /// Indicador para mostrar una vista de alerta
+  const [mostrarAlertaEliminarPolitica, setMostrarAlertaEliminarPolitica] =
+    useState(false)
+
   const [politicaEdicion, setPoliticaEdicion] = useState<
     PoliticaCRUDType | undefined
   >()
@@ -82,6 +87,16 @@ const Politicas: NextPage = () => {
           icono={'edit'}
           name={'Editar política'}
         />
+        <IconoTooltip
+          titulo={'Eliminar'}
+          color={'error'}
+          accion={() => {
+            imprimir(`Eliminaremos : ${JSON.stringify(politicaData)}`)
+            eliminarPoliticaModal(politicaData)
+          }}
+          icono={'delete_outline'}
+          name={'Editar política'}
+        />
       </Grid>,
     ]
   )
@@ -130,6 +145,30 @@ const Politicas: NextPage = () => {
     }
   }
 
+  const eliminarPoliticaPeticion = async (politica: PoliticaCRUDType) => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/autorizacion/politicas`,
+        tipo: 'delete',
+        params: {
+          sujeto: politica?.sujeto,
+          objeto: politica?.objeto,
+          accion: politica?.accion,
+          app: politica?.app,
+        },
+      })
+      imprimir(`respuesta eliminar política: ${respuesta}`)
+      Alertas.correcto(InterpreteMensajes(respuesta))
+      await obtenerPoliticasPeticion()
+    } catch (e) {
+      imprimir(`Error al eliminar política: ${e}`)
+      Alertas.error(InterpreteMensajes(e))
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const VistaModalPolitica = ({ politica }: ModalPoliticaType) => {
     const [loadingModal, setLoadingModal] = useState<boolean>(false)
 
@@ -149,15 +188,21 @@ const Politicas: NextPage = () => {
     }
 
     const guardarActualizarPoliticaPeticion = async (
-      parametro: CrearEditarPoliticaCRUDType
+      politica: CrearEditarPoliticaCRUDType
     ) => {
       try {
         setLoadingModal(true)
         await delay(1000)
         const respuesta = await sesionPeticion({
-          url: `${Constantes.baseUrl}/autorizacion/politicas/`,
-          tipo: 'patch',
-          body: parametro,
+          url: `${Constantes.baseUrl}/autorizacion/politicas`,
+          tipo: politicaEdicion ? 'patch' : 'post',
+          body: politica,
+          params: {
+            sujeto: politicaEdicion?.sujeto,
+            objeto: politicaEdicion?.objeto,
+            accion: politicaEdicion?.accion,
+            app: politicaEdicion?.app,
+          },
         })
         Alertas.correcto(InterpreteMensajes(respuesta))
         cerrarModalPolitica()
@@ -268,6 +313,23 @@ const Politicas: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
+  const eliminarPoliticaModal = (politica: PoliticaCRUDType) => {
+    setPoliticaEdicion(politica) // para mostrar datos de usuario en la alerta
+    setMostrarAlertaEliminarPolitica(true) // para mostrar alerta de usuarios
+  }
+
+  const cancelarAlertaEliminarPolitica = () => {
+    setMostrarAlertaEliminarPolitica(false)
+    setPoliticaEdicion(undefined)
+  }
+
+  const aceptarAlertaEliminarPoliticas = async () => {
+    setMostrarAlertaEliminarPolitica(false)
+    if (politicaEdicion) {
+      await eliminarPoliticaPeticion(politicaEdicion)
+    }
+  }
+
   const paginacion = (
     <Paginacion
       pagina={pagina}
@@ -280,6 +342,16 @@ const Politicas: NextPage = () => {
 
   return (
     <>
+      <AlertDialog
+        isOpen={mostrarAlertaEliminarPolitica}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de eliminar la política ${titleCase(
+          `${politicaEdicion?.app}-${politicaEdicion?.objeto}-${politicaEdicion?.sujeto}-${politicaEdicion?.accion}`
+        )} ?`}
+      >
+        <Button onClick={cancelarAlertaEliminarPolitica}>Cancelar</Button>
+        <Button onClick={aceptarAlertaEliminarPoliticas}>Aceptar</Button>
+      </AlertDialog>
       <CustomDialog
         isOpen={modalPolitica}
         handleClose={cerrarModalPolitica}

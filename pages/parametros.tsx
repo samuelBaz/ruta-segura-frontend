@@ -160,7 +160,9 @@ const Parametros: NextPage = () => {
         setLoadingModal(true)
         await delay(1000)
         const respuesta = await sesionPeticion({
-          url: `${Constantes.baseUrl}/parametros/${parametro.id ?? ''}`,
+          url: `${Constantes.baseUrl}/parametros${
+            parametro.id ? `/${parametro.id}` : ''
+          }`,
           tipo: !!parametro.id ? 'patch' : 'post',
           body: parametro,
         })

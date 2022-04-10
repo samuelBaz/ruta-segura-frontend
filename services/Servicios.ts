@@ -16,7 +16,7 @@ export interface peticionFormato {
   params?: any
 }
 
-export const estadosCorrectos: number[] = [200, 201, 202]
+export const estadosCorrectos: number[] = [200, 201, 202, 204]
 export const estadosSinPermiso: number[] = [401]
 
 class ServiciosClass {
