@@ -91,7 +91,6 @@ const Login: NextPage = () => {
               <Typography
                 variant={'h4'}
                 component="h1"
-                color={'primary'}
                 align={sm || xs ? 'center' : 'left'}
               >
                 Frontend base con Next.js, MUI v5 y TypeScript
@@ -125,67 +124,71 @@ const Login: NextPage = () => {
           </Box>
         </Grid>
         <Grid item xl={4} md={5} xs={12}>
-          <Card sx={{ borderRadius: 4, p: 4 }}>
-            <Box
-              display={'flex'}
-              justifyContent={'center'}
-              alignItems={'center'}
-              color={'primary'}
-            >
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Card sx={{ borderRadius: 4, p: 4, maxWidth: '450px' }}>
               <Box
-                display={'grid'}
+                display={'flex'}
                 justifyContent={'center'}
                 alignItems={'center'}
-                height={400}
-                maxWidth={450}
+                color={'primary'}
               >
-                <Typography
-                  align={'center'}
-                  color={'primary'}
-                  sx={{ flexGrow: 1, fontWeight: 'bold' }}
+                <Box
+                  display={'grid'}
+                  justifyContent={'center'}
+                  alignItems={'center'}
+                  height={400}
                 >
-                  Iniciar Sesión
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Este es un ejemplo de Login, las credenciales estan
-                  predefinidas en los campos de texto
-                </Typography>
-                <FormInputText
-                  id={'usuario'}
-                  control={control}
-                  name="usuario"
-                  label="Usuario"
-                  size={'medium'}
-                  rules={{ required: 'Este campo es requerido' }}
-                />
-                <FormInputText
-                  id={'contrasena'}
-                  control={control}
-                  name="contrasena"
-                  label="Contraseña"
-                  size={'medium'}
-                  rules={{
-                    required: 'Este campo es requerido',
-                    minLength: {
-                      value: 3,
-                      message: 'Mínimo 3 caracteres',
-                    },
-                  }}
-                />
+                  <Typography
+                    align={'center'}
+                    color={'primary'}
+                    sx={{ flexGrow: 1, fontWeight: 'bold' }}
+                  >
+                    Iniciar Sesión
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    Ingresa con las credenciales proporcionadas
+                  </Typography>
+                  <FormInputText
+                    id={'usuario'}
+                    control={control}
+                    name="usuario"
+                    label="Usuario"
+                    size={'medium'}
+                    rules={{ required: 'Este campo es requerido' }}
+                  />
+                  <FormInputText
+                    id={'contrasena'}
+                    control={control}
+                    name="contrasena"
+                    label="Contraseña"
+                    size={'medium'}
+                    rules={{
+                      required: 'Este campo es requerido',
+                      minLength: {
+                        value: 3,
+                        message: 'Mínimo 3 caracteres',
+                      },
+                    }}
+                  />
 
-                <ProgresoLineal mostrar={progresoLogin} />
+                  <ProgresoLineal mostrar={progresoLogin} />
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={progresoLogin}
-                  onClick={handleSubmit(iniciarSesion)}
-                >
-                  Ingresar
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={progresoLogin}
+                    onClick={handleSubmit(iniciarSesion)}
+                  >
+                    Ingresar
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          </Card>
+            </Card>
+          </Box>
         </Grid>
       </Grid>
     </LayoutLogin>
