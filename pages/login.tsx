@@ -158,6 +158,7 @@ const Login: NextPage = () => {
                     name="usuario"
                     label="Usuario"
                     size={'medium'}
+                    disabled={progresoLogin}
                     rules={{ required: 'Este campo es requerido' }}
                   />
                   <FormInputText
@@ -166,6 +167,7 @@ const Login: NextPage = () => {
                     name="contrasena"
                     label="Contraseña"
                     size={'medium'}
+                    disabled={progresoLogin}
                     rules={{
                       required: 'Este campo es requerido',
                       minLength: {
