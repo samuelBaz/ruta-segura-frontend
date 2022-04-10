@@ -78,6 +78,7 @@ const Parametros: NextPage = () => {
       <Grid key={`${parametroData.id}-${indexParametro}-accion`}>
         <IconoTooltip
           titulo={'Editar'}
+          color={'success'}
           accion={() => {
             imprimir(`Editaremos : ${JSON.stringify(parametroData)}`)
             editarParametroModal(parametroData)
@@ -254,6 +255,7 @@ const Parametros: NextPage = () => {
   }
 
   const agregarParametroModal = () => {
+    setParametroEdicion(undefined)
     setModalParametro(true)
   }
   const editarParametroModal = (parametro: ParametroCRUDType) => {

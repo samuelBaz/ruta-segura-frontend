@@ -153,6 +153,7 @@ const Usuarios: NextPage = () => {
         />
         <IconoTooltip
           titulo={'Editar'}
+          color={'success'}
           accion={() => {
             imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
             editarUsuarioModal(usuarioData)
@@ -421,6 +422,7 @@ const Usuarios: NextPage = () => {
   /// Métodos para agregar, editar usuarios
 
   const agregarUsuarioModal = () => {
+    setUsuarioEdicion(null)
     setModalUsuario(true)
   }
   const editarUsuarioModal = (usuario: UsuarioCRUDType) => {

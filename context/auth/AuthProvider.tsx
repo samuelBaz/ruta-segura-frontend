@@ -213,7 +213,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       if (Servicios.isNetworkError(e))
         throw new Error('Error en la conexión 🌎')
       else if (estadosSinPermiso.includes(e.response?.status)) {
+        mostrarFullScreen()
         await logout()
+        ocultarFullScreen()
       }
       throw e.response?.data || 'Ocurrio un error desconocido'
     }
