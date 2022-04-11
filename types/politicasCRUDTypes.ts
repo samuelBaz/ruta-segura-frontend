@@ -10,6 +10,13 @@ export interface PoliticaCRUDType {
 export interface CrearEditarPoliticaCRUDType {
   sujeto: string
   objeto: string
+  accion: string[]
+  app: string
+}
+
+export interface guardarPoliticaCRUDType {
+  sujeto: string
+  objeto: string
   accion: string
   app: string
 }

@@ -6,7 +6,9 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import {
   ColumnaType,
   CrearEditarPoliticaCRUDType,
+  guardarPoliticaCRUDType,
   PoliticaCRUDType,
+  RolType,
 } from '../types'
 import {
   Alertas,
@@ -20,7 +22,11 @@ import { Constantes } from '../config'
 import { Paginacion } from '../components/ui/Paginacion'
 import { useFirstMountState } from 'react-use'
 import { useForm } from 'react-hook-form'
-import { FormInputText } from '../components/ui/form'
+import {
+  FormInputDropdown,
+  FormInputDropdownMultiple,
+  FormInputText,
+} from '../components/ui/form'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
 
 export interface ModalPoliticaType {
@@ -30,7 +36,7 @@ export interface ModalPoliticaType {
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const [errorPoliticasData, setErrorPoliticasData] = useState<any>()
+  const [errorData, setErrorData] = useState<any>()
   const [modalPolitica, setModalPolitica] = useState(false)
 
   /// Indicador para mostrar una vista de alerta
@@ -40,12 +46,28 @@ const Politicas: NextPage = () => {
   const [politicaEdicion, setPoliticaEdicion] = useState<
     PoliticaCRUDType | undefined
   >()
+
+  // Roles de usuario
+  const [rolesData, setRolesData] = useState<RolType[]>([])
+
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
   // Verificar primer render
   const isFirstMount = useFirstMountState()
+
+  const opcionesAcciones: string[] = [
+    'create',
+    'read',
+    'update',
+    'delete',
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+  ]
 
   const { sesionPeticion, estaAutenticado } = useAuth()
 
@@ -135,10 +157,10 @@ const Politicas: NextPage = () => {
       })
       setPoliticasData(respuesta.datos?.filas)
       setTotal(respuesta.datos?.total)
-      setErrorPoliticasData(null)
+      setErrorData(null)
     } catch (e) {
       imprimir(`Error al obtener políticas: ${e}`)
-      setErrorPoliticasData(e)
+      setErrorData(e)
       Alertas.error(InterpreteMensajes(e))
     } finally {
       setLoading(false)
@@ -175,7 +197,7 @@ const Politicas: NextPage = () => {
     const { handleSubmit, control } = useForm<CrearEditarPoliticaCRUDType>({
       defaultValues: {
         app: politica?.app,
-        accion: politica?.accion,
+        accion: politica?.accion.split('|'),
         objeto: politica?.objeto,
         sujeto: politica?.sujeto,
       },
@@ -184,11 +206,14 @@ const Politicas: NextPage = () => {
     const guardarActualizarPolitica = async (
       data: CrearEditarPoliticaCRUDType
     ) => {
-      await guardarActualizarPoliticaPeticion(data)
+      await guardarActualizarPoliticaPeticion({
+        ...data,
+        ...{ accion: data.accion.join('|') },
+      })
     }
 
     const guardarActualizarPoliticaPeticion = async (
-      politica: CrearEditarPoliticaCRUDType
+      politica: guardarPoliticaCRUDType
     ) => {
       try {
         setLoadingModal(true)
@@ -219,12 +244,17 @@ const Politicas: NextPage = () => {
       <Grid container direction={'column'} justifyContent="space-evenly">
         <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
           <Grid item xs={12} sm={12} md={6}>
-            <FormInputText
+            <FormInputDropdown
               id={'sujeto'}
-              control={control}
               name="sujeto"
+              control={control}
               label="Sujeto"
               disabled={loadingModal}
+              options={rolesData.map((rol) => ({
+                key: rol.rol,
+                value: rol.rol,
+                label: rol.rol,
+              }))}
               rules={{ required: 'Este campo es requerido' }}
             />
           </Grid>
@@ -241,12 +271,17 @@ const Politicas: NextPage = () => {
         </Grid>
         <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
           <Grid item xs={12} sm={12} md={6}>
-            <FormInputText
+            <FormInputDropdownMultiple
               id={'accion'}
-              control={control}
               name="accion"
+              control={control}
               label="Acción"
               disabled={loadingModal}
+              options={opcionesAcciones.map((opcionAccion) => ({
+                key: opcionAccion,
+                value: opcionAccion,
+                label: opcionAccion,
+              }))}
               rules={{ required: 'Este campo es requerido' }}
             />
           </Grid>
@@ -308,8 +343,26 @@ const Politicas: NextPage = () => {
     setModalPolitica(false)
   }
 
+  const obtenerRolesPeticion = async () => {
+    try {
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/autorizacion/roles`,
+      })
+      setRolesData(respuesta.datos)
+      setErrorData(null)
+    } catch (e) {
+      imprimir(`Error al obtener roles: ${e}`)
+      setErrorData(e)
+      Alertas.error(InterpreteMensajes(e))
+    } finally {
+    }
+  }
+
   useEffect(() => {
-    if (estaAutenticado) obtenerPoliticasPeticion().finally(() => {})
+    if (estaAutenticado)
+      obtenerRolesPeticion().then(() => {
+        obtenerPoliticasPeticion().finally(() => {})
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
@@ -362,7 +415,7 @@ const Politicas: NextPage = () => {
       <LayoutUser title={'Políticas - Fronted Base'}>
         <CustomDataTable
           titulo={'Políticas'}
-          error={!!errorPoliticasData}
+          error={!!errorData}
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
