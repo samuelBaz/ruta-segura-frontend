@@ -26,12 +26,17 @@ import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { useAuth } from '../context/auth'
 import { CampoNombre, CustomDialog } from '../components/ui'
 import { useForm } from 'react-hook-form'
-import { useFirstMountState } from 'react-use'
-import { FormInputDate, FormInputText } from '../components/ui/form'
-import { FormInputDropdownMultiple } from '../components/ui/form'
+import {
+  FormInputDate,
+  FormInputDropdownMultiple,
+  FormInputText,
+} from '../components/ui/form'
 import { isValidEmail } from '../utils/validations'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
 import { Paginacion } from '../components/ui/Paginacion'
+
+import { useRouter } from 'next/router'
+import { CasbinTypes } from '../types/casbinTypes'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
@@ -62,16 +67,26 @@ const Usuarios: NextPage = () => {
   // Roles de usuario
   const [rolesData, setRolesData] = useState<RolType[]>([])
 
-  // Verificar primer render
-  const isFirstMount = useFirstMountState()
-
   // Variables de páginado
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
-  const { sesionPeticion, estaAutenticado } = useAuth()
+  // Proveedor de la sesión
+  const { sesionPeticion, estaAutenticado, rolUsuario, verificarPermiso } =
+    useAuth()
 
+  // Permisos para acciones
+  const [permisos, setPermisos] = useState<CasbinTypes>({
+    create: false,
+    update: false,
+    delete: false,
+  })
+
+  // router para conocer la ruta actual
+  const router = useRouter()
+
+  /// Columnas para data table
   const columnas: Array<ColumnaType> = [
     { campo: 'nro_documento', nombre: 'Nro. Documento' },
     { campo: 'persona', nombre: 'Persona' },
@@ -81,6 +96,7 @@ const Usuarios: NextPage = () => {
     { campo: 'acciones', nombre: 'Acciones' },
   ]
 
+  /// Contenido del data table
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
     (usuarioData, indexUsuario) => [
       <Typography
@@ -127,21 +143,23 @@ const Usuarios: NextPage = () => {
         </Button>
       </Typography>,
       <Grid key={`${usuarioData.id}-${indexUsuario}-acciones`}>
-        <IconoTooltip
-          titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-          color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
-          accion={async () => {
-            imprimir(`estado: ${usuarioData.estado}`)
-            await editarEstadoUsuarioModal(usuarioData)
-          }}
-          desactivado={usuarioData.estado == 'PENDIENTE'}
-          icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
-          name={
-            usuarioData.estado == 'ACTIVO'
-              ? 'Inactivar Usuario'
-              : 'Activar Usuario'
-          }
-        />
+        {permisos.update && (
+          <IconoTooltip
+            titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
+            accion={async () => {
+              imprimir(`estado: ${usuarioData.estado}`)
+              await editarEstadoUsuarioModal(usuarioData)
+            }}
+            desactivado={usuarioData.estado == 'PENDIENTE'}
+            icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+            name={
+              usuarioData.estado == 'ACTIVO'
+                ? 'Inactivar Usuario'
+                : 'Activar Usuario'
+            }
+          />
+        )}
         <IconoTooltip
           titulo={'Restablecer contraseña'}
           color={'info'}
@@ -151,30 +169,34 @@ const Usuarios: NextPage = () => {
           icono={'vpn_key'}
           name={'Restablecer contraseña'}
         />
-        <IconoTooltip
-          titulo={'Editar'}
-          color={'success'}
-          accion={() => {
-            imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
-            editarUsuarioModal(usuarioData)
-          }}
-          icono={'edit'}
-          name={'Editar usuario'}
-        />
+        {permisos.update && (
+          <IconoTooltip
+            titulo={'Editar'}
+            color={'success'}
+            accion={() => {
+              imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
+              editarUsuarioModal(usuarioData)
+            }}
+            icono={'edit'}
+            name={'Editar usuario'}
+          />
+        )}
       </Grid>,
     ]
   )
 
   const acciones: Array<ReactNode> = [
-    <IconoTooltip
-      titulo={'Agregar usuario'}
-      key={`accionAgregarUsuario`}
-      accion={() => {
-        agregarUsuarioModal()
-      }}
-      icono={'add_circle_outline'}
-      name={'Agregar usuario'}
-    />,
+    permisos.create && (
+      <IconoTooltip
+        titulo={'Agregar usuario'}
+        key={`accionAgregarUsuario`}
+        accion={() => {
+          agregarUsuarioModal()
+        }}
+        icono={'add_circle_outline'}
+        name={'Agregar usuario'}
+      />
+    ),
     <IconoTooltip
       titulo={'Actualizar'}
       key={`accionActualizarUsuario`}
@@ -204,6 +226,7 @@ const Usuarios: NextPage = () => {
       imprimir(`Error al obtener usuarios: ${e}`)
       setErrorData(e)
       Alertas.error(InterpreteMensajes(e))
+      throw e
     } finally {
       setLoading(false)
     }
@@ -221,6 +244,7 @@ const Usuarios: NextPage = () => {
       imprimir(`Error al obtener roles: ${e}`)
       setErrorData(e)
       Alertas.error(InterpreteMensajes(e))
+      throw e
     } finally {
       setLoading(false)
     }
@@ -454,6 +478,37 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  async function interpretarPermisos() {
+    if (rolUsuario) {
+      setPermisos({
+        create: await verificarPermiso({
+          sujeto: rolUsuario.rol,
+          objeto: router.pathname,
+          accion: 'create',
+        }),
+        update: await verificarPermiso({
+          sujeto: rolUsuario.rol,
+          objeto: router.pathname,
+          accion: 'update',
+        }),
+        delete: await verificarPermiso({
+          sujeto: rolUsuario.rol,
+          objeto: router.pathname,
+          accion: 'delete',
+        }),
+      })
+    }
+  }
+
+  useEffect(() => {
+    interpretarPermisos().finally()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estaAutenticado])
+
+  useEffect(() => {
+    imprimir(`⚙️ Interpretando permisos: ${JSON.stringify(permisos)}`)
+  }, [permisos])
+
   useEffect(() => {
     if (estaAutenticado)
       obtenerRolesPeticion()
@@ -464,7 +519,6 @@ const Usuarios: NextPage = () => {
         })
         .catch(() => {})
         .finally(() => {})
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
@@ -497,7 +551,7 @@ const Usuarios: NextPage = () => {
       >
         <VistaModalUsuario usuario={usuarioEdicion} />
       </CustomDialog>
-      <LayoutUser title={'Usuarios - Fronted Base'}>
+      <LayoutUser title={'Usuarios - Frontend Base'}>
         <CustomDataTable
           titulo={'Usuarios'}
           error={!!errorData}

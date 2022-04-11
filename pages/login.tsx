@@ -20,6 +20,7 @@ import ProgresoLineal from '../components/ui/ProgresoLineal'
 import { useFullScreenLoadingContext } from '../context/ui'
 import { useEffectOnce, useFirstMountState } from 'react-use'
 import { FormInputText } from '../components/ui/form'
+import { LoginType } from '../types'
 
 const Login: NextPage = () => {
   const { ingresar, progresoLogin } = useAuth()
@@ -30,12 +31,7 @@ const Login: NextPage = () => {
 
   const isFirstMount = useFirstMountState()
 
-  type FormData = {
-    usuario: string
-    contrasena: string
-  }
-
-  const { handleSubmit, control } = useForm<FormData>({
+  const { handleSubmit, control } = useForm<LoginType>({
     defaultValues: {
       usuario: 'ADMINISTRADOR-TECNICO',
       contrasena: '123',
@@ -64,7 +60,7 @@ const Login: NextPage = () => {
     }
   }
 
-  const iniciarSesion = async ({ usuario, contrasena }: FormData) => {
+  const iniciarSesion = async ({ usuario, contrasena }: LoginType) => {
     await ingresar({ usuario, contrasena })
   }
 

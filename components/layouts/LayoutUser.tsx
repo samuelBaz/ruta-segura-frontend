@@ -25,17 +25,16 @@ export const LayoutUser: FC<Props> = ({
     imprimir(
       `🎨 useEffect LayoutUser: ${router.pathname} - autenticado: ${estaAutenticado} - loading: ${progresoLogin}`
     )
-    if (!progresoLogin)
-      if (!estaAutenticado) {
-        imprimir(`🥾 Cerrando sesión desde ${router.pathname}`)
-        router
-          .replace({
-            pathname: '/login',
-          })
-          .finally(() => {})
-      }
+    if (!estaAutenticado) {
+      imprimir(`🥾 Cerrando sesión desde ${router.pathname}`)
+      router
+        .replace({
+          pathname: '/login',
+        })
+        .finally(() => {})
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [progresoLogin])
+  }, [estaAutenticado])
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
