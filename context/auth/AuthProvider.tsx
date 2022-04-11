@@ -22,10 +22,23 @@ import {
 import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'
-import { RoleType, UsuarioType } from '../../types'
+import {
+  idRolType,
+  LoginType,
+  PoliticaType,
+  RoleType,
+  UsuarioType,
+} from '../../types'
 import { useFullScreenLoadingContext } from '../ui'
 import { AxiosError } from 'axios'
 import { decodeToken } from 'react-jwt'
+import {
+  Enforcer,
+  newEnforcer,
+  newModelFromString,
+  StringAdapter,
+} from 'casbin'
+import { basicModel, basicPolicy } from '../../utils/casbin'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -43,21 +56,17 @@ interface ContextProps {
     body,
     params,
   }: peticionFormatoMetodo) => Promise<any>
+  verificarPermiso: ({
+    sujeto,
+    objeto,
+    accion,
+  }: PoliticaType) => Promise<boolean>
 }
 
 const AuthContext = createContext<ContextProps>({} as ContextProps)
 
 interface AuthContextType {
   children: ReactNode
-}
-
-interface LoginType {
-  usuario: string
-  contrasena: string
-}
-
-interface idRolType {
-  idRol: string
 }
 
 export const AuthProvider = ({ children }: AuthContextType) => {
@@ -69,28 +78,34 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const router = useRouter()
 
+  const [enforcer, setEnforcer] = useState<Enforcer>()
+
   async function loadUserFromCookies() {
     const token = leerCookie('token')
 
     if (token) {
       try {
         mostrarFullScreen()
-        await delay(1000)
-        const respuesta = await sesionPeticion({
+        const respuestaUsuario = await sesionPeticion({
           url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
         })
-        if (respuesta.datos) {
-          setUser(respuesta.datos)
+        if (respuestaUsuario.datos) {
+          setUser(respuestaUsuario.datos)
 
-          if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
+          if (
+            respuestaUsuario.datos.roles &&
+            respuestaUsuario.datos.roles.length > 0
+          ) {
             imprimir(
-              `rol encontrado en loadUserFromCookies 👨‍💻: ${respuesta.datos.roles[0].idRol}`
+              `rol encontrado en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
             )
             AlmacenarRol({
-              idRol: leerCookie('rol') ?? respuesta.datos.roles[0].idRol,
+              idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
             })
           }
         }
+
+        await obtenerPermisos()
 
         if (router.pathname == '/login' || router.pathname == '/')
           // TODO: Verificar si el usuario tiene permiso de acceder a la ruta
@@ -99,11 +114,12 @@ export const AuthProvider = ({ children }: AuthContextType) => {
           })
 
         await delay(1000)
-      } catch (error) {
+      } catch (error: Error | any) {
         eliminarCookie('token')
         await router.replace({
           pathname: '/login',
         })
+        throw error
       } finally {
         setLoading(false)
       }
@@ -143,11 +159,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         imprimir(`Usuarios ✅: ${JSON.stringify(respuesta.datos)}`)
 
         if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
-          imprimir(
-            `rol encontrado en login 👨‍💻: ${respuesta.datos.roles[0].idRol}`
-          )
+          imprimir(`rol inicial 👨‍💻: ${respuesta.datos.roles[0].idRol}`)
           AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
         }
+
+        await obtenerPermisos()
 
         mostrarFullScreen()
         await delay(1000)
@@ -251,10 +267,50 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     guardarCookie('rol', idRol)
   }
 
+  const obtenerPermisos = async () => {
+    const respuestaPermisos = await sesionPeticion({
+      url: `${Constantes.baseUrl}/autorizacion/permisos`,
+    })
+
+    if (respuestaPermisos.datos) {
+      await inicializarCasbin(respuestaPermisos.datos)
+    }
+  }
+
+  const inicializarCasbin = async (politicas: string[][]) => {
+    const model = newModelFromString(basicModel)
+    const policy = new StringAdapter(basicPolicy)
+
+    const enforcerTemp: Enforcer = await newEnforcer(model, policy)
+    for (const p of politicas) {
+      await enforcerTemp.addPolicy(p[0], p[1], p[2], p[3], p[4], p[5])
+    }
+    setEnforcer(enforcerTemp)
+  }
+
+  const verificarAutorizacion = async ({
+    sujeto,
+    objeto,
+    accion,
+  }: PoliticaType): Promise<boolean> => {
+    if (enforcer) {
+      return enforcer
+        .enforce(sujeto, objeto, accion)
+        .then((permitido) => {
+          return permitido
+        })
+        .catch((reason) => {
+          return false
+        })
+    } else {
+      return false
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
-        estaAutenticado: !!user,
+        estaAutenticado: !!user && !loading,
         usuario: user,
         idRolUsuario: idRol,
         rolUsuario: user?.roles.find((rol) => rol.idRol == idRol),
@@ -263,6 +319,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         progresoLogin: loading,
         cerrarSesion: logout,
         sesionPeticion: sesionPeticion,
+        verificarPermiso: verificarAutorizacion,
       }}
     >
       {children}

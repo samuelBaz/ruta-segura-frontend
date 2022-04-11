@@ -1,3 +1,14 @@
+// Form Login
+
+export interface LoginType {
+  usuario: string
+  contrasena: string
+}
+
+export interface idRolType {
+  idRol: string
+}
+
 /// Usuario que iniciar sesión
 
 export interface PropiedadesType {
@@ -49,4 +60,10 @@ export interface UsuarioType {
   estado: string
   roles: RoleType[]
   persona: PersonaType
+}
+
+export interface PoliticaType {
+  sujeto: string
+  objeto: string
+  accion: string
 }
