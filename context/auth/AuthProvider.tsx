@@ -39,6 +39,7 @@ import {
   StringAdapter,
 } from 'casbin'
 import { basicModel, basicPolicy } from '../../utils/casbin'
+import { CasbinTypes } from '../../types/casbinTypes'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -61,6 +62,7 @@ interface ContextProps {
     objeto,
     accion,
   }: PoliticaType) => Promise<boolean>
+  interpretarPermiso: (routerName: string) => Promise<CasbinTypes>
 }
 
 const AuthContext = createContext<ContextProps>({} as ContextProps)
@@ -307,19 +309,47 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
+  const obtenerRolUsuario = () => user?.roles.find((rol) => rol.idRol == idRol)
+
   return (
     <AuthContext.Provider
       value={{
         estaAutenticado: !!user && !loading,
         usuario: user,
         idRolUsuario: idRol,
-        rolUsuario: user?.roles.find((rol) => rol.idRol == idRol),
+        rolUsuario: obtenerRolUsuario(),
         setRolUsuario: AlmacenarRol,
         ingresar: login,
         progresoLogin: loading,
         cerrarSesion: logout,
         sesionPeticion: sesionPeticion,
         verificarPermiso: verificarAutorizacion,
+        interpretarPermiso: async (routerName) => {
+          if (obtenerRolUsuario()) {
+            return {
+              create: await verificarAutorizacion({
+                sujeto: obtenerRolUsuario()?.rol ?? '',
+                objeto: routerName,
+                accion: 'create',
+              }),
+              update: await verificarAutorizacion({
+                sujeto: obtenerRolUsuario()?.rol ?? '',
+                objeto: routerName,
+                accion: 'update',
+              }),
+              delete: await verificarAutorizacion({
+                sujeto: obtenerRolUsuario()?.rol ?? '',
+                objeto: routerName,
+                accion: 'delete',
+              }),
+            }
+          } else
+            return {
+              create: false,
+              update: false,
+              delete: false,
+            }
+        },
       }}
     >
       {children}

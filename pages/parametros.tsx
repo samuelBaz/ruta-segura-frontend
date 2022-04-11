@@ -21,6 +21,8 @@ import { Paginacion } from '../components/ui/Paginacion'
 import { useForm } from 'react-hook-form'
 import { FormInputText } from '../components/ui/form'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
+import { CasbinTypes } from '../types/casbinTypes'
+import { useRouter } from 'next/router'
 
 export interface ModalParametroType {
   parametro?: ParametroCRUDType
@@ -45,7 +47,17 @@ const Parametros: NextPage = () => {
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
-  const { sesionPeticion, estaAutenticado } = useAuth()
+  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
+
+  // Permisos para acciones
+  const [permisos, setPermisos] = useState<CasbinTypes>({
+    create: false,
+    update: false,
+    delete: false,
+  })
+
+  // router para conocer la ruta actual
+  const router = useRouter()
 
   const columnas: Array<ColumnaType> = [
     { campo: 'codigo', nombre: 'Código' },
@@ -76,30 +88,34 @@ const Parametros: NextPage = () => {
         variant={'body2'}
       >{`${parametroData.grupo}`}</Typography>,
       <Grid key={`${parametroData.id}-${indexParametro}-accion`}>
-        <IconoTooltip
-          titulo={'Editar'}
-          color={'success'}
-          accion={() => {
-            imprimir(`Editaremos : ${JSON.stringify(parametroData)}`)
-            editarParametroModal(parametroData)
-          }}
-          icono={'edit'}
-          name={'Parámetros'}
-        />
+        {permisos.update && (
+          <IconoTooltip
+            titulo={'Editar'}
+            color={'success'}
+            accion={() => {
+              imprimir(`Editaremos : ${JSON.stringify(parametroData)}`)
+              editarParametroModal(parametroData)
+            }}
+            icono={'edit'}
+            name={'Parámetros'}
+          />
+        )}
       </Grid>,
     ]
   )
 
   const acciones: Array<ReactNode> = [
-    <IconoTooltip
-      titulo={'Agregar parámetro'}
-      key={`accionAgregarParametro`}
-      accion={() => {
-        agregarParametroModal()
-      }}
-      icono={'add_circle_outline'}
-      name={'Agregar parámetro'}
-    />,
+    permisos.create && (
+      <IconoTooltip
+        titulo={'Agregar parámetro'}
+        key={`accionAgregarParametro`}
+        accion={() => {
+          agregarParametroModal()
+        }}
+        icono={'add_circle_outline'}
+        name={'Agregar parámetro'}
+      />
+    ),
     <IconoTooltip
       titulo={'Actualizar'}
       key={`accionActualizarParametro`}
@@ -269,6 +285,15 @@ const Parametros: NextPage = () => {
     setParametroEdicion(undefined)
     setModalParametro(false)
   }
+
+  async function definirPermisos() {
+    setPermisos(await interpretarPermiso(router.pathname))
+  }
+
+  useEffect(() => {
+    definirPermisos().finally()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estaAutenticado])
 
   useEffect(() => {
     if (estaAutenticado) obtenerParametrosPeticion().finally(() => {})

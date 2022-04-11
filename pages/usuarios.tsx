@@ -73,8 +73,7 @@ const Usuarios: NextPage = () => {
   const [total, setTotal] = useState<number>(0)
 
   // Proveedor de la sesión
-  const { sesionPeticion, estaAutenticado, rolUsuario, verificarPermiso } =
-    useAuth()
+  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
 
   // Permisos para acciones
   const [permisos, setPermisos] = useState<CasbinTypes>({
@@ -471,43 +470,21 @@ const Usuarios: NextPage = () => {
     setUsuarioEdicion(null)
   }
 
+  async function definirPermisos() {
+    setPermisos(await interpretarPermiso(router.pathname))
+  }
+
+  useEffect(() => {
+    definirPermisos().finally()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estaAutenticado])
+
   const aceptarAlertaEstadoUsuario = async () => {
     setMostrarAlertaEstadoUsuario(false)
     if (usuarioEdicion) {
       await cambiarEstadoUsuarioPeticion(usuarioEdicion)
     }
   }
-
-  async function interpretarPermisos() {
-    if (rolUsuario) {
-      setPermisos({
-        create: await verificarPermiso({
-          sujeto: rolUsuario.rol,
-          objeto: router.pathname,
-          accion: 'create',
-        }),
-        update: await verificarPermiso({
-          sujeto: rolUsuario.rol,
-          objeto: router.pathname,
-          accion: 'update',
-        }),
-        delete: await verificarPermiso({
-          sujeto: rolUsuario.rol,
-          objeto: router.pathname,
-          accion: 'delete',
-        }),
-      })
-    }
-  }
-
-  useEffect(() => {
-    interpretarPermisos().finally()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado])
-
-  useEffect(() => {
-    imprimir(`⚙️ Interpretando permisos: ${JSON.stringify(permisos)}`)
-  }, [permisos])
 
   useEffect(() => {
     if (estaAutenticado)

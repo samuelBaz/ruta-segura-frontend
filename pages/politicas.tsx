@@ -20,7 +20,6 @@ import {
 import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
 import { Constantes } from '../config'
 import { Paginacion } from '../components/ui/Paginacion'
-import { useFirstMountState } from 'react-use'
 import { useForm } from 'react-hook-form'
 import {
   FormInputDropdown,
@@ -28,6 +27,8 @@ import {
   FormInputText,
 } from '../components/ui/form'
 import ProgresoLineal from '../components/ui/ProgresoLineal'
+import { CasbinTypes } from '../types/casbinTypes'
+import { useRouter } from 'next/router'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType
@@ -54,9 +55,6 @@ const Politicas: NextPage = () => {
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
-  // Verificar primer render
-  const isFirstMount = useFirstMountState()
-
   const opcionesAcciones: string[] = [
     'create',
     'read',
@@ -69,7 +67,17 @@ const Politicas: NextPage = () => {
     'DELETE',
   ]
 
-  const { sesionPeticion, estaAutenticado } = useAuth()
+  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
+
+  // Permisos para acciones
+  const [permisos, setPermisos] = useState<CasbinTypes>({
+    create: false,
+    update: false,
+    delete: false,
+  })
+
+  // router para conocer la ruta actual
+  const router = useRouter()
 
   const columnas: Array<ColumnaType> = [
     { campo: 'sujeto', nombre: 'Sujeto' },
@@ -99,40 +107,47 @@ const Politicas: NextPage = () => {
       >{`${politicaData.app}`}</Typography>,
 
       <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
-        <IconoTooltip
-          titulo={'Editar'}
-          color={'success'}
-          accion={() => {
-            imprimir(`Editaremos : ${JSON.stringify(politicaData)}`)
-            editarPoliticaModal(politicaData)
-          }}
-          icono={'edit'}
-          name={'Editar política'}
-        />
-        <IconoTooltip
-          titulo={'Eliminar'}
-          color={'error'}
-          accion={() => {
-            imprimir(`Eliminaremos : ${JSON.stringify(politicaData)}`)
-            eliminarPoliticaModal(politicaData)
-          }}
-          icono={'delete_outline'}
-          name={'Editar política'}
-        />
+        {permisos.update && (
+          <IconoTooltip
+            titulo={'Editar'}
+            color={'success'}
+            accion={() => {
+              imprimir(`Editaremos : ${JSON.stringify(politicaData)}`)
+              editarPoliticaModal(politicaData)
+            }}
+            icono={'edit'}
+            name={'Editar política'}
+          />
+        )}
+
+        {permisos.delete && (
+          <IconoTooltip
+            titulo={'Eliminar'}
+            color={'error'}
+            accion={() => {
+              imprimir(`Eliminaremos : ${JSON.stringify(politicaData)}`)
+              eliminarPoliticaModal(politicaData)
+            }}
+            icono={'delete_outline'}
+            name={'Editar política'}
+          />
+        )}
       </Grid>,
     ]
   )
 
   const acciones: Array<ReactNode> = [
-    <IconoTooltip
-      titulo={'Agregar política'}
-      key={`accionAgregarPolitica`}
-      accion={() => {
-        agregarPoliticaModal()
-      }}
-      icono={'add_circle_outline'}
-      name={'Agregar política'}
-    />,
+    permisos.create && (
+      <IconoTooltip
+        titulo={'Agregar política'}
+        key={`accionAgregarPolitica`}
+        accion={() => {
+          agregarPoliticaModal()
+        }}
+        icono={'add_circle_outline'}
+        name={'Agregar política'}
+      />
+    ),
     <IconoTooltip
       titulo={'Actualizar'}
       key={`accionActualizarPolitica`}
@@ -357,6 +372,15 @@ const Politicas: NextPage = () => {
     } finally {
     }
   }
+
+  async function definirPermisos() {
+    setPermisos(await interpretarPermiso(router.pathname))
+  }
+
+  useEffect(() => {
+    definirPermisos().finally()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estaAutenticado])
 
   useEffect(() => {
     if (estaAutenticado)
