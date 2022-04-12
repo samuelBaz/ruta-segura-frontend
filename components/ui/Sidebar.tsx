@@ -30,6 +30,7 @@ export const Sidebar = () => {
   const router = useRouter()
 
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
+  const md = useMediaQuery(theme.breakpoints.only('md'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const { estadoFullScreen } = useFullScreenLoadingContext()
@@ -53,22 +54,21 @@ export const Sidebar = () => {
   }
 
   const navigateTo = async (url: string) => {
-    if (sm || xs) {
+    if (sm || xs || md) {
       closeSideMenu()
     }
     await router.push(url)
   }
 
   useEffect(() => {
-    imprimir(`Cambio de escala 📏: ${sm}`)
-    if (sm || xs) {
+    if (sm || xs || md) {
       closeSideMenu()
     } else {
       openSideMenu()
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sm, xs])
+  }, [sm, xs, md])
 
   useEffect(() => {
     interpretarModulos()
@@ -77,7 +77,7 @@ export const Sidebar = () => {
 
   return (
     <Drawer
-      variant={sm || xs ? 'temporary' : 'persistent'}
+      variant={sm || xs || md ? 'temporary' : 'persistent'}
       open={
         sidemenuOpen &&
         estaAutenticado &&
