@@ -2,7 +2,7 @@
   "name": "nextjs-with-typescript",
   "version": "1.0.1",
   "description": "Frontend base con Next.js, MUI v5 y TypeScript",
-  "author": "ivillarreal@agetic.gob.bo",
+  "author": "Imanol",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8080",

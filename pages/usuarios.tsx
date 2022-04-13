@@ -184,6 +184,7 @@ const Usuarios: NextPage = () => {
     ]
   )
 
+  /// Acciones para data table
   const acciones: Array<ReactNode> = [
     permisos.create && (
       <IconoTooltip
@@ -207,6 +208,7 @@ const Usuarios: NextPage = () => {
     />,
   ]
 
+  /// Petición que obtiene lista de usuarios
   const obtenerUsuariosPeticion = async () => {
     try {
       setLoading(true)
@@ -231,6 +233,7 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  /// Petición que obtiene lista de roles
   const obtenerRolesPeticion = async () => {
     try {
       setLoading(true)
@@ -249,6 +252,7 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  /// Petición que cambia el estado de un usuario
   const cambiarEstadoUsuarioPeticion = async (usuario: UsuarioCRUDType) => {
     try {
       setLoading(true)
@@ -269,6 +273,7 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  /// Vista modal de usuario
   const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
     // Flag que indica que hay un proceso en ventana modal cargando visualmente
     const [loadingModal, setLoadingModal] = useState<boolean>(false)
@@ -314,10 +319,7 @@ const Usuarios: NextPage = () => {
     return (
       <Grid container direction={'column'} justifyContent="space-evenly">
         <Box height={'10px'} />
-        <Typography
-          color="text.secondary"
-          sx={{ fontSize: 14, fontWeight: 'bold' }}
-        >
+        <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
           Datos personales
         </Typography>
         <Box height={'10px'} />
@@ -375,7 +377,9 @@ const Usuarios: NextPage = () => {
         </Grid>
         <Grid>
           <Box height={'10px'} />
-          <CampoNombre name={'Datos de usuario'} />
+          <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
+            Datos personales
+          </Typography>
           <Box height={'10px'} />
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
             <Grid item xs={12} sm={12} md={4}>
@@ -442,34 +446,47 @@ const Usuarios: NextPage = () => {
     )
   }
 
-  /// Métodos para agregar, editar usuarios
+  /// Método abre una ventana modal para un usuario nuevo
 
   const agregarUsuarioModal = () => {
     setUsuarioEdicion(null)
     setModalUsuario(true)
   }
+  /// Método abre una ventana modal para un usuario existente
   const editarUsuarioModal = (usuario: UsuarioCRUDType) => {
     setUsuarioEdicion(usuario)
     setModalUsuario(true)
   }
 
+  /// Método que cierra una ventana modal
   const cerrarModalUsuario = () => {
     setUsuarioEdicion(null)
     setModalUsuario(false)
   }
 
-  /// Métodos para alerta de cambiar de estado
+  /// Método que muestra alerta de cambio de estado
 
   const editarEstadoUsuarioModal = async (usuario: UsuarioCRUDType) => {
     setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
     setMostrarAlertaEstadoUsuario(true) // para mostrar alerta de usuarios
   }
 
+  /// Método que cierra alerta de cambio de estado
+
   const cancelarAlertaEstadoUsuario = () => {
     setMostrarAlertaEstadoUsuario(false)
     setUsuarioEdicion(null)
   }
 
+  /// Método que oculta la alerta de cambio de estado y procede al cambio
+  const aceptarAlertaEstadoUsuario = async () => {
+    setMostrarAlertaEstadoUsuario(false)
+    if (usuarioEdicion) {
+      await cambiarEstadoUsuarioPeticion(usuarioEdicion)
+    }
+  }
+
+  /// Método que define permisos por rol desde la sesión
   async function definirPermisos() {
     setPermisos(await interpretarPermiso(router.pathname))
   }
@@ -478,13 +495,6 @@ const Usuarios: NextPage = () => {
     definirPermisos().finally()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado])
-
-  const aceptarAlertaEstadoUsuario = async () => {
-    setMostrarAlertaEstadoUsuario(false)
-    if (usuarioEdicion) {
-      await cambiarEstadoUsuarioPeticion(usuarioEdicion)
-    }
-  }
 
   useEffect(() => {
     if (estaAutenticado)
@@ -499,6 +509,7 @@ const Usuarios: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
+  /// Variable con parámetros de paginación
   const paginacion = (
     <Paginacion
       pagina={pagina}

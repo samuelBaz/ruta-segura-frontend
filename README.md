@@ -1,4 +1,4 @@
-# Next.js with TypeScript example
+# Frontend base con Next.js, MUI v5 y TypeScript
 
 ## How to use
 

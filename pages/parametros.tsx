@@ -217,6 +217,7 @@ const Parametros: NextPage = () => {
             />
           </Grid>
         </Grid>
+        <Box height={'15px'} />
         <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
           <Grid item xs={12} sm={12} md={6}>
             <FormInputText
