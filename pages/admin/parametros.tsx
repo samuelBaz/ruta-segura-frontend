@@ -1,27 +1,27 @@
 import type { NextPage } from 'next'
 import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
-import { useAuth } from '../context/auth'
-import { LayoutUser } from '../components/layouts'
+import { useAuth } from '../../context/auth'
+import { LayoutUser } from '../../components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import {
   ColumnaType,
   CrearEditarParametroCRUDType,
   ParametroCRUDType,
-} from '../types'
+} from '../../types'
 import {
   Alertas,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
-} from '../components/ui'
-import { delay, imprimir, InterpreteMensajes } from '../utils'
-import { Constantes } from '../config'
+} from '../../components/ui'
+import { delay, imprimir, InterpreteMensajes } from '../../utils'
+import { Constantes } from '../../config'
 import { useFirstMountState } from 'react-use'
-import { Paginacion } from '../components/ui/Paginacion'
+import { Paginacion } from '../../components/ui/Paginacion'
 import { useForm } from 'react-hook-form'
-import { FormInputText } from '../components/ui/form'
-import ProgresoLineal from '../components/ui/ProgresoLineal'
-import { CasbinTypes } from '../types/casbinTypes'
+import { FormInputText } from '../../components/ui/form'
+import ProgresoLineal from '../../components/ui/ProgresoLineal'
+import { CasbinTypes } from '../../types/casbinTypes'
 import { useRouter } from 'next/router'
 
 export interface ModalParametroType {

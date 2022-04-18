@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
-import { useAuth } from '../context/auth'
-import { LayoutUser } from '../components/layouts'
+import { useAuth } from '../../context/auth'
+import { LayoutUser } from '../../components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import {
   ColumnaType,
@@ -9,25 +9,25 @@ import {
   guardarPoliticaCRUDType,
   PoliticaCRUDType,
   RolType,
-} from '../types'
+} from '../../types'
 import {
   Alertas,
   AlertDialog,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
-} from '../components/ui'
-import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
-import { Constantes } from '../config'
-import { Paginacion } from '../components/ui/Paginacion'
+} from '../../components/ui'
+import { delay, imprimir, InterpreteMensajes, titleCase } from '../../utils'
+import { Constantes } from '../../config'
+import { Paginacion } from '../../components/ui/Paginacion'
 import { useForm } from 'react-hook-form'
 import {
   FormInputDropdown,
   FormInputDropdownMultiple,
   FormInputText,
-} from '../components/ui/form'
-import ProgresoLineal from '../components/ui/ProgresoLineal'
-import { CasbinTypes } from '../types/casbinTypes'
+} from '../../components/ui/form'
+import ProgresoLineal from '../../components/ui/ProgresoLineal'
+import { CasbinTypes } from '../../types/casbinTypes'
 import { useRouter } from 'next/router'
 
 export interface ModalPoliticaType {

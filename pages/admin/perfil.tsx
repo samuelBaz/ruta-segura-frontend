@@ -9,11 +9,11 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { useAuth } from '../context/auth'
-import { LayoutUser } from '../components/layouts'
+import { useAuth } from '../../context/auth'
+import { LayoutUser } from '../../components/layouts'
 import React from 'react'
-import { formatoFecha, imprimir, titleCase } from '../utils'
-import { Icono } from '../components/ui'
+import { formatoFecha, imprimir, titleCase } from '../../utils'
+import { Icono } from '../../components/ui'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
 const Perfil: NextPage = () => {

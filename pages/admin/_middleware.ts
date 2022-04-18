@@ -1,0 +1,25 @@
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
+import { imprimir, verificarToken } from '../../utils'
+
+export const middleware = async (
+  req: NextRequest | any,
+  ev: NextFetchEvent
+) => {
+  const { token = '' } = req.cookies
+  imprimir(`token middleware 🔐️: ${token}`)
+
+  try {
+    if (verificarToken(token)) {
+      return NextResponse.next()
+    } else {
+      const url = req.nextUrl.clone()
+      url.pathname = '/login'
+      return NextResponse.redirect(url)
+    }
+  } catch (e) {
+    imprimir(`Error verificando token en midleware`)
+    const url = req.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+}

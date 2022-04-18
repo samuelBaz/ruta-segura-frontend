@@ -13,6 +13,7 @@ import {
   imprimir,
   InterpreteMensajes,
   leerCookie,
+  verificarToken,
 } from '../../utils'
 import {
   estadosSinPermiso,
@@ -31,7 +32,6 @@ import {
 } from '../../types'
 import { useFullScreenLoadingContext } from '../ui'
 import { AxiosError } from 'axios'
-import { decodeToken } from 'react-jwt'
 import {
   Enforcer,
   newEnforcer,
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
             respuestaUsuario.datos.roles.length > 0
           ) {
             imprimir(
-              `rol encontrado en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
+              `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
             )
             AlmacenarRol({
               idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         if (router.pathname == '/login' || router.pathname == '/')
           // TODO: Verificar si el usuario tiene permiso de acceder a la ruta
           await router.replace({
-            pathname: '/home',
+            pathname: '/admin/home',
           })
 
         await delay(1000)
@@ -170,7 +170,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         mostrarFullScreen()
         await delay(1000)
         await router.replace({
-          pathname: '/home',
+          pathname: '/admin/home',
         })
       }
     } catch (e) {
@@ -180,15 +180,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       setLoading(false)
       ocultarFullScreen()
     }
-  }
-
-  const verificarToken = (): boolean => {
-    const myDecodedToken: any = decodeToken(leerCookie('token') ?? '')
-    const caducidad = new Date(myDecodedToken.exp * 1000)
-
-    imprimir(`Token 🔐 : expira en ${caducidad}`)
-
-    return new Date().getTime() - caducidad.getTime() > 0
   }
 
   const sesionPeticion = async ({
@@ -202,7 +193,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     params,
   }: peticionFormatoMetodo) => {
     try {
-      if (verificarToken()) {
+      if (!verificarToken(leerCookie('token') ?? '')) {
         imprimir(`Token caducado ⏳`)
         // TODO: implementar refresh token
       }

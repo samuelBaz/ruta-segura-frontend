@@ -7,11 +7,11 @@ import {
   Grid,
   Typography,
 } from '@mui/material'
-import { useAuth } from '../context/auth'
-import { LayoutUser } from '../components/layouts'
-import { Icono } from '../components/ui'
+import { useAuth } from '../../context/auth'
+import { LayoutUser } from '../../components/layouts'
+import { Icono } from '../../components/ui'
 import { useRouter } from 'next/router'
-import { titleCase } from '../utils'
+import { titleCase } from '../../utils'
 
 const Home: NextPage = () => {
   const { usuario, rolUsuario, idRolUsuario } = useAuth()

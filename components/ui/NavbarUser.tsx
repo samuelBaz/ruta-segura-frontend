@@ -57,7 +57,7 @@ export const NavbarUser = () => {
     mostrarFullScreen(`Cambiando de rol..`)
     await delay(1500)
     await router.replace({
-      pathname: '/home',
+      pathname: '/admin/home',
     })
     setRolUsuario({ idRol: event.target.value })
     ocultarFullScreen()

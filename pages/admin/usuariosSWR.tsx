@@ -7,50 +7,46 @@ import {
   Grid,
   Typography,
 } from '@mui/material'
-import { LayoutUser } from '../components/layouts'
+import { LayoutUser } from '../../components/layouts'
 import {
   Alertas,
   AlertDialog,
   CustomDataTable,
   IconoTooltip,
-} from '../components/ui/'
+} from '../../components/ui'
 import React, { ReactNode, useEffect, useState } from 'react'
 import {
   ColumnaType,
   CrearEditarUsuarioType,
   RolType,
   UsuarioCRUDType,
-} from '../types'
-import { Constantes } from '../config'
-import { delay, imprimir, InterpreteMensajes, titleCase } from '../utils'
-import { useAuth } from '../context/auth'
-import { CampoNombre, CustomDialog } from '../components/ui'
+} from '../../types'
+import { Constantes } from '../../config'
+import { delay, imprimir, InterpreteMensajes, titleCase } from '../../utils'
+import { useAuth } from '../../context/auth'
+import { CampoNombre, CustomDialog } from '../../components/ui'
 import { useForm } from 'react-hook-form'
 import {
   FormInputDate,
   FormInputDropdownMultiple,
   FormInputText,
-} from '../components/ui/form'
-import { isValidEmail } from '../utils/validations'
-import ProgresoLineal from '../components/ui/ProgresoLineal'
-import { Paginacion } from '../components/ui/Paginacion'
+} from '../../components/ui/form'
+import { isValidEmail } from '../../utils/validations'
+import ProgresoLineal from '../../components/ui/ProgresoLineal'
+import { Paginacion } from '../../components/ui/Paginacion'
 
 import { useRouter } from 'next/router'
-import { CasbinTypes } from '../types/casbinTypes'
+import { CasbinTypes } from '../../types/casbinTypes'
+import useSWR, { Fetcher } from 'swr'
+import { SWRConfiguration } from 'swr/dist/types'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
 }
 
-const Usuarios: NextPage = () => {
-  // data de usuarios
-  const [usuariosData, setUsuariosData] = useState<UsuarioCRUDType[]>([])
-
+const UsuariosSWR: NextPage = () => {
   // Flag que indica que hay un proceso cargando visualmente
   const [loading, setLoading] = useState<boolean>(true)
-
-  /// Indicador de error en una petición
-  const [errorData, setErrorData] = useState<any>()
 
   /// Indicador para mostrar una ventana modal de usuario
   const [modalUsuario, setModalUsuario] = useState(false)
@@ -95,96 +91,130 @@ const Usuarios: NextPage = () => {
     { campo: 'acciones', nombre: 'Acciones' },
   ]
 
-  /// Contenido del data table
-  const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
-    (usuarioData, indexUsuario) => [
-      <Typography
-        key={`${usuarioData.id}-${indexUsuario}-tipoDoc`}
-        variant={'body2'}
-      >
-        {`${usuarioData.persona.tipoDocumento} ${usuarioData.persona.nroDocumento}`}
-      </Typography>,
-      <div key={`${usuarioData.id}-${indexUsuario}-nombres`}>
-        <Typography variant={'body2'}>
-          {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
-        </Typography>
-        <Typography variant={'body2'}>
-          {`${usuarioData.persona.fechaNacimiento}`}
-        </Typography>
-      </div>,
-      <Typography
-        key={`${usuarioData.id}-${indexUsuario}-usuario`}
-        variant={'body2'}
-      >
-        {usuarioData.usuario}
-      </Typography>,
-      <Grid key={`${usuarioData.id}-${indexUsuario}-roles`}>
-        {usuarioData.usuarioRol.map((itemUsuarioRol, indexUsuarioRol) => (
-          <Chip
-            key={`usuario-rol-${indexUsuarioRol}`}
-            label={itemUsuarioRol.rol.rol}
-          />
-        ))}
-      </Grid>,
-      <Typography key={`${usuarioData.id}-${indexUsuario}-estado`}>
-        <Button
-          variant="outlined"
-          sx={{ borderRadius: 12 }}
-          color={
-            usuarioData.estado == 'ACTIVO'
-              ? 'success'
-              : usuarioData.estado == 'INACTIVO'
-              ? 'error'
-              : 'info'
-          }
-        >
-          {usuarioData.estado}
-        </Button>
-      </Typography>,
-      <Grid key={`${usuarioData.id}-${indexUsuario}-acciones`}>
-        {permisos.update && (
-          <IconoTooltip
-            titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
-            accion={async () => {
-              imprimir(`estado: ${usuarioData.estado}`)
-              await editarEstadoUsuarioModal(usuarioData)
-            }}
-            desactivado={usuarioData.estado == 'PENDIENTE'}
-            icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
-            name={
-              usuarioData.estado == 'ACTIVO'
-                ? 'Inactivar Usuario'
-                : 'Activar Usuario'
-            }
-          />
-        )}
-        <IconoTooltip
-          titulo={'Restablecer contraseña'}
-          color={'info'}
-          accion={() => {
-            imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
-          }}
-          icono={'vpn_key'}
-          name={'Restablecer contraseña'}
-        />
-        {permisos.update && (
-          <IconoTooltip
-            titulo={'Editar'}
-            color={'success'}
-            accion={() => {
-              imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
-              editarUsuarioModal(usuarioData)
-            }}
-            icono={'edit'}
-            name={'Editar usuario'}
-          />
-        )}
-      </Grid>,
-    ]
+  const address = `${Constantes.baseUrl}/usuarios`
+  const fetcher: Fetcher<UsuarioCRUDType[]> = async (url: string) => {
+    setLoading(true)
+    await obtenerRolesPeticion()
+    return await sesionPeticion({
+      url: url,
+      params: {
+        pagina: pagina,
+        limite: limite,
+      },
+    })
+      .then((respuesta) => {
+        setTotal(respuesta.datos?.total)
+        return respuesta.datos?.filas
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  const revalidationOptions: SWRConfiguration = {
+    dedupingInterval: 3600000,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  }
+
+  const { data, mutate, error } = useSWR<UsuarioCRUDType[]>(
+    address,
+    fetcher,
+    revalidationOptions
   )
 
-  /// Acciones para data table
+  const contenidoTabla: () => Array<Array<ReactNode>> = () => {
+    return (
+      data?.map((usuarioData, indexUsuario) => [
+        <Typography
+          key={`${usuarioData.id}-${indexUsuario}-tipoDoc`}
+          variant={'body2'}
+        >
+          {`${usuarioData.persona.tipoDocumento} ${usuarioData.persona.nroDocumento}`}
+        </Typography>,
+        <div key={`${usuarioData.id}-${indexUsuario}-nombres`}>
+          <Typography variant={'body2'}>
+            {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
+          </Typography>
+          <Typography variant={'body2'}>
+            {`${usuarioData.persona.fechaNacimiento}`}
+          </Typography>
+        </div>,
+        <Typography
+          key={`${usuarioData.id}-${indexUsuario}-usuario`}
+          variant={'body2'}
+        >
+          {usuarioData.usuario}
+        </Typography>,
+        <Grid key={`${usuarioData.id}-${indexUsuario}-roles`}>
+          {usuarioData.usuarioRol.map((itemUsuarioRol, indexUsuarioRol) => (
+            <Chip
+              key={`usuario-rol-${indexUsuarioRol}`}
+              label={itemUsuarioRol.rol.rol}
+            />
+          ))}
+        </Grid>,
+        <Typography key={`${usuarioData.id}-${indexUsuario}-estado`}>
+          <Button
+            variant="outlined"
+            sx={{ borderRadius: 12 }}
+            color={
+              usuarioData.estado == 'ACTIVO'
+                ? 'success'
+                : usuarioData.estado == 'INACTIVO'
+                ? 'error'
+                : 'info'
+            }
+          >
+            {usuarioData.estado}
+          </Button>
+        </Typography>,
+        <Grid key={`${usuarioData.id}-${indexUsuario}-acciones`}>
+          {permisos.update && (
+            <IconoTooltip
+              titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+              color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
+              accion={async () => {
+                imprimir(`estado: ${usuarioData.estado}`)
+                await editarEstadoUsuarioModal(usuarioData)
+              }}
+              desactivado={usuarioData.estado == 'PENDIENTE'}
+              icono={
+                usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
+              }
+              name={
+                usuarioData.estado == 'ACTIVO'
+                  ? 'Inactivar Usuario'
+                  : 'Activar Usuario'
+              }
+            />
+          )}
+          <IconoTooltip
+            titulo={'Restablecer contraseña'}
+            color={'info'}
+            accion={() => {
+              imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
+            }}
+            icono={'vpn_key'}
+            name={'Restablecer contraseña'}
+          />
+          {permisos.update && (
+            <IconoTooltip
+              titulo={'Editar'}
+              color={'success'}
+              accion={() => {
+                imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
+                editarUsuarioModal(usuarioData)
+              }}
+              icono={'edit'}
+              name={'Editar usuario'}
+            />
+          )}
+        </Grid>,
+      ]) ?? []
+    )
+  }
+
   const acciones: Array<ReactNode> = [
     permisos.create && (
       <IconoTooltip
@@ -201,58 +231,31 @@ const Usuarios: NextPage = () => {
       titulo={'Actualizar'}
       key={`accionActualizarUsuario`}
       accion={async () => {
-        await obtenerUsuariosPeticion()
+        await mutate()
       }}
       icono={'refresh'}
       name={'Actualizar lista de usuario'}
     />,
   ]
 
-  /// Petición que obtiene lista de usuarios
-  const obtenerUsuariosPeticion = async () => {
-    try {
-      setLoading(true)
-
-      const respuesta = await sesionPeticion({
-        url: `${Constantes.baseUrl}/usuarios`,
-        params: {
-          pagina: pagina,
-          limite: limite,
-        },
-      })
-      setUsuariosData(respuesta.datos?.filas)
-      setTotal(respuesta.datos?.total)
-      setErrorData(null)
-    } catch (e) {
-      imprimir(`Error al obtener usuarios: ${e}`)
-      setErrorData(e)
-      Alertas.error(InterpreteMensajes(e))
-      throw e
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  /// Petición que obtiene lista de roles
   const obtenerRolesPeticion = async () => {
     try {
-      setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/roles`,
       })
       setRolesData(respuesta.datos)
-      setErrorData(null)
     } catch (e) {
       imprimir(`Error al obtener roles: ${e}`)
-      setErrorData(e)
       Alertas.error(InterpreteMensajes(e))
-      throw e
     } finally {
-      setLoading(false)
     }
   }
 
-  /// Petición que cambia el estado de un usuario
+  useEffect(() => {
+    definirPermisos().finally()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estaAutenticado])
+
   const cambiarEstadoUsuarioPeticion = async (usuario: UsuarioCRUDType) => {
     try {
       setLoading(true)
@@ -264,7 +267,7 @@ const Usuarios: NextPage = () => {
       })
       imprimir(`respuesta inactivar usuario: ${respuesta}`)
       Alertas.correcto(InterpreteMensajes(respuesta))
-      await obtenerUsuariosPeticion()
+      await mutate()
     } catch (e) {
       imprimir(`Error al inactivar usuarios: ${e}`)
       Alertas.error(InterpreteMensajes(e))
@@ -273,7 +276,6 @@ const Usuarios: NextPage = () => {
     }
   }
 
-  /// Vista modal de usuario
   const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
     // Flag que indica que hay un proceso en ventana modal cargando visualmente
     const [loadingModal, setLoadingModal] = useState<boolean>(false)
@@ -307,7 +309,7 @@ const Usuarios: NextPage = () => {
         })
         Alertas.correcto(InterpreteMensajes(respuesta))
         cerrarModalUsuario()
-        obtenerUsuariosPeticion().finally()
+        await mutate()
       } catch (e) {
         imprimir(`Error al crear o actualizar usuario: ${e}`)
         Alertas.error(InterpreteMensajes(e))
@@ -319,7 +321,10 @@ const Usuarios: NextPage = () => {
     return (
       <Grid container direction={'column'} justifyContent="space-evenly">
         <Box height={'10px'} />
-        <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
+        <Typography
+          color="text.secondary"
+          sx={{ fontSize: 14, fontWeight: 'bold' }}
+        >
           Datos personales
         </Typography>
         <Box height={'10px'} />
@@ -377,9 +382,7 @@ const Usuarios: NextPage = () => {
         </Grid>
         <Grid>
           <Box height={'10px'} />
-          <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
-            Datos personales
-          </Typography>
+          <CampoNombre name={'Datos de usuario'} />
           <Box height={'10px'} />
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
             <Grid item xs={12} sm={12} md={4}>
@@ -446,49 +449,36 @@ const Usuarios: NextPage = () => {
     )
   }
 
-  /// Método abre una ventana modal para un usuario nuevo
+  /// Métodos para agregar, editar usuarios
 
   const agregarUsuarioModal = () => {
     setUsuarioEdicion(null)
     setModalUsuario(true)
   }
-  /// Método abre una ventana modal para un usuario existente
   const editarUsuarioModal = (usuario: UsuarioCRUDType) => {
     setUsuarioEdicion(usuario)
     setModalUsuario(true)
   }
 
-  /// Método que cierra una ventana modal
   const cerrarModalUsuario = () => {
     setUsuarioEdicion(null)
     setModalUsuario(false)
   }
 
-  /// Método que muestra alerta de cambio de estado
+  /// Métodos para alerta de cambiar de estado
 
   const editarEstadoUsuarioModal = async (usuario: UsuarioCRUDType) => {
     setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
     setMostrarAlertaEstadoUsuario(true) // para mostrar alerta de usuarios
   }
 
-  /// Método que cierra alerta de cambio de estado
-
   const cancelarAlertaEstadoUsuario = () => {
     setMostrarAlertaEstadoUsuario(false)
     setUsuarioEdicion(null)
   }
 
-  /// Método que oculta la alerta de cambio de estado y procede al cambio
-  const aceptarAlertaEstadoUsuario = async () => {
-    setMostrarAlertaEstadoUsuario(false)
-    if (usuarioEdicion) {
-      await cambiarEstadoUsuarioPeticion(usuarioEdicion)
-    }
-  }
-
-  /// Método que define permisos por rol desde la sesión
   async function definirPermisos() {
-    setPermisos(await interpretarPermiso(router.pathname))
+    setPermisos(await interpretarPermiso('/admin/usuarios'))
   }
 
   useEffect(() => {
@@ -496,21 +486,14 @@ const Usuarios: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado])
 
-  useEffect(() => {
-    if (estaAutenticado)
-      obtenerRolesPeticion()
-        .then(() => {
-          obtenerUsuariosPeticion()
-            .catch(() => {})
-            .finally(() => {})
-        })
-        .catch(() => {})
-        .finally(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite])
+  const aceptarAlertaEstadoUsuario = async () => {
+    setMostrarAlertaEstadoUsuario(false)
+    if (usuarioEdicion) {
+      await cambiarEstadoUsuarioPeticion(usuarioEdicion)
+    }
+  }
 
-  /// Variable con parámetros de paginación
-  const paginacion = (
+  const paginacion = () => (
     <Paginacion
       pagina={pagina}
       limite={limite}
@@ -519,6 +502,10 @@ const Usuarios: NextPage = () => {
       cambioLimite={setLimite}
     />
   )
+
+  useEffect(() => {
+    imprimir(`cambio en página`)
+  }, [])
 
   return (
     <>
@@ -542,16 +529,16 @@ const Usuarios: NextPage = () => {
       <LayoutUser title={'Usuarios - Frontend Base'}>
         <CustomDataTable
           titulo={'Usuarios'}
-          error={!!errorData}
+          error={!!error}
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
-          contenidoTabla={contenidoTabla}
-          paginacion={paginacion}
+          contenidoTabla={contenidoTabla()}
+          paginacion={paginacion()}
         />
       </LayoutUser>
     </>
   )
 }
 
-export default Usuarios
+export default UsuariosSWR
