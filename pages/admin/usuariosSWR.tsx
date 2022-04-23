@@ -1,50 +1,12 @@
 import type { NextPage } from 'next'
-import {
-  Box,
-  Button,
-  Chip,
-  DialogActions,
-  Grid,
-  Typography,
-} from '@mui/material'
-import { LayoutUser } from '../../components/layouts'
-import {
-  Alertas,
-  AlertDialog,
-  CustomDataTable,
-  IconoTooltip,
-} from '../../components/ui'
-import React, { ReactNode, useEffect, useState } from 'react'
-import {
-  ColumnaType,
-  CrearEditarUsuarioType,
-  RolType,
-  UsuarioCRUDType,
-} from '../../types'
-import { Constantes } from '../../config'
-import { delay, imprimir, InterpreteMensajes, titleCase } from '../../utils'
-import { useAuth } from '../../context/auth'
-import { CampoNombre, CustomDialog } from '../../components/ui'
-import { useForm } from 'react-hook-form'
-import {
-  FormInputDate,
-  FormInputDropdownMultiple,
-  FormInputText,
-} from '../../components/ui/form'
-import { isValidEmail } from '../../utils/validations'
-import ProgresoLineal from '../../components/ui/ProgresoLineal'
-import { Paginacion } from '../../components/ui/Paginacion'
-
-import { useRouter } from 'next/router'
-import { CasbinTypes } from '../../types/casbinTypes'
-import useSWR, { Fetcher } from 'swr'
-import { SWRConfiguration } from 'swr/dist/types'
-
-export interface ModalUsuarioType {
-  usuario?: UsuarioCRUDType | undefined | null
-}
+import { Box } from '@mui/material'
+import React from 'react'
 
 const UsuariosSWR: NextPage = () => {
+  return <Box></Box>
+}
+
+/*const UsuariosSWR: NextPage = () => {
   // Flag que indica que hay un proceso cargando visualmente
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -539,6 +501,6 @@ const UsuariosSWR: NextPage = () => {
       </LayoutUser>
     </>
   )
-}
+}*/
 
 export default UsuariosSWR

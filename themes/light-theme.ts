@@ -4,7 +4,7 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: '#F6F6F7',
+      default: '#F0F2F5',
     },
     primary: {
       main: '#255EA6',

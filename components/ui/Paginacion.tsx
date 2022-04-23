@@ -69,7 +69,7 @@ export const Paginacion: FC<Props> = ({
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ pt: 4, pb: 0 }}
+      sx={{ pt: 1, pb: 0 }}
     >
       <Grid>
         <Box
