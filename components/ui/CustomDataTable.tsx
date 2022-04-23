@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { ColumnaType } from '../../types'
 import {
   Box,
@@ -19,6 +19,7 @@ import {
 } from '@mui/material'
 import { ListSkeleton, TableSkeleton } from './CustomSkeleton'
 import { IconoTooltip } from './IconoTooltip'
+import { delay } from '../../utils'
 
 export interface CustomDataTableType {
   titulo: string
@@ -27,6 +28,7 @@ export interface CustomDataTableType {
   acciones: Array<ReactNode>
   columnas: Array<ColumnaType>
   filtros?: ReactNode
+  accionOcultarFiltro?: () => void
   contenidoTabla: Array<Array<ReactNode>>
   paginacion?: ReactNode
 }
@@ -38,6 +40,7 @@ export const CustomDataTable = ({
   acciones,
   columnas,
   filtros,
+  accionOcultarFiltro,
   contenidoTabla,
   paginacion,
 }: CustomDataTableType) => {
@@ -46,9 +49,20 @@ export const CustomDataTable = ({
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const [mostrarFiltro, setMostrarFiltro] = useState(false)
+
+  useEffect(() => {
+    if (!mostrarFiltro)
+      delay(500).then(() => {
+        if (accionOcultarFiltro) {
+          accionOcultarFiltro()
+        }
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mostrarFiltro])
+
   return (
     <Box sx={{ pb: 2 }}>
-      {/*titulo y acciones*/}
+      {/*título y acciones*/}
       <Grid
         container
         direction="row"
@@ -92,11 +106,10 @@ export const CustomDataTable = ({
       <Collapse in={mostrarFiltro} sx={{}}>
         <Card
           sx={{
-            borderRadius: 4,
+            borderRadius: 2,
+            backgroundColor: 'inherit',
             pt: 2,
             pb: 2,
-            pl: 3,
-            pr: 3,
             mb: mostrarFiltro ? 3 : 0,
           }}
         >
@@ -106,11 +119,11 @@ export const CustomDataTable = ({
       {/*Contenedor de la tabla*/}
       <Card
         sx={{
-          borderRadius: 4,
+          borderRadius: 2,
           pt: 0,
           pl: { sm: 3, md: 3, xl: 3 },
           pr: { sm: 3, md: 3, xl: 3 },
-          pb: { sm: 3, md: 3, xl: 3 },
+          pb: { sm: 2, md: 2, xl: 2 },
           mb: { sm: 3, md: 3, xl: 3 },
           backgroundColor: xs
             ? {
@@ -155,6 +168,39 @@ export const CustomDataTable = ({
                               alignItems={'center'}
                             >
                               {`Error obteniendo información`}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : contenidoTabla.length == 0 ? (
+              <TableContainer>
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell />
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>
+                        <Grid
+                          container
+                          spacing={0}
+                          direction="column"
+                          alignItems="center"
+                          justifyContent="center"
+                          justifyItems={'center'}
+                        >
+                          <Grid item xs={3} xl={4}>
+                            <Typography
+                              variant={'body1'}
+                              component="h1"
+                              noWrap={true}
+                              alignItems={'center'}
+                            >
+                              {`Sin registros`}
                             </Typography>
                           </Grid>
                         </Grid>
