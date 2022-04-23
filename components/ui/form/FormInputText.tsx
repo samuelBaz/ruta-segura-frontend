@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
 import { Control } from 'react-hook-form/dist/types/form'
-import { FormHelperText } from '@mui/material'
+import { FormHelperText, IconButton } from '@mui/material'
+import { ClearOutlined } from '@mui/icons-material'
 
 export interface FormInputTextProps {
   id: string
@@ -15,6 +16,8 @@ export interface FormInputTextProps {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: StandardInputProps['onChange']
+  onEnter?: () => void
+  onClear?: () => void
 }
 
 export const FormInputText = ({
@@ -26,6 +29,8 @@ export const FormInputText = ({
   rules,
   disabled,
   onChange,
+  onEnter,
+  onClear,
 }: FormInputTextProps) => {
   return (
     <div>
@@ -47,8 +52,31 @@ export const FormInputText = ({
                 }
                 field.onChange(event)
               }}
+              onKeyUp={(event) => {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                  if (onEnter) {
+                    onEnter()
+                  }
+                }
+              }}
               value={field.value}
               disabled={disabled}
+              InputProps={{
+                endAdornment:
+                  field.value && onClear ? (
+                    <IconButton
+                      size="small"
+                      color={'primary'}
+                      onClick={() => {
+                        if (onClear) {
+                          onClear()
+                        }
+                      }}
+                    >
+                      <ClearOutlined />
+                    </IconButton>
+                  ) : undefined,
+              }}
             />
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
           </>
