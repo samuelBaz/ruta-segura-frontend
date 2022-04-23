@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import {
   Box,
   Button,
+  Card,
   Chip,
   DialogActions,
   Grid,
@@ -12,19 +13,20 @@ import {
   Alertas,
   AlertDialog,
   CustomDataTable,
+  CustomDialog,
   IconoTooltip,
 } from '../../components/ui'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { FC, ReactNode, useEffect, useState } from 'react'
 import {
   ColumnaType,
   CrearEditarUsuarioType,
+  FiltroUsuariosType,
   RolType,
   UsuarioCRUDType,
 } from '../../types'
 import { Constantes } from '../../config'
 import { delay, imprimir, InterpreteMensajes, titleCase } from '../../utils'
 import { useAuth } from '../../context/auth'
-import { CampoNombre, CustomDialog } from '../../components/ui'
 import { useForm } from 'react-hook-form'
 import {
   FormInputDate,
@@ -71,6 +73,10 @@ const Usuarios: NextPage = () => {
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
+
+  // Variable de filtro
+
+  const [filtro, setFiltro] = useState<string | undefined>('')
 
   // Proveedor de la sesión
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
@@ -216,8 +222,11 @@ const Usuarios: NextPage = () => {
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios`,
         params: {
-          pagina: pagina,
-          limite: limite,
+          ...{
+            pagina: pagina,
+            limite: limite,
+          },
+          ...(filtro ? { filtro: filtro } : {}),
         },
       })
       setUsuariosData(respuesta.datos?.filas)
@@ -227,7 +236,6 @@ const Usuarios: NextPage = () => {
       imprimir(`Error al obtener usuarios: ${e}`)
       setErrorData(e)
       Alertas.error(InterpreteMensajes(e))
-      throw e
     } finally {
       setLoading(false)
     }
@@ -507,18 +515,61 @@ const Usuarios: NextPage = () => {
         .catch(() => {})
         .finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite])
+  }, [estaAutenticado, pagina, limite, filtro])
 
-  /// Variable con parámetros de paginación
-  const paginacion = (
-    <Paginacion
-      pagina={pagina}
-      limite={limite}
-      total={total}
-      cambioPagina={setPagina}
-      cambioLimite={setLimite}
-    />
-  )
+  interface filtroUsuariosType {
+    filtroUsuariosValor?: string
+    cambioFiltroUsuariosValor: (nuevoFiltro?: string) => void
+  }
+
+  /// Componente espesífico para filtros de usuarios
+  const FiltroUsuarios: FC<filtroUsuariosType> = ({
+    filtroUsuariosValor,
+    cambioFiltroUsuariosValor,
+  }) => {
+    const { handleSubmit, control, watch } = useForm<FiltroUsuariosType>({
+      defaultValues: {
+        filtro: filtroUsuariosValor,
+      },
+    })
+
+    const filtroWatch: string = watch('filtro')
+
+    const limpiarFiltro = ({ filtro }: FiltroUsuariosType) => {
+      cambioFiltroUsuariosValor(undefined)
+    }
+
+    useEffect(() => {
+      const timeOutId = setTimeout(
+        () => cambioFiltroUsuariosValor(filtroWatch),
+        1000
+      )
+      return () => clearTimeout(timeOutId)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filtroWatch])
+
+    return (
+      <Grid
+        container
+        direction="row"
+        spacing={{ xs: 1, md: 3 }}
+        columns={{ xs: 1, sm: 4, md: 8, xl: 12 }}
+      >
+        <Grid item xs={2} sm={4} md={4}>
+          <Card sx={{ borderRadius: 2, p: 2 }}>
+            <FormInputText
+              control={control}
+              id={'filtro'}
+              key={`filtro`}
+              name="filtro"
+              label="Usuario"
+              onClear={handleSubmit(limpiarFiltro)}
+            />
+          </Card>
+        </Grid>
+      </Grid>
+    )
+  }
 
   return (
     <>
@@ -547,7 +598,24 @@ const Usuarios: NextPage = () => {
           acciones={acciones}
           columnas={columnas}
           contenidoTabla={contenidoTabla}
-          paginacion={paginacion}
+          filtros={
+            <FiltroUsuarios
+              filtroUsuariosValor={filtro}
+              cambioFiltroUsuariosValor={setFiltro}
+            />
+          }
+          accionOcultarFiltro={() => {
+            setFiltro(undefined)
+          }}
+          paginacion={
+            <Paginacion
+              pagina={pagina}
+              limite={limite}
+              total={total}
+              cambioPagina={setPagina}
+              cambioLimite={setLimite}
+            />
+          }
         />
       </LayoutUser>
     </>
