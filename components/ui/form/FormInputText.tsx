@@ -5,7 +5,7 @@ import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
 import { Control } from 'react-hook-form/dist/types/form'
 import { FormHelperText, IconButton } from '@mui/material'
-import { ClearOutlined } from '@mui/icons-material'
+import ClearOutlined from '@mui/icons-material/ClearOutlined'
 
 export interface FormInputTextProps {
   id: string
