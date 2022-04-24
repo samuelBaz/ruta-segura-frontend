@@ -1,13 +1,5 @@
 import type { NextPage } from 'next'
-import {
-  Box,
-  Button,
-  Card,
-  Chip,
-  DialogActions,
-  Grid,
-  Typography,
-} from '@mui/material'
+import { Button, Chip, Grid, Typography } from '@mui/material'
 import { LayoutUser } from '../../components/layouts'
 import {
   Alertas,
@@ -16,33 +8,14 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../components/ui'
-import React, { FC, ReactNode, useEffect, useState } from 'react'
-import {
-  ColumnaType,
-  CrearEditarUsuarioType,
-  FiltroUsuariosType,
-  RolType,
-  UsuarioCRUDType,
-} from '../../types'
+import React, { ReactNode, useEffect, useState } from 'react'
+import { CasbinTypes, ColumnaType, RolType, UsuarioCRUDType } from '../../types'
 import { Constantes } from '../../config'
-import { delay, imprimir, InterpreteMensajes, titleCase } from '../../utils'
+import { imprimir, InterpreteMensajes, titleCase } from '../../utils'
 import { useAuth } from '../../context/auth'
-import { useForm } from 'react-hook-form'
-import {
-  FormInputDate,
-  FormInputDropdownMultiple,
-  FormInputText,
-} from '../../components/ui/form'
-import { isValidEmail } from '../../utils/validations'
-import ProgresoLineal from '../../components/ui/ProgresoLineal'
 import { Paginacion } from '../../components/ui/Paginacion'
-
 import { useRouter } from 'next/router'
-import { CasbinTypes } from '../../types/casbinTypes'
-
-export interface ModalUsuarioType {
-  usuario?: UsuarioCRUDType | undefined | null
-}
+import { FiltroUsuarios, VistaModalUsuario } from '../../lib/admin/usuarios'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -75,7 +48,7 @@ const Usuarios: NextPage = () => {
   const [total, setTotal] = useState<number>(0)
 
   // Variable de filtro
-  const [filtro, setFiltro] = useState<string | undefined>(undefined)
+  const [filtro, setFiltro] = useState<string>('')
   const [filtroRoles, setFiltroRoles] = useState<string>('')
 
   // Proveedor de la sesión
@@ -226,7 +199,7 @@ const Usuarios: NextPage = () => {
             pagina: pagina,
             limite: limite,
           },
-          ...(filtro ? { filtro: filtro } : {}),
+          ...(filtro.length == 0 ? {} : { filtro: filtro }),
           ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles }),
         },
       })
@@ -280,179 +253,6 @@ const Usuarios: NextPage = () => {
     } finally {
       setLoading(false)
     }
-  }
-
-  /// Vista modal de usuario
-  const VistaModalUsuario = ({ usuario }: ModalUsuarioType) => {
-    // Flag que indica que hay un proceso en ventana modal cargando visualmente
-    const [loadingModal, setLoadingModal] = useState<boolean>(false)
-
-    const { handleSubmit, control } = useForm<CrearEditarUsuarioType>({
-      defaultValues: {
-        id: usuario?.id,
-        usuario: usuario?.usuario,
-        roles: usuario?.usuarioRol.map((rol) => rol.rol.id),
-        estado: usuario?.estado,
-        correoElectronico: usuario?.correoElectronico,
-        persona: usuario?.persona,
-        ciudadaniaDigital: usuario?.ciudadaniaDigital,
-      },
-    })
-
-    const guardarActualizarUsuario = async (data: CrearEditarUsuarioType) => {
-      await guardarActualizarUsuariosPeticion(data)
-    }
-
-    const guardarActualizarUsuariosPeticion = async (
-      usuario: CrearEditarUsuarioType
-    ) => {
-      try {
-        setLoadingModal(true)
-        await delay(1000)
-        const respuesta = await sesionPeticion({
-          url: `${Constantes.baseUrl}/usuarios/${usuario.id ?? ''}`,
-          tipo: !!usuario.id ? 'patch' : 'post',
-          body: usuario,
-        })
-        Alertas.correcto(InterpreteMensajes(respuesta))
-        cerrarModalUsuario()
-        obtenerUsuariosPeticion().finally()
-      } catch (e) {
-        imprimir(`Error al crear o actualizar usuario: ${e}`)
-        Alertas.error(InterpreteMensajes(e))
-      } finally {
-        setLoadingModal(false)
-      }
-    }
-
-    return (
-      <Grid container direction={'column'} justifyContent="space-evenly">
-        <Box height={'10px'} />
-        <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
-          Datos personales
-        </Typography>
-        <Box height={'10px'} />
-        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-          <Grid item xs={12} sm={12} md={4}>
-            <FormInputText
-              id={'nroDocumento'}
-              control={control}
-              name="persona.nroDocumento"
-              label="Nro. Documento"
-              disabled={loadingModal}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <FormInputText
-              id={'nroDocumento'}
-              control={control}
-              name="persona.nombres"
-              label="Nombre"
-              disabled={loadingModal}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <FormInputText
-              id={'primerApellido'}
-              control={control}
-              name="persona.primerApellido"
-              label="Primer Apellido"
-              disabled={loadingModal}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <FormInputText
-              id={'segundoApellido'}
-              control={control}
-              name="persona.segundoApellido"
-              label="Segundo apellido"
-              disabled={loadingModal}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <FormInputDate
-              id={'fechaNacimiento'}
-              control={control}
-              name="persona.fechaNacimiento"
-              label="Fecha de nacimiento"
-              disabled={loadingModal}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-        </Grid>
-        <Grid>
-          <Box height={'10px'} />
-          <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
-            Datos personales
-          </Typography>
-          <Box height={'10px'} />
-          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-            <Grid item xs={12} sm={12} md={4}>
-              <FormInputDropdownMultiple
-                id={'roles'}
-                name="roles"
-                control={control}
-                label="Roles"
-                disabled={loadingModal}
-                options={rolesData.map((rol) => ({
-                  key: rol.id,
-                  value: rol.id,
-                  label: rol.nombre,
-                }))}
-                rules={{ required: 'Este campo es requerido' }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={8}>
-              <FormInputText
-                id={'correoElectronico'}
-                control={control}
-                name="correoElectronico"
-                label="Correo electrónico"
-                disabled={loadingModal}
-                rules={{
-                  required: 'Este campo es requerido',
-                  validate: (value) => {
-                    if (!isValidEmail(value)) return 'No es un correo válido'
-                  },
-                }}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Box height={'10px'} />
-        <ProgresoLineal mostrar={loadingModal} />
-        <Box height={'5px'} />
-        <DialogActions
-          sx={{
-            justifyContent: {
-              lg: 'flex-end',
-              md: 'flex-end',
-              xs: 'center',
-              sm: 'center',
-            },
-          }}
-        >
-          <Button
-            variant={'outlined'}
-            disabled={loadingModal}
-            onClick={cerrarModalUsuario}
-          >
-            Cancelar
-          </Button>
-          <Button
-            variant={'contained'}
-            disabled={loadingModal}
-            onClick={handleSubmit(guardarActualizarUsuario)}
-          >
-            Guardar
-          </Button>
-        </DialogActions>
-      </Grid>
-    )
   }
 
   /// Método abre una ventana modal para un usuario nuevo
@@ -518,92 +318,6 @@ const Usuarios: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite, filtro, filtroRoles])
 
-  interface filtroUsuariosType {
-    filtroUsuariosValor?: string | undefined
-    cambioFiltroUsuariosValor: (nuevoFiltro?: string) => void
-    rolesDisponibles: RolType[]
-    filtroRolesValor: string
-    cambioFiltroRolesValor: (nuevoFiltroRoles: string) => void
-  }
-
-  /// Componente espesífico para filtros de usuarios
-  const FiltroUsuarios: FC<filtroUsuariosType> = ({
-    filtroUsuariosValor,
-    cambioFiltroUsuariosValor,
-    rolesDisponibles,
-    filtroRolesValor,
-    cambioFiltroRolesValor,
-  }) => {
-    const { handleSubmit, control, watch } = useForm<FiltroUsuariosType>({
-      defaultValues: {
-        filtro: filtroUsuariosValor,
-        roles: filtroRolesValor ? filtroRolesValor.split(',') : [],
-      },
-    })
-
-    const filtroUsuarioWatch: string = watch('filtro')
-    const filtroRolesWatch: string[] = watch('roles')
-
-    const limpiarFiltroUsuario = ({ filtro }: FiltroUsuariosType) => {
-      cambioFiltroUsuariosValor(undefined)
-    }
-
-    useEffect(() => {
-      const timeOutId = setTimeout(
-        () => cambioFiltroUsuariosValor(filtroUsuarioWatch),
-        1000
-      )
-      return () => clearTimeout(timeOutId)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filtroUsuarioWatch])
-
-    useEffect(() => {
-      const timeOutId = setTimeout(
-        () => cambioFiltroRolesValor(filtroRolesWatch.join(',')),
-        1000
-      )
-      return () => clearTimeout(timeOutId)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filtroRolesWatch])
-
-    return (
-      <Grid
-        container
-        direction="row"
-        spacing={{ xs: 1, md: 3 }}
-        columns={{ xs: 1, sm: 4, md: 8, xl: 12 }}
-      >
-        <Grid item xs={2} sm={4} md={4}>
-          <Card sx={{ borderRadius: 2, p: 2 }}>
-            <FormInputText
-              control={control}
-              id={'filtro'}
-              key={`filtro`}
-              name="filtro"
-              label="Usuario"
-              onClear={handleSubmit(limpiarFiltroUsuario)}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={2} sm={4} md={4}>
-          <Card sx={{ borderRadius: 2, p: 2 }}>
-            <FormInputDropdownMultiple
-              control={control}
-              id={'roles'}
-              name="roles"
-              label="Roles"
-              options={rolesDisponibles.map((rol) => ({
-                key: rol.id,
-                value: rol.id,
-                label: rol.nombre,
-              }))}
-            />
-          </Card>
-        </Grid>
-      </Grid>
-    )
-  }
-
   return (
     <>
       <AlertDialog
@@ -621,7 +335,15 @@ const Usuarios: NextPage = () => {
         handleClose={cerrarModalUsuario}
         title={usuarioEdicion ? 'Editar usuario' : 'Nuevo usuario'}
       >
-        <VistaModalUsuario usuario={usuarioEdicion} />
+        <VistaModalUsuario
+          usuario={usuarioEdicion}
+          roles={rolesData}
+          accionCorrecta={() => {
+            cerrarModalUsuario()
+            obtenerUsuariosPeticion().finally()
+          }}
+          accionCancelar={cerrarModalUsuario}
+        />
       </CustomDialog>
       <LayoutUser title={'Usuarios - Frontend Base'}>
         <CustomDataTable
@@ -641,7 +363,7 @@ const Usuarios: NextPage = () => {
             />
           }
           accionOcultarFiltro={() => {
-            setFiltro(undefined)
+            setFiltro('')
             setFiltroRoles('')
           }}
           paginacion={
