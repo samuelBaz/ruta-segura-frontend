@@ -77,7 +77,7 @@ const Parametros: NextPage = () => {
         {permisos.update && (
           <IconoTooltip
             titulo={'Editar'}
-            color={'success'}
+            color={'primary'}
             accion={() => {
               imprimir(`Editaremos : ${JSON.stringify(parametroData)}`)
               editarParametroModal(parametroData)

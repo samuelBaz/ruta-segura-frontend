@@ -150,7 +150,7 @@ const Usuarios: NextPage = () => {
         {permisos.update && (
           <IconoTooltip
             titulo={'Editar'}
-            color={'success'}
+            color={'primary'}
             accion={() => {
               imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
               editarUsuarioModal(usuarioData)
