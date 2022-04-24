@@ -1,5 +1,12 @@
 import { Controller } from 'react-hook-form'
-import { Box, Chip, MenuItem, Select, Typography } from '@mui/material'
+import {
+  Box,
+  Checkbox,
+  Chip,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material'
 import { FormInputDropdownProps } from './FormInputDropdown'
 import { FormHelperText } from '@mui/material'
 
@@ -12,10 +19,11 @@ export const FormInputDropdownMultiple = ({
   rules,
   options,
 }: FormInputDropdownProps) => {
-  const generateSelectOptions = () => {
+  const generateSelectOptions = (value: string[]) => {
     return options.map((option) => {
       return (
         <MenuItem key={option.key} value={option.value}>
+          <Checkbox checked={value.indexOf(option.value) >= 0} />
           {option.label}
         </MenuItem>
       )
@@ -52,7 +60,7 @@ export const FormInputDropdownMultiple = ({
               value={field.value}
               multiple
             >
-              {generateSelectOptions()}
+              {generateSelectOptions(field.value)}
             </Select>
 
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
