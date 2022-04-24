@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
-import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import {
+  CasbinTypes,
   ColumnaType,
-  CrearEditarPoliticaCRUDType,
-  guardarPoliticaCRUDType,
   PoliticaCRUDType,
   RolType,
 } from '../../types'
@@ -17,22 +16,11 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../components/ui'
-import { delay, imprimir, InterpreteMensajes, titleCase } from '../../utils'
+import { imprimir, InterpreteMensajes, titleCase } from '../../utils'
 import { Constantes } from '../../config'
 import { Paginacion } from '../../components/ui/Paginacion'
-import { useForm } from 'react-hook-form'
-import {
-  FormInputDropdown,
-  FormInputDropdownMultiple,
-  FormInputText,
-} from '../../components/ui/form'
-import ProgresoLineal from '../../components/ui/ProgresoLineal'
-import { CasbinTypes } from '../../types/casbinTypes'
 import { useRouter } from 'next/router'
-
-export interface ModalPoliticaType {
-  politica?: PoliticaCRUDType
-}
+import { VistaModalPolitica } from '../../lib/admin/politicas'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -54,18 +42,6 @@ const Politicas: NextPage = () => {
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
-
-  const opcionesAcciones: string[] = [
-    'create',
-    'read',
-    'update',
-    'delete',
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-  ]
 
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
 
@@ -206,145 +182,6 @@ const Politicas: NextPage = () => {
     }
   }
 
-  const VistaModalPolitica = ({ politica }: ModalPoliticaType) => {
-    const [loadingModal, setLoadingModal] = useState<boolean>(false)
-
-    const { handleSubmit, control } = useForm<CrearEditarPoliticaCRUDType>({
-      defaultValues: {
-        app: politica?.app,
-        accion: politica?.accion.split('|'),
-        objeto: politica?.objeto,
-        sujeto: politica?.sujeto,
-      },
-    })
-
-    const guardarActualizarPolitica = async (
-      data: CrearEditarPoliticaCRUDType
-    ) => {
-      await guardarActualizarPoliticaPeticion({
-        ...data,
-        ...{ accion: data.accion.join('|') },
-      })
-    }
-
-    const guardarActualizarPoliticaPeticion = async (
-      politica: guardarPoliticaCRUDType
-    ) => {
-      try {
-        setLoadingModal(true)
-        await delay(1000)
-        const respuesta = await sesionPeticion({
-          url: `${Constantes.baseUrl}/autorizacion/politicas`,
-          tipo: politicaEdicion ? 'patch' : 'post',
-          body: politica,
-          params: {
-            sujeto: politicaEdicion?.sujeto,
-            objeto: politicaEdicion?.objeto,
-            accion: politicaEdicion?.accion,
-            app: politicaEdicion?.app,
-          },
-        })
-        Alertas.correcto(InterpreteMensajes(respuesta))
-        cerrarModalPolitica()
-        obtenerPoliticasPeticion().finally()
-      } catch (e) {
-        imprimir(`Error al crear o actualizar política: ${e}`)
-        Alertas.error(InterpreteMensajes(e))
-      } finally {
-        setLoadingModal(false)
-      }
-    }
-
-    return (
-      <Grid container direction={'column'} justifyContent="space-evenly">
-        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-          <Grid item xs={12} sm={12} md={6}>
-            <FormInputDropdown
-              id={'sujeto'}
-              name="sujeto"
-              control={control}
-              label="Sujeto"
-              disabled={loadingModal}
-              options={rolesData.map((rol) => ({
-                key: rol.rol,
-                value: rol.rol,
-                label: rol.rol,
-              }))}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <FormInputText
-              id={'objeto'}
-              control={control}
-              name="objeto"
-              label="Objeto"
-              disabled={loadingModal}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-        </Grid>
-        <Box height={'15px'} />
-        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-          <Grid item xs={12} sm={12} md={6}>
-            <FormInputDropdownMultiple
-              id={'accion'}
-              name="accion"
-              control={control}
-              label="Acción"
-              disabled={loadingModal}
-              options={opcionesAcciones.map((opcionAccion) => ({
-                key: opcionAccion,
-                value: opcionAccion,
-                label: opcionAccion,
-              }))}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <FormInputText
-              id={'app'}
-              control={control}
-              name="app"
-              label="App"
-              disabled={loadingModal}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-        </Grid>
-        <Box height={'10px'} />
-        <ProgresoLineal mostrar={loadingModal} />
-        <Box height={'5px'} />
-        <DialogActions
-          sx={{
-            justifyContent: {
-              lg: 'flex-end',
-              md: 'flex-end',
-              xs: 'center',
-              sm: 'center',
-            },
-            pt: 2,
-          }}
-        >
-          <Button
-            variant={'outlined'}
-            disabled={loadingModal}
-            onClick={cerrarModalPolitica}
-          >
-            Cancelar
-          </Button>
-          <Button
-            variant={'contained'}
-            disabled={loadingModal}
-            onClick={handleSubmit(guardarActualizarPolitica)}
-          >
-            Guardar
-          </Button>
-        </DialogActions>
-      </Grid>
-    )
-  }
-
   const agregarPoliticaModal = () => {
     setPoliticaEdicion(undefined)
     setModalPolitica(true)
@@ -408,16 +245,6 @@ const Politicas: NextPage = () => {
     }
   }
 
-  const paginacion = (
-    <Paginacion
-      pagina={pagina}
-      limite={limite}
-      total={total}
-      cambioPagina={setPagina}
-      cambioLimite={setLimite}
-    />
-  )
-
   return (
     <>
       <AlertDialog
@@ -435,7 +262,15 @@ const Politicas: NextPage = () => {
         handleClose={cerrarModalPolitica}
         title={politicaEdicion ? 'Editar política' : 'Nueva política'}
       >
-        <VistaModalPolitica politica={politicaEdicion} />
+        <VistaModalPolitica
+          politica={politicaEdicion}
+          roles={rolesData}
+          accionCorrecta={() => {
+            cerrarModalPolitica()
+            obtenerPoliticasPeticion().finally()
+          }}
+          accionCancelar={cerrarModalPolitica}
+        />
       </CustomDialog>
       <LayoutUser title={'Políticas - Fronted Base'}>
         <CustomDataTable
@@ -445,7 +280,15 @@ const Politicas: NextPage = () => {
           acciones={acciones}
           columnas={columnas}
           contenidoTabla={contenidoTabla}
-          paginacion={paginacion}
+          paginacion={
+            <Paginacion
+              pagina={pagina}
+              limite={limite}
+              total={total}
+              cambioPagina={setPagina}
+              cambioLimite={setLimite}
+            />
+          }
         />
       </LayoutUser>
     </>
