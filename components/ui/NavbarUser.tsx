@@ -93,7 +93,7 @@ export const NavbarUser = () => {
 
   const abrirPerfil = async () => {
     cerrarMenu()
-    await router.push('/perfil')
+    await router.push('/admin/perfil')
   }
 
   /// Interpretando roles desde estado
