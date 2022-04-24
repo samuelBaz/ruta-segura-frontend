@@ -75,8 +75,8 @@ const Usuarios: NextPage = () => {
   const [total, setTotal] = useState<number>(0)
 
   // Variable de filtro
-
-  const [filtro, setFiltro] = useState<string | undefined>('')
+  const [filtro, setFiltro] = useState<string | undefined>(undefined)
+  const [filtroRoles, setFiltroRoles] = useState<string>('')
 
   // Proveedor de la sesión
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
@@ -227,6 +227,7 @@ const Usuarios: NextPage = () => {
             limite: limite,
           },
           ...(filtro ? { filtro: filtro } : {}),
+          ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles }),
         },
       })
       setUsuariosData(respuesta.datos?.filas)
@@ -515,38 +516,55 @@ const Usuarios: NextPage = () => {
         .catch(() => {})
         .finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtro])
+  }, [estaAutenticado, pagina, limite, filtro, filtroRoles])
 
   interface filtroUsuariosType {
-    filtroUsuariosValor?: string
+    filtroUsuariosValor?: string | undefined
     cambioFiltroUsuariosValor: (nuevoFiltro?: string) => void
+    rolesDisponibles: RolType[]
+    filtroRolesValor: string
+    cambioFiltroRolesValor: (nuevoFiltroRoles: string) => void
   }
 
   /// Componente espesífico para filtros de usuarios
   const FiltroUsuarios: FC<filtroUsuariosType> = ({
     filtroUsuariosValor,
     cambioFiltroUsuariosValor,
+    rolesDisponibles,
+    filtroRolesValor,
+    cambioFiltroRolesValor,
   }) => {
     const { handleSubmit, control, watch } = useForm<FiltroUsuariosType>({
       defaultValues: {
         filtro: filtroUsuariosValor,
+        roles: filtroRolesValor ? filtroRolesValor.split(',') : [],
       },
     })
 
-    const filtroWatch: string = watch('filtro')
+    const filtroUsuarioWatch: string = watch('filtro')
+    const filtroRolesWatch: string[] = watch('roles')
 
-    const limpiarFiltro = ({ filtro }: FiltroUsuariosType) => {
+    const limpiarFiltroUsuario = ({ filtro }: FiltroUsuariosType) => {
       cambioFiltroUsuariosValor(undefined)
     }
 
     useEffect(() => {
       const timeOutId = setTimeout(
-        () => cambioFiltroUsuariosValor(filtroWatch),
+        () => cambioFiltroUsuariosValor(filtroUsuarioWatch),
         1000
       )
       return () => clearTimeout(timeOutId)
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filtroWatch])
+    }, [filtroUsuarioWatch])
+
+    useEffect(() => {
+      const timeOutId = setTimeout(
+        () => cambioFiltroRolesValor(filtroRolesWatch.join(',')),
+        1000
+      )
+      return () => clearTimeout(timeOutId)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filtroRolesWatch])
 
     return (
       <Grid
@@ -563,7 +581,22 @@ const Usuarios: NextPage = () => {
               key={`filtro`}
               name="filtro"
               label="Usuario"
-              onClear={handleSubmit(limpiarFiltro)}
+              onClear={handleSubmit(limpiarFiltroUsuario)}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={2} sm={4} md={4}>
+          <Card sx={{ borderRadius: 2, p: 2 }}>
+            <FormInputDropdownMultiple
+              control={control}
+              id={'roles'}
+              name="roles"
+              label="Roles"
+              options={rolesDisponibles.map((rol) => ({
+                key: rol.id,
+                value: rol.id,
+                label: rol.nombre,
+              }))}
             />
           </Card>
         </Grid>
@@ -602,10 +635,14 @@ const Usuarios: NextPage = () => {
             <FiltroUsuarios
               filtroUsuariosValor={filtro}
               cambioFiltroUsuariosValor={setFiltro}
+              rolesDisponibles={rolesData}
+              filtroRolesValor={filtroRoles}
+              cambioFiltroRolesValor={setFiltroRoles}
             />
           }
           accionOcultarFiltro={() => {
             setFiltro(undefined)
+            setFiltroRoles('')
           }}
           paginacion={
             <Paginacion

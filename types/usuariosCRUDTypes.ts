@@ -66,4 +66,5 @@ export interface RolType {
 
 export interface FiltroUsuariosType {
   filtro: string
+  roles: string[]
 }
