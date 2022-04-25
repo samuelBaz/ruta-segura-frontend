@@ -15,7 +15,7 @@ import { Constantes } from '../../config'
 
 import { Paginacion } from '../../components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { VistaModalParametro } from '../../lib/admin/parametros'
+import { VistaModalParametro } from '../../src/admin/parametros'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -190,7 +190,7 @@ const Parametros: NextPage = () => {
           accionCancelar={cerrarModalParametro}
         />
       </CustomDialog>
-      <LayoutUser title={'Parametros - Fronted Base'}>
+      <LayoutUser title={'Parametros - Frontend Base'}>
         <CustomDataTable
           titulo={'Parámetros'}
           error={!!errorParametrosData}

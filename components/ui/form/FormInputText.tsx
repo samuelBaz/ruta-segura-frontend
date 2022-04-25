@@ -18,6 +18,7 @@ export interface FormInputTextProps {
   onChange?: StandardInputProps['onChange']
   onEnter?: () => void
   onClear?: () => void
+  variant?: 'standard' | 'outlined' | 'filled'
 }
 
 export const FormInputText = ({
@@ -31,6 +32,7 @@ export const FormInputText = ({
   onChange,
   onEnter,
   onClear,
+  variant,
 }: FormInputTextProps) => {
   return (
     <div>
@@ -43,6 +45,7 @@ export const FormInputText = ({
             <TextField
               id={id}
               name={name}
+              variant={variant}
               sx={{ width: '100%' }}
               size={size}
               error={!!error}

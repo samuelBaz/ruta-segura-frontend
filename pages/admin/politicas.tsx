@@ -20,7 +20,7 @@ import { imprimir, InterpreteMensajes, titleCase } from '../../utils'
 import { Constantes } from '../../config'
 import { Paginacion } from '../../components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { VistaModalPolitica } from '../../lib/admin/politicas'
+import { VistaModalPolitica } from '../../src/admin/politicas'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -272,7 +272,7 @@ const Politicas: NextPage = () => {
           accionCancelar={cerrarModalPolitica}
         />
       </CustomDialog>
-      <LayoutUser title={'Políticas - Fronted Base'}>
+      <LayoutUser title={'Políticas - Frontend Base'}>
         <CustomDataTable
           titulo={'Políticas'}
           error={!!errorData}

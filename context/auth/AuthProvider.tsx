@@ -19,7 +19,7 @@ import {
   estadosSinPermiso,
   peticionFormatoMetodo,
   Servicios,
-} from '../../services'
+} from '../../src/services'
 import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'

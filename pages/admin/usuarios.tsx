@@ -15,7 +15,7 @@ import { imprimir, InterpreteMensajes, titleCase } from '../../utils'
 import { useAuth } from '../../context/auth'
 import { Paginacion } from '../../components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { FiltroUsuarios, VistaModalUsuario } from '../../lib/admin/usuarios'
+import { FiltroUsuarios, VistaModalUsuario } from '../../src/admin/usuarios'
 
 const Usuarios: NextPage = () => {
   // data de usuarios

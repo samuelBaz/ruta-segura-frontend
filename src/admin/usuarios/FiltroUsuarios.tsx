@@ -6,6 +6,7 @@ import {
   FormInputDropdownMultiple,
   FormInputText,
 } from '../../../components/ui/form'
+import { imprimir } from '../../../utils'
 
 interface filtroUsuariosType {
   filtroUsuariosValor: string
@@ -23,18 +24,20 @@ export const FiltroUsuarios: FC<filtroUsuariosType> = ({
   filtroRolesValor,
   cambioFiltroRolesValor,
 }) => {
-  const { handleSubmit, control, watch } = useForm<FiltroUsuariosType>({
-    defaultValues: {
-      filtro: filtroUsuariosValor,
-      roles: filtroRolesValor ? filtroRolesValor.split(',') : [],
-    },
-  })
+  const { handleSubmit, control, watch, setValue } =
+    useForm<FiltroUsuariosType>({
+      defaultValues: {
+        filtro: filtroUsuariosValor,
+        roles: filtroRolesValor ? filtroRolesValor.split(',') : [],
+      },
+    })
 
   const filtroUsuarioWatch: string = watch('filtro')
   const filtroRolesWatch: string[] = watch('roles')
 
   const limpiarFiltroUsuario = ({ filtro }: FiltroUsuariosType) => {
-    cambioFiltroUsuariosValor('')
+    imprimir(`limpiando: ${filtro}`)
+    setValue('filtro', '')
   }
 
   useEffect(() => {
@@ -63,7 +66,7 @@ export const FiltroUsuarios: FC<filtroUsuariosType> = ({
       columns={{ xs: 1, sm: 4, md: 8, xl: 12 }}
     >
       <Grid item xs={2} sm={4} md={4}>
-        <Card sx={{ borderRadius: 2, p: 2 }}>
+        <Card sx={{ borderRadius: 2, p: 2, backgroundColor: 'inherit' }}>
           <FormInputText
             control={control}
             id={'filtro'}
@@ -75,7 +78,7 @@ export const FiltroUsuarios: FC<filtroUsuariosType> = ({
         </Card>
       </Grid>
       <Grid item xs={2} sm={4} md={4}>
-        <Card sx={{ borderRadius: 2, p: 2 }}>
+        <Card sx={{ borderRadius: 2, p: 2, backgroundColor: 'inherit' }}>
           <FormInputDropdownMultiple
             control={control}
             id={'roles'}

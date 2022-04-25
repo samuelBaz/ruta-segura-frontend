@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestHeaders, Method } from 'axios'
-import { imprimir } from '../utils'
+import { imprimir } from '../../utils'
 
 export interface peticionFormatoMetodo {
   url: string

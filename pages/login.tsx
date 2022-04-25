@@ -12,7 +12,7 @@ import {
 import Typography from '@mui/material/Typography'
 import { delay, imprimir, InterpreteMensajes } from '../utils'
 import { Constantes } from '../config'
-import { Servicios } from '../services'
+import { Servicios } from '../src/services'
 import { Alertas } from '../components/ui'
 import { useAuth } from '../context/auth'
 import { useForm } from 'react-hook-form'
