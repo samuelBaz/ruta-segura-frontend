@@ -24,6 +24,7 @@ import { Constantes } from '../../config'
 import { Alertas } from '../../components/ui'
 import { useRouter } from 'next/router'
 import {
+  CasbinTypes,
   idRolType,
   LoginType,
   PoliticaType,
@@ -39,7 +40,6 @@ import {
   StringAdapter,
 } from 'casbin'
 import { basicModel, basicPolicy } from '../../utils/casbin'
-import { CasbinTypes } from '../../types/casbinTypes'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -247,9 +247,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       eliminarCookie('rol')
       setUser(null)
       setLoading(false)
-      await router.replace({
-        pathname: '/login',
-      })
+      router.reload()
       ocultarFullScreen()
     }
   }
