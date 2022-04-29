@@ -246,8 +246,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       eliminarCookie('token')
       eliminarCookie('rol')
       setUser(null)
-      setLoading(false)
       router.reload()
+      await delay(1000)
+      setLoading(false)
       ocultarFullScreen()
     }
   }
