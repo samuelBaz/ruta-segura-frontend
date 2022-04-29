@@ -87,9 +87,6 @@ const Usuarios: NextPage = () => {
         <Typography variant={'body2'}>
           {`${usuarioData.persona.nombres} ${usuarioData.persona.primerApellido} ${usuarioData.persona.segundoApellido}`}
         </Typography>
-        <Typography variant={'body2'}>
-          {`${usuarioData.persona.fechaNacimiento}`}
-        </Typography>
       </div>,
       <Typography
         key={`${usuarioData.id}-${indexUsuario}-usuario`}
