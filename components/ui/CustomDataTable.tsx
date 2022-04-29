@@ -227,14 +227,14 @@ export const CustomDataTable = ({
                             borderRadius: 3,
                           }}
                         >
-                          <CardContent>
+                          <CardContent sx={{ '&:last-child': { pb: 1 } }}>
                             {contenidoFila.map((contenido, indexContenido) => (
                               <Grid
                                 key={`Grid-id-${index}-${indexContenido}`}
                                 container
                                 direction="row"
                                 paddingTop={'5px'}
-                                paddingBottom={'5px'}
+                                paddingBottom={'0px'}
                                 justifyContent="space-between"
                                 alignItems="center"
                               >
