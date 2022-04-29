@@ -48,7 +48,7 @@ const Home: NextPage = () => {
         <Typography sx={{ fontSize: 14 }}>
           Puedes ver los siguientes modulos:
         </Typography>
-        <Box height={'10px'} />
+        <Box height={'5px'} />
       </Grid>
 
       <Grid container direction="row" alignItems="center">
@@ -103,13 +103,16 @@ const Home: NextPage = () => {
                                   <Icono>{subModulo.propiedades.icono}</Icono>
                                   <Box height={'30px'} width={'10px'} />
                                   <Typography
-                                    sx={{ fontSize: 14 }}
-                                    gutterBottom
+                                    variant="caption"
+                                    sx={{ fontSize: 14, fontWeight: 'bold' }}
                                   >
                                     {`${subModulo.label}`}
                                   </Typography>
                                 </Grid>
-                                <Typography variant="body2">
+                                <Typography
+                                  variant="body2"
+                                  sx={{ fontSize: 14 }}
+                                >
                                   {`${subModulo.propiedades.descripcion}`}
                                 </Typography>
                               </CardContent>
@@ -124,6 +127,7 @@ const Home: NextPage = () => {
             ))}
         </Grid>
       </Grid>
+      <Box height={'100px'} />
     </LayoutUser>
   )
 }
