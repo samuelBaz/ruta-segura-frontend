@@ -146,8 +146,8 @@ const Parametros: NextPage = () => {
   }
 
   const cerrarModalParametro = () => {
-    setParametroEdicion(undefined)
     setModalParametro(false)
+    setParametroEdicion(undefined)
   }
 
   async function definirPermisos() {

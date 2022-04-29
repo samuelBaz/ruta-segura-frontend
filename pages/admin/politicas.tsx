@@ -192,8 +192,8 @@ const Politicas: NextPage = () => {
   }
 
   const cerrarModalPolitica = () => {
-    setPoliticaEdicion(undefined)
     setModalPolitica(false)
+    setPoliticaEdicion(undefined)
   }
 
   const obtenerRolesPeticion = async () => {

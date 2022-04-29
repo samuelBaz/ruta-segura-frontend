@@ -423,8 +423,8 @@ const UsuariosSWR: NextPage = () => {
   }
 
   const cerrarModalUsuario = () => {
-    setUsuarioEdicion(null)
     setModalUsuario(false)
+    setUsuarioEdicion(null)
   }
 
   /// Métodos para alerta de cambiar de estado

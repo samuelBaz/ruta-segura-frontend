@@ -269,8 +269,8 @@ const Usuarios: NextPage = () => {
 
   /// Método que cierra una ventana modal
   const cerrarModalUsuario = () => {
-    setUsuarioEdicion(null)
     setModalUsuario(false)
+    setUsuarioEdicion(null)
   }
 
   /// Método que muestra alerta de cambio de estado
