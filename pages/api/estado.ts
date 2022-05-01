@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { nombreRama, commitID, commitDate } from '../../utils'
+import { nombreRama, commitID, commitDate } from '../../common/utils'
 
 type Data = {
   estado: string

@@ -1,26 +1,26 @@
 import type { NextPage } from 'next'
 import { Button, Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
-import { LayoutUser } from '../../components/layouts'
+import { LayoutUser } from '../../common/components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import {
   CasbinTypes,
   ColumnaType,
   PoliticaCRUDType,
   RolType,
-} from '../../types'
+} from '../../common/types'
 import {
   Alertas,
   AlertDialog,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
-} from '../../components/ui'
-import { imprimir, InterpreteMensajes, titleCase } from '../../utils'
+} from '../../common/components/ui'
+import { imprimir, InterpreteMensajes, titleCase } from '../../common/utils'
 import { Constantes } from '../../config'
-import { Paginacion } from '../../components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { VistaModalPolitica } from '../../src/admin/politicas'
+import { VistaModalPolitica } from '../../modules/admin/politicas'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])

@@ -8,8 +8,8 @@ import {
 import { ThemeProvider as MuiThemeProvider, useMediaQuery } from '@mui/material'
 
 import { darkTheme, lightTheme } from '../../themes'
-import useLocalStorage from '../../hooks/useLocalStorage'
-import { delay } from '../../utils'
+import useLocalStorage from '../../common/hooks/useLocalStorage'
+import { delay } from '../../common/utils'
 
 const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)'
 

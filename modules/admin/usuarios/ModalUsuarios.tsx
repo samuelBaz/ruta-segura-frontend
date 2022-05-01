@@ -5,18 +5,18 @@ import {
   CrearEditarUsuarioType,
   RolType,
   UsuarioCRUDType,
-} from '../../../types'
-import { delay, imprimir, InterpreteMensajes } from '../../../utils'
+} from '../../../common/types'
+import { delay, imprimir, InterpreteMensajes } from '../../../common/utils'
 import { Constantes } from '../../../config'
-import { Alertas } from '../../../components/ui'
+import { Alertas } from '../../../common/components/ui'
 import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
 import {
   FormInputDate,
   FormInputDropdownMultiple,
   FormInputText,
-} from '../../../components/ui/form'
-import { isValidEmail } from '../../../utils/validations'
-import ProgresoLineal from '../../../components/ui/ProgresoLineal'
+} from '../../../common/components/ui/form'
+import { isValidEmail } from '../../../common/utils/validations'
+import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 
 import { useAuth } from '../../../context/auth'
 

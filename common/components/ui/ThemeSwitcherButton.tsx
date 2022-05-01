@@ -1,7 +1,7 @@
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import { IconButton, IconButtonProps, Tooltip } from '@mui/material'
-import { useThemeContext } from '../../context/ui/ThemeContext'
+import { useThemeContext } from '../../../context/ui/ThemeContext'
 
 interface ThemeSwitcherButtonProps extends IconButtonProps {}
 

@@ -8,10 +8,10 @@ import {
   Typography,
 } from '@mui/material'
 import { useAuth } from '../../context/auth'
-import { LayoutUser } from '../../components/layouts'
-import { Icono } from '../../components/ui'
+import { LayoutUser } from '../../common/components/layouts'
+import { Icono } from '../../common/components/ui'
 import { useRouter } from 'next/router'
-import { titleCase } from '../../utils'
+import { titleCase } from '../../common/utils'
 
 const Home: NextPage = () => {
   const { usuario, rolUsuario, idRolUsuario } = useAuth()

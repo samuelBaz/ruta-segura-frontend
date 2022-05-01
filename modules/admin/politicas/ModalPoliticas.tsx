@@ -5,17 +5,17 @@ import {
   guardarPoliticaCRUDType,
   PoliticaCRUDType,
   RolType,
-} from '../../../types'
-import { delay, imprimir, InterpreteMensajes } from '../../../utils'
+} from '../../../common/types'
+import { delay, imprimir, InterpreteMensajes } from '../../../common/utils'
 import { Constantes } from '../../../config'
-import { Alertas } from '../../../components/ui'
+import { Alertas } from '../../../common/components/ui'
 import { Box, Button, DialogActions, Grid } from '@mui/material'
 import {
   FormInputDropdown,
   FormInputDropdownMultiple,
   FormInputText,
-} from '../../../components/ui/form'
-import ProgresoLineal from '../../../components/ui/ProgresoLineal'
+} from '../../../common/components/ui/form'
+import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 import { useAuth } from '../../../context/auth'
 
 export interface ModalPoliticaType {

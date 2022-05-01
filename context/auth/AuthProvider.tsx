@@ -14,14 +14,14 @@ import {
   InterpreteMensajes,
   leerCookie,
   verificarToken,
-} from '../../utils'
+} from '../../common/utils'
 import {
   estadosSinPermiso,
   peticionFormatoMetodo,
   Servicios,
-} from '../../src/services'
+} from '../../services'
 import { Constantes } from '../../config'
-import { Alertas } from '../../components/ui'
+import { Alertas } from '../../common/components/ui'
 import { useRouter } from 'next/router'
 import {
   CasbinTypes,
@@ -30,7 +30,7 @@ import {
   PoliticaType,
   RoleType,
   UsuarioType,
-} from '../../types'
+} from '../../common/types'
 import { useFullScreenLoadingContext } from '../ui'
 import { AxiosError } from 'axios'
 import {
@@ -39,7 +39,7 @@ import {
   newModelFromString,
   StringAdapter,
 } from 'casbin'
-import { basicModel, basicPolicy } from '../../utils/casbin'
+import { basicModel, basicPolicy } from '../../common/utils/casbin'
 
 interface ContextProps {
   estaAutenticado: boolean

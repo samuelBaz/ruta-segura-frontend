@@ -2,15 +2,15 @@ import { AppProps } from 'next/app'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '../src/createEmotionCache'
-import DebugBanner from '../components/DebugBanner'
+import DebugBanner from '../common/components/DebugBanner'
 import '@fontsource/poppins'
 import { FullScreenLoadingProvider, UIProvider } from '../context/ui'
-import { imprimir } from '../utils'
+import { imprimir } from '../common/utils'
 import { ThemeProvider } from '../context/ui/ThemeContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthProvider } from '../context/auth'
-import { Sidebar } from '../components/ui'
+import { Sidebar } from '../common/components/ui'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 

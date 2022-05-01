@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { Box, Typography } from '@mui/material'
-import { Alertas } from '../components/ui'
+import { Alertas } from '../common/components/ui'
 import { useEffect } from 'react'
 
 function saludo() {

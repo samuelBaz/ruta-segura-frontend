@@ -1,21 +1,21 @@
 import type { NextPage } from 'next'
 import { Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
-import { LayoutUser } from '../../components/layouts'
+import { LayoutUser } from '../../common/components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType, ParametroCRUDType } from '../../types'
+import { CasbinTypes, ColumnaType, ParametroCRUDType } from '../../common/types'
 import {
   Alertas,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
-} from '../../components/ui'
-import { imprimir, InterpreteMensajes } from '../../utils'
+} from '../../common/components/ui'
+import { imprimir, InterpreteMensajes } from '../../common/utils'
 import { Constantes } from '../../config'
 
-import { Paginacion } from '../../components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { VistaModalParametro } from '../../src/admin/parametros'
+import { VistaModalParametro } from '../../modules/admin/parametros'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])

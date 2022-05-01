@@ -1,5 +1,5 @@
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
-import { imprimir, verificarToken } from '../../utils'
+import { imprimir, verificarToken } from '../../common/utils'
 
 export const middleware = async (
   req: NextRequest | any,

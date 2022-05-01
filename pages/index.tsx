@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
-import { LayoutUser } from '../components/layouts'
+import { LayoutUser } from '../common/components/layouts'
 import { IconButton, Typography } from '@mui/material'
-import { imprimir } from '../utils'
+import { imprimir } from '../common/utils'
 
 function saludo() {
   imprimir('Hola mundo 🙌')

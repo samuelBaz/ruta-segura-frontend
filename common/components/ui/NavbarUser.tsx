@@ -19,13 +19,13 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import MenuOpenOutlined from '@mui/icons-material/MenuOpenOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
-import { UIContext, useFullScreenLoadingContext } from '../../context/ui'
+import { UIContext, useFullScreenLoadingContext } from '../../../context/ui'
 
 import React, { useContext, useEffect, useState } from 'react'
 import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { CustomDialog } from './CustomDialog'
 
-import { useAuth } from '../../context/auth'
+import { useAuth } from '../../../context/auth'
 import { delay, imprimir, titleCase } from '../../utils'
 import { RoleType } from '../../types'
 import { useRouter } from 'next/router'

@@ -1,21 +1,26 @@
 import type { NextPage } from 'next'
 import { Button, Chip, Grid, Typography } from '@mui/material'
-import { LayoutUser } from '../../components/layouts'
+import { LayoutUser } from '../../common/components/layouts'
 import {
   Alertas,
   AlertDialog,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
-} from '../../components/ui'
+} from '../../common/components/ui'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType, RolType, UsuarioCRUDType } from '../../types'
+import {
+  CasbinTypes,
+  ColumnaType,
+  RolType,
+  UsuarioCRUDType,
+} from '../../common/types'
 import { Constantes } from '../../config'
-import { imprimir, InterpreteMensajes, titleCase } from '../../utils'
+import { imprimir, InterpreteMensajes, titleCase } from '../../common/utils'
 import { useAuth } from '../../context/auth'
-import { Paginacion } from '../../components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { FiltroUsuarios, VistaModalUsuario } from '../../src/admin/usuarios'
+import { FiltroUsuarios, VistaModalUsuario } from '../../modules/admin/usuarios'
 
 const Usuarios: NextPage = () => {
   // data de usuarios

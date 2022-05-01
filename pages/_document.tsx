@@ -1,7 +1,7 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
 import createEmotionCache from '../src/createEmotionCache'
-import { commitDate, commitID, imprimir, nombreRama } from '../utils'
+import { commitDate, commitID, imprimir, nombreRama } from '../common/utils'
 
 export default class MyDocument extends Document {
   render() {

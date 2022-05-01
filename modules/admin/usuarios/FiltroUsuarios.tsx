@@ -1,12 +1,12 @@
-import { FiltroUsuariosType, RolType } from '../../../types'
+import { FiltroUsuariosType, RolType } from '../../../common/types'
 import React, { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Card, Grid } from '@mui/material'
 import {
   FormInputDropdownMultiple,
   FormInputText,
-} from '../../../components/ui/form'
-import { imprimir } from '../../../utils'
+} from '../../../common/components/ui/form'
+import { imprimir } from '../../../common/utils'
 
 interface filtroUsuariosType {
   filtroUsuariosValor: string

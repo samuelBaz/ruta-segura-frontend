@@ -10,9 +10,9 @@ import {
 } from '@mui/material'
 
 import { useRouter } from 'next/router'
-import { UIContext, useFullScreenLoadingContext } from '../../context/ui'
+import { UIContext, useFullScreenLoadingContext } from '../../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
-import { useAuth } from '../../context/auth'
+import { useAuth } from '../../../context/auth'
 import { imprimir } from '../../utils'
 import { ModuloType, RoleType } from '../../types'
 import { Icono } from './Icono'

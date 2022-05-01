@@ -4,7 +4,7 @@ import React, { FC, useContext } from 'react'
 
 import { NavbarUser } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
-import { UIContext } from '../../context/ui'
+import { UIContext } from '../../../context/ui'
 
 interface Props {
   title?: string
