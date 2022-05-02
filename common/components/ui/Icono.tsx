@@ -1,6 +1,6 @@
 import Icon from '@mui/material/Icon'
 
-import { FC } from 'react'
+import { FC, PropsWithChildren } from 'react'
 
 interface Props {
   color?:
@@ -15,7 +15,10 @@ interface Props {
     | 'warning'
 }
 
-export const Icono: FC<Props> = ({ color = 'primary', children }) => {
+export const Icono: FC<PropsWithChildren<Props>> = ({
+  color = 'primary',
+  children,
+}) => {
   return (
     <Icon color={`${color}`} className={'material-icons-outlined'}>
       {children}

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import Head from 'next/head'
-import { FC } from 'react'
+import { FC, PropsWithChildren } from 'react'
 
 import Toolbar from '@mui/material/Toolbar'
 import { NavbarLogin } from '../ui/NavbarLogin'
@@ -9,7 +9,7 @@ interface Props {
   title?: string
 }
 
-export const LayoutLogin: FC<Props> = ({
+export const LayoutLogin: FC<PropsWithChildren<Props>> = ({
   title = 'Frontend base - NextJS',
   children,
 }) => {
