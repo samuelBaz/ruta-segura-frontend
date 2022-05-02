@@ -8,7 +8,7 @@ import {
   useTheme,
   Zoom,
 } from '@mui/material'
-import React, { FC } from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { TransitionProps } from '@mui/material/transitions'
 
@@ -37,7 +37,7 @@ const TransitionZoom = React.forwardRef(function Transition(
   return <Zoom ref={ref} {...props} />
 })
 
-export const CustomDialog: FC<Props> = ({
+export const CustomDialog: FC<PropsWithChildren<Props>> = ({
   isOpen,
   handleClose,
   title,

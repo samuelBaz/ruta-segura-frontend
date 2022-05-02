@@ -1,6 +1,6 @@
 import { Box, Grid, useMediaQuery, useTheme } from '@mui/material'
 import Head from 'next/head'
-import React, { FC, useContext } from 'react'
+import React, { FC, PropsWithChildren, useContext } from 'react'
 
 import { NavbarUser } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
@@ -10,7 +10,7 @@ interface Props {
   title?: string
 }
 
-export const LayoutUser: FC<Props> = ({
+export const LayoutUser: FC<PropsWithChildren<Props>> = ({
   title = 'Frontend base - NextJS',
   children,
 }) => {
