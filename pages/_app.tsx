@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import createEmotionCache from '../src/createEmotionCache'
+import createEmotionCache from '../common/utils/createEmotionCache'
 import DebugBanner from '../common/components/DebugBanner'
 import '@fontsource/poppins'
 import { FullScreenLoadingProvider, UIProvider } from '../context/ui'
