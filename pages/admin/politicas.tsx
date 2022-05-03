@@ -16,7 +16,12 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import { imprimir, InterpreteMensajes, titleCase } from '../../common/utils'
+import {
+  imprimir,
+  InterpreteMensajes,
+  siteName,
+  titleCase,
+} from '../../common/utils'
 import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
@@ -272,7 +277,7 @@ const Politicas: NextPage = () => {
           accionCancelar={cerrarModalPolitica}
         />
       </CustomDialog>
-      <LayoutUser title={'Políticas - Frontend Base'}>
+      <LayoutUser title={`Políticas - ${siteName()}`}>
         <CustomDataTable
           titulo={'Políticas'}
           error={!!errorData}

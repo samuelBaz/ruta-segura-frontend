@@ -16,7 +16,12 @@ import {
   UsuarioCRUDType,
 } from '../../common/types'
 import { Constantes } from '../../config'
-import { imprimir, InterpreteMensajes, titleCase } from '../../common/utils'
+import {
+  imprimir,
+  InterpreteMensajes,
+  siteName,
+  titleCase,
+} from '../../common/utils'
 import { useAuth } from '../../context/auth'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
@@ -371,7 +376,7 @@ const Usuarios: NextPage = () => {
           accionCancelar={cerrarModalUsuario}
         />
       </CustomDialog>
-      <LayoutUser title={'Usuarios - Frontend Base'}>
+      <LayoutUser title={`Usuarios - ${siteName()}`}>
         <CustomDataTable
           titulo={'Usuarios'}
           error={!!errorData}

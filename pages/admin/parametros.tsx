@@ -10,7 +10,7 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import { imprimir, InterpreteMensajes } from '../../common/utils'
+import { imprimir, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
 
 import { Paginacion } from '../../common/components/ui/Paginacion'
@@ -190,7 +190,7 @@ const Parametros: NextPage = () => {
           accionCancelar={cerrarModalParametro}
         />
       </CustomDialog>
-      <LayoutUser title={'Parametros - Frontend Base'}>
+      <LayoutUser title={`Parámetros - ${siteName()}`}>
         <CustomDataTable
           titulo={'Parámetros'}
           error={!!errorParametrosData}

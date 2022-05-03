@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 
 import childProcess from 'child_process'
+import { Constantes } from '../../config'
 
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -45,4 +46,8 @@ export const formatoFecha = (
   formatoNuevo: string
 ) => {
   return dayjs(fecha, formatoInicial, true).format(formatoNuevo)
+}
+
+export const siteName = () => {
+  return Constantes.siteName ?? ''
 }

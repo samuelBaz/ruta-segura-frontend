@@ -12,7 +12,7 @@ import {
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import React from 'react'
-import { formatoFecha, imprimir, titleCase } from '../../common/utils'
+import { formatoFecha, imprimir, siteName, titleCase } from '../../common/utils'
 import { Icono } from '../../common/components/ui'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
@@ -24,7 +24,11 @@ const Perfil: NextPage = () => {
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   return (
-    <LayoutUser title={`Perfil - ${titleCase(usuario?.persona.nombres ?? '')}`}>
+    <LayoutUser
+      title={`Perfil - ${titleCase(
+        usuario?.persona.nombres ?? ''
+      )} - ${siteName()}`}
+    >
       <Grid
         container
         direction="row"

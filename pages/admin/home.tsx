@@ -11,7 +11,7 @@ import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import { Icono } from '../../common/components/ui'
 import { useRouter } from 'next/router'
-import { titleCase } from '../../common/utils'
+import { siteName, titleCase } from '../../common/utils'
 
 const Home: NextPage = () => {
   const { usuario, rolUsuario, idRolUsuario } = useAuth()
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const router = useRouter()
 
   return (
-    <LayoutUser title={'Home - Frontend Base'}>
+    <LayoutUser title={`Home - ${siteName()}`}>
       <Grid
         container
         direction="row"

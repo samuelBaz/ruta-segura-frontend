@@ -488,7 +488,7 @@ const UsuariosSWR: NextPage = () => {
       >
         <VistaModalUsuario usuario={usuarioEdicion} />
       </CustomDialog>
-      <LayoutUser title={'Usuarios - Frontend Base'}>
+      <LayoutUser title={`Usuarios - ${siteName()}`}>
         <CustomDataTable
           titulo={'Usuarios'}
           error={!!error}

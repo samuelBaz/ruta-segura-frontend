@@ -1,5 +1,7 @@
+import { Constantes } from '../../config'
+
 export default function DebugBanner() {
-  const entorno = process.env.NODE_ENV
+  const entorno = Constantes.appEnv
 
   let mensaje = undefined
   switch (entorno) {

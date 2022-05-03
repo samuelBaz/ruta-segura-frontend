@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthProvider } from '../context/auth'
 import { Sidebar } from '../common/components/ui'
+import { Constantes } from '../config'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
@@ -21,7 +22,7 @@ interface MyAppProps extends AppProps {
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
-  const entorno = process.env.NODE_ENV
+  const entorno = Constantes.appEnv
   imprimir(`🚀 iniciando en modo ${entorno}`)
 
   return (

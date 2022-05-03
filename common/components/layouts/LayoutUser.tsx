@@ -5,13 +5,14 @@ import React, { FC, PropsWithChildren, useContext } from 'react'
 import { NavbarUser } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
 import { UIContext } from '../../../context/ui'
+import { siteName } from '../../utils'
 
 interface Props {
   title?: string
 }
 
 export const LayoutUser: FC<PropsWithChildren<Props>> = ({
-  title = 'Frontend base - NextJS',
+  title = siteName(),
   children,
 }) => {
   const { sidemenuOpen } = useContext(UIContext)

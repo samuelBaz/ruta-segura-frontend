@@ -10,7 +10,7 @@ import {
   useTheme,
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { delay, imprimir, InterpreteMensajes } from '../common/utils'
+import { delay, imprimir, InterpreteMensajes, siteName } from '../common/utils'
 import { Constantes } from '../config'
 import { Servicios } from '../services'
 import { Alertas } from '../common/components/ui'
@@ -68,7 +68,7 @@ const Login: NextPage = () => {
   }, [])
 
   return (
-    <LayoutLogin title={'Frontend base - NextJS'}>
+    <LayoutLogin title={siteName()}>
       <Grid container justifyContent="space-evenly" alignItems={'center'}>
         <Grid item xl={6} md={5} xs={12}>
           <Box

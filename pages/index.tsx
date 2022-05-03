@@ -1,24 +1,24 @@
 import type { NextPage } from 'next'
-import { LayoutUser } from '../common/components/layouts'
-import { IconButton, Typography } from '@mui/material'
-import { imprimir } from '../common/utils'
+import { Grid, Typography } from '@mui/material'
+import { imprimir, siteName } from '../common/utils'
 
-function saludo() {
-  imprimir('Hola mundo 🙌')
-}
-
-const Home: NextPage = () => {
+const Inicio: NextPage = () => {
+  const nombreSitio: string = siteName()
+  imprimir(nombreSitio)
   return (
-    <LayoutUser title={'Proyecto base'}>
-      <Typography variant={'h4'} component="h1" color={'primary'}>
-        Frontend base con MUI v5 + Next.js con TypeScript
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: '100vh' }}
+    >
+      <Typography variant={'h4'} component="h1">
+        {nombreSitio}
       </Typography>
-      <IconButton
-        onClick={() => {
-          saludo()
-        }}
-      />
-    </LayoutUser>
+    </Grid>
   )
 }
-export default Home
+
+export default Inicio

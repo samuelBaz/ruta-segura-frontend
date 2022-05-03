@@ -1,3 +1,5 @@
+import { Constantes } from '../../config'
+
 function obtenerNombreFuncionAnterior(d: number) {
   const error = new Error()
   let r = ''
@@ -24,7 +26,7 @@ export const imprimir = (mensaje: any) => {
   const funcionAnterior: string = obtenerNombreFuncionAnterior(2)
   const ocultarAnterior: boolean =
     funcionAnterior.includes('callee') || false || funcionAnterior === ''
-  const entorno = process.env.NODE_ENV
+  const entorno = Constantes.appEnv
   if (entorno != 'production') {
     // eslint-disable-next-line no-console
     console.log(

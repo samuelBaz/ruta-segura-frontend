@@ -25,7 +25,7 @@ export interface CustomDataTableType {
   cargando?: boolean
   acciones: Array<ReactNode>
   columnas: Array<ColumnaType>
-  filtros: Array<ReactNode>
+  filtros?: Array<ReactNode>
   contenidoTabla: Array<Array<ReactNode>>
   paginacion?: ReactNode
 }

@@ -4,13 +4,14 @@ import { FC, PropsWithChildren } from 'react'
 
 import Toolbar from '@mui/material/Toolbar'
 import { NavbarLogin } from '../ui/NavbarLogin'
+import { siteName } from '../../utils'
 
 interface Props {
   title?: string
 }
 
 export const LayoutLogin: FC<PropsWithChildren<Props>> = ({
-  title = 'Frontend base - NextJS',
+  title = siteName(),
   children,
 }) => {
   return (
