@@ -1,57 +1,54 @@
-import { FiltroUsuariosType, RolType } from '../../../common/types'
-import React, { FC, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { Card, Grid } from '@mui/material'
+import { IconoTooltip } from '../../../common/components/ui'
+import { Box, DialogContent, Menu, Toolbar, Typography } from '@mui/material'
+import React, { useEffect } from 'react'
 import {
   FormInputDropdownMultiple,
   FormInputText,
 } from '../../../common/components/ui/form'
+import { RolType } from '../../../common/types'
+import { useForm } from 'react-hook-form'
 import { imprimir } from '../../../common/utils'
 
-interface filtroUsuariosType {
-  filtroUsuariosValor: string
-  cambioFiltroUsuariosValor: (nuevoFiltro: string) => void
+export interface FiltroUsuariosType {
   rolesDisponibles: RolType[]
-  filtroRolesValor: string
-  cambioFiltroRolesValor: (nuevoFiltroRoles: string) => void
+  cambioFiltroRoles: (idRoles: string[]) => void
 }
 
-/// Componente espesífico para filtros de usuarios
-export const FiltroUsuarios: FC<filtroUsuariosType> = ({
-  filtroUsuariosValor,
-  cambioFiltroUsuariosValor,
+export const FiltroUsuarios = ({
   rolesDisponibles,
-  filtroRolesValor,
-  cambioFiltroRolesValor,
-}) => {
-  const { handleSubmit, control, watch, setValue } =
-    useForm<FiltroUsuariosType>({
-      defaultValues: {
-        filtro: filtroUsuariosValor,
-        roles: filtroRolesValor ? filtroRolesValor.split(',') : [],
-      },
-    })
+  cambioFiltroRoles,
+}: FiltroUsuariosType) => {
+  /// Indicador para mostrar el filtro de usuarios
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
 
-  const filtroUsuarioWatch: string = watch('filtro')
-  const filtroRolesWatch: string[] = watch('roles')
-
-  const limpiarFiltroUsuario = ({ filtro }: FiltroUsuariosType) => {
-    imprimir(`limpiando: ${filtro}`)
-    setValue('filtro', '')
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
   }
 
-  useEffect(() => {
-    const timeOutId = setTimeout(
-      () => cambioFiltroUsuariosValor(filtroUsuarioWatch),
-      1000
-    )
-    return () => clearTimeout(timeOutId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filtroUsuarioWatch])
+  imprimir(`dibujando filtro otra vez 🥲`)
+
+  // Formulario
+
+  const { control, reset, watch } = useForm<{
+    filtro: string | undefined
+    roles: Array<string>
+  }>({
+    defaultValues: {
+      filtro: '',
+      roles: [],
+    },
+  })
+
+  const filtroRolesWatch: string[] = watch('roles')
 
   useEffect(() => {
+    imprimir(`filtroRolesWatch 😬: ${filtroRolesWatch}`)
     const timeOutId = setTimeout(
-      () => cambioFiltroRolesValor(filtroRolesWatch.join(',')),
+      () => cambioFiltroRoles(filtroRolesWatch),
       1000
     )
     return () => clearTimeout(timeOutId)
@@ -59,39 +56,78 @@ export const FiltroUsuarios: FC<filtroUsuariosType> = ({
   }, [filtroRolesWatch])
 
   return (
-    <Grid
-      container
-      direction="row"
-      spacing={{ xs: 1, md: 3 }}
-      columns={{ xs: 1, sm: 4, md: 8, xl: 12 }}
-    >
-      <Grid item xs={2} sm={4} md={4}>
-        <Card sx={{ borderRadius: 2, p: 2, backgroundColor: 'inherit' }}>
-          <FormInputText
-            control={control}
-            id={'filtro'}
-            key={`filtro`}
-            name="filtro"
-            label="Usuario"
-            onClear={handleSubmit(limpiarFiltroUsuario)}
-          />
-        </Card>
-      </Grid>
-      <Grid item xs={2} sm={4} md={4}>
-        <Card sx={{ borderRadius: 2, p: 2, backgroundColor: 'inherit' }}>
-          <FormInputDropdownMultiple
-            control={control}
-            id={'roles'}
-            name="roles"
-            label="Roles"
-            options={rolesDisponibles.map((rol) => ({
-              key: rol.id,
-              value: rol.id,
-              label: rol.nombre,
-            }))}
-          />
-        </Card>
-      </Grid>
-    </Grid>
+    <div>
+      <IconoTooltip
+        id="boton-filtro-usuarios-id"
+        titulo={'Filtrar'}
+        accion={handleClick}
+        icono={'filter_list'}
+        name={'Filtrar lista de usuarios'}
+      />
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="boton-filtro-usuarios-id"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <Box sx={{ width: '100%', minWidth: 300, maxWidth: 300 }}>
+          <Toolbar>
+            <Typography
+              color={'text.primary'}
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              Filtro
+            </Typography>
+            <IconoTooltip
+              titulo={'Limpiar'}
+              accion={() => {
+                reset({ filtro: '', roles: [] })
+              }}
+              icono={'delete_outline'}
+              name={'Limpiar filtros'}
+            />
+            <IconoTooltip
+              titulo={'Cerrar'}
+              accion={handleClose}
+              icono={'close'}
+              name={'Cerrar'}
+            />
+          </Toolbar>
+          <DialogContent>
+            <FormInputText
+              id={'filtro'}
+              control={control}
+              name="filtro"
+              label="Usuario"
+              onClear={() => {
+                reset({ filtro: '' })
+              }}
+            />
+            <Box height={'10px'} />
+            <FormInputDropdownMultiple
+              id={'roles'}
+              name="roles"
+              control={control}
+              label="Roles"
+              options={rolesDisponibles.map((rol) => ({
+                key: rol.id,
+                value: rol.id,
+                label: rol.nombre,
+              }))}
+            />
+          </DialogContent>
+        </Box>
+      </Menu>
+    </div>
   )
 }

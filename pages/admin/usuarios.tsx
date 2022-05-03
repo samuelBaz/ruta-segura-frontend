@@ -8,7 +8,7 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import {
   CasbinTypes,
   ColumnaType,
@@ -54,7 +54,7 @@ const Usuarios: NextPage = () => {
 
   // Variable de filtro
   const [filtro, setFiltro] = useState<string>('')
-  const [filtroRoles, setFiltroRoles] = useState<string>('')
+  const [filtroRoles, setFiltroRoles] = useState<string[]>([])
 
   // Proveedor de la sesión
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
@@ -187,6 +187,13 @@ const Usuarios: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de usuario'}
     />,
+    <FiltroUsuarios
+      key={'accionFiltrarUsuario'}
+      rolesDisponibles={rolesData}
+      cambioFiltroRoles={(idRoles) => {
+        setFiltroRoles(idRoles)
+      }}
+    />,
   ]
 
   /// Petición que obtiene lista de usuarios
@@ -201,8 +208,8 @@ const Usuarios: NextPage = () => {
             pagina: pagina,
             limite: limite,
           },
-          ...(filtro.length == 0 ? {} : { filtro: filtro }),
-          ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles }),
+          // ...(filtro.length == 0 ? {} : { filtro: filtro }),
+          ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles.join(',') }),
         },
       })
       setUsuariosData(respuesta.datos?.filas)
@@ -308,6 +315,11 @@ const Usuarios: NextPage = () => {
   }, [estaAutenticado])
 
   useEffect(() => {
+    imprimir(`estaAutenticado: ${estaAutenticado}`)
+    imprimir(`pagina: ${pagina}`)
+    imprimir(`limite: ${limite}`)
+    imprimir(`filtro: ${filtro}`)
+    imprimir(`filtroRoles: ${filtroRoles}`)
     if (estaAutenticado)
       obtenerRolesPeticion()
         .then(() => {
@@ -319,6 +331,18 @@ const Usuarios: NextPage = () => {
         .finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite, filtro, filtroRoles])
+
+  const eliminarFiltro = useCallback(
+    (index: number) => {
+      {
+        imprimir(index)
+        setFiltroRoles((prevState) => {
+          return prevState.filter((item, idRol) => idRol !== index)
+        })
+      }
+    },
+    [setFiltroRoles]
+  )
 
   return (
     <>
@@ -356,18 +380,25 @@ const Usuarios: NextPage = () => {
           columnas={columnas}
           contenidoTabla={contenidoTabla}
           filtros={
-            <FiltroUsuarios
-              filtroUsuariosValor={filtro}
-              cambioFiltroUsuariosValor={setFiltro}
-              rolesDisponibles={rolesData}
-              filtroRolesValor={filtroRoles}
-              cambioFiltroRolesValor={setFiltroRoles}
-            />
+            filtroRoles
+              ? filtroRoles.map((idRol, index) => {
+                  return (
+                    <Chip
+                      sx={{ m: 1 }}
+                      key={`${index}`}
+                      color="primary"
+                      label={
+                        rolesData.find((rol) => rol.id == idRol)?.nombre ??
+                        idRol
+                      }
+                      onDelete={() => {
+                        eliminarFiltro(index)
+                      }}
+                    />
+                  )
+                })
+              : []
           }
-          accionOcultarFiltro={() => {
-            setFiltro('')
-            setFiltroRoles('')
-          }}
           paginacion={
             <Paginacion
               pagina={pagina}

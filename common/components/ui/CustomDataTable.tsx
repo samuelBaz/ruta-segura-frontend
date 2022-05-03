@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode } from 'react'
 import { ColumnaType } from '../../types'
 import {
   Box,
@@ -18,8 +18,6 @@ import {
   useTheme,
 } from '@mui/material'
 import { ListSkeleton, TableSkeleton } from './CustomSkeleton'
-import { IconoTooltip } from './IconoTooltip'
-import { delay } from '../../utils'
 
 export interface CustomDataTableType {
   titulo: string
@@ -27,8 +25,7 @@ export interface CustomDataTableType {
   cargando?: boolean
   acciones: Array<ReactNode>
   columnas: Array<ColumnaType>
-  filtros?: ReactNode
-  accionOcultarFiltro?: () => void
+  filtros: Array<ReactNode>
   contenidoTabla: Array<Array<ReactNode>>
   paginacion?: ReactNode
 }
@@ -39,26 +36,13 @@ export const CustomDataTable = ({
   cargando = false,
   acciones,
   columnas,
-  filtros,
-  accionOcultarFiltro,
+  filtros = [],
   contenidoTabla,
   paginacion,
 }: CustomDataTableType) => {
   const theme = useTheme()
   // const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
-
-  const [mostrarFiltro, setMostrarFiltro] = useState(false)
-
-  useEffect(() => {
-    if (!mostrarFiltro)
-      delay(500).then(() => {
-        if (accionOcultarFiltro) {
-          accionOcultarFiltro()
-        }
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mostrarFiltro])
 
   return (
     <Box sx={{ pb: 2 }}>
@@ -83,38 +67,16 @@ export const CustomDataTable = ({
               {acciones.map((accion, index) => (
                 <div key={`accion-id-${index}`}>{accion}</div>
               ))}
-              {!!filtros && (
-                <div key={`accion-filtro`}>
-                  <IconoTooltip
-                    titulo={
-                      mostrarFiltro ? 'Ocultar filtros' : 'Mostrar filtros'
-                    }
-                    accion={() => {
-                      setMostrarFiltro(!mostrarFiltro)
-                    }}
-                    icono={mostrarFiltro ? 'filter_list_off' : 'filter_list'}
-                    name={mostrarFiltro ? 'Ocultar filtros' : 'Mostrar filtros'}
-                  />
-                </div>
-              )}
             </Grid>
           </Typography>
         </Fade>
       </Grid>
-      <Box height={xs ? '20px' : '20px'} />
       {/* filtros */}
-      <Collapse in={mostrarFiltro} sx={{}}>
-        <Card
-          sx={{
-            borderRadius: 2,
-            backgroundColor: 'inherit',
-            pt: 2,
-            pb: 2,
-            mb: mostrarFiltro ? 3 : 0,
-          }}
-        >
-          {filtros}
-        </Card>
+      <Collapse
+        in={filtros.length > 0}
+        sx={{ pt: filtros.length > 0 ? 1 : 2, pb: filtros.length > 0 ? 3 : 1 }}
+      >
+        <Box sx={{ pa: 1 }}>{filtros}</Box>
       </Collapse>
       {/*Contenedor de la tabla*/}
       <Card

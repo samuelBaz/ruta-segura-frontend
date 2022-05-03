@@ -1,4 +1,9 @@
-import React, { FC, PropsWithChildren, ReactNode } from 'react'
+import React, {
+  FC,
+  MouseEventHandler,
+  PropsWithChildren,
+  ReactNode,
+} from 'react'
 import { IconButton, Tooltip } from '@mui/material'
 import { Icono } from './Icono'
 
@@ -15,9 +20,10 @@ interface Props {
     | 'warning'
   titulo: string
   icono: ReactNode
-  accion: () => void
+  accion: MouseEventHandler<any> | undefined
   desactivado?: boolean
   name: string
+  id?: string | undefined
 }
 
 export const IconoTooltip: FC<PropsWithChildren<Props>> = ({
@@ -27,11 +33,13 @@ export const IconoTooltip: FC<PropsWithChildren<Props>> = ({
   accion,
   desactivado = false,
   name,
+  id,
 }) => {
   return (
     <Tooltip title={titulo}>
       <span>
         <IconButton
+          id={id}
           name={name}
           disabled={desactivado}
           classes={{
