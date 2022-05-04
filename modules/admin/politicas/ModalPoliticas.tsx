@@ -37,11 +37,16 @@ export const VistaModalPolitica = ({
 
   const politicaActual: PoliticaCRUDType | undefined = politica
 
-  const opcionesAcciones: string[] = [
+  const opcionesApp: string[] = ['frontend', 'backend']
+
+  const opcionesAccionesFrontend: string[] = [
     'create',
     'read',
     'update',
     'delete',
+  ]
+
+  const opcionesAccionesBackend: string[] = [
     'GET',
     'POST',
     'PUT',
@@ -49,14 +54,17 @@ export const VistaModalPolitica = ({
     'DELETE',
   ]
 
-  const { handleSubmit, control } = useForm<CrearEditarPoliticaCRUDType>({
-    defaultValues: {
-      app: politica?.app,
-      accion: politica?.accion.split('|'),
-      objeto: politica?.objeto,
-      sujeto: politica?.sujeto,
-    },
-  })
+  const { handleSubmit, control, watch, setValue } =
+    useForm<CrearEditarPoliticaCRUDType>({
+      defaultValues: {
+        app: politica?.app,
+        accion: politica?.accion.split('|'),
+        objeto: politica?.objeto,
+        sujeto: politica?.sujeto,
+      },
+    })
+
+  const valorApp = watch('app')
 
   const guardarActualizarPolitica = async (
     data: CrearEditarPoliticaCRUDType
@@ -126,27 +134,41 @@ export const VistaModalPolitica = ({
       <Box height={'15px'} />
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={6}>
+          <FormInputDropdown
+            id={'app'}
+            name="app"
+            control={control}
+            label="App"
+            disabled={loadingModal}
+            options={opcionesApp.map((app) => ({
+              key: app,
+              value: app,
+              label: app,
+            }))}
+            onChange={(event) => {
+              imprimir(event.target.value)
+              setValue('accion', [])
+            }}
+            rules={{ required: 'Este campo es requerido' }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
           <FormInputDropdownMultiple
             id={'accion'}
             name="accion"
             control={control}
             label="Acción"
             disabled={loadingModal}
-            options={opcionesAcciones.map((opcionAccion) => ({
+            options={(valorApp == 'frontend'
+              ? opcionesAccionesFrontend
+              : valorApp == 'backend'
+              ? opcionesAccionesBackend
+              : []
+            ).map((opcionAccion) => ({
               key: opcionAccion,
               value: opcionAccion,
               label: opcionAccion,
             }))}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'app'}
-            control={control}
-            name="app"
-            label="App"
-            disabled={loadingModal}
             rules={{ required: 'Este campo es requerido' }}
           />
         </Grid>

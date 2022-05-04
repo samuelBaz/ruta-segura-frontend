@@ -257,9 +257,7 @@ const Politicas: NextPage = () => {
       <AlertDialog
         isOpen={mostrarAlertaEliminarPolitica}
         titulo={'Alerta'}
-        texto={`¿Está seguro de eliminar la política ${titleCase(
-          `${politicaEdicion?.app}-${politicaEdicion?.objeto}-${politicaEdicion?.sujeto}-${politicaEdicion?.accion}`
-        )} ?`}
+        texto={`¿Está seguro de eliminar la política ${politicaEdicion?.app}-${politicaEdicion?.objeto}-${politicaEdicion?.sujeto}-${politicaEdicion?.accion} ?`}
       >
         <Button onClick={cancelarAlertaEliminarPolitica}>Cancelar</Button>
         <Button onClick={aceptarAlertaEliminarPoliticas}>Aceptar</Button>
