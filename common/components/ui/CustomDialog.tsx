@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Divider,
   IconButton,
   Slide,
   useMediaQuery,
@@ -55,10 +56,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
       TransitionComponent={dsm ? Transition : TransitionZoom}
       onClose={handleClose}
     >
-      <DialogTitle
-        sx={{ m: 1, p: 2 }}
-        style={{ borderBottom: 'thin solid rgba(0, 0, 0, 0.1)' }}
-      >
+      <DialogTitle sx={{ mt: 1, mr: 1, ml: 1, p: 2 }}>
         {title}
         <IconButton
           aria-label="close"
@@ -73,6 +71,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
           <CloseIcon />
         </IconButton>
       </DialogTitle>
+      <Divider />
       <DialogContent>{children}</DialogContent>
     </Dialog>
   )
