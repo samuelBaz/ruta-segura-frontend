@@ -17,6 +17,7 @@ import {
   IconoTooltip,
 } from '../../common/components/ui'
 import {
+  delay,
   imprimir,
   InterpreteMensajes,
   siteName,
@@ -196,8 +197,9 @@ const Politicas: NextPage = () => {
     setModalPolitica(true)
   }
 
-  const cerrarModalPolitica = () => {
+  const cerrarModalPolitica = async () => {
     setModalPolitica(false)
+    await delay(500)
     setPoliticaEdicion(undefined)
   }
 

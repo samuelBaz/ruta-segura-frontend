@@ -17,6 +17,7 @@ import {
 } from '../../common/types'
 import { Constantes } from '../../config'
 import {
+  delay,
   imprimir,
   InterpreteMensajes,
   siteName,
@@ -282,8 +283,9 @@ const Usuarios: NextPage = () => {
   }
 
   /// Método que cierra una ventana modal
-  const cerrarModalUsuario = () => {
+  const cerrarModalUsuario = async () => {
     setModalUsuario(false)
+    await delay(500)
     setUsuarioEdicion(null)
   }
 
@@ -337,17 +339,12 @@ const Usuarios: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite, filtro, filtroRoles])
 
-  const eliminarFiltro = useCallback(
-    (index: number) => {
-      {
-        imprimir(index)
-        setFiltroRoles((prevState) => {
-          return prevState.filter((item, idRol) => idRol !== index)
-        })
-      }
-    },
-    [setFiltroRoles]
-  )
+  const eliminarFiltro = (index: number) => {
+    imprimir(index)
+    setFiltroRoles((prevState) => {
+      return prevState.filter((item, idRol) => idRol !== index)
+    })
+  }
 
   return (
     <>
@@ -384,26 +381,21 @@ const Usuarios: NextPage = () => {
           acciones={acciones}
           columnas={columnas}
           contenidoTabla={contenidoTabla}
-          filtros={
-            filtroRoles
-              ? filtroRoles.map((idRol, index) => {
-                  return (
-                    <Chip
-                      sx={{ m: 1 }}
-                      key={`${index}`}
-                      color="primary"
-                      label={
-                        rolesData.find((rol) => rol.id == idRol)?.nombre ??
-                        idRol
-                      }
-                      onDelete={() => {
-                        eliminarFiltro(index)
-                      }}
-                    />
-                  )
-                })
-              : []
-          }
+          filtros={filtroRoles.map((idRol, index) => {
+            return (
+              <Chip
+                sx={{ m: 1 }}
+                key={`${index}`}
+                color="primary"
+                label={
+                  rolesData.find((rol) => rol.id == idRol)?.nombre ?? idRol
+                }
+                onDelete={() => {
+                  eliminarFiltro(index)
+                }}
+              />
+            )
+          })}
           paginacion={
             <Paginacion
               pagina={pagina}
@@ -413,7 +405,7 @@ const Usuarios: NextPage = () => {
               cambioLimite={setLimite}
             />
           }
-        />
+        ></CustomDataTable>
       </LayoutUser>
     </>
   )

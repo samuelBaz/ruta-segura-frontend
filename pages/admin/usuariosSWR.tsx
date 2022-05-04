@@ -422,8 +422,10 @@ const UsuariosSWR: NextPage = () => {
     setModalUsuario(true)
   }
 
-  const cerrarModalUsuario = () => {
+  /// Método que cierra una ventana modal
+  const cerrarModalUsuario = async () => {
     setModalUsuario(false)
+    await delay(500)
     setUsuarioEdicion(null)
   }
 

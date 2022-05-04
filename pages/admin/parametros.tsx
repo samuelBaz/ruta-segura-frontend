@@ -10,7 +10,12 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import { imprimir, InterpreteMensajes, siteName } from '../../common/utils'
+import {
+  delay,
+  imprimir,
+  InterpreteMensajes,
+  siteName,
+} from '../../common/utils'
 import { Constantes } from '../../config'
 
 import { Paginacion } from '../../common/components/ui/Paginacion'
@@ -145,8 +150,9 @@ const Parametros: NextPage = () => {
     setModalParametro(true)
   }
 
-  const cerrarModalParametro = () => {
+  const cerrarModalParametro = async () => {
     setModalParametro(false)
+    await delay(500)
     setParametroEdicion(undefined)
   }
 
