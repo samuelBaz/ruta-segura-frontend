@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form'
-import { MenuItem, Select, Typography } from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 
 export interface optionType {
@@ -16,6 +16,7 @@ export interface FormInputDropdownProps {
   size?: 'small' | 'medium'
   rules?: RegisterOptions
   disabled?: boolean
+  onChange?: (event: SelectChangeEvent) => void
   options: optionType[]
 }
 
@@ -27,6 +28,7 @@ export const FormInputDropdown = ({
   size = 'small',
   rules,
   disabled,
+  onChange,
   options,
 }: FormInputDropdownProps) => {
   const generateSelectOptions = () => {
@@ -52,7 +54,12 @@ export const FormInputDropdown = ({
             size={size}
             error={!!error}
             disabled={disabled}
-            onChange={field.onChange}
+            onChange={(event) => {
+              if (onChange) {
+                onChange(event)
+              }
+              field.onChange(event)
+            }}
             value={field.value}
           >
             {generateSelectOptions()}
