@@ -6,7 +6,12 @@ import {
   RolType,
   UsuarioCRUDType,
 } from '../../../common/types'
-import { delay, imprimir, InterpreteMensajes } from '../../../common/utils'
+import {
+  delay,
+  formatoFecha,
+  imprimir,
+  InterpreteMensajes,
+} from '../../../common/utils'
 import { Constantes } from '../../../config'
 import { Alertas } from '../../../common/components/ui'
 import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
@@ -46,7 +51,19 @@ export const VistaModalUsuario = ({
       roles: usuario?.usuarioRol.map((rol) => rol.rol.id),
       estado: usuario?.estado,
       correoElectronico: usuario?.correoElectronico,
-      persona: usuario?.persona,
+      persona: {
+        nroDocumento: usuario?.persona.nroDocumento,
+        nombres: usuario?.persona.nombres,
+        primerApellido: usuario?.persona.primerApellido,
+        segundoApellido: usuario?.persona.segundoApellido,
+        fechaNacimiento: usuario?.persona.fechaNacimiento
+          ? formatoFecha(
+              usuario?.persona.fechaNacimiento,
+              'YYYY-MM-DD',
+              'DD/MM/YYYY'
+            )
+          : undefined,
+      },
       ciudadaniaDigital: usuario?.ciudadaniaDigital,
     },
   })
@@ -62,9 +79,25 @@ export const VistaModalUsuario = ({
       setLoadingModal(true)
       await delay(1000)
       const respuesta = await sesionPeticion({
-        url: `${Constantes.baseUrl}/usuarios/${usuario.id ?? ''}`,
+        url: `${Constantes.baseUrl}/usuarios${
+          usuario.id ? `/${usuario.id}` : ''
+        }`,
         tipo: !!usuario.id ? 'patch' : 'post',
-        body: usuario,
+        body: {
+          ...usuario,
+          ...{
+            persona: {
+              ...usuario.persona,
+              ...{
+                fechaNacimiento: formatoFecha(
+                  usuario.persona.fechaNacimiento,
+                  'DD/MM/YYYY',
+                  'YYYY-MM-DD'
+                ),
+              },
+            },
+          },
+        },
       })
       Alertas.correcto(InterpreteMensajes(respuesta))
       accionCorrecta()

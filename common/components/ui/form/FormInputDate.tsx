@@ -6,6 +6,7 @@ import { FormHelperText, TextField, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { Control } from 'react-hook-form/dist/types/form'
 import dayjs from 'dayjs'
+import esMX from 'dayjs/locale/es-mx'
 
 export interface FormDatePickerProps {
   id: string
@@ -24,7 +25,7 @@ export const FormInputDate = ({
   control,
   label,
   size = 'small',
-  format = 'YYYY-MM-DD',
+  format = 'DD/MM/YYYY',
   disabled,
   rules,
 }: FormDatePickerProps) => {
@@ -38,12 +39,12 @@ export const FormInputDate = ({
           field: { onChange, value, ref },
           fieldState: { error },
         }) => (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider locale={esMX} dateAdapter={AdapterDayjs}>
             <DatePicker
               onChange={onChange}
               value={value}
               ref={ref}
-              mask={'____-__-__'}
+              mask={'__/__/____'}
               inputFormat={format}
               disabled={disabled}
               renderInput={(params) => (

@@ -40,11 +40,15 @@ export const execChildProcess = async (comando: string) => {
   })
 }
 
+export const stringToDate = (fecha: string, formatoInicial: string): Date => {
+  return dayjs(fecha, formatoInicial, true).toDate()
+}
+
 export const formatoFecha = (
   fecha: string,
   formatoInicial: string,
   formatoNuevo: string
-) => {
+): string => {
   return dayjs(fecha, formatoInicial, true).format(formatoNuevo)
 }
 
