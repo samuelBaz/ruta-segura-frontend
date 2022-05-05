@@ -1,2 +1,2 @@
 export * from './ModalUsuarios'
-export * from './FiltroUsuarios'
+export * from './FiltroModalUsuarios'

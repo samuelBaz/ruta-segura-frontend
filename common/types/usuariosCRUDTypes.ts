@@ -21,7 +21,7 @@ export interface PersonaCRUDType {
   segundoApellido: string
   tipoDocumento: string
   nroDocumento: string
-  fechaNacimiento: Date
+  fechaNacimiento: string
 }
 
 export interface UsuarioCRUDType {
@@ -41,7 +41,7 @@ export interface CrearPersonaType {
   primerApellido: string
   segundoApellido: string
   nroDocumento: string
-  fechaNacimiento: Date
+  fechaNacimiento: string
 }
 
 export interface CrearEditarUsuarioType {

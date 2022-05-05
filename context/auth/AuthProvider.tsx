@@ -117,6 +117,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
         await delay(1000)
       } catch (error: Error | any) {
+        imprimir(`Error durante Auth Provider 🚨: ${JSON.stringify(error)}`)
         eliminarCookie('token')
         await router.replace({
           pathname: '/login',

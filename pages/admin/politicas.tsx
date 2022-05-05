@@ -21,7 +21,6 @@ import {
   imprimir,
   InterpreteMensajes,
   siteName,
-  titleCase,
 } from '../../common/utils'
 import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
@@ -271,7 +270,7 @@ const Politicas: NextPage = () => {
           politica={politicaEdicion}
           roles={rolesData}
           accionCorrecta={() => {
-            cerrarModalPolitica()
+            cerrarModalPolitica().finally()
             obtenerPoliticasPeticion().finally()
           }}
           accionCancelar={cerrarModalPolitica}

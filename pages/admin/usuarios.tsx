@@ -8,7 +8,7 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import React, { ReactNode, useCallback, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import {
   CasbinTypes,
   ColumnaType,
@@ -26,7 +26,10 @@ import {
 import { useAuth } from '../../context/auth'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { FiltroUsuarios, VistaModalUsuario } from '../../modules/admin/usuarios'
+import {
+  FiltroModalUsuarios,
+  VistaModalUsuario,
+} from '../../modules/admin/usuarios'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -58,9 +61,10 @@ const Usuarios: NextPage = () => {
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
-  // Variable de filtro
-  const [filtro, setFiltro] = useState<string>('')
   const [filtroRoles, setFiltroRoles] = useState<string[]>([])
+
+  /// Indicador para mostrar el filtro de usuarios
+  const [mostrarFiltroUsuarios, setMostrarFiltroUsuarios] = useState(false)
 
   // Proveedor de la sesión
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
@@ -134,7 +138,6 @@ const Usuarios: NextPage = () => {
             titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
             color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={async () => {
-              imprimir(`estado: ${usuarioData.estado}`)
               await editarEstadoUsuarioModal(usuarioData)
             }}
             desactivado={usuarioData.estado == 'PENDIENTE'}
@@ -193,12 +196,15 @@ const Usuarios: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de usuario'}
     />,
-    <FiltroUsuarios
+    <IconoTooltip
+      id="boton-filtro-usuarios-id"
+      titulo={'Filtrar'}
       key={'accionFiltrarUsuario'}
-      rolesDisponibles={rolesData}
-      cambioFiltroRoles={(idRoles) => {
-        setFiltroRoles(idRoles)
+      accion={() => {
+        setMostrarFiltroUsuarios(true)
       }}
+      icono={'filter_list'}
+      name={'Filtrar lista de usuarios'}
     />,
   ]
 
@@ -322,11 +328,6 @@ const Usuarios: NextPage = () => {
   }, [estaAutenticado])
 
   useEffect(() => {
-    imprimir(`estaAutenticado: ${estaAutenticado}`)
-    imprimir(`pagina: ${pagina}`)
-    imprimir(`limite: ${limite}`)
-    imprimir(`filtro: ${filtro}`)
-    imprimir(`filtroRoles: ${filtroRoles}`)
     if (estaAutenticado)
       obtenerRolesPeticion()
         .then(() => {
@@ -337,13 +338,10 @@ const Usuarios: NextPage = () => {
         .catch(() => {})
         .finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtro, filtroRoles])
+  }, [estaAutenticado, pagina, limite, filtroRoles])
 
   const eliminarFiltro = (index: number) => {
-    imprimir(index)
-    setFiltroRoles((prevState) => {
-      return prevState.filter((item, idRol) => idRol !== index)
-    })
+    setFiltroRoles(filtroRoles.filter((item, idRol) => idRol !== index))
   }
 
   return (
@@ -359,6 +357,26 @@ const Usuarios: NextPage = () => {
         <Button onClick={aceptarAlertaEstadoUsuario}>Aceptar</Button>
       </AlertDialog>
       <CustomDialog
+        isOpen={mostrarFiltroUsuarios}
+        handleClose={() => {
+          setMostrarFiltroUsuarios(false)
+        }}
+        title={`Filtros`}
+      >
+        <FiltroModalUsuarios
+          filtroRoles={[...filtroRoles]}
+          rolesDisponibles={rolesData}
+          accionCorrecta={(filtros) => {
+            setMostrarFiltroUsuarios(false)
+            setFiltroRoles(filtros.roles)
+          }}
+          accionCerrar={() => {
+            setMostrarFiltroUsuarios(false)
+          }}
+        ></FiltroModalUsuarios>
+      </CustomDialog>
+
+      <CustomDialog
         isOpen={modalUsuario}
         handleClose={cerrarModalUsuario}
         title={usuarioEdicion ? 'Editar usuario' : 'Nuevo usuario'}
@@ -367,7 +385,7 @@ const Usuarios: NextPage = () => {
           usuario={usuarioEdicion}
           roles={rolesData}
           accionCorrecta={() => {
-            cerrarModalUsuario()
+            cerrarModalUsuario().finally()
             obtenerUsuariosPeticion().finally()
           }}
           accionCancelar={cerrarModalUsuario}
