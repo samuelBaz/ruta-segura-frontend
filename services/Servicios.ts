@@ -61,10 +61,11 @@ class ServiciosClass {
       )
       return response.data
     } catch (e: AxiosError | any) {
-      if (this.isNetworkError(e)) throw new Error('Error en la conexión 🌎')
-      else if (e.code === 'ECONNABORTED') {
+      if (e.code === 'ECONNABORTED') {
         throw new Error('La petición está tardando demasiado')
-      } else {
+      } else if (this.isNetworkError(e))
+        throw new Error('Error en la conexión 🌎')
+      else {
         throw e.response?.data || 'Ocurrio un error inesperado'
       }
     }

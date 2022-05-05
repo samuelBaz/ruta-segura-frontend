@@ -219,14 +219,17 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       )
       return response.data
     } catch (e: AxiosError | any) {
-      if (Servicios.isNetworkError(e))
+      if (e.code === 'ECONNABORTED') {
+        throw new Error('La petición está tardando demasiado')
+      } else if (Servicios.isNetworkError(e))
         throw new Error('Error en la conexión 🌎')
       else if (estadosSinPermiso.includes(e.response?.status)) {
         mostrarFullScreen()
         await logout()
         ocultarFullScreen()
+      } else {
+        throw e.response?.data || 'Ocurrio un error inesperado'
       }
-      throw e.response?.data || 'Ocurrio un error desconocido'
     }
   }
 
