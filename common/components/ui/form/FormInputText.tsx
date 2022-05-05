@@ -55,6 +55,7 @@ export const FormInputText = ({
                 }
                 field.onChange(event)
               }}
+              inputRef={field.ref}
               onKeyUp={(event) => {
                 if (event.key === 'Enter' && !event.shiftKey) {
                   if (onEnter) {

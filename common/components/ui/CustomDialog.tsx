@@ -4,6 +4,7 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  PaperProps,
   Slide,
   useMediaQuery,
   useTheme,
@@ -18,6 +19,7 @@ interface Props {
   handleClose: () => void
   title: string
   fullScreen?: boolean
+  paperProps?: Partial<PaperProps>
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -44,12 +46,14 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
   title,
   children,
   fullScreen = false,
+  paperProps,
 }) => {
   const theme = useTheme()
   let dsm = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <Dialog
+      PaperProps={paperProps}
       fullScreen={fullScreen || dsm}
       fullWidth={true}
       open={isOpen}

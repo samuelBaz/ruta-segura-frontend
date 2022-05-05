@@ -3,12 +3,26 @@ import {
   Box,
   Checkbox,
   Chip,
+  FormHelperText,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Typography,
 } from '@mui/material'
-import { FormInputDropdownProps } from './FormInputDropdown'
-import { FormHelperText } from '@mui/material'
+import { optionType } from './FormInputDropdown'
+import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+
+export interface FormInputDropdownMultipleProps {
+  id: string
+  name: string
+  control: any
+  label: string
+  size?: 'small' | 'medium'
+  rules?: RegisterOptions
+  disabled?: boolean
+  onChange?: (event: SelectChangeEvent<string[]>) => void
+  options: optionType[]
+}
 
 export const FormInputDropdownMultiple = ({
   id,
@@ -17,8 +31,9 @@ export const FormInputDropdownMultiple = ({
   label,
   size = 'small',
   rules,
+  onChange,
   options,
-}: FormInputDropdownProps) => {
+}: FormInputDropdownMultipleProps) => {
   const generateSelectOptions = (value: string[]) => {
     return options.map((option) => {
       return (
@@ -56,7 +71,13 @@ export const FormInputDropdownMultiple = ({
                   ))}
                 </Box>
               )}
-              onChange={field.onChange}
+              onChange={(event) => {
+                if (onChange) {
+                  onChange(event)
+                }
+                field.onChange(event)
+              }}
+              inputRef={field.ref}
               value={field.value}
               multiple
             >
