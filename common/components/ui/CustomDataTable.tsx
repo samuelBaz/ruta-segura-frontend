@@ -72,12 +72,14 @@ export const CustomDataTable = ({
         </Fade>
       </Grid>
       {/* filtros */}
-      <Collapse
-        in={filtros.length > 0}
-        sx={{ pt: filtros.length > 0 ? 1 : 2, pb: filtros.length > 0 ? 3 : 1 }}
+      <Box
+        sx={{
+          pt: filtros.length > 0 ? 1 : 2,
+          pb: filtros.length > 0 ? 3 : 1,
+        }}
       >
-        <Box sx={{ pa: 1 }}>{filtros}</Box>
-      </Collapse>
+        {filtros}
+      </Box>
       {/*Contenedor de la tabla*/}
       <Card
         sx={{
@@ -100,7 +102,7 @@ export const CustomDataTable = ({
             {xs ? (
               <ListSkeleton filas={5} />
             ) : (
-              <TableSkeleton filas={5} columnas={5} />
+              <TableSkeleton filas={10} columnas={5} />
             )}
           </>
         ) : (
