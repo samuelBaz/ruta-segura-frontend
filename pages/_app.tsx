@@ -7,7 +7,6 @@ import '@fontsource/poppins'
 import { FullScreenLoadingProvider, UIProvider } from '../context/ui'
 import { imprimir } from '../common/utils'
 import { ThemeProvider } from '../context/ui/ThemeContext'
-import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthProvider } from '../context/auth'
 import { Sidebar } from '../common/components/ui'
@@ -40,7 +39,6 @@ export default function MyApp(props: MyAppProps) {
                 <Component {...pageProps} />
               </ThemeProvider>
             </UIProvider>
-            <ToastContainer />
           </AuthProvider>
         </SnackbarProvider>
       </FullScreenLoadingProvider>

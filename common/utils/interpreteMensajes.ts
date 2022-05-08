@@ -1,11 +1,17 @@
+const isHTML = RegExp.prototype.test.bind(/^(<([^>]+)>)$/i)
+
 export const InterpreteMensajes = (mensaje: any): string => {
   try {
-    let nuevoMensaje: string = ''
+    let nuevoMensaje: string
 
     if (mensaje instanceof Error) {
       nuevoMensaje = mensaje.message
     } else if (typeof mensaje === 'string') {
-      nuevoMensaje = mensaje
+      if (isHTML(mensaje)) {
+        nuevoMensaje = 'Solicitud erronea'
+      } else {
+        nuevoMensaje = mensaje
+      }
     } else {
       nuevoMensaje =
         mensaje.message ||
