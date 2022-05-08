@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { AuthProvider } from '../context/auth'
 import { Sidebar } from '../common/components/ui'
 import { Constantes } from '../config'
+import { SnackbarProvider } from 'notistack'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
@@ -28,18 +29,20 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <FullScreenLoadingProvider>
-        <DebugBanner />
-        <AuthProvider>
-          <UIProvider>
-            <ThemeProvider>
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
-              <Sidebar />
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </UIProvider>
-          <ToastContainer />
-        </AuthProvider>
+        <SnackbarProvider maxSnack={3}>
+          <DebugBanner />
+          <AuthProvider>
+            <UIProvider>
+              <ThemeProvider>
+                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                <CssBaseline />
+                <Sidebar />
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </UIProvider>
+            <ToastContainer />
+          </AuthProvider>
+        </SnackbarProvider>
       </FullScreenLoadingProvider>
     </CacheProvider>
   )

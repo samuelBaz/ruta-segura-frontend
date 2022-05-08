@@ -6,11 +6,12 @@ import {
 } from '../../../common/types'
 import { delay, imprimir, InterpreteMensajes } from '../../../common/utils'
 import { Constantes } from '../../../config'
-import { Alertas } from '../../../common/components/ui'
+
 import { Box, Button, DialogActions, Grid } from '@mui/material'
 import { FormInputText } from '../../../common/components/ui/form'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 import { useAuth } from '../../../context/auth'
+import { useAlerts } from '../../../common/hooks'
 
 export interface ModalParametroType {
   parametro?: ParametroCRUDType
@@ -24,6 +25,9 @@ export const VistaModalParametro = ({
   accionCancelar,
 }: ModalParametroType) => {
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
+  // Hook para mostrar alertas
+  const { Alerta } = useAlerts()
 
   // Proveedor de la sesión
   const { sesionPeticion } = useAuth()
@@ -57,11 +61,14 @@ export const VistaModalParametro = ({
         tipo: !!parametro.id ? 'patch' : 'post',
         body: parametro,
       })
-      Alertas.correcto(InterpreteMensajes(respuesta))
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
       accionCorrecta()
     } catch (e) {
       imprimir(`Error al crear o actualizar parámetro: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)
     }

@@ -5,7 +5,6 @@ import { LayoutUser } from '../../common/components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { CasbinTypes, ColumnaType, ParametroCRUDType } from '../../common/types'
 import {
-  Alertas,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
@@ -21,10 +20,14 @@ import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
 import { VistaModalParametro } from '../../modules/admin/parametros'
+import { useAlerts } from '../../common/hooks'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+
+  // Hook para mostrar alertas
+  const { Alerta } = useAlerts()
   const [errorParametrosData, setErrorParametrosData] = useState<any>()
 
   const [modalParametro, setModalParametro] = useState(false)
@@ -135,7 +138,7 @@ const Parametros: NextPage = () => {
     } catch (e) {
       imprimir(`Error al obtener parametros: ${e}`)
       setErrorParametrosData(e)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
     }

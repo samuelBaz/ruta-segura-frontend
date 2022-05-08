@@ -208,7 +208,7 @@ const UsuariosSWR: NextPage = () => {
       setRolesData(respuesta.datos)
     } catch (e) {
       imprimir(`Error al obtener roles: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
     }
   }
@@ -228,11 +228,14 @@ const UsuariosSWR: NextPage = () => {
         tipo: 'patch',
       })
       imprimir(`respuesta inactivar usuario: ${respuesta}`)
-      Alertas.correcto(InterpreteMensajes(respuesta))
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
       await mutate()
     } catch (e) {
       imprimir(`Error al inactivar usuarios: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
     }
@@ -269,12 +272,15 @@ const UsuariosSWR: NextPage = () => {
           tipo: !!usuario.id ? 'patch' : 'post',
           body: usuario,
         })
-        Alertas.correcto(InterpreteMensajes(respuesta))
+        Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
         cerrarModalUsuario()
         await mutate()
       } catch (e) {
         imprimir(`Error al crear o actualizar usuario: ${e}`)
-        Alertas.error(InterpreteMensajes(e))
+        Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
       } finally {
         setLoadingModal(false)
       }

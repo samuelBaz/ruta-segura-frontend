@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography'
 import { delay, imprimir, InterpreteMensajes, siteName } from '../common/utils'
 import { Constantes } from '../config'
 import { Servicios } from '../services'
-import { Alertas } from '../common/components/ui'
 import { useAuth } from '../context/auth'
 import { useForm } from 'react-hook-form'
 import ProgresoLineal from '../common/components/ui/ProgresoLineal'
@@ -21,6 +20,7 @@ import { useFullScreenLoadingContext } from '../context/ui'
 import { FormInputText } from '../common/components/ui/form'
 import { LoginType } from '../common/types'
 import { useEffect } from 'react'
+import { useAlerts } from '../common/hooks'
 
 const Login: NextPage = () => {
   const { ingresar, progresoLogin } = useAuth()
@@ -28,6 +28,8 @@ const Login: NextPage = () => {
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  const { Alerta } = useAlerts()
 
   const { handleSubmit, control } = useForm<LoginType>({
     defaultValues: {
@@ -52,7 +54,7 @@ const Login: NextPage = () => {
       imprimir(`Se obtuvo el estado 🙌: ${JSON.stringify(respuesta)}`)
     } catch (e) {
       imprimir(`Error al obtener estado: ${e}`)
-      Alertas.error(`${InterpreteMensajes(e)}`)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       ocultarFullScreen()
     }

@@ -8,7 +8,7 @@ import {
 } from '../../../common/types'
 import { delay, imprimir, InterpreteMensajes } from '../../../common/utils'
 import { Constantes } from '../../../config'
-import { Alertas } from '../../../common/components/ui'
+
 import { Box, Button, DialogActions, Grid } from '@mui/material'
 import {
   FormInputDropdown,
@@ -17,6 +17,7 @@ import {
 } from '../../../common/components/ui/form'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 import { useAuth } from '../../../context/auth'
+import { useAlerts } from '../../../common/hooks'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType
@@ -32,6 +33,9 @@ export const VistaModalPolitica = ({
   accionCancelar,
 }: ModalPoliticaType) => {
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
+  // Hook para mostrar alertas
+  const { Alerta } = useAlerts()
   // Proveedor de la sesión
   const { sesionPeticion } = useAuth()
 
@@ -92,11 +96,14 @@ export const VistaModalPolitica = ({
           app: politicaActual?.app,
         },
       })
-      Alertas.correcto(InterpreteMensajes(respuesta))
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
       accionCorrecta()
     } catch (e) {
       imprimir(`Error al crear o actualizar política: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)
     }

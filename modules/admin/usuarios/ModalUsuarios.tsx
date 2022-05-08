@@ -13,7 +13,6 @@ import {
   InterpreteMensajes,
 } from '../../../common/utils'
 import { Constantes } from '../../../config'
-import { Alertas } from '../../../common/components/ui'
 import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
 import {
   FormInputDate,
@@ -24,6 +23,7 @@ import { isValidEmail } from '../../../common/utils/validations'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 
 import { useAuth } from '../../../context/auth'
+import { useAlerts } from '../../../common/hooks'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
@@ -40,6 +40,9 @@ export const VistaModalUsuario = ({
 }: ModalUsuarioType) => {
   // Flag que indica que hay un proceso en ventana modal cargando visualmente
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
+  // Hook para mostrar alertas
+  const { Alerta } = useAlerts()
 
   // Proveedor de la sesión
   const { sesionPeticion } = useAuth()
@@ -99,11 +102,14 @@ export const VistaModalUsuario = ({
           },
         },
       })
-      Alertas.correcto(InterpreteMensajes(respuesta))
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
       accionCorrecta()
     } catch (e) {
       imprimir(`Error al crear o actualizar usuario: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)
     }

@@ -10,7 +10,6 @@ import {
   RolType,
 } from '../../common/types'
 import {
-  Alertas,
   AlertDialog,
   CustomDataTable,
   CustomDialog,
@@ -26,10 +25,14 @@ import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
 import { VistaModalPolitica } from '../../modules/admin/politicas'
+import { useAlerts } from '../../common/hooks'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+
+  // Hook para mostrar alertas
+  const { Alerta } = useAlerts()
   const [errorData, setErrorData] = useState<any>()
   const [modalPolitica, setModalPolitica] = useState(false)
 
@@ -157,7 +160,7 @@ const Politicas: NextPage = () => {
     } catch (e) {
       imprimir(`Error al obtener políticas: ${e}`)
       setErrorData(e)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
     }
@@ -177,11 +180,14 @@ const Politicas: NextPage = () => {
         },
       })
       imprimir(`respuesta eliminar política: ${respuesta}`)
-      Alertas.correcto(InterpreteMensajes(respuesta))
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
       await obtenerPoliticasPeticion()
     } catch (e) {
       imprimir(`Error al eliminar política: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
     }
@@ -212,7 +218,7 @@ const Politicas: NextPage = () => {
     } catch (e) {
       imprimir(`Error al obtener roles: ${e}`)
       setErrorData(e)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
     }
   }

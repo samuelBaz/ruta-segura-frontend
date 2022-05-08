@@ -21,7 +21,6 @@ import {
   Servicios,
 } from '../../services'
 import { Constantes } from '../../config'
-import { Alertas } from '../../common/components/ui'
 import { useRouter } from 'next/router'
 import {
   CasbinTypes,
@@ -40,6 +39,7 @@ import {
   StringAdapter,
 } from 'casbin'
 import { basicModel, basicPolicy } from '../../common/utils/casbin'
+import { useAlerts } from '../../common/hooks'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -75,6 +75,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const [user, setUser] = useState<UsuarioType | null>(null)
   const [idRol, setIdRol] = useState<string>()
   const [loading, setLoading] = useState<boolean>(true)
+
+  // Hook para mostrar alertas
+  const { Alerta } = useAlerts()
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
 
@@ -176,7 +179,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       }
     } catch (e) {
       imprimir(`Error al iniciar sesión: ${JSON.stringify(e)}`)
-      Alertas.error(`${InterpreteMensajes(e)}`)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
       ocultarFullScreen()
@@ -245,7 +248,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       })*/
     } catch (e) {
       imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
-      Alertas.error(`${InterpreteMensajes(e)}`)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       eliminarCookie('token')
       eliminarCookie('rol')

@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import { Button, Chip, Grid, Typography } from '@mui/material'
 import { LayoutUser } from '../../common/components/layouts'
 import {
-  Alertas,
   AlertDialog,
   CustomDataTable,
   CustomDialog,
@@ -30,6 +29,7 @@ import {
   FiltroModalUsuarios,
   VistaModalUsuario,
 } from '../../modules/admin/usuarios'
+import { useAlerts } from '../../common/hooks'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -37,6 +37,9 @@ const Usuarios: NextPage = () => {
 
   // Flag que indica que hay un proceso cargando visualmente
   const [loading, setLoading] = useState<boolean>(true)
+
+  // Hook para mostrar alertas
+  const { Alerta } = useAlerts()
 
   /// Indicador de error en una petición
   const [errorData, setErrorData] = useState<any>()
@@ -230,7 +233,7 @@ const Usuarios: NextPage = () => {
     } catch (e) {
       imprimir(`Error al obtener usuarios: ${e}`)
       setErrorData(e)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
     }
@@ -248,7 +251,7 @@ const Usuarios: NextPage = () => {
     } catch (e) {
       imprimir(`Error al obtener roles: ${e}`)
       setErrorData(e)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
       throw e
     } finally {
       setLoading(false)
@@ -266,11 +269,14 @@ const Usuarios: NextPage = () => {
         tipo: 'patch',
       })
       imprimir(`respuesta inactivar usuario: ${respuesta}`)
-      Alertas.correcto(InterpreteMensajes(respuesta))
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
       await obtenerUsuariosPeticion()
     } catch (e) {
       imprimir(`Error al inactivar usuarios: ${e}`)
-      Alertas.error(InterpreteMensajes(e))
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
     }
