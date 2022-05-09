@@ -2,6 +2,9 @@ import dayjs from 'dayjs'
 
 import childProcess from 'child_process'
 import { Constantes } from '../../config'
+import { imprimir } from './imprimir'
+import moment from 'moment'
+moment.suppressDeprecationWarnings = true
 
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -44,12 +47,25 @@ export const stringToDate = (fecha: string, formatoInicial: string): Date => {
   return dayjs(fecha, formatoInicial, true).toDate()
 }
 
+export const validarFechaFormatoDayJS = (date: string, format: string) => {
+  imprimir(`${date} -> ${dayjs(date, format).format(format)}`)
+  return dayjs(date, format, true).isValid()
+}
+
+export const validarFechaFormatoMoment = (date: string, format: string) => {
+  imprimir(`${date} -> ${moment(date, format).format(format)}`)
+  return moment(date, format, true).isValid()
+}
+
 export const formatoFecha = (
   fecha: string,
   formatoInicial: string,
   formatoNuevo: string
 ): string => {
-  return dayjs(fecha, formatoInicial, true).format(formatoNuevo)
+  imprimir(
+    `${fecha} -> ${moment(fecha, formatoInicial).format(formatoInicial)}`
+  )
+  return moment(fecha, formatoInicial, true).format(formatoNuevo)
 }
 
 export const siteName = () => {

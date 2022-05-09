@@ -7,7 +7,6 @@ import '@fontsource/poppins'
 import { FullScreenLoadingProvider, UIProvider } from '../context/ui'
 import { imprimir } from '../common/utils'
 import { ThemeProvider } from '../context/ui/ThemeContext'
-import 'react-toastify/dist/ReactToastify.css'
 import { AuthProvider } from '../context/auth'
 import { Sidebar } from '../common/components/ui'
 import { Constantes } from '../config'
@@ -28,7 +27,7 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <FullScreenLoadingProvider>
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider maxSnack={1}>
           <DebugBanner />
           <AuthProvider>
             <UIProvider>

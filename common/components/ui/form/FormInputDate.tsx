@@ -1,12 +1,17 @@
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { Controller } from 'react-hook-form'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { FormHelperText, TextField, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { Control } from 'react-hook-form/dist/types/form'
-import dayjs from 'dayjs'
-import esMX from 'dayjs/locale/es-mx'
+// import dayjs from 'dayjs'
+// import esMX from 'dayjs/locale/es-mx'
+import 'moment/locale/es'
+import { validarFechaFormatoMoment } from '../../../utils'
+
+/*const customParseFormat = require('dayjs/plugin/customParseFormat')
+dayjs.extend(customParseFormat)*/
 
 export interface FormDatePickerProps {
   id: string
@@ -39,7 +44,7 @@ export const FormInputDate = ({
           field: { onChange, value, ref },
           fieldState: { error },
         }) => (
-          <LocalizationProvider locale={esMX} dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
             <DatePicker
               onChange={onChange}
               value={value}
@@ -68,7 +73,9 @@ export const FormInputDate = ({
           ...rules,
           ...{
             validate: (val: string) => {
-              if (!dayjs(val, format).isValid()) return 'La fecha no es válida'
+              if (!validarFechaFormatoMoment(val, format)) {
+                return 'La fecha no es válida'
+              }
             },
           },
         }}

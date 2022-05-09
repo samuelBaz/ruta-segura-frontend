@@ -29,34 +29,28 @@ export const FiltroModalUsuarios = ({
 
   return (
     <Grid container direction={'column'} justifyContent="space-evenly">
-      <Grid>
-        <Box height={'10px'} />
-        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-          <Grid item xs={12} sm={12} md={12}>
-            <FormInputDropdownMultiple
-              id={'roles'}
-              name="roles"
-              control={control}
-              label="Roles"
-              options={rolesDisponibles.map((rol) => ({
-                key: rol.id,
-                value: rol.id,
-                label: rol.nombre,
-              }))}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
+      <Box height={'10px'} />
+      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormInputDropdownMultiple
+            id={'roles'}
+            name="roles"
+            control={control}
+            label="Roles"
+            options={rolesDisponibles.map((rol) => ({
+              key: rol.id,
+              value: rol.id,
+              label: rol.nombre,
+            }))}
+            rules={{ required: 'Este campo es requerido' }}
+          />
         </Grid>
       </Grid>
-      <Box height={'10px'} />
-      <Box height={'5px'} />
+      <Box height={'30px'} />
       <DialogActions
         sx={{
           justifyContent: {
-            lg: 'flex-end',
-            md: 'flex-end',
             xs: 'center',
-            sm: 'center',
           },
         }}
       >

@@ -232,7 +232,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         await logout()
         ocultarFullScreen()
       } else {
-        throw e.response?.data || 'Ocurrio un error inesperado'
+        throw e.response?.data || 'Ocurrio un error desconocido'
       }
     }
   }

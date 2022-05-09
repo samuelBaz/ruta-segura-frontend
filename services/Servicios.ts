@@ -66,7 +66,7 @@ class ServiciosClass {
       } else if (this.isNetworkError(e))
         throw new Error('Error en la conexión 🌎')
       else {
-        throw e.response?.data || 'Ocurrio un error inesperado'
+        throw e.response?.data || 'Ocurrio un error desconocido'
       }
     }
   }
