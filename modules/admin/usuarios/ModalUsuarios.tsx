@@ -117,9 +117,11 @@ export const VistaModalUsuario = ({
 
   return (
     <Grid container direction={'column'} justifyContent="space-evenly">
-      <Box height={'10px'} />
-      <Typography sx={{ fontWeight: 'bold' }}>Datos personales</Typography>
-      <Box height={'10px'} />
+      <Box height={'5px'} />
+      <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
+        Datos personales
+      </Typography>
+      <Box height={'20px'} />
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={4}>
           <FormInputText
@@ -173,8 +175,10 @@ export const VistaModalUsuario = ({
         </Grid>
       </Grid>
       <Grid>
-        <Box height={'10px'} />
-        <Typography sx={{ fontWeight: 'bold' }}>Datos de usuario</Typography>
+        <Box height={'20px'} />
+        <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
+          Datos de usuario
+        </Typography>
         <Box height={'10px'} />
         <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
           <Grid item xs={12} sm={12} md={12}>

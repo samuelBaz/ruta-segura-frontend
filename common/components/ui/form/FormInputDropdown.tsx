@@ -43,7 +43,12 @@ export const FormInputDropdown = ({
 
   return (
     <div>
-      <Typography sx={{ pb: 1 }}>{label}</Typography>
+      <Typography
+        variant={'subtitle2'}
+        sx={{ pb: 1, fontWeight: 'fontWeightMedium' }}
+      >
+        {label}
+      </Typography>
       <Controller
         name={name}
         control={control}

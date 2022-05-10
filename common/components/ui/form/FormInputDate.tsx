@@ -36,7 +36,9 @@ export const FormInputDate = ({
 }: FormDatePickerProps) => {
   return (
     <div>
-      <Typography>{label}</Typography>
+      <Typography variant={'subtitle2'} sx={{ fontWeight: 'fontWeightMedium' }}>
+        {label}
+      </Typography>
       <Controller
         name={name}
         control={control}

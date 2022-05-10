@@ -6,6 +6,7 @@ import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
 import { Control } from 'react-hook-form/dist/types/form'
 import { FormHelperText, IconButton } from '@mui/material'
 import ClearOutlined from '@mui/icons-material/ClearOutlined'
+import { Variant } from '@mui/material/styles/createTypography'
 
 export interface FormInputTextProps {
   id: string
@@ -19,6 +20,7 @@ export interface FormInputTextProps {
   onEnter?: () => void
   onClear?: () => void
   variant?: 'standard' | 'outlined' | 'filled'
+  labelVariant?: Variant
 }
 
 export const FormInputText = ({
@@ -33,10 +35,16 @@ export const FormInputText = ({
   onEnter,
   onClear,
   variant,
+  labelVariant = 'subtitle2',
 }: FormInputTextProps) => {
   return (
     <div>
-      <Typography>{label}</Typography>
+      <Typography
+        variant={labelVariant}
+        sx={{ fontWeight: 'fontWeightMedium' }}
+      >
+        {label}
+      </Typography>
       <Controller
         name={name}
         control={control}
