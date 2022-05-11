@@ -47,8 +47,12 @@ const Usuarios: NextPage = () => {
   /// Indicador para mostrar una ventana modal de usuario
   const [modalUsuario, setModalUsuario] = useState(false)
 
-  /// Indicador para mostrar una vista de alerta
+  /// Indicador para mostrar una vista de alerta de cambio de estado
   const [mostrarAlertaEstadoUsuario, setMostrarAlertaEstadoUsuario] =
+    useState(false)
+
+  /// Indicador para mostrar una vista de alerta de restablecimiento de contraseña
+  const [mostrarAlertaRestablecerUsuario, setMostrarAlertaRestablecerUsuario] =
     useState(false)
 
   /// Variable que contiene el estado del usuario que se esta editando
@@ -155,8 +159,8 @@ const Usuarios: NextPage = () => {
         <IconoTooltip
           titulo={'Restablecer contraseña'}
           color={'info'}
-          accion={() => {
-            imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
+          accion={async () => {
+            await restablecimientoPassUsuarioModal(usuarioData)
           }}
           icono={'vpn_key'}
           name={'Restablecer contraseña'}
@@ -282,6 +286,28 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  /// Petición que restablecer la contraseña del usuario
+  const restablecerPassUsuarioPeticion = async (usuario: UsuarioCRUDType) => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/usuarios/${usuario.id}/restauracion`,
+        tipo: 'patch',
+      })
+      imprimir(`respuesta restablecer usuario: ${respuesta}`)
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
+      await obtenerUsuariosPeticion()
+    } catch (e) {
+      imprimir(`Error al restablecer usuario: ${e}`)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   /// Método abre una ventana modal para un usuario nuevo
 
   const agregarUsuarioModal = () => {
@@ -308,10 +334,18 @@ const Usuarios: NextPage = () => {
     setMostrarAlertaEstadoUsuario(true) // para mostrar alerta de usuarios
   }
 
+  /// Método que muestra alerta de restablecimiento de contraseña
+
+  const restablecimientoPassUsuarioModal = async (usuario: UsuarioCRUDType) => {
+    setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
+    setMostrarAlertaRestablecerUsuario(true) // para mostrar alerta de usuarios
+  }
+
   /// Método que cierra alerta de cambio de estado
 
-  const cancelarAlertaEstadoUsuario = () => {
+  const cancelarAlertaEstadoUsuario = async () => {
     setMostrarAlertaEstadoUsuario(false)
+    await delay(500) // para no mostrar undefined mientras el modal se cierra
     setUsuarioEdicion(null)
   }
 
@@ -321,6 +355,24 @@ const Usuarios: NextPage = () => {
     if (usuarioEdicion) {
       await cambiarEstadoUsuarioPeticion(usuarioEdicion)
     }
+    setUsuarioEdicion(null)
+  }
+
+  /// Método que cierra alerta de cambio de estado
+
+  const cancelarAlertaRestablecerUsuario = async () => {
+    setMostrarAlertaRestablecerUsuario(false)
+    await delay(500) // para no mostrar undefined mientras el modal se cierra
+    setUsuarioEdicion(null)
+  }
+
+  /// Método que oculta la alerta de cambio de estado y procede al cambio
+  const aceptarAlertaRestablecerUsuario = async () => {
+    setMostrarAlertaRestablecerUsuario(false)
+    if (usuarioEdicion) {
+      await restablecerPassUsuarioPeticion(usuarioEdicion)
+    }
+    setUsuarioEdicion(null)
   }
 
   /// Método que define permisos por rol desde la sesión
@@ -361,6 +413,15 @@ const Usuarios: NextPage = () => {
       >
         <Button onClick={cancelarAlertaEstadoUsuario}>Cancelar</Button>
         <Button onClick={aceptarAlertaEstadoUsuario}>Aceptar</Button>
+      </AlertDialog>
+      <AlertDialog
+        isOpen={mostrarAlertaRestablecerUsuario}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de restablecer la contraseña de
+         ${titleCase(usuarioEdicion?.persona.nombres ?? '')} ?`}
+      >
+        <Button onClick={cancelarAlertaRestablecerUsuario}>Cancelar</Button>
+        <Button onClick={aceptarAlertaRestablecerUsuario}>Aceptar</Button>
       </AlertDialog>
       <CustomDialog
         isOpen={mostrarFiltroUsuarios}
