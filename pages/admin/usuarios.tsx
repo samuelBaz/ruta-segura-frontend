@@ -1,10 +1,19 @@
 import type { NextPage } from 'next'
-import { Button, Chip, Grid, Typography } from '@mui/material'
+import {
+  Button,
+  Chip,
+  Grid,
+  ToggleButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { LayoutUser } from '../../common/components/layouts'
 import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
+  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -25,11 +34,9 @@ import {
 import { useAuth } from '../../context/auth'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import {
-  FiltroModalUsuarios,
-  VistaModalUsuario,
-} from '../../modules/admin/usuarios'
+import { VistaModalUsuario } from '../../modules/admin/usuarios'
 import { useAlerts } from '../../common/hooks'
+import { FiltroUsuarios } from '../../modules/admin/usuarios/FiltroUsuarios'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -68,6 +75,8 @@ const Usuarios: NextPage = () => {
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
+  const [filtroUsuario, setFiltroUsuario] = useState<string>('')
+
   const [filtroRoles, setFiltroRoles] = useState<string[]>([])
 
   /// Indicador para mostrar el filtro de usuarios
@@ -82,6 +91,9 @@ const Usuarios: NextPage = () => {
     update: false,
     delete: false,
   })
+
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   // router para conocer la ruta actual
   const router = useRouter()
@@ -183,7 +195,33 @@ const Usuarios: NextPage = () => {
 
   /// Acciones para data table
   const acciones: Array<ReactNode> = [
-    permisos.create && (
+    <ToggleButton
+      key={'accionFiltrarUsuarioToggle'}
+      value="check"
+      sx={{
+        '&.MuiToggleButton-root': {
+          borderRadius: '4px !important',
+          border: '0px solid lightgrey !important',
+        },
+      }}
+      size={'small'}
+      selected={mostrarFiltroUsuarios}
+      onChange={() => {
+        setMostrarFiltroUsuarios(!mostrarFiltroUsuarios)
+      }}
+    >
+      <Icono>search</Icono>
+    </ToggleButton>,
+    <IconoTooltip
+      titulo={'Actualizar'}
+      key={`accionActualizarUsuario`}
+      accion={async () => {
+        await obtenerUsuariosPeticion()
+      }}
+      icono={'refresh'}
+      name={'Actualizar lista de usuario'}
+    />,
+    permisos.create && xs && (
       <IconoTooltip
         titulo={'Agregar usuario'}
         key={`accionAgregarUsuario`}
@@ -194,25 +232,19 @@ const Usuarios: NextPage = () => {
         name={'Agregar usuario'}
       />
     ),
-    <IconoTooltip
-      titulo={'Actualizar'}
-      key={`accionActualizarUsuario`}
-      accion={async () => {
-        await obtenerUsuariosPeticion()
-      }}
-      icono={'refresh'}
-      name={'Actualizar lista de usuario'}
-    />,
-    <IconoTooltip
-      id="boton-filtro-usuarios-id"
-      titulo={'Filtrar'}
-      key={'accionFiltrarUsuario'}
-      accion={() => {
-        setMostrarFiltroUsuarios(true)
-      }}
-      icono={'filter_list'}
-      name={'Filtrar lista de usuarios'}
-    />,
+    permisos.create && !xs && (
+      <Button
+        key={`accionAgregarUsuarioBoton`}
+        variant={'contained'}
+        sx={{ ml: 1, mr: 1, textTransform: 'none' }}
+        size={'small'}
+        onClick={() => {
+          agregarUsuarioModal()
+        }}
+      >
+        Agregar
+      </Button>
+    ),
   ]
 
   /// Petición que obtiene lista de usuarios
@@ -227,7 +259,7 @@ const Usuarios: NextPage = () => {
             pagina: pagina,
             limite: limite,
           },
-          // ...(filtro.length == 0 ? {} : { filtro: filtro }),
+          ...(filtroUsuario.length == 0 ? {} : { filtro: filtroUsuario }),
           ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles.join(',') }),
         },
       })
@@ -396,11 +428,15 @@ const Usuarios: NextPage = () => {
         .catch(() => {})
         .finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroRoles])
+  }, [estaAutenticado, pagina, limite, filtroRoles, filtroUsuario])
 
-  const eliminarFiltro = (index: number) => {
-    setFiltroRoles(filtroRoles.filter((item, idRol) => idRol !== index))
-  }
+  useEffect(() => {
+    imprimir(`filtro cerrado: ${mostrarFiltroUsuarios}`)
+    if (!mostrarFiltroUsuarios) {
+      setFiltroUsuario('')
+      setFiltroRoles([])
+    }
+  }, [mostrarFiltroUsuarios])
 
   return (
     <>
@@ -423,7 +459,7 @@ const Usuarios: NextPage = () => {
         <Button onClick={cancelarAlertaRestablecerUsuario}>Cancelar</Button>
         <Button onClick={aceptarAlertaRestablecerUsuario}>Aceptar</Button>
       </AlertDialog>
-      <CustomDialog
+      {/*<CustomDialog
         isOpen={mostrarFiltroUsuarios}
         handleClose={() => {
           setMostrarFiltroUsuarios(false)
@@ -441,7 +477,7 @@ const Usuarios: NextPage = () => {
             setMostrarFiltroUsuarios(false)
           }}
         ></FiltroModalUsuarios>
-      </CustomDialog>
+      </CustomDialog>*/}
 
       <CustomDialog
         isOpen={modalUsuario}
@@ -466,21 +502,22 @@ const Usuarios: NextPage = () => {
           acciones={acciones}
           columnas={columnas}
           contenidoTabla={contenidoTabla}
-          filtros={filtroRoles.map((idRol, index) => {
-            return (
-              <Chip
-                sx={{ m: 1 }}
-                key={`${index}`}
-                color="primary"
-                label={
-                  rolesData.find((rol) => rol.id == idRol)?.nombre ?? idRol
-                }
-                onDelete={() => {
-                  eliminarFiltro(index)
+          filtros={
+            mostrarFiltroUsuarios && (
+              <FiltroUsuarios
+                rolesDisponibles={rolesData}
+                filtroRoles={filtroRoles}
+                filtroUsuario={filtroUsuario}
+                accionCorrecta={(filtros) => {
+                  setFiltroRoles(filtros.roles)
+                  setFiltroUsuario(filtros.usuario)
+                }}
+                accionCerrar={() => {
+                  imprimir(`👀 cerrar`)
                 }}
               />
             )
-          })}
+          }
           paginacion={
             <Paginacion
               pagina={pagina}

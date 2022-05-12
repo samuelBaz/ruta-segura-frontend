@@ -6,6 +6,7 @@ import { Box, Button, DialogActions, Grid } from '@mui/material'
 import { FormInputDropdownMultiple } from '../../../common/components/ui/form'
 
 export interface FiltroType {
+  usuario: string
   roles: string[]
 }
 

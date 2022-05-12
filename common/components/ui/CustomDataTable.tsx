@@ -4,7 +4,6 @@ import {
   Box,
   Card,
   CardContent,
-  Collapse,
   Fade,
   Grid,
   Table,
@@ -25,7 +24,7 @@ export interface CustomDataTableType {
   cargando?: boolean
   acciones: Array<ReactNode>
   columnas: Array<ColumnaType>
-  filtros?: Array<ReactNode>
+  filtros?: ReactNode
   contenidoTabla: Array<Array<ReactNode>>
   paginacion?: ReactNode
 }
@@ -36,7 +35,7 @@ export const CustomDataTable = ({
   cargando = false,
   acciones,
   columnas,
-  filtros = [],
+  filtros,
   contenidoTabla,
   paginacion,
 }: CustomDataTableType) => {
@@ -74,8 +73,8 @@ export const CustomDataTable = ({
       {/* filtros */}
       <Box
         sx={{
-          pt: filtros.length > 0 ? 1 : 2,
-          pb: filtros.length > 0 ? 3 : 1,
+          pt: filtros ? 1 : 2,
+          pb: filtros ? 3 : 1,
         }}
       >
         {filtros}
