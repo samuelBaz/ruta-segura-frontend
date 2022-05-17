@@ -15,6 +15,7 @@ import React from 'react'
 import { imprimir, siteName, titleCase } from '../../common/utils'
 import { Icono } from '../../common/components/ui'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import { formatoFecha } from '../../common/utils/fechas'
 
 const Perfil: NextPage = () => {
   const { usuario, estaAutenticado } = useAuth()
@@ -87,7 +88,9 @@ const Perfil: NextPage = () => {
                   justifyContent="space-between"
                   direction={'column'}
                 >
-                  <Typography sx={{ fontWeight: 'bold' }}>Usuario</Typography>
+                  <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
+                    Usuario
+                  </Typography>
                   <Typography sx={{}}>{`@${usuario?.usuario}`}</Typography>
                 </Grid>
                 <Box height={'20px'} />
@@ -96,7 +99,7 @@ const Perfil: NextPage = () => {
                   justifyContent="space-between"
                   direction={'column'}
                 >
-                  <Typography sx={{ fontWeight: 'bold' }}>
+                  <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
                     Número de documento
                   </Typography>
                   <Typography variant={'body1'}>
@@ -110,13 +113,20 @@ const Perfil: NextPage = () => {
                   direction={'column'}
                 >
                   {usuario?.persona.fechaNacimiento && (
-                    <Typography sx={{ fontWeight: 'bold' }}>
+                    <Typography
+                      sx={{ fontWeight: 'bold' }}
+                      variant={'subtitle2'}
+                    >
                       Fecha de nacimiento
                     </Typography>
                   )}
                   {usuario?.persona.fechaNacimiento && (
                     <Typography variant={'body1'}>
-                      {usuario?.persona.fechaNacimiento}
+                      {formatoFecha(
+                        usuario?.persona.fechaNacimiento,
+                        'YYYY-MM-DD',
+                        'DD/MM/YYYY'
+                      )}
                     </Typography>
                   )}
                 </Grid>
@@ -126,7 +136,9 @@ const Perfil: NextPage = () => {
                   justifyContent="space-between"
                   direction={'column'}
                 >
-                  <Typography sx={{ fontWeight: 'bold' }}>Roles</Typography>
+                  <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
+                    Roles
+                  </Typography>
                   <Grid>
                     {usuario?.roles.map((itemUsuarioRol, index) => (
                       <Chip key={`${index}-idRol`} label={itemUsuarioRol.rol} />

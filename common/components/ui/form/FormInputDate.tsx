@@ -8,7 +8,7 @@ import { Control } from 'react-hook-form/dist/types/form'
 // import dayjs from 'dayjs'
 // import esMX from 'dayjs/locale/es-mx'
 import 'moment/locale/es'
-import { validarFechaFormatoMoment } from '../../../utils'
+import { validarFechaFormatoMoment } from '../../../utils/fechas'
 
 /*const customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)*/
