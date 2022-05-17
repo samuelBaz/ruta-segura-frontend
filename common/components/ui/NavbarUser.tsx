@@ -26,7 +26,7 @@ import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { CustomDialog } from './CustomDialog'
 
 import { useAuth } from '../../../context/auth'
-import { delay, imprimir, titleCase } from '../../utils'
+import { delay, imprimir, siteName, titleCase } from '../../utils'
 import { RoleType } from '../../types'
 import { useRouter } from 'next/router'
 import { Icono } from './Icono'
@@ -40,7 +40,8 @@ export const NavbarUser = () => {
 
   const [roles, setRoles] = useState<RoleType[]>([])
 
-  const { usuario, idRolUsuario, setRolUsuario, cerrarSesion } = useAuth()
+  const { usuario, idRolUsuario, setRolUsuario, cerrarSesion, rolUsuario } =
+    useAuth()
 
   const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
@@ -173,7 +174,7 @@ export const NavbarUser = () => {
             component="div"
             sx={{ flexGrow: 1, fontWeight: 'bold' }}
           >
-            Frontend base
+            {siteName()}
           </Typography>
           <IconoTooltip
             titulo={'Ayuda'}
@@ -185,7 +186,7 @@ export const NavbarUser = () => {
           />
           {!xs && <ThemeSwitcherButton />}
           <Button
-            size="large"
+            size="small"
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="false"
@@ -194,10 +195,18 @@ export const NavbarUser = () => {
             style={{ textTransform: 'none' }}
           >
             <AccountCircleOutlinedIcon />
-            <Box width={'10px'} />
-            <Typography variant={'body2'}>
-              {`${titleCase(usuario?.persona.nombres ?? '')}`}
-            </Typography>
+            {!xs && (
+              <Box
+                sx={{ pl: 1 }}
+                display={'flex'}
+                flexDirection={'column'}
+                alignItems={'start'}
+              >
+                <Typography variant={'body2'} color="text.primary">
+                  {`${titleCase(usuario?.persona.nombres ?? '')}`}
+                </Typography>
+              </Box>
+            )}
           </Button>
           <Menu
             id="menu-appbar"
@@ -220,7 +229,23 @@ export const NavbarUser = () => {
             <MenuItem sx={{ p: 2 }} onClick={abrirPerfil}>
               <Icono>person</Icono>
               <Box width={'20px'} />
-              <Typography variant={'body2'}>Perfil</Typography>
+              <Box
+                display={'flex'}
+                flexDirection={'column'}
+                alignItems={'start'}
+              >
+                <Typography variant={'body2'} color="text.primary">
+                  {`${titleCase(usuario?.persona.nombres ?? '')}
+                    ${titleCase(
+                      usuario?.persona.primerApellido ??
+                        usuario?.persona.segundoApellido ??
+                        ''
+                    )}`}
+                </Typography>
+                <Typography variant={'caption'} color="text.secondary">
+                  {`${rolUsuario?.nombre}`}
+                </Typography>
+              </Box>
             </MenuItem>
             <MenuItem
               sx={{
