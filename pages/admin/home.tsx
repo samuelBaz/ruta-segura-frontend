@@ -74,7 +74,19 @@ const Home: NextPage = () => {
                       container
                       direction="row"
                       spacing={{ xs: 2, md: 3 }}
-                      columns={{ xs: 4, sm: 8, md: 12, xl: 12 }}
+                      columns={
+                        rolUsuario.modulos.some(
+                          (modulo) => modulo.subModulo.length == 1
+                          // Si algun módulo tiene solo un sub modulo, las columnas en tamaño md o xl serán más pequeñas
+                        )
+                          ? {
+                              xs: 4,
+                              sm: 8,
+                              md: 8,
+                              xl: 8,
+                            }
+                          : { xs: 4, sm: 8, md: 12, xl: 12 }
+                      }
                     >
                       {modulo.subModulo.map((subModulo, index2) => (
                         <Grid
