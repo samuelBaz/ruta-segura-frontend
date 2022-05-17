@@ -21,6 +21,8 @@ export interface FormInputDropdownMultipleProps {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: (event: SelectChangeEvent<string[]>) => void
+  variant?: 'standard' | 'outlined' | 'filled'
+  bgcolor?: string
   options: optionType[]
 }
 
@@ -32,6 +34,8 @@ export const FormInputDropdownMultiple = ({
   size = 'small',
   rules,
   onChange,
+  variant,
+  bgcolor,
   options,
 }: FormInputDropdownMultipleProps) => {
   const generateSelectOptions = (value: string[]) => {
@@ -60,9 +64,13 @@ export const FormInputDropdownMultiple = ({
           <>
             <Select
               id={id}
-              sx={{ width: '100%' }}
+              sx={{
+                width: '100%',
+                bgcolor: bgcolor,
+              }}
               size={size}
               error={!!error}
+              variant={variant}
               renderValue={(selecteds: string[]) => (
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                   {selecteds.map((selected) => (

@@ -28,7 +28,7 @@ export const FiltroUsuarios = ({
   filtroUsuario,
   accionCorrecta,
 }: FiltroModalUsuarioType) => {
-  const { control, watch } = useForm<FiltroType>({
+  const { control, watch, setValue } = useForm<FiltroType>({
     defaultValues: {
       usuario: filtroUsuario,
       roles: filtroRoles,
@@ -52,7 +52,7 @@ export const FiltroUsuarios = ({
   }
 
   return (
-    <Box sx={{ pl: 1, pr: 1 }}>
+    <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={4}>
           <FormInputText
@@ -60,9 +60,17 @@ export const FiltroUsuarios = ({
             name={'usuario'}
             control={control}
             label={'Nombre'}
+            bgcolor={'background.paper'}
             onChange={(event) => {
               actualizacionFiltros({
                 usuario: event.target.value,
+                roles: filtroRolesWatch,
+              })
+            }}
+            onClear={() => {
+              setValue('usuario', '')
+              accionCorrecta({
+                usuario: '',
                 roles: filtroRolesWatch,
               })
             }}
@@ -74,6 +82,7 @@ export const FiltroUsuarios = ({
             name="roles"
             control={control}
             label="Roles"
+            bgcolor={'background.paper'}
             options={rolesDisponibles.map((rol) => ({
               key: rol.id,
               value: rol.id,

@@ -20,6 +20,7 @@ export interface FormInputTextProps {
   onEnter?: () => void
   onClear?: () => void
   variant?: 'standard' | 'outlined' | 'filled'
+  bgcolor?: string
   labelVariant?: Variant
 }
 
@@ -35,6 +36,7 @@ export const FormInputText = ({
   onEnter,
   onClear,
   variant,
+  bgcolor,
   labelVariant = 'subtitle2',
 }: FormInputTextProps) => {
   return (
@@ -54,7 +56,10 @@ export const FormInputText = ({
               id={id}
               name={name}
               variant={variant}
-              sx={{ width: '100%' }}
+              sx={{
+                width: '100%',
+                bgcolor: bgcolor,
+              }}
               size={size}
               error={!!error}
               onChange={(event) => {
