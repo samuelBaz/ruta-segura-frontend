@@ -60,5 +60,14 @@ export const lightTheme = createTheme({
         size: 'small',
       },
     },
+    MuiDialog: {
+      defaultProps: {
+        PaperProps: {
+          sx: {
+            backgroundColor: '#FFFFFF',
+          },
+        },
+      },
+    },
   },
 })

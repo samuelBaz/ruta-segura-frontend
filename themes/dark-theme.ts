@@ -60,5 +60,14 @@ export const darkTheme = createTheme({
         size: 'small',
       },
     },
+    MuiDialog: {
+      defaultProps: {
+        PaperProps: {
+          sx: {
+            backgroundColor: '#131313',
+          },
+        },
+      },
+    },
   },
 })

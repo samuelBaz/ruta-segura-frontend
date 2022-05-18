@@ -6,6 +6,7 @@ import {
   IconButton,
   PaperProps,
   Slide,
+  Typography,
   useMediaQuery,
   useTheme,
   Zoom,
@@ -61,7 +62,9 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
       onClose={handleClose}
     >
       <DialogTitle sx={{ mt: 1, mr: 1, ml: 1, p: 2 }}>
-        {title}
+        <Typography sx={{ fontWeight: 'bold', fontSize: 20 }}>
+          {title}
+        </Typography>
         <IconButton
           aria-label="close"
           onClick={handleClose}
