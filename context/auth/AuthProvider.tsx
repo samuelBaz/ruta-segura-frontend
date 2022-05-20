@@ -130,6 +130,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         setLoading(false)
       }
     } else {
+      imprimir(`Token no definido 🥾: ${token}`)
       await router.replace({
         pathname: '/login',
       })

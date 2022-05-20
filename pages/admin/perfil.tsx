@@ -124,8 +124,7 @@ const Perfil: NextPage = () => {
                     <Typography variant={'body1'}>
                       {formatoFecha(
                         usuario?.persona.fechaNacimiento,
-                        'YYYY-MM-DD',
-                        'DD/MM/YYYY'
+                        'YYYY-MM-DD'
                       )}
                     </Typography>
                   )}

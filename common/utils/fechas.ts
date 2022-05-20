@@ -1,30 +1,19 @@
 import dayjs from 'dayjs'
 import { imprimir } from './imprimir'
-import moment from 'moment'
+
+const customParseFormat = require('dayjs/plugin/customParseFormat')
+dayjs.extend(customParseFormat)
 
 export const stringToDate = (fecha: string, formatoInicial: string): Date => {
   return dayjs(fecha, formatoInicial, true).toDate()
 }
 
-export const validarFechaFormatoDayJS = (date: string, format: string) => {
-  imprimir(`${date} -> ${dayjs(date, format).format(format)}`)
-  return dayjs(date, format, true).isValid()
+export const validarFechaFormato = (date: string, format: string) => {
+  imprimir(`${date} -> ${dayjs(date).format(format)}`)
+  return dayjs(dayjs(date).format(format), format, true).isValid()
 }
 
-export const validarFechaFormatoMoment = (date: string, format: string) => {
-  imprimir(`${date} -> ${moment(date, format).format(format)}`)
-  // moment.suppressDeprecationWarnings = true
-  return moment(date, format, true).isValid()
-}
-
-export const formatoFecha = (
-  fecha: string,
-  formatoInicial: string,
-  formatoNuevo: string
-): string => {
-  imprimir(
-    `${fecha} -> ${moment(fecha, formatoInicial).format(formatoInicial)}`
-  )
-  // moment.suppressDeprecationWarnings = true
-  return moment(fecha, formatoInicial, true).format(formatoNuevo)
+export const formatoFecha = (fecha: string, formatoNuevo: string): string => {
+  imprimir(`${fecha} -> ${formatoNuevo}:${dayjs(fecha).format(formatoNuevo)}`)
+  return dayjs(fecha).format(formatoNuevo)
 }

@@ -1,17 +1,12 @@
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { Controller } from 'react-hook-form'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { FormHelperText, TextField, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { Control } from 'react-hook-form/dist/types/form'
-// import dayjs from 'dayjs'
-// import esMX from 'dayjs/locale/es-mx'
-import 'moment/locale/es'
-import { validarFechaFormatoMoment } from '../../../utils/fechas'
-
-/*const customParseFormat = require('dayjs/plugin/customParseFormat')
-dayjs.extend(customParseFormat)*/
+import esMX from 'dayjs/locale/es-mx'
+import { validarFechaFormato } from '../../../utils/fechas'
 
 export interface FormDatePickerProps {
   id: string
@@ -42,15 +37,12 @@ export const FormInputDate = ({
       <Controller
         name={name}
         control={control}
-        render={({
-          field: { onChange, value, ref },
-          fieldState: { error },
-        }) => (
-          <LocalizationProvider dateAdapter={AdapterMoment}>
+        render={({ field, fieldState: { error } }) => (
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={esMX}>
             <DatePicker
-              onChange={onChange}
-              value={value}
-              ref={ref}
+              onChange={field.onChange}
+              value={field.value}
+              ref={field.ref}
               mask={'__/__/____'}
               inputFormat={format}
               disabled={disabled}
@@ -75,7 +67,7 @@ export const FormInputDate = ({
           ...rules,
           ...{
             validate: (val: string) => {
-              if (!validarFechaFormatoMoment(val, format)) {
+              if (!validarFechaFormato(val, format)) {
                 return 'La fecha no es válida'
               }
             },

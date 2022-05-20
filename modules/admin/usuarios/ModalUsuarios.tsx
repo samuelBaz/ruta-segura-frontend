@@ -55,13 +55,7 @@ export const VistaModalUsuario = ({
         nombres: usuario?.persona.nombres,
         primerApellido: usuario?.persona.primerApellido,
         segundoApellido: usuario?.persona.segundoApellido,
-        fechaNacimiento: usuario?.persona.fechaNacimiento
-          ? formatoFecha(
-              usuario?.persona.fechaNacimiento,
-              'YYYY-MM-DD',
-              'DD/MM/YYYY'
-            )
-          : undefined,
+        fechaNacimiento: usuario?.persona.fechaNacimiento,
       },
       ciudadaniaDigital: usuario?.ciudadaniaDigital,
     },
@@ -90,7 +84,6 @@ export const VistaModalUsuario = ({
               ...{
                 fechaNacimiento: formatoFecha(
                   usuario.persona.fechaNacimiento,
-                  'DD/MM/YYYY',
                   'YYYY-MM-DD'
                 ),
               },
