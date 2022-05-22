@@ -117,7 +117,7 @@ export const NavbarUser = () => {
       <AlertDialog
         isOpen={mostrarAlertaCerrarSesion}
         titulo={'Alerta'}
-        texto={`¿Está seguro de cerrar sesión ?`}
+        texto={`¿Está seguro de cerrar sesión?`}
       >
         <Button
           onClick={() => {

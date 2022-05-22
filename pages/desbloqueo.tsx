@@ -27,6 +27,7 @@ const Desbloqueo: NextPage = () => {
     const codigoDesbloqueo = Array.isArray(params.q) ? params.q[0] : params.q
 
     desbloquearPeticion(codigoDesbloqueo ?? '').finally()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady, router.query])
 
   const desbloquearPeticion = async (codigoDesbloqueo: string) => {
