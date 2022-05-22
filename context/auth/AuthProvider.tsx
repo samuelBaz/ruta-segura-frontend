@@ -131,9 +131,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       }
     } else {
       imprimir(`Token no definido 🥾: ${token}`)
-      await router.replace({
+      /*await router.replace({
         pathname: '/login',
-      })
+      })*/
       await delay(1000)
     }
     setLoading(false)

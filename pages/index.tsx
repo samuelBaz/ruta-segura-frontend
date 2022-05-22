@@ -1,10 +1,24 @@
 import type { NextPage } from 'next'
 import { Grid, Typography } from '@mui/material'
-import { imprimir, siteName } from '../common/utils'
+import { siteName } from '../common/utils'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const Inicio: NextPage = () => {
   const nombreSitio: string = siteName()
-  imprimir(nombreSitio)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!router.isReady) return
+    router.reload()
+    router
+      .replace({
+        pathname: '/login',
+      })
+      .finally()
+  }, [router.isReady])
+
   return (
     <Grid
       container

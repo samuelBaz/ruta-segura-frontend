@@ -11,7 +11,7 @@ export interface peticionFormatoMetodo {
 
 export interface peticionFormato {
   url: string
-  headers: AxiosRequestHeaders
+  headers?: AxiosRequestHeaders
   body?: object
   params?: any
 }

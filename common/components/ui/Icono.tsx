@@ -13,14 +13,20 @@ interface Props {
     | 'info'
     | 'success'
     | 'warning'
+  fontSize?: 'inherit' | 'large' | 'medium' | 'small'
 }
 
 export const Icono: FC<PropsWithChildren<Props>> = ({
   color = 'primary',
+  fontSize = 'inherit',
   children,
 }) => {
   return (
-    <Icon color={`${color}`} className={'material-icons-outlined'}>
+    <Icon
+      fontSize={fontSize}
+      color={`${color}`}
+      className={'material-icons-outlined'}
+    >
       {children}
     </Icon>
   )
