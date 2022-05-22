@@ -1,0 +1,181 @@
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  DialogActions,
+  Grid,
+} from '@mui/material'
+import React, { useState } from 'react'
+import { FormInputText } from '../../../common/components/ui/form'
+import { useForm } from 'react-hook-form'
+import {
+  cambioPassForm,
+  cambioPassPeticion,
+} from '../../../common/types/perfilTypes'
+import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
+import { NivelSeguridadPass } from '../../../common/components/ui/NivelSeguridadPass'
+import {
+  encodeBase64,
+  InterpreteMensajes,
+  seguridadPass,
+} from '../../../common/utils'
+import { useAlerts } from '../../../common/hooks'
+import { Constantes } from '../../../config'
+import { useAuth } from '../../../context/auth'
+
+export interface CambioPassModalType {
+  accionCorrecta: () => void
+  accionCancelar: () => void
+}
+
+export const CambioPassModal = ({
+  accionCorrecta,
+  accionCancelar,
+}: CambioPassModalType) => {
+  const { Alerta } = useAlerts()
+  const [loadingModal, setLoadingModal] = useState<boolean>(false)
+  const { handleSubmit, control, watch } = useForm<cambioPassForm>({
+    defaultValues: {
+      oldPassword: '',
+      newPassword1: '',
+      newPassword2: '',
+    },
+  })
+
+  const { sesionPeticion } = useAuth()
+
+  const validarPass = async ({
+    oldPassword,
+    newPassword1,
+    newPassword2,
+  }: cambioPassForm) => {
+    if (oldPassword.length == 0) {
+      Alerta({
+        mensaje: 'Debe ingresar su contraseña anterior',
+        variant: 'error',
+      })
+      return
+    }
+    if (seguridadPass(newPassword1).score != 4) {
+      Alerta({ mensaje: 'La contraseña no es muy segura', variant: 'error' })
+      return
+    }
+    if (newPassword1 != newPassword2) {
+      Alerta({
+        mensaje: 'La contraseña repetida no coincide',
+        variant: 'error',
+      })
+      return
+    }
+    await cambiarPassPeticion({
+      contrasenaActual: encodeBase64(encodeURI(oldPassword)),
+      contrasenaNueva: encodeBase64(encodeURI(newPassword1)),
+    })
+  }
+
+  const cambiarPassPeticion = async (params: cambioPassPeticion) => {
+    try {
+      setLoadingModal(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/usuarios/cuenta/contrasena`,
+        tipo: 'patch',
+        body: params,
+      })
+      Alerta({ mensaje: InterpreteMensajes(respuesta), variant: 'success' })
+      accionCorrecta()
+    } catch (e) {
+      Alerta({ mensaje: InterpreteMensajes(e), variant: 'error' })
+    } finally {
+      setLoadingModal(false)
+    }
+  }
+
+  const newPassword1Watch = watch('newPassword1')
+
+  return (
+    <Grid container direction={'column'} justifyContent="space-evenly">
+      <Alert severity="info" variant={'standard'}>
+        <AlertTitle>¿Cómo es una contraseña segura?</AlertTitle>
+        <li>Las contraseñas deben tener 8 caracteres o más.</li>
+        <li>
+          Las buenas contraseñas son dificiles de adivinar y usan palabras,
+          números, símbolos y letras mayúsculas poco comunes.
+        </li>
+      </Alert>
+      <Box height={'20px'} />
+      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormInputText
+            id={'oldPassword'}
+            control={control}
+            name="oldPassword"
+            label="Contraseña actual"
+            disabled={loadingModal}
+            type={'password'}
+            rules={{ required: 'Este campo es requerido' }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormInputText
+            id={'newPassword1'}
+            control={control}
+            name="newPassword1"
+            label="Nueva contraseña"
+            disabled={loadingModal}
+            type={'password'}
+            rules={{ required: 'Este campo es requerido' }}
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={12}>
+          <NivelSeguridadPass pass={newPassword1Watch} />
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormInputText
+            id={'newPassword2'}
+            control={control}
+            name="newPassword2"
+            label="Repita su nueva contraseña"
+            disabled={loadingModal}
+            type={'password'}
+            rules={{
+              required: 'Este campo es requerido',
+              validate: (value: string) => {
+                if (value != newPassword1Watch)
+                  return 'La contraseña no coincide'
+              },
+            }}
+          />
+        </Grid>
+      </Grid>
+      <ProgresoLineal mostrar={loadingModal} />
+      <Box height={'15px'} />
+      <DialogActions
+        sx={{
+          justifyContent: {
+            lg: 'flex-end',
+            md: 'flex-end',
+            xs: 'center',
+            sm: 'center',
+          },
+        }}
+      >
+        <Button
+          variant={'outlined'}
+          disabled={loadingModal}
+          onClick={accionCancelar}
+        >
+          Cancelar
+        </Button>
+        <Button
+          variant={'contained'}
+          disabled={loadingModal}
+          onClick={handleSubmit(validarPass)}
+        >
+          Modificar
+        </Button>
+      </DialogActions>
+    </Grid>
+  )
+}

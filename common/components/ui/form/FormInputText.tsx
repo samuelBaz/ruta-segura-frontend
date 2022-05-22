@@ -4,9 +4,12 @@ import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
 import { Control } from 'react-hook-form/dist/types/form'
-import { FormHelperText, IconButton } from '@mui/material'
+import { FormHelperText, IconButton, InputAdornment } from '@mui/material'
 import ClearOutlined from '@mui/icons-material/ClearOutlined'
 import { Variant } from '@mui/material/styles/createTypography'
+import { useState } from 'react'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 export interface FormInputTextProps {
   id: string
@@ -14,6 +17,7 @@ export interface FormInputTextProps {
   control: Control<any>
   label: string
   size?: 'small' | 'medium'
+  type?: 'password' | 'number' | 'search' | string | undefined
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: StandardInputProps['onChange']
@@ -30,6 +34,7 @@ export const FormInputText = ({
   control,
   label,
   size = 'small',
+  type,
   rules,
   disabled,
   onChange,
@@ -39,6 +44,11 @@ export const FormInputText = ({
   bgcolor,
   labelVariant = 'subtitle2',
 }: FormInputTextProps) => {
+  // Add these variables to your component to track the state
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClickShowPassword = () => setShowPassword(!showPassword)
+  const handleMouseDownPassword = () => setShowPassword(!showPassword)
+
   return (
     <div>
       <Typography
@@ -62,6 +72,7 @@ export const FormInputText = ({
               }}
               size={size}
               error={!!error}
+              type={showPassword ? 'text' : type}
               onChange={(event) => {
                 if (onChange) {
                   onChange(event)
@@ -92,6 +103,16 @@ export const FormInputText = ({
                     >
                       <ClearOutlined />
                     </IconButton>
+                  ) : type == 'password' ? (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
                   ) : undefined,
               }}
             />

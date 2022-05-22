@@ -166,6 +166,7 @@ const Login: NextPage = () => {
                     label="Contraseña"
                     size={'medium'}
                     labelVariant={'subtitle1'}
+                    type={'password'}
                     disabled={progresoLogin}
                     rules={{
                       required: 'Este campo es requerido',

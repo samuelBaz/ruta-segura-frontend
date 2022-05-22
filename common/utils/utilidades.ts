@@ -1,5 +1,6 @@
 import childProcess from 'child_process'
 import { Constantes } from '../../config'
+import { IZXCVBNResult, zxcvbn } from 'zxcvbn-typescript'
 
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -40,4 +41,8 @@ export const execChildProcess = async (comando: string) => {
 
 export const siteName = () => {
   return Constantes.siteName ?? ''
+}
+
+export const seguridadPass = (pass: string): IZXCVBNResult => {
+  return zxcvbn(pass)
 }

@@ -33,7 +33,8 @@
     "react-hook-form": "7.31.1",
     "react-jwt": "1.1.6",
     "swr": "1.3.0",
-    "use-debounce": "8.0.1"
+    "use-debounce": "8.0.1",
+    "zxcvbn-typescript": "^5.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.0",
