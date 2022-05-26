@@ -13,9 +13,9 @@ import { useRouter } from 'next/router'
 import { UIContext, useFullScreenLoadingContext } from '../../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../../context/auth'
-import { imprimir } from '../../utils'
-import { ModuloType, RoleType } from '../../types'
+import { imprimir } from '../../utils/imprimir'
 import { Icono } from './Icono'
+import { ModuloType, RoleType } from '../../../modules/login/loginTypes'
 
 const drawerWidth = 240
 

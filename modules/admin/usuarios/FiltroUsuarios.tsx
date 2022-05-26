@@ -5,9 +5,9 @@ import {
   FormInputDropdownMultiple,
   FormInputText,
 } from '../../../common/components/ui/form'
-import { RolType } from '../../../common/types'
 
 import { useDebouncedCallback } from 'use-debounce'
+import { RolType } from './usuariosCRUDTypes'
 
 export interface FiltroType {
   usuario: string

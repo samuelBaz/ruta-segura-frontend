@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import {
-  CrearEditarParametroCRUDType,
-  ParametroCRUDType,
-} from '../../../common/types'
-import { delay, imprimir, InterpreteMensajes } from '../../../common/utils'
+import { delay, InterpreteMensajes } from '../../../common/utils'
 import { Constantes } from '../../../config'
 
 import { Box, Button, DialogActions, Grid } from '@mui/material'
@@ -12,6 +8,11 @@ import { FormInputText } from '../../../common/components/ui/form'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 import { useAuth } from '../../../context/auth'
 import { useAlerts } from '../../../common/hooks'
+import { imprimir } from '../../../common/utils/imprimir'
+import {
+  CrearEditarParametroCRUDType,
+  ParametroCRUDType,
+} from './parametrosCRUDTypes'
 
 export interface ModalParametroType {
   parametro?: ParametroCRUDType

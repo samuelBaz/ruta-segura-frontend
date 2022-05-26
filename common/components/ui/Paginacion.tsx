@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { IconoTooltip } from './IconoTooltip'
 import { FC } from 'react'
-import { imprimir } from '../../utils'
+import { imprimir } from '../../utils/imprimir'
 import { styled } from '@mui/material/styles'
 
 interface Props {

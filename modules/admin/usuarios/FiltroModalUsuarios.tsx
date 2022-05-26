@@ -1,9 +1,10 @@
 /// Vista modal de filtro de usuarios
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { RolType } from '../../../common/types'
+
 import { Box, Button, DialogActions, Grid } from '@mui/material'
 import { FormInputDropdownMultiple } from '../../../common/components/ui/form'
+import { RolType } from './usuariosCRUDTypes'
 
 export interface FiltroType {
   usuario: string

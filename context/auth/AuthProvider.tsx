@@ -10,26 +10,17 @@ import {
   eliminarCookie,
   encodeBase64,
   guardarCookie,
-  imprimir,
   InterpreteMensajes,
   leerCookie,
-  verificarToken,
 } from '../../common/utils'
 import {
   estadosSinPermiso,
   peticionFormatoMetodo,
   Servicios,
-} from '../../services'
+} from '../../common/services'
 import { Constantes } from '../../config'
 import { useRouter } from 'next/router'
-import {
-  CasbinTypes,
-  idRolType,
-  LoginType,
-  PoliticaType,
-  RoleType,
-  UsuarioType,
-} from '../../common/types'
+import { CasbinTypes } from '../../common/types'
 import { useFullScreenLoadingContext } from '../ui'
 import { AxiosError } from 'axios'
 import {
@@ -40,6 +31,15 @@ import {
 } from 'casbin'
 import { basicModel, basicPolicy } from '../../common/utils/casbin'
 import { useAlerts } from '../../common/hooks'
+import { imprimir } from '../../common/utils/imprimir'
+import { verificarToken } from '../../common/utils/token'
+import {
+  idRolType,
+  LoginType,
+  PoliticaType,
+  RoleType,
+  UsuarioType,
+} from '../../modules/login/loginTypes'
 
 interface ContextProps {
   estaAutenticado: boolean

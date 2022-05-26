@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { LayoutLogin } from '../common/components/layouts/LayoutLogin'
+import { LayoutLogin } from '../common/components/layouts'
 import Grid from '@mui/material/Grid'
 import {
   Box,
@@ -10,17 +10,18 @@ import {
   useTheme,
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { delay, imprimir, InterpreteMensajes, siteName } from '../common/utils'
+import { delay, InterpreteMensajes, siteName } from '../common/utils'
 import { Constantes } from '../config'
-import { Servicios } from '../services'
+import { Servicios } from '../common/services'
 import { useAuth } from '../context/auth'
 import { useForm } from 'react-hook-form'
 import ProgresoLineal from '../common/components/ui/ProgresoLineal'
 import { useFullScreenLoadingContext } from '../context/ui'
 import { FormInputText } from '../common/components/ui/form'
-import { LoginType } from '../common/types'
 import { useEffect } from 'react'
 import { useAlerts } from '../common/hooks'
+import { imprimir } from '../common/utils/imprimir'
+import { LoginType } from '../modules/login/loginTypes'
 
 const Login: NextPage = () => {
   const { ingresar, progresoLogin } = useAuth()

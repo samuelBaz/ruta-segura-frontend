@@ -1,13 +1,14 @@
 import type { NextPage } from 'next'
 import { Alert, Box, Button, Card, Grid, Typography } from '@mui/material'
-import { delay, imprimir, InterpreteMensajes, siteName } from '../common/utils'
+import { delay, InterpreteMensajes, siteName } from '../common/utils'
 import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
-import { Servicios } from '../services'
+import { Servicios } from '../common/services'
 import { Constantes } from '../config'
 import { useFullScreenLoadingContext } from '../context/ui'
 import { Icono } from '../common/components/ui'
+import { imprimir } from '../common/utils/imprimir'
 
 const Desbloqueo: NextPage = () => {
   const [mensaje, setMensaje] = useState<string>('')

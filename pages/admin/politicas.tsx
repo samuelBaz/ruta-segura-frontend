@@ -3,29 +3,22 @@ import { Button, Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
-import {
-  CasbinTypes,
-  ColumnaType,
-  PoliticaCRUDType,
-  RolType,
-} from '../../common/types'
+import { CasbinTypes, ColumnaType } from '../../common/types'
 import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import {
-  delay,
-  imprimir,
-  InterpreteMensajes,
-  siteName,
-} from '../../common/utils'
+import { delay, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
 import { VistaModalPolitica } from '../../modules/admin/politicas'
 import { useAlerts } from '../../common/hooks'
+import { imprimir } from '../../common/utils/imprimir'
+import { PoliticaCRUDType } from '../../modules/admin/politicas/politicasCRUDTypes'
+import { RolType } from '../../modules/admin/usuarios/usuariosCRUDTypes'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])

@@ -1,6 +1,6 @@
 /** @type {import("next").NextConfig} */
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false, // se desactiva por que React 18 renderiza 2 veces y llama useEffect 2 veces 🤷‍♂️
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback.child_process = false

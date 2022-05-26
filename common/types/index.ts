@@ -1,6 +1,2 @@
-export * from './parametrosCRUDTypes'
-export * from './usuariosCRUDTypes'
-export * from './loginTypes'
 export * from './datatableTypes'
-export * from './politicasCRUDTypes'
 export * from './casbinTypes'

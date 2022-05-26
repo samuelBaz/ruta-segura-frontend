@@ -5,8 +5,8 @@ import {
   CrearEditarUsuarioType,
   RolType,
   UsuarioCRUDType,
-} from '../../../common/types'
-import { delay, imprimir, InterpreteMensajes } from '../../../common/utils'
+} from './usuariosCRUDTypes'
+import { delay, InterpreteMensajes } from '../../../common/utils'
 import { Constantes } from '../../../config'
 import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
 import {
@@ -20,6 +20,7 @@ import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 import { useAuth } from '../../../context/auth'
 import { useAlerts } from '../../../common/hooks'
 import { formatoFecha } from '../../../common/utils/fechas'
+import { imprimir } from '../../../common/utils/imprimir'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null

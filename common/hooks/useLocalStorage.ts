@@ -2,7 +2,7 @@
 // to support ssr in Next.js
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import useEventListener from './useEventListener'
-import { imprimir } from '../utils'
+import { imprimir } from '../utils/imprimir'
 
 type SetValue<T> = Dispatch<SetStateAction<T>>
 

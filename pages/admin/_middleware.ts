@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { imprimir, verificarToken } from '../../common/utils'
+import { imprimir } from '../../common/utils/imprimir'
+import { verificarToken } from '../../common/utils/token'
 
 export const middleware = async (req: NextRequest | any) => {
   const { token = '' } = req.cookies

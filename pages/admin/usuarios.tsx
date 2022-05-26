@@ -17,16 +17,10 @@ import {
   IconoTooltip,
 } from '../../common/components/ui'
 import React, { ReactNode, useEffect, useState } from 'react'
-import {
-  CasbinTypes,
-  ColumnaType,
-  RolType,
-  UsuarioCRUDType,
-} from '../../common/types'
+import { CasbinTypes, ColumnaType } from '../../common/types'
 import { Constantes } from '../../config'
 import {
   delay,
-  imprimir,
   InterpreteMensajes,
   siteName,
   titleCase,
@@ -37,6 +31,11 @@ import { useRouter } from 'next/router'
 import { VistaModalUsuario } from '../../modules/admin/usuarios'
 import { useAlerts } from '../../common/hooks'
 import { FiltroUsuarios } from '../../modules/admin/usuarios/FiltroUsuarios'
+import { imprimir } from '../../common/utils/imprimir'
+import {
+  RolType,
+  UsuarioCRUDType,
+} from '../../modules/admin/usuarios/usuariosCRUDTypes'
 
 const Usuarios: NextPage = () => {
   // data de usuarios

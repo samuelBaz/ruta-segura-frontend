@@ -9,10 +9,7 @@ import {
 import React, { useState } from 'react'
 import { FormInputText } from '../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
-import {
-  cambioPassForm,
-  cambioPassPeticion,
-} from '../../../common/types/perfilTypes'
+import { cambioPassForm, cambioPassPeticion } from './perfilTypes'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 import { NivelSeguridadPass } from '../../../common/components/ui/NivelSeguridadPass'
 import {

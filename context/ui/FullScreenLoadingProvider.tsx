@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 import { FullScreenLoading } from '../../common/components/ui/FullScreenLoading'
 import { Box, Fade } from '@mui/material'
-import { imprimir } from '../../common/utils'
 
 interface FullScreenLoadingType {
   estadoFullScreen: boolean

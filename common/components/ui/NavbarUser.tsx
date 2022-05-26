@@ -26,12 +26,13 @@ import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { CustomDialog } from './CustomDialog'
 
 import { useAuth } from '../../../context/auth'
-import { delay, imprimir, siteName, titleCase } from '../../utils'
-import { RoleType } from '../../types'
+import { delay, siteName, titleCase } from '../../utils'
 import { useRouter } from 'next/router'
 import { Icono } from './Icono'
 import { IconoTooltip } from './IconoTooltip'
 import { AlertDialog } from './AlertDialog'
+import { imprimir } from '../../utils/imprimir'
+import { RoleType } from '../../../modules/login/loginTypes'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)

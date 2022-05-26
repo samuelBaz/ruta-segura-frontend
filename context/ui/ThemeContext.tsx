@@ -10,6 +10,7 @@ import { ThemeProvider as MuiThemeProvider, useMediaQuery } from '@mui/material'
 import { darkTheme, lightTheme } from '../../themes'
 import useLocalStorage from '../../common/hooks/useLocalStorage'
 import { delay } from '../../common/utils'
+import { imprimir } from '../../common/utils/imprimir'
 
 const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)'
 
@@ -51,7 +52,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     delay(isDarkOS ? 100 : 100).then(() => {
       // TODO: Tarda en reconocer ajuste de usuario claro en modo oscuro
-      // imprimir(`useEffect isDarkOS: ${isDarkOS}`)
+      imprimir(`useEffect isDarkOS: ${isDarkOS}`)
       if (primeraVezState || isDarkOS) {
         setThemeMode(isDarkOS ? 'dark' : 'light')
       } else {
