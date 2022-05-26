@@ -46,7 +46,7 @@ interface ContextProps {
   usuario: UsuarioType | null
   idRolUsuario: string | undefined
   rolUsuario: RoleType | undefined
-  setRolUsuario: ({ idRol }: idRolType) => void
+  setRolUsuario: ({ idRol }: idRolType) => Promise<void>
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
   progresoLogin: boolean
   cerrarSesion: () => void
@@ -85,31 +85,35 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
+  const obtenerPerfil = async () => {
+    const respuestaUsuario = await sesionPeticion({
+      url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
+    })
+    if (respuestaUsuario.datos) {
+      setUser(respuestaUsuario.datos)
+
+      if (
+        respuestaUsuario.datos.roles &&
+        respuestaUsuario.datos.roles.length > 0
+      ) {
+        imprimir(
+          `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
+        )
+        await AlmacenarRol({
+          idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
+        })
+      }
+    }
+  }
+
   async function loadUserFromCookies() {
     const token = leerCookie('token')
 
     if (token) {
       try {
         mostrarFullScreen()
-        const respuestaUsuario = await sesionPeticion({
-          url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
-        })
-        if (respuestaUsuario.datos) {
-          setUser(respuestaUsuario.datos)
 
-          if (
-            respuestaUsuario.datos.roles &&
-            respuestaUsuario.datos.roles.length > 0
-          ) {
-            imprimir(
-              `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
-            )
-            AlmacenarRol({
-              idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
-            })
-          }
-        }
-
+        await obtenerPerfil()
         await obtenerPermisos()
 
         if (router.pathname == '/login' || router.pathname == '/')
@@ -167,7 +171,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
         if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
           imprimir(`rol inicial 👨‍💻: ${respuesta.datos.roles[0].idRol}`)
-          AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
+          await AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
         }
 
         await obtenerPermisos()
@@ -261,10 +265,17 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
-  const AlmacenarRol = ({ idRol }: idRolType) => {
+  const AlmacenarRol = async ({ idRol }: idRolType) => {
     imprimir(`Almacenando rol 👮‍♂️: ${idRol}`)
     setIdRol(idRol)
     guardarCookie('rol', idRol)
+  }
+
+  const CambiarRol = async ({ idRol }: idRolType) => {
+    imprimir(`Cambiando rol 👮‍♂️: ${idRol}`)
+    setIdRol(idRol)
+    guardarCookie('rol', idRol)
+    await loadUserFromCookies()
   }
 
   const obtenerPermisos = async () => {
@@ -316,7 +327,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         usuario: user,
         idRolUsuario: idRol,
         rolUsuario: obtenerRolUsuario(),
-        setRolUsuario: AlmacenarRol,
+        setRolUsuario: CambiarRol,
         ingresar: login,
         progresoLogin: loading,
         cerrarSesion: logout,

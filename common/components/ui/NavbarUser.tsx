@@ -57,11 +57,7 @@ export const NavbarUser = () => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
     cerrarMenu()
     mostrarFullScreen(`Cambiando de rol..`)
-    await delay(1500)
-    await router.replace({
-      pathname: '/admin/home',
-    })
-    setRolUsuario({ idRol: event.target.value })
+    await setRolUsuario({ idRol: event.target.value })
     ocultarFullScreen()
   }
 
