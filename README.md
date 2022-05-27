@@ -3,6 +3,7 @@
 > Para proyectos de AGETIC
 
 ## Técnologias empleadas
+
 - NextJS, framework sobre ReactJS. [Sitio oficial](https://nextjs.org)
 - ReactJS como librería para desarrollo frontend  [Sitio oficial](https://es.reactjs.org)
 - MUI (Material UI), librería de componentes UI para ReactJS. [Sitio oficial](https://mui.com)
@@ -10,72 +11,105 @@
 - ESLint, para examinar el código en busca de problemas. [Documentación](https://eslint.org)
 
 ## Estructura general
-Para la creación de la estructura general del proyecto base se hizo uso de `vue-cli` con el template oficial recomendado en la uĺtima versión [Documentación](https://cli.vuejs.org/)
 
-## Plugins
-El proyecto cuenta con plugins (librerías que extienden la funcionalidad de `Vue.js`) para diversos usos y requerimientos:
+Para la creación de la estructura general del proyecto base se hizo uso de `Next.js CLI`
 
-Plugin | Descripción | Ejemplo |
---- | --- | --- |
-$util | Plugin con funciones generales del sistema | `this.$util.toType([])` devuelve el tipo de dato más específico, en este caso devuelve `array` |
-$storage | Plugin wrapper de funciones para el manejo de `localstorage`, su uso es obligatorio | `this.$storage.get('mi-dato')` |
-$datetime | Plugin con funciones para el manejo de fechas | `this.$datetime.format('DD/MM/YYYY', '2021-08-17T23:59:14.357Z')` lo convierte a `17/08/2021` |
-$waiting | Plugin para el bloqueo a petición del usuario de la pantalla | `this.$waiting(true, 'Bloquear pantalla por 5 segundos'), this.$waiting(false)` |
-$message | Plugin con funciones de mensajes de notificaciones | `this.$message.success('¡Hola mundo!')` |
-$alert | Plugin que reemplaza al `alert` nativo del navegador | `this.$alert({ text: '¡Hola mundo!' })` |
-$confirm | Plugin que reemplaza al `confirm` nativo del navegador | `this.$confirm({ text: '¿Desea continuar?', callbackOk: () => { ... esto se ejecuta cuando se acepte el mensaje ...} })` |
-$service | Plugin wrapper con funciones para el manejo de peticiones con `axios` su uso es obligatorio | `this.$service.post('usuarios', { ... datos ... }).then(response => { ... })` |
+## Utilidades
 
-> Nota.- Se recomienda usar todos estos plugins y tratar de buscar la funcionalidad que se requiera dentro de estos para no sobrecargar el proyecto
+El proyecto cuenta con utilidades que podrían que pueden aplicarse de según el caso:
 
-## Vue Router
-La configuración general de rutas se encuentra en `src/router/index.js`.
+| Utilidad           | Descripción                                                                                                                             | Ejemplo                                                                                                                       |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| Cookies            | Utilidad wrapper que ayuda a leer/guardar cookies                                                                                       | `guardarCookie('token','mi-token' )` guarda el valor de la cookie                                                             |
+| Fechas             | Utilidad wrapper de `dayjs` que puede validar y parsear fechas                                                                          | `formatoFecha('1994-07-05', '05/07/1994')`, retorna el valor de la fecha en nuevo formato                                     |
+| Imprimir           | Utilidad wrapper de `console.log` que sirve para mostrar mensajes en consola con el nombre de la función que lo invoca segun el entorno | `imprimir('hola mundo')`, imprime `🖨 funcionSaludo -> hola mundo`                                                            |
+| InterpreteMensajes | Utilidad que ayuda a extra mensajes de respuesta, pueden ser `Exception`, `strings`, objetos que contengan `message` o `mensaje`        | `interpretarMensaje({mensaje: 'hola mundo'})` retorna `Hola Mundo`                                                            |
+| Alerta             | Hook que muestra alertas de confirmación, error, advertencía o información                                                              | `Alerta({mensaje: 'Hola mundo', variant: 'success'})` mostrará una Alerta en color verde                                      |
+| Token              | Utilidad que valida la caducidad de un token                                                                                            | `verificarToken('mi-token')` el token devolverá `true` o `false` si caduco o no                                               |
+| AlertDialog        | Utilidad que muestra una alerta con acciones según el caso                                                                              | `<AlertDialog isOpen={mostrarAlerta} titulo={'Alerta'}, texto={'Hola mundo'}><Button onClick={'cerrarAlerta'}></AlertDialog>` |
+| Servicios          | Utilidad wrapper de `Axios` con funciones para hacer peticiones HTTP                                                                    | `await Servicios.get({url: 'localhost:3000', })`                                                                              |
 
-## Vuex
-La configuración general de vuex para el manejo de estados se encuentra en `src/store/index` se recomienda manejarlo por módulos.
+## Navegación
 
-## Components
-Se deben crear todos los componentes de la aplicación en `src/components/` y para los componentes generales en `src/plugins/`.
+Todas las rutas se encuentran en la carpeta `pages` (si, así de simple)
+
+## Hooks (ciclo de vida)
+
+Funciones de React que permiten crear/acceder al estado y ciclo de vida de componentes, las usadas en el proyecto son:
+
+- useContext, es un Hook que nos permite acceder al contexto de un Provider
+- useState, es un Hook que permite añadir el estado de React a un componente de función
+- useEffect, es un Hook que permite controlar y decidir cuándo queremos que se ejecute un código concreto
+
+## Componentes
+
+Todos los componentes para uso general se encuentran en la carpeta `common/` y los componentes de uso específico por
+módulo se encuentran en  `modules/`.
 
 ## Archivos estáticos
-Si se desean modificar variables globales de $vuetify se puede hacer en el archivo src/scss/variables.scss
-Los archivos estáticos(imágenes, etc.) se encuentran en la carpeta `public/`.
 
-### Iconografía
+Los archivos estáticos (imágenes, etc.) se encuentran en la carpeta `public/`.
 
-Para los íconos se esta utilizando [material icons](https://fonts.google.com/icons). Se puede consultar la documentación de la librería [vue-material-icons](https://www.npmjs.com/package/@dbetka/vue-material-icons) para referenciar los iconos requeridos.
+### Iconos
 
-## Configuración de Tokens(variables del sistema de diseño)
-Para cambiar los colores del sistema basado en tokens(variables) se debe cambiar en `src/scss/variables.scss` y en `src/plugins/vuetify.js` en la constante `light, dark`.
+Los iconos de los menús son de  [material icons](https://fonts.google.com/icons).
 
-## Importante
-La elección de `Vuetify` fue debido a que esta ya tiene la mayoría de los componentes más comunes para la construcción de cualquier sistema, es importante usar todo lo que nos ofrece y no tratar de colocar librerías que ya tengan funcionalidades similares a las que ya se tienen, para no así sobrecargar el sistema.
+## Sistema de diseño
+
+Para cambiar los colores del sistema, se debe editar los archivos `theme/light-theme.ts` o  `theme/dark-theme.ts` según corresponda
+
+Se recomienda seguir la regla `60 - 30 - 10` para el uso de colores
+
+Para más información, se recomienda leer el articulo [How the 60-30-10 rule saved the day](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
 
 ## Instalación
-Para instalar la aplicación se recomienda revisar el siguiente enlace:
+
+Para instalar la aplicación se recomienda revisar el siguiente documento:
 
 > [INSTALL.md](INSTALL.md)
 
-
 ### Ejecutar en modo desarrollo
+
 ```
-npm run start
+npm run dev
 ```
 
-### Compilar para produccion
+### Compilar para producción
+
 ```
 npm run build
 ```
 
 ### Ejecutar test
+
 ```
 npm run test
 ```
 
 ## Documentación
-Este proyecto incluye el directorio **docs** con más detalle de la documentación técnica:
-1. [Documentación](docs/analisis/README.md)
 
-## Licencia
 
-[LGP-Bolivia](LICENSE).
+> La documentación esta en progreso
+
+## Changelog
+
+1. Instalar dependencia 
+```bash
+npm i generate-changelog -g
+```
+2. Generar tag de la versión
+
+```bash
+git tag v1.0.5 -m "1.0.5"
+```
+
+3. Generar archivo CHANGELOG para el tag
+```bash
+ generate-changelog 1.0.5
+```
+
+generar change log entre tags
+
+```bash
+generate-changelog 1.0.1...1.0.5
+```
