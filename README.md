@@ -93,23 +93,10 @@ npm run test
 
 ## Changelog
 
-1. Instalar dependencia 
-```bash
-npm i generate-changelog -g
-```
-2. Generar tag de la versión
+1. Generar tag de la versión
+> Cambiar el número de versión en archivo `package.json` 
 
+2. Generar tag y archivo CHANGELOG
 ```bash
-git tag v1.0.5 -m "1.0.5"
-```
-
-3. Generar archivo CHANGELOG para el tag
-```bash
- generate-changelog 1.0.5
-```
-
-generar change log entre tags
-
-```bash
-generate-changelog 1.0.1...1.0.5
+npm run release
 ```

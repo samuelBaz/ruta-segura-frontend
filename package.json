@@ -1,6 +1,6 @@
 {
   "name": "nextjs-typescript",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "Frontend base con Next.js, MUI v5 y TypeScript",
   "author": "Imanol",
   "private": true,
@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
-    "preinstall": "mkdir -p node_modules; touch ./node_modules/.metadata_never_index"
+    "preinstall": "mkdir -p node_modules; touch ./node_modules/.metadata_never_index",
+    "release": "standard-version"
   },
   "dependencies": {
     "@emotion/cache": "11.7.1",
@@ -46,6 +47,7 @@
     "eslint-config-prettier": "8.5.0",
     "husky": "8.0.1",
     "prettier": "2.6.2",
+    "standard-version": "^9.5.0",
     "typescript": "4.7.2"
   }
 }
