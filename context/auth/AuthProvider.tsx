@@ -85,27 +85,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
-  const obtenerPerfil = async () => {
-    const respuestaUsuario = await sesionPeticion({
-      url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
-    })
-    if (respuestaUsuario.datos) {
-      setUser(respuestaUsuario.datos)
-
-      if (
-        respuestaUsuario.datos.roles &&
-        respuestaUsuario.datos.roles.length > 0
-      ) {
-        imprimir(
-          `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
-        )
-        await AlmacenarRol({
-          idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
-        })
-      }
-    }
-  }
-
   async function loadUserFromCookies() {
     const token = leerCookie('token')
 
@@ -113,7 +92,24 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       try {
         mostrarFullScreen()
 
-        await obtenerPerfil()
+        const respuestaUsuario = await sesionPeticion({
+          url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
+        })
+        if (respuestaUsuario.datos) {
+          setUser(respuestaUsuario.datos)
+
+          if (
+            respuestaUsuario.datos.roles &&
+            respuestaUsuario.datos.roles.length > 0
+          ) {
+            imprimir(
+              `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
+            )
+            await AlmacenarRol({
+              idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
+            })
+          }
+        }
         await obtenerPermisos()
 
         if (router.pathname == '/login' || router.pathname == '/')

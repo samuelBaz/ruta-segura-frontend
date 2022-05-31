@@ -71,9 +71,10 @@ export const Sidebar = () => {
   }, [sm, xs, md])
 
   useEffect(() => {
+    imprimir(`reinterpretando modulos`)
     interpretarModulos()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idRolUsuario])
+  }, [usuario])
 
   return (
     <Drawer
