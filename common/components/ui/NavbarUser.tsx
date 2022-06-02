@@ -57,7 +57,10 @@ export const NavbarUser = () => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
     cerrarMenu()
     mostrarFullScreen(`Cambiando de rol..`)
-    await setRolUsuario({ idRol: event.target.value })
+    await router.replace({
+      pathname: '/admin/home',
+    })
+    await setRolUsuario({ idRol: `${event.target.value}` })
     ocultarFullScreen()
   }
 
@@ -273,7 +276,7 @@ export const NavbarUser = () => {
                       value={rol.idRol}
                       control={
                         <Radio
-                          checked={idRolUsuario === rol.idRol}
+                          checked={idRolUsuario == rol.idRol}
                           onChange={cambiarRol}
                           color={'success'}
                           size="small"
