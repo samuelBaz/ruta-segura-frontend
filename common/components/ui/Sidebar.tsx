@@ -36,7 +36,7 @@ export const Sidebar = () => {
   const { estadoFullScreen } = useFullScreenLoadingContext()
 
   const interpretarModulos = () => {
-    imprimir(`Cambio en modulos: ${JSON.stringify(usuario)}`)
+    imprimir(`Cambio en modulos`)
     let roles: RoleType[]
     let rolSeleccionado: RoleType | undefined
     roles = usuario?.roles ?? []
@@ -44,7 +44,7 @@ export const Sidebar = () => {
       rolSeleccionado = roles.find((itemRol) => itemRol.idRol == idRolUsuario)
       if (rolSeleccionado) {
         setModulos(rolSeleccionado.modulos)
-        imprimir(`cantidad: ${rolSeleccionado.modulos.length} modulos`)
+        imprimir(`rolSeleccionado: ${JSON.stringify(rolSeleccionado)}`)
       }
     }
   }
