@@ -34,6 +34,7 @@ class ServiciosClass {
       timeout: 5000,
       data: body,
       params: params,
+      withCredentials: true,
       validateStatus(status) {
         return estadosCorrectos.some((estado: number) => status === estado)
       },

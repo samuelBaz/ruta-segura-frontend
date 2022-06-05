@@ -187,20 +187,33 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
+  const actualizarSesion = async () => {
+    imprimir(`Actualizando token 🚨`)
+
+    const respuesta = await Servicios.post({
+      url: `${Constantes.baseUrl}/token`,
+    })
+
+    guardarCookie('token', respuesta.datos?.access_token, { expires: 60 })
+
+    await delay(500)
+  }
+
   const sesionPeticion = async ({
     url,
     tipo = 'get',
-    headers = {
-      accept: 'application/json',
-      Authorization: `Bearer ${leerCookie('token') ?? ''}`,
-    },
     body,
     params,
   }: peticionFormatoMetodo) => {
     try {
       if (!verificarToken(leerCookie('token') ?? '')) {
         imprimir(`Token caducado ⏳`)
-        // TODO: implementar refresh token
+        await actualizarSesion()
+      }
+
+      const headers = {
+        accept: 'application/json',
+        Authorization: `Bearer ${leerCookie('token') ?? ''}`,
       }
 
       imprimir(
@@ -253,6 +266,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     } finally {
       eliminarCookie('token')
       eliminarCookie('rol')
+      eliminarCookie('jid')
       setUser(null)
       router.reload()
       await delay(1000)
