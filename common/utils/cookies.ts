@@ -7,7 +7,7 @@ export const guardarCookie = (
   options?: CookieAttributes
 ) => {
   Cookies.set(key, value, options)
-  imprimir(`🍪 ✅ ${value} : ${value}`)
+  imprimir(`🍪 ✅ ${key} : ${value}`)
 }
 
 export const leerCookie = (key: string) => {

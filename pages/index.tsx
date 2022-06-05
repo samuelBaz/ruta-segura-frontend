@@ -11,7 +11,6 @@ const Inicio: NextPage = () => {
 
   useEffect(() => {
     if (!router.isReady) return
-    router.reload()
     router
       .replace({
         pathname: '/login',

@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { imprimir } from '../../common/utils/imprimir'
-import { verificarToken } from '../../common/utils/token'
 
 export const middleware = async (req: NextRequest | any) => {
   const { token = '' } = req.cookies
   imprimir(`token middleware 🔐️: ${token}`)
 
   try {
-    if (verificarToken(token)) {
+    if (token != '' || null || undefined) {
       return NextResponse.next()
     } else {
       const url = req.nextUrl.clone()
