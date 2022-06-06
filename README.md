@@ -2,6 +2,8 @@
 
 > Para proyectos de AGETIC
 
+Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/experimental) creado con NestJS en la rama `Experimental`
+
 ## Técnologias empleadas
 
 - NextJS, framework sobre ReactJS. [Sitio oficial](https://nextjs.org)

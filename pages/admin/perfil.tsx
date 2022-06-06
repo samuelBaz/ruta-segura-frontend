@@ -17,10 +17,9 @@ import { CustomDialog, Icono } from '../../common/components/ui'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import { formatoFecha } from '../../common/utils/fechas'
 import { CambioPassModal } from '../../modules/admin/perfil/CambioPassModal'
-import Image from 'next/image'
 import { useThemeContext } from '../../context/ui/ThemeContext'
 import { Constantes } from '../../config'
-import { imprimir } from '../../common/utils/imprimir'
+import { BotonCiudadania } from '../../modules/login/BotonCiudadania'
 
 const Perfil: NextPage = () => {
   const { usuario } = useAuth()
@@ -208,38 +207,21 @@ const Perfil: NextPage = () => {
                   )}
                   {usuario?.ciudadania_digital && (
                     <Box display={'flex'}>
-                      <Button
-                        size="large"
-                        sx={{
-                          borderRadius: 2,
-                          backgroundColor: 'background.paper',
-                        }}
-                        variant="outlined"
-                        style={{ textTransform: 'none' }}
-                        onClick={() => {
-                          imprimir(`Abriendo: ${Constantes.ciudadaniaUrl}`)
+                      <BotonCiudadania
+                        altText={'Ver perfil en Ciudadanía'}
+                        accion={() => {
                           window.open(Constantes.ciudadaniaUrl, '_blank')
                         }}
                       >
-                        <Image
-                          src={
-                            themeMode == 'light'
-                              ? '/logo_ciudadania2.png'
-                              : '/logo_ciudadania2_dark.png'
-                          }
-                          alt="Ingresar con Ciudadanía Digital"
-                          width="37"
-                          height="30"
-                        />
                         <Typography
-                          sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}
                           variant={'body2'}
+                          sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}
                         >
                           Ver perfil en Ciudadanía Digital
                         </Typography>
                         <Box width={'10px'} />
                         <Icono color={'inherit'}>north_east</Icono>
-                      </Button>
+                      </BotonCiudadania>
                     </Box>
                   )}
                 </Grid>

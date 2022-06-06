@@ -27,13 +27,11 @@ import { useEffect } from 'react'
 import { useAlerts } from '../common/hooks'
 import { imprimir } from '../common/utils/imprimir'
 import { LoginType } from '../modules/login/loginTypes'
-import Image from 'next/image'
-import { useThemeContext } from '../context/ui/ThemeContext'
 import { useRouter } from 'next/router'
+import { BotonCiudadania } from '../modules/login/BotonCiudadania'
 
 const Login: NextPage = () => {
   const { ingresar, progresoLogin, actualizarSesion } = useAuth()
-  const { themeMode } = useThemeContext()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
@@ -201,8 +199,11 @@ const Login: NextPage = () => {
                       },
                     }}
                   />
-                  <Box sx={{ mt: 1, mb: 1 }}></Box>
-                  <ProgresoLineal mostrar={progresoLogin} />
+
+                  <Box sx={{ mt: 1, mb: 1 }}>
+                    <ProgresoLineal mostrar={progresoLogin} />
+                  </Box>
+
                   <Button
                     type="submit"
                     variant="contained"
@@ -213,33 +214,22 @@ const Login: NextPage = () => {
                       Ingresar
                     </Typography>
                   </Button>
-                  <Box sx={{ pt: 2, pb: 2 }}>
-                    <Divider>O</Divider>
+                  <Box sx={{ pt: 1, pb: 1 }}>
+                    <Divider>
+                      <Typography color="text.secondary">O</Typography>
+                    </Divider>
                   </Box>
-                  <Button
-                    type="submit"
-                    sx={{ borderRadius: 2 }}
-                    variant="outlined"
-                    style={{ textTransform: 'none' }}
+                  <BotonCiudadania
                     disabled={progresoLogin}
-                    onClick={() => {
+                    altText={'Ingresa con Ciudadanía'}
+                    accion={() => {
                       window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
                     }}
                   >
-                    <Image
-                      src={
-                        themeMode == 'light'
-                          ? '/logo_ciudadania2.png'
-                          : '/logo_ciudadania2_dark.png'
-                      }
-                      alt="Ingresar con Ciudadanía Digital"
-                      width="37"
-                      height="30"
-                    />
                     <Typography sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}>
-                      Ingresa con Ciudadanía Digital
+                      Ingresa con Ciudadanía
                     </Typography>
-                  </Button>
+                  </BotonCiudadania>
                 </Box>
               </Box>
             </Card>
