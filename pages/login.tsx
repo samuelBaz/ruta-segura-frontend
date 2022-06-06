@@ -10,7 +10,12 @@ import {
   useTheme,
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { delay, InterpreteMensajes, siteName } from '../common/utils'
+import {
+  delay,
+  guardarCookie,
+  InterpreteMensajes,
+  siteName,
+} from '../common/utils'
 import { Constantes } from '../config'
 import { Servicios } from '../common/services'
 import { useAuth } from '../context/auth'
@@ -22,13 +27,19 @@ import { useEffect } from 'react'
 import { useAlerts } from '../common/hooks'
 import { imprimir } from '../common/utils/imprimir'
 import { LoginType } from '../modules/login/loginTypes'
+import Image from 'next/image'
+import { useThemeContext } from '../context/ui/ThemeContext'
+import { useRouter } from 'next/router'
 
 const Login: NextPage = () => {
-  const { ingresar, progresoLogin } = useAuth()
+  const { ingresar, progresoLogin, actualizarSesion } = useAuth()
+  const { themeMode } = useThemeContext()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  const router = useRouter()
 
   const { Alerta } = useAlerts()
 
@@ -69,6 +80,17 @@ const Login: NextPage = () => {
     obtenerEstado().then(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (!router.isReady) return
+    const { code } = router.query
+    if (code) {
+      imprimir(`code: ${code}`)
+      guardarCookie('token', code)
+      actualizarSesion()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady])
 
   return (
     <LayoutLogin title={siteName()}>
@@ -135,6 +157,7 @@ const Login: NextPage = () => {
                   justifyContent={'center'}
                   alignItems={'center'}
                   height={400}
+                  sx={{ borderRadius: 12 }}
                 >
                   <Typography
                     align={'center'}
@@ -143,13 +166,14 @@ const Login: NextPage = () => {
                   >
                     Iniciar Sesión
                   </Typography>
-                  <Typography
+                  {/*<Typography
                     variant="body2"
                     color="text.secondary"
                     gutterBottom
                   >
                     Ingresa con las credenciales proporcionadas
-                  </Typography>
+                  </Typography>*/}
+                  <Box sx={{ mt: 1, mb: 1 }}></Box>
                   <FormInputText
                     id={'usuario'}
                     control={control}
@@ -177,16 +201,44 @@ const Login: NextPage = () => {
                       },
                     }}
                   />
-
+                  <Box sx={{ mt: 1, mb: 1 }}></Box>
                   <ProgresoLineal mostrar={progresoLogin} />
-
                   <Button
                     type="submit"
                     variant="contained"
                     disabled={progresoLogin}
                     onClick={handleSubmit(iniciarSesion)}
                   >
-                    Ingresar
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      Ingresar
+                    </Typography>
+                  </Button>
+                  <Box sx={{ pt: 2, pb: 2 }}>
+                    <Divider>O</Divider>
+                  </Box>
+                  <Button
+                    type="submit"
+                    sx={{ borderRadius: 2 }}
+                    variant="outlined"
+                    style={{ textTransform: 'none' }}
+                    disabled={progresoLogin}
+                    onClick={() => {
+                      window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
+                    }}
+                  >
+                    <Image
+                      src={
+                        themeMode == 'light'
+                          ? '/logo_ciudadania2.png'
+                          : '/logo_ciudadania2_dark.png'
+                      }
+                      alt="Ingresar con Ciudadanía Digital"
+                      width="37"
+                      height="30"
+                    />
+                    <Typography sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}>
+                      Ingresa con Ciudadanía Digital
+                    </Typography>
                   </Button>
                 </Box>
               </Box>

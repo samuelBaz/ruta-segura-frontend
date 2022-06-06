@@ -57,6 +57,7 @@ export interface UsuarioType {
   access_token: string
   id: string
   usuario: string
+  ciudadania_digital: boolean
   estado: string
   roles: RoleType[]
   persona: PersonaType
