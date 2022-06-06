@@ -50,6 +50,7 @@ interface ContextProps {
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
   progresoLogin: boolean
   cerrarSesion: () => void
+  actualizarSesion: () => void
   sesionPeticion: ({
     url,
     tipo,
@@ -95,6 +96,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         const respuestaUsuario = await sesionPeticion({
           url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
         })
+
+        imprimir(
+          `respuestaUsuario: ${respuestaUsuario.datos.ciudadania_digital}`
+        )
+
         if (respuestaUsuario.datos) {
           setUser(respuestaUsuario.datos)
 
@@ -255,11 +261,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     try {
       setLoading(true)
       mostrarFullScreen()
-      await delay(1000)
-      /*await Servicios.get({
-        url: `${Constantes.baseUrl}/logout`,
-        headers: {},
-      })*/
+      // await delay(1000)
+      await sesionPeticion({ url: `${Constantes.baseUrl}/logout` })
     } catch (e) {
       imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
@@ -342,6 +345,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         progresoLogin: loading,
         cerrarSesion: logout,
         sesionPeticion: sesionPeticion,
+        actualizarSesion: loadUserFromCookies,
         verificarPermiso: verificarAutorizacion,
         interpretarPermiso: async (routerName) => {
           if (obtenerRolUsuario()) {

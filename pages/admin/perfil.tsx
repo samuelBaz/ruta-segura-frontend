@@ -17,9 +17,15 @@ import { CustomDialog, Icono } from '../../common/components/ui'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import { formatoFecha } from '../../common/utils/fechas'
 import { CambioPassModal } from '../../modules/admin/perfil/CambioPassModal'
+import Image from 'next/image'
+import { useThemeContext } from '../../context/ui/ThemeContext'
+import { Constantes } from '../../config'
+import { imprimir } from '../../common/utils/imprimir'
 
 const Perfil: NextPage = () => {
   const { usuario } = useAuth()
+
+  const { themeMode } = useThemeContext()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
@@ -177,25 +183,65 @@ const Perfil: NextPage = () => {
                       ))}
                     </Grid>
                   </Grid>
-
                   <Box height={'30px'} />
-                  <Box display={'flex'}>
-                    <Button
-                      size="large"
-                      onClick={() => {
-                        abrirModalAyuda()
-                      }}
-                      color="primary"
-                      variant="contained"
-                      style={{ textTransform: 'none' }}
-                    >
-                      <Icono color={'inherit'}>vpn_key</Icono>
-                      <Box width={'10px'} />
-                      <Typography sx={{ fontWeight: 'bold' }} variant={'body2'}>
-                        Cambiar contraseña
-                      </Typography>
-                    </Button>
-                  </Box>
+                  {!usuario?.ciudadania_digital && (
+                    <Box display={'flex'}>
+                      <Button
+                        size="large"
+                        onClick={() => {
+                          abrirModalAyuda()
+                        }}
+                        color="primary"
+                        variant="contained"
+                        style={{ textTransform: 'none' }}
+                      >
+                        <Icono color={'inherit'}>vpn_key</Icono>
+                        <Box width={'10px'} />
+                        <Typography
+                          sx={{ fontWeight: 'bold' }}
+                          variant={'body2'}
+                        >
+                          Cambiar contraseña
+                        </Typography>
+                      </Button>
+                    </Box>
+                  )}
+                  {usuario?.ciudadania_digital && (
+                    <Box display={'flex'}>
+                      <Button
+                        size="large"
+                        sx={{
+                          borderRadius: 2,
+                          backgroundColor: 'background.paper',
+                        }}
+                        variant="outlined"
+                        style={{ textTransform: 'none' }}
+                        onClick={() => {
+                          imprimir(`Abriendo: ${Constantes.ciudadaniaUrl}`)
+                          window.open(Constantes.ciudadaniaUrl, '_blank')
+                        }}
+                      >
+                        <Image
+                          src={
+                            themeMode == 'light'
+                              ? '/logo_ciudadania2.png'
+                              : '/logo_ciudadania2_dark.png'
+                          }
+                          alt="Ingresar con Ciudadanía Digital"
+                          width="37"
+                          height="30"
+                        />
+                        <Typography
+                          sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}
+                          variant={'body2'}
+                        >
+                          Ver perfil en Ciudadanía Digital
+                        </Typography>
+                        <Box width={'10px'} />
+                        <Icono color={'inherit'}>north_east</Icono>
+                      </Button>
+                    </Box>
+                  )}
                 </Grid>
               </Box>
             </Box>
