@@ -120,7 +120,7 @@ const Perfil: NextPage = () => {
                     >
                       Usuario
                     </Typography>
-                    <Typography sx={{}}>{`@${usuario?.usuario}`}</Typography>
+                    <Typography>{`@${usuario?.usuario}`}</Typography>
                   </Grid>
                   <Box height={'20px'} />
                   <Grid
@@ -217,7 +217,7 @@ const Perfil: NextPage = () => {
                           variant={'body2'}
                           sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}
                         >
-                          Ver perfil en Ciudadanía Digital
+                          Ver perfil en Ciudadanía
                         </Typography>
                         <Box width={'10px'} />
                         <Icono color={'inherit'}>north_east</Icono>

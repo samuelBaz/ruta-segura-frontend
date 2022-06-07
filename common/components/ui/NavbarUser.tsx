@@ -33,6 +33,7 @@ import { IconoTooltip } from './IconoTooltip'
 import { AlertDialog } from './AlertDialog'
 import { imprimir } from '../../utils/imprimir'
 import { RoleType } from '../../../modules/login/loginTypes'
+import { useThemeContext } from '../../../context/ui/ThemeContext'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -52,6 +53,8 @@ export const NavbarUser = () => {
     useState(false)
 
   const router = useRouter()
+
+  const { themeMode, toggleTheme } = useThemeContext()
 
   const cambiarRol = async (event: React.ChangeEvent<HTMLInputElement>) => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
@@ -292,6 +295,18 @@ export const NavbarUser = () => {
                 </ListItem>
               ))}
             </List>
+            <MenuItem sx={{ p: 2 }} onClick={toggleTheme}>
+              {themeMode === 'light' ? (
+                <Icono>dark_mode</Icono>
+              ) : (
+                <Icono>light_mode</Icono>
+              )}
+
+              <Box width={'20px'} />
+              <Typography variant={'body2'}>
+                {themeMode === 'light' ? `Modo oscuro` : `Modo claro`}{' '}
+              </Typography>
+            </MenuItem>
             <MenuItem sx={{ p: 2 }} onClick={accionMostrarAlertaCerrarSesion}>
               <Icono>logout</Icono>
               <Box width={'20px'} />
