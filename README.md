@@ -84,14 +84,20 @@ npm run build
 
 ### Ejecutar test
 
+Test's unitarios aún en progreso 🔨
 ```
 npm run test
 ```
 
 ## Documentación
 
+La documentación de los componentes fue elaborada usando Storybook [Más información](https://storybook.js.org/docs/react/get-started/introduction)
 
-> La documentación esta en progreso
+Para generar la documentación ejecutar el siguiente comando:
+
+```bash
+npm run storybook
+```
 
 ## Changelog
 
