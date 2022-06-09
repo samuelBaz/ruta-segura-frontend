@@ -165,7 +165,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       })
 
       if (respuesta.datos?.access_token) {
-        guardarCookie('token', respuesta.datos?.access_token, { expires: 60 })
+        guardarCookie('token', respuesta.datos?.access_token)
         imprimir(`Token ✅: ${respuesta.datos?.access_token}`)
 
         setUser(respuesta.datos)
@@ -196,13 +196,17 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const actualizarSesion = async () => {
     imprimir(`Actualizando token 🚨`)
 
-    const respuesta = await Servicios.post({
-      url: `${Constantes.baseUrl}/token`,
-    })
+    try {
+      const respuesta = await Servicios.post({
+        url: `${Constantes.baseUrl}/token`,
+      })
 
-    guardarCookie('token', respuesta.datos?.access_token, { expires: 60 })
+      guardarCookie('token', respuesta.datos?.access_token)
 
-    await delay(500)
+      await delay(500)
+    } catch (e) {
+      await logout()
+    }
   }
 
   const sesionPeticion = async ({
@@ -264,14 +268,21 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       setLoading(true)
       mostrarFullScreen()
       // await delay(1000)
-      await sesionPeticion({ url: `${Constantes.baseUrl}/logout` })
+
+      await Servicios.get({
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${leerCookie('token') ?? ''}`,
+        },
+        url: `${Constantes.baseUrl}/logout`,
+      })
     } catch (e) {
       imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
-      eliminarCookie('token')
-      eliminarCookie('rol')
-      eliminarCookie('jid')
+      eliminarCookie('token') // Eliminando access_token
+      eliminarCookie('rol') // Eliminando rol
+      eliminarCookie('jid') // Eliminando refresh token
       setUser(null)
       router.reload()
       await delay(1000)
