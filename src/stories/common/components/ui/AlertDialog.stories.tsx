@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react'
 
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { AlertDialog } from '../../../../../common/components/ui/AlertDialog'
-import { Icono } from '../../../../../common/components/ui'
 import { action } from '@storybook/addon-actions'
 import Button from '@mui/material/Button'
+
 export default {
   title: 'COMPONENTES/AlertDialog',
   component: AlertDialog,

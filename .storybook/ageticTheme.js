@@ -2,9 +2,8 @@ import { create } from '@storybook/theming'
 
 export default create({
   base: 'light',
-  brandTitle: 'Proyecto de obras storybook',
+  brandTitle: 'Frontend base Storybook',
   brandUrl: '#',
-  brandImage:
-    'https://upload.wikimedia.org/wikipedia/commons/a/a0/LogoAgetic.svg',
+  brandImage: 'https://nx.dev/documentation/shared/storybook-logo.png',
   brandTarget: '_self',
 })
