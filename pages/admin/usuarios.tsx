@@ -168,11 +168,16 @@ const Usuarios: NextPage = () => {
           />
         )}
         <IconoTooltip
-          titulo={'Restablecer contraseña'}
+          titulo={
+            usuarioData.ciudadaniaDigital
+              ? 'No puede restablecer la contraseña'
+              : 'Restablecer contraseña'
+          }
           color={'info'}
           accion={async () => {
             await restablecimientoPassUsuarioModal(usuarioData)
           }}
+          desactivado={usuarioData.ciudadaniaDigital}
           icono={'vpn_key'}
           name={'Restablecer contraseña'}
         />

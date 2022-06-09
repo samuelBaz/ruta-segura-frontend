@@ -1,7 +1,12 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
 import createEmotionCache from '../common/utils/createEmotionCache'
-import { commitDate, commitID, nombreRama } from '../common/utils'
+import {
+  commitDate,
+  commitID,
+  nombreRama,
+  versionNumber,
+} from '../common/utils'
 import { imprimir } from '../common/utils/imprimir'
 
 export default class MyDocument extends Document {
@@ -100,6 +105,8 @@ MyDocument.getInitialProps = async (ctx) => {
   imprimir(`🆔 commit-id: ${commitId}`)
   const lastCommitDate = await commitDate()
   imprimir(`🕙 commit-date: ${lastCommitDate}`)
+  const version = versionNumber()
+  imprimir(`🏳 versión: ${version}`)
 
   return {
     ...initialProps,

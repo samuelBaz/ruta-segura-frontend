@@ -17,14 +17,11 @@ import { CustomDialog, Icono } from '../../common/components/ui'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import { formatoFecha } from '../../common/utils/fechas'
 import { CambioPassModal } from '../../modules/admin/perfil/CambioPassModal'
-import { useThemeContext } from '../../context/ui/ThemeContext'
 import { Constantes } from '../../config'
 import { BotonCiudadania } from '../../modules/login/BotonCiudadania'
 
 const Perfil: NextPage = () => {
   const { usuario } = useAuth()
-
-  const { themeMode } = useThemeContext()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))

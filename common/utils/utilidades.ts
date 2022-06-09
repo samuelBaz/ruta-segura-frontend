@@ -1,6 +1,7 @@
 import childProcess from 'child_process'
 import { Constantes } from '../../config'
 import { IZXCVBNResult, zxcvbn } from 'zxcvbn-typescript'
+import packageJson from '../../package.json'
 
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -37,6 +38,10 @@ export const execChildProcess = async (comando: string) => {
       }
     )
   })
+}
+
+export const versionNumber = () => {
+  return packageJson.version
 }
 
 export const siteName = () => {

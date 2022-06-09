@@ -16,6 +16,7 @@ import { useAuth } from '../../../context/auth'
 import { imprimir } from '../../utils/imprimir'
 import { Icono } from './Icono'
 import { ModuloType, RoleType } from '../../../modules/login/loginTypes'
+import { versionNumber } from '../../utils'
 
 const drawerWidth = 240
 
@@ -157,6 +158,14 @@ export const Sidebar = () => {
             </div>
           ))}
         </List>
+      </Box>
+      <Box sx={{ pb: 2 }} display="flex" flex="1" justifyContent="space-around">
+        <Box sx={{ alignSelf: 'flex-end' }}>
+          <Typography
+            color="text.secondary"
+            variant={'body2'}
+          >{`v${versionNumber()}`}</Typography>
+        </Box>
       </Box>
     </Drawer>
   )
