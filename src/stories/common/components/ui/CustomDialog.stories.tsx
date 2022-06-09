@@ -1,10 +1,10 @@
 // import React from 'react'
 
-import { ComponentStory, ComponentMeta, storiesOf } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { action, actions } from '@storybook/addon-actions'
+import { action } from '@storybook/addon-actions'
 import { CustomDialog } from '../../../../../common/components/ui/CustomDialog'
-import { Button } from '@mui/material'
+
 export default {
   title: 'COMPONENTES/CustomDialog',
   component: CustomDialog,
@@ -61,26 +61,6 @@ MaxWidth.storyName = 'Tamaño para modal'
 MaxWidth.args = {
   ...Activo.args,
   maxWidth: 'xs',
-  children: (
-    <div>
-      <h3>Componente React...</h3>
-      <h6> React node</h6>
-    </div>
-  ),
-}
-
-export const TituloReacNode = Template.bind({})
-TituloReacNode.storyName = 'Titulo con React node'
-TituloReacNode.args = {
-  ...Activo.args,
-  maxWidth: 'xs',
-  title: (
-    <div>
-      Hola mundo y click{' '}
-      <Button onClick={action('Cancelar accion')}>Cancelar</Button>{' '}
-      <Button onClick={action('Acpetar accion')}>Aceptar</Button>{' '}
-    </div>
-  ),
   children: (
     <div>
       <h3>Componente React...</h3>

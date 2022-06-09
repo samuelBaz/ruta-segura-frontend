@@ -1,25 +1,19 @@
 // import React from 'react'
 
-import {
-  ComponentStory,
-  ComponentMeta,
-  storiesOf,
-  Story,
-} from '@storybook/react'
+import { ComponentStory, Meta } from '@storybook/react'
 
-import { action, actions } from '@storybook/addon-actions'
+import { action } from '@storybook/addon-actions'
 import { FormInputText } from '../../../../../../common/components/ui/form/FormInputText'
 import { useForm } from 'react-hook-form'
-import { Meta } from '@storybook/react'
 
 import {
-  Title,
-  Subtitle,
+  ArgsTable,
   Description,
   Primary,
-  ArgsTable,
-  Stories,
   PRIMARY_STORY,
+  Stories,
+  Subtitle,
+  Title,
 } from '@storybook/addon-docs'
 
 export interface PersonaType {

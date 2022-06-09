@@ -1,9 +1,10 @@
 // import React from 'react'
 
-import { ComponentStory, ComponentMeta, storiesOf } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { IconoTooltip } from '../../../../../common/components/ui/IconoTooltip'
-import { action, actions } from '@storybook/addon-actions'
+import { action } from '@storybook/addon-actions'
+
 export default {
   title: 'COMPONENTES/IconoTooltip',
   component: IconoTooltip,

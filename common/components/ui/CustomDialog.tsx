@@ -1,4 +1,5 @@
 import {
+  Breakpoint,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -20,6 +21,7 @@ interface Props {
   handleClose: () => void
   title: string
   fullScreen?: boolean
+  maxWidth?: Breakpoint | undefined
   paperProps?: Partial<PaperProps>
 }
 
@@ -47,6 +49,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
   title,
   children,
   fullScreen = false,
+  maxWidth,
   paperProps,
 }) => {
   const theme = useTheme()
@@ -57,6 +60,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
       PaperProps={paperProps}
       fullScreen={fullScreen || dsm}
       fullWidth={true}
+      maxWidth={maxWidth}
       open={isOpen}
       TransitionComponent={dsm ? Transition : TransitionZoom}
       onClose={handleClose}

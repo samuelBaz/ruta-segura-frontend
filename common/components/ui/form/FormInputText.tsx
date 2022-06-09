@@ -24,6 +24,8 @@ export interface FormInputTextProps {
   onEnter?: () => void
   onClear?: () => void
   variant?: 'standard' | 'outlined' | 'filled'
+  rows?: number
+  multiline?: boolean
   bgcolor?: string
   labelVariant?: Variant
 }
@@ -41,6 +43,8 @@ export const FormInputText = ({
   onEnter,
   onClear,
   variant,
+  rows = 1,
+  multiline = false,
   bgcolor,
   labelVariant = 'subtitle2',
 }: FormInputTextProps) => {
@@ -72,6 +76,8 @@ export const FormInputText = ({
               }}
               size={size}
               error={!!error}
+              rows={rows}
+              multiline={multiline}
               type={showPassword ? 'text' : type}
               onChange={(event) => {
                 if (onChange) {
