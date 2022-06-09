@@ -209,6 +209,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     url,
     tipo = 'get',
     body,
+    headers,
     params,
   }: peticionFormatoMetodo) => {
     try {
@@ -217,20 +218,21 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         await actualizarSesion()
       }
 
-      const headers = {
+      const cabeceras = {
         accept: 'application/json',
         Authorization: `Bearer ${leerCookie('token') ?? ''}`,
+        ...headers,
       }
 
       imprimir(
         `enviando 🔐🌍 : ${
           body ? JSON.stringify(body) : '{}'
-        } -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
+        } -> ${tipo} - ${url} - con ${JSON.stringify(cabeceras)}`
       )
       const response = await Servicios.peticionHTTP({
         url,
         tipo,
-        headers,
+        headers: cabeceras,
         body,
         params,
       })
