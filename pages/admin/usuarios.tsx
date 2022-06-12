@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import {
+  Box,
   Button,
   Chip,
   Grid,
@@ -102,6 +103,7 @@ const Usuarios: NextPage = () => {
     { campo: 'nro_documento', nombre: 'Nro. Documento' },
     { campo: 'persona', nombre: 'Persona' },
     { campo: 'usuario', nombre: 'Usuario' },
+    { campo: 'tipo', nombre: 'Tipo' },
     { campo: 'rol', nombre: 'Roles' },
     { campo: 'estado', nombre: 'Estado' },
     { campo: 'acciones', nombre: 'Acciones' },
@@ -127,6 +129,20 @@ const Usuarios: NextPage = () => {
       >
         {usuarioData.usuario}
       </Typography>,
+
+      <Box key={`${usuarioData.id}-${indexUsuario}-tipo`}>
+        {usuarioData.ciudadaniaDigital && (
+          <Chip
+            size={'small'}
+            color={'primary'}
+            label="Ciudadanía"
+            variant="outlined"
+          />
+        )}
+        {!usuarioData.ciudadaniaDigital && (
+          <Chip size={'small'} label="Normal" variant="outlined" />
+        )}
+      </Box>,
       <Grid key={`${usuarioData.id}-${indexUsuario}-roles`}>
         {usuarioData.usuarioRol.map((itemUsuarioRol, indexUsuarioRol) => (
           <Chip
