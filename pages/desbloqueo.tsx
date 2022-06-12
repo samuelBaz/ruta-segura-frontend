@@ -44,7 +44,7 @@ const Desbloqueo: NextPage = () => {
     } catch (e) {
       setMensaje(InterpreteMensajes(e))
       setError(true)
-      imprimir(`Error al iniciar sesión: ${JSON.stringify(e)}`)
+      imprimir(`Error al desbloquear usuario: ${JSON.stringify(e)}`)
     } finally {
       ocultarFullScreen()
     }

@@ -2,25 +2,14 @@ const isHTML = RegExp.prototype.test.bind(/^(<([^>]+)>)$/i)
 
 export const InterpreteMensajes = (mensaje: any): string => {
   try {
-    let nuevoMensaje: string
-
-    if (mensaje instanceof Error) {
-      nuevoMensaje = mensaje.message
-    } else if (typeof mensaje === 'string') {
-      if (isHTML(mensaje)) {
-        nuevoMensaje = 'Solicitud erronea'
-      } else {
-        nuevoMensaje = mensaje
-      }
-    } else {
-      nuevoMensaje =
-        mensaje.message ||
-        mensaje.mensaje ||
-        mensaje.error ||
-        'Solicitud erronea'
-    }
-    return nuevoMensaje
+    const errorMessage = JSON.parse(JSON.stringify(mensaje))
+    return (
+      errorMessage.mensaje ??
+      errorMessage.message ??
+      errorMessage.error ??
+      'Solicitud erronea 🚨'
+    )
   } catch (e) {
-    return `${mensaje}`
+    return isHTML(mensaje) ? 'Solicitud erronea 🚨' : `${mensaje}`
   }
 }

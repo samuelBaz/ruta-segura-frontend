@@ -221,13 +221,13 @@ const Login: NextPage = () => {
                   </Box>
                   <BotonCiudadania
                     disabled={progresoLogin}
-                    altText={'Ingresa con Ciudadanía'}
+                    altText={'Ingresar con Ciudadanía'}
                     accion={() => {
                       window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
                     }}
                   >
                     <Typography sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}>
-                      Ingresa con Ciudadanía
+                      Ingresar con Ciudadanía
                     </Typography>
                   </BotonCiudadania>
                 </Box>
