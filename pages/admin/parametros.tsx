@@ -42,6 +42,7 @@ const Parametros: NextPage = () => {
 
   // Permisos para acciones
   const [permisos, setPermisos] = useState<CasbinTypes>({
+    read: false,
     create: false,
     update: false,
     delete: false,

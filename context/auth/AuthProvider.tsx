@@ -363,6 +363,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         interpretarPermiso: async (routerName) => {
           if (obtenerRolUsuario()) {
             return {
+              read: await verificarAutorizacion({
+                sujeto: obtenerRolUsuario()?.rol ?? '',
+                objeto: routerName,
+                accion: 'read',
+              }),
               create: await verificarAutorizacion({
                 sujeto: obtenerRolUsuario()?.rol ?? '',
                 objeto: routerName,
@@ -381,6 +386,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
             }
           } else
             return {
+              read: false,
               create: false,
               update: false,
               delete: false,
