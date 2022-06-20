@@ -264,12 +264,13 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   }
 
   const logout = async () => {
+    let respuesta: any
     try {
       setLoading(true)
       mostrarFullScreen()
       // await delay(1000)
 
-      await Servicios.get({
+      respuesta = await Servicios.get({
         headers: {
           accept: 'application/json',
           Authorization: `Bearer ${leerCookie('token') ?? ''}`,
@@ -284,10 +285,14 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       eliminarCookie('rol') // Eliminando rol
       eliminarCookie('jid') // Eliminando refresh token
       setUser(null)
-      router.reload()
-      await delay(1000)
-      setLoading(false)
-      ocultarFullScreen()
+      if (respuesta.url) {
+        window.location.href = respuesta.url
+      } else {
+        router.reload()
+        await delay(1000)
+        setLoading(false)
+        ocultarFullScreen()
+      }
     }
   }
 

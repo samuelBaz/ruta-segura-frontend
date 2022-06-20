@@ -1,6 +1,6 @@
 {
   "name": "nextjs-typescript",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Frontend base con Next.js, MUI v5 y TypeScript",
   "author": "Imanol",
   "private": true,
@@ -43,6 +43,7 @@
     "@babel/core": "7.18.5",
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
+    "@mdx-js/react": "2.1.2",
     "@storybook/addon-actions": "6.5.9",
     "@storybook/addon-docs": "6.5.9",
     "@storybook/addon-essentials": "6.5.9",
