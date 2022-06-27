@@ -167,7 +167,7 @@ const Parametros: NextPage = () => {
   }, [estaAutenticado])
 
   useEffect(() => {
-    if (estaAutenticado) obtenerParametrosPeticion().finally(() => {})
+    if (estaAutenticado) obtenerParametrosPeticion().finally(() => { })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
@@ -204,8 +204,8 @@ const Parametros: NextPage = () => {
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
-          contenidoTabla={contenidoTabla}
           paginacion={paginacion}
+          contenidoTabla={contenidoTabla}
         />
       </LayoutUser>
     </>
