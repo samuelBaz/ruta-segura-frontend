@@ -10,7 +10,7 @@ export const guardarCookie = (
   imprimir(`🍪 ✅ ${key} : ${value}`)
 }
 
-export const leerCookie = (key: string) => {
+export const leerCookie = (key: string): string | undefined => {
   return Cookies.get(key)
 }
 

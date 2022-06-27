@@ -45,14 +45,26 @@ class ServiciosClass {
     return !!err.isAxiosError && !err.response
   }
 
-  async peticion({ url, tipo = 'get', headers, body }: peticionFormatoMetodo) {
+  async peticion({
+    url,
+    tipo = 'get',
+    headers,
+    body,
+    params,
+  }: peticionFormatoMetodo) {
     try {
       imprimir(
         `enviando 🌍 : ${
           body ? JSON.stringify(body) : '{}'
         } -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
       )
-      const response = await this.peticionHTTP({ url, tipo, headers, body })
+      const response = await this.peticionHTTP({
+        url,
+        tipo,
+        headers,
+        body,
+        params,
+      })
       imprimir(
         `respuesta 📡 : ${
           body ? JSON.stringify(body) : '{}'
@@ -72,48 +84,58 @@ class ServiciosClass {
     }
   }
 
-  async get({ url, body = {}, headers = {} }: peticionFormato): Promise<any> {
+  async get({
+    url,
+    body = {},
+    headers = {},
+    params,
+  }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'get',
       headers,
       body,
+      params,
     })
   }
 
-  async post({ url, body, headers }: peticionFormato): Promise<any> {
+  async post({ url, body, headers, params }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'post',
       headers,
       body,
+      params,
     })
   }
 
-  async put({ url, body, headers }: peticionFormato): Promise<any> {
+  async put({ url, body, headers, params }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'put',
       headers,
       body,
+      params,
     })
   }
 
-  async patch({ url, body, headers }: peticionFormato): Promise<any> {
+  async patch({ url, body, headers, params }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'patch',
       headers,
       body,
+      params,
     })
   }
 
-  async delete({ url, body, headers }: peticionFormato): Promise<any> {
+  async delete({ url, body, headers, params }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'delete',
       headers,
       body,
+      params,
     })
   }
 }
