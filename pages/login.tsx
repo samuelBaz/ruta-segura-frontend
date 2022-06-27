@@ -10,12 +10,7 @@ import {
   useTheme,
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import {
-  delay,
-  guardarCookie,
-  InterpreteMensajes,
-  siteName,
-} from '../common/utils'
+import { delay, InterpreteMensajes, siteName } from '../common/utils'
 import { Constantes } from '../config'
 import { Servicios } from '../common/services'
 import { useAuth } from '../context/auth'
@@ -31,7 +26,7 @@ import { useRouter } from 'next/router'
 import { BotonCiudadania } from '../modules/login/BotonCiudadania'
 
 const Login: NextPage = () => {
-  const { ingresar, progresoLogin, actualizarSesion } = useAuth()
+  const { ingresar, progresoLogin, autorizarCiudadania } = useAuth()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
@@ -81,11 +76,14 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     if (!router.isReady) return
-    const { code } = router.query
-    if (code) {
-      imprimir(`code: ${code}`)
-      guardarCookie('token', code)
-      actualizarSesion()
+
+    const { code, state, session_state } = router.query
+    if (code && state && session_state) {
+      autorizarCiudadania({
+        code: code as string,
+        state: state as string,
+        session_state: session_state as string,
+      }).finally()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady])

@@ -36,6 +36,7 @@ import { verificarToken } from '../../common/utils/token'
 import {
   idRolType,
   LoginType,
+  AutorizacionLoginType,
   PoliticaType,
   RoleType,
   UsuarioType,
@@ -48,9 +49,13 @@ interface ContextProps {
   rolUsuario: RoleType | undefined
   setRolUsuario: ({ idRol }: idRolType) => Promise<void>
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
+  autorizarCiudadania: ({
+    code,
+    state,
+    session_state,
+  }: AutorizacionLoginType) => Promise<void>
   progresoLogin: boolean
   cerrarSesion: () => void
-  actualizarSesion: () => void
   sesionPeticion: ({
     url,
     tipo,
@@ -193,6 +198,38 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
+  const autorizarCiudadania = async ({
+    code,
+    state,
+    session_state,
+  }: AutorizacionLoginType) => {
+    try {
+      setLoading(true)
+      await delay(4000)
+      const respuesta = await Servicios.get({
+        url: `${Constantes.baseUrl}/ciudadania-autorizar`,
+        body: {},
+        params: {
+          code: code,
+          state: state,
+          session_state: session_state,
+        },
+        headers: {
+          accept: 'application/json',
+        },
+      })
+
+      imprimir(`Sesión Autorizada: ${JSON.stringify(respuesta)}`)
+      guardarCookie('token', respuesta.access_token)
+      await loadUserFromCookies()
+    } catch (e) {
+      imprimir(`Error al autorizar sesión: ${e}`)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const actualizarSesion = async () => {
     imprimir(`Actualizando token 🚨`)
 
@@ -264,7 +301,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   }
 
   const logout = async () => {
-    let respuesta: any
+    let respuesta: { url?: string } | undefined | null
     try {
       setLoading(true)
       mostrarFullScreen()
@@ -281,12 +318,13 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
+      imprimir(`finalizando con respuesta: ${JSON.stringify(respuesta)}`)
       eliminarCookie('token') // Eliminando access_token
       eliminarCookie('rol') // Eliminando rol
       eliminarCookie('jid') // Eliminando refresh token
       setUser(null)
-      if (respuesta.url) {
-        window.location.href = respuesta.url
+      if (respuesta?.url) {
+        window.location.href = respuesta?.url
       } else {
         router.reload()
         await delay(1000)
@@ -360,10 +398,10 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         rolUsuario: obtenerRolUsuario(),
         setRolUsuario: CambiarRol,
         ingresar: login,
+        autorizarCiudadania: autorizarCiudadania,
         progresoLogin: loading,
         cerrarSesion: logout,
         sesionPeticion: sesionPeticion,
-        actualizarSesion: loadUserFromCookies,
         verificarPermiso: verificarAutorizacion,
         interpretarPermiso: async (routerName) => {
           if (obtenerRolUsuario()) {
