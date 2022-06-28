@@ -166,7 +166,11 @@ const Modulos: NextPage = () => {
         key={`${moduloData.id}-${indexModulo}-icono`}
         variant={'body2'}
       >
-        <Icono color="inherit">{`${moduloData.propiedades.icono}`}</Icono>
+        {moduloData.fidModulo === null ? (
+          <></>
+        ) : (
+          <Icono color="inherit">{`${moduloData.propiedades.icono}`}</Icono>
+        )}
       </Typography>,
       <Typography
         key={`${moduloData.id}-${indexModulo}-nombre`}
