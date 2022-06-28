@@ -1,4 +1,4 @@
-/// CRUD de politicas
+/// CRUD de políticas
 
 export interface PoliticaCRUDType {
   sujeto: string

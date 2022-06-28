@@ -31,7 +31,7 @@ export const FullScreenLoading: FC<Props> = ({ mensaje }) => {
         <div className="bar11" />
         <div className="bar12" />
       </div>
-      <style jsx>{`
+      <style>{`
         div.spinner {
           position: relative;
           width: 54px;

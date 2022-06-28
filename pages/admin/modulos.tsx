@@ -15,10 +15,10 @@ import { delay, InterpreteMensajes } from '../../common/utils'
 import { Constantes } from '../../config'
 import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
-import { IModulos } from '../../modules/admin/modulos/interfaces/imodulos'
-import { VistaModalModulo } from '../../modules/admin/modulos/componente/modalModulo'
+import { ModulosType } from '../../modules/admin/modulos/types/ModulosType'
+import { VistaModalModulo } from '../../modules/admin/modulos/ui/ModalModulo'
 import { useRouter } from 'next/router'
-import { FiltroModulo } from '../../modules/admin/modulos/componente/filtroModulo'
+import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
 
 export interface FiltroTypeM {
   buscar: string
@@ -27,7 +27,7 @@ export interface FiltroTypeM {
 const Modulos: NextPage = () => {
   const router = useRouter()
   //const [parametrosData, setParametrosData] = useState<IModulos[]>([])
-  const [lmodulos, setModulosData] = useState<IModulos[]>([])
+  const [modulosData, setModulosData] = useState<ModulosType[]>([])
   const [errorParametrosData, setErrorParametrosData] = useState<any>()
   const [loading, setLoading] = useState<boolean>(true)
   const [mostrarFiltroModulo, setMostrarFiltroModulo] = useState(false)
@@ -39,10 +39,11 @@ const Modulos: NextPage = () => {
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
 
   const [filtroBuscar, setFiltroBuscar] = useState<string>('')
-  // ============= PARA OBTENER PERMISOS DESDE CASBIN ==========================
+
   async function definirPermisos() {
     setPermisos(await interpretarPermiso(router.pathname))
   }
+
   useEffect(() => {
     definirPermisos().finally()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,8 +54,6 @@ const Modulos: NextPage = () => {
     update: false,
     delete: false,
   })
-
-  //============================================================================
 
   const agregarModuloModal = () => {
     setParametroEdicion(undefined)
@@ -106,7 +105,7 @@ const Modulos: NextPage = () => {
   ]
 
   const [parametroEdicion, setParametroEdicion] = useState<
-    IModulos | undefined
+    ModulosType | undefined
   >()
 
   const paginacion = (
@@ -118,7 +117,7 @@ const Modulos: NextPage = () => {
       cambioLimite={setLimite}
     />
   )
-  const editarModuloModal = (parametro: IModulos) => {
+  const editarModuloModal = (parametro: ModulosType) => {
     setParametroEdicion(parametro)
     setModalModulo(true)
   }
@@ -160,7 +159,7 @@ const Modulos: NextPage = () => {
     { campo: 'estado', nombre: 'Estado' },
     { campo: 'acciones', nombre: 'Acciones' },
   ]
-  const contenidoTabla: Array<Array<ReactNode>> = lmodulos.map(
+  const contenidoTabla: Array<Array<ReactNode>> = modulosData.map(
     (moduloData, indexModulo) => [
       <Typography
         key={`${moduloData.id}-${indexModulo}-icono`}
@@ -213,21 +212,6 @@ const Modulos: NextPage = () => {
       </Grid>,
     ]
   )
-  /*
-  const Texto = () => {
-    return (
-      <TextField
-        id="outlined-search"
-        label="Buscar 3...."
-        type="search"
-        onChange={(event) => {
-          console.log(' buscando....', event.target.value)
-          setFiltroBuscar(event.target.value)
-          console.log(' buscando. v2...', filtroBuscar)
-        }}
-      />
-    )
-  }*/
   return (
     <>
       <CustomDialog
@@ -242,7 +226,7 @@ const Modulos: NextPage = () => {
             obtenerModuloPeticion().finally()
           }}
           accionCancelar={cerrarModalParametro}
-          lmodulos={lmodulos.filter((f) => f.fidModulo === null)}
+          lmodulos={modulosData.filter((f) => f.fidModulo === null)}
         />
       </CustomDialog>
 
@@ -257,7 +241,7 @@ const Modulos: NextPage = () => {
           contenidoTabla={contenidoTabla}
           filtros={
             mostrarFiltroModulo && (
-              <FiltroModulo
+              <FiltroModulos
                 filtroModulo={filtroBuscar}
                 accionCorrecta={(filtros) => {
                   setFiltroBuscar(filtros.buscar)

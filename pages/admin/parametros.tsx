@@ -15,11 +15,11 @@ import { Constantes } from '../../config'
 
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { VistaModalParametro } from '../../modules/admin/parametros'
+import { VistaModalParametro } from '../../modules/admin/parametros/ui'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
-import { ParametroCRUDType } from '../../modules/admin/parametros/parametrosCRUDTypes'
-import { FiltroParametros } from '../../modules/admin/parametros/FiltroParametros'
+import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametrosCRUDTypes'
+import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -151,7 +151,7 @@ const Parametros: NextPage = () => {
             pagina: pagina,
             limite: limite,
           },
-          ...(filtroParametro.length == 0 ? {} : { filtro: filtroParametro}),
+          ...(filtroParametro.length == 0 ? {} : { filtro: filtroParametro }),
         },
       })
       setParametrosData(respuesta.datos?.filas)
@@ -189,7 +189,6 @@ const Parametros: NextPage = () => {
     definirPermisos().finally()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado])
-  
 
   useEffect(() => {
     if (estaAutenticado) obtenerParametrosPeticion().finally(() => {})
@@ -223,7 +222,7 @@ const Parametros: NextPage = () => {
         <VistaModalParametro
           parametro={parametroEdicion}
           accionCorrecta={() => {
-            cerrarModalParametro()
+            cerrarModalParametro().finally()
             obtenerParametrosPeticion().finally()
           }}
           accionCancelar={cerrarModalParametro}

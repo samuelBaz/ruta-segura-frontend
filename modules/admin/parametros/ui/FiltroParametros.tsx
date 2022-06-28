@@ -1,7 +1,7 @@
-import { Box, Grid } from "@mui/material";
-import { FormInputText } from '../../../common/components/ui/form'
-import { useForm } from "react-hook-form";
-import { useDebouncedCallback } from "use-debounce";
+import { Box, Grid } from '@mui/material'
+import { FormInputText } from '../../../../common/components/ui/form'
+import { useForm } from 'react-hook-form'
+import { useDebouncedCallback } from 'use-debounce'
 
 export interface FiltroType {
   parametro: string
@@ -18,19 +18,16 @@ export const FiltroParametros = ({
   accionCorrecta,
 }: FiltroParametrosType) => {
   const { control, watch, setValue } = useForm<FiltroType>({
-      defaultValues: {
-          parametro: filtroParametro,
-      }
+    defaultValues: {
+      parametro: filtroParametro,
+    },
   })
 
   const filtroParametroWatch: string = watch('parametro')
 
-  const debounced = useDebouncedCallback(
-    (filtros: FiltroType) => {
-      accionCorrecta(filtros)
-    },
-    1000            
-  )
+  const debounced = useDebouncedCallback((filtros: FiltroType) => {
+    accionCorrecta(filtros)
+  }, 1000)
 
   const actualizacionFiltros = (filtros: FiltroType) => {
     debounced(filtros)
@@ -60,6 +57,6 @@ export const FiltroParametros = ({
           />
         </Grid>
       </Grid>
-    </Box>        
-  );
-};
+    </Box>
+  )
+}

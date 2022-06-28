@@ -535,9 +535,7 @@ const Usuarios: NextPage = () => {
                   setFiltroRoles(filtros.roles)
                   setFiltroUsuario(filtros.usuario)
                 }}
-                accionCerrar={() => {
-                  imprimir(`👀 cerrar`)
-                }}
+                accionCerrar={() => {}}
               />
             )
           }

@@ -1,12 +1,4 @@
-import { AirlineSeatIndividualSuiteSharp } from '@mui/icons-material'
-import {
-  Box,
-  Button,
-  Checkbox,
-  DialogActions,
-  Grid,
-  Switch,
-} from '@mui/material'
+import { Box, Button, DialogActions, Grid, Switch } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
@@ -19,15 +11,15 @@ import { InterpreteMensajes } from '../../../../common/utils'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { Constantes } from '../../../../config'
 import { useAuth } from '../../../../context/auth'
-import { IModalModuloType } from '../interfaces/imodal-parametro-type'
-import { IModulos } from '../interfaces/imodulos'
+import { ModalModuloType } from '../types/ModalModuloType'
+import { ModulosType } from '../types/ModulosType'
 
 export const VistaModalModulo = ({
   modulo,
   accionCorrecta,
   accionCancelar,
   lmodulos,
-}: IModalModuloType) => {
+}: ModalModuloType) => {
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
   const [checked, setChecked] = useState<boolean>(!modulo?.fidModulo?.id)
 
@@ -37,7 +29,7 @@ export const VistaModalModulo = ({
   // Proveedor de la sesión
   const { sesionPeticion } = useAuth() //hoook
 
-  const { handleSubmit, control, getValues, setValue } = useForm<IModulos>({
+  const { handleSubmit, control, setValue } = useForm<ModulosType>({
     defaultValues: {
       id: modulo?.id,
       label: modulo?.label,
@@ -48,22 +40,18 @@ export const VistaModalModulo = ({
       fidModulo: modulo?.fidModulo?.id,
     },
   })
-  // const { field } = useController({ 'propiedades', control })
-  // console.log('fieldddddddddddddddddddddddddddddddd', field)
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
     if (!checked) {
       setValue('propiedades.icono', '')
     }
   }
-  //console.log('============ datos form',getValues())
-  //const data=getValues()// para obtener datos del formulario
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
-  console.log('lista de modulos...............................', lmodulos)
-  const guardarActualizarModulo = async (data: IModulos) => {
+
+  const guardarActualizarModulo = async (data: ModulosType) => {
     await guardarActualizarModuloPeticion(data)
   }
-  const guardarActualizarModuloPeticion = async (emodulo: IModulos) => {
+  const guardarActualizarModuloPeticion = async (emodulo: ModulosType) => {
     try {
       setLoadingModal(true)
       //await delay(1000)

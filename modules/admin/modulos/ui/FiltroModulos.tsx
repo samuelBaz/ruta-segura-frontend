@@ -1,37 +1,27 @@
 import { Box, Grid } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
-import {
-  FormInputDropdown,
-  FormInputText,
-} from '../../../../common/components/ui/form'
+import { FormInputText } from '../../../../common/components/ui/form'
 
 export interface FiltroType {
   buscar: string
-  app: string
 }
 
-export interface FiltroModalPoliticasType {
-  filtroPolitica: string
-  filtroApp: string
+export interface FiltroModalModuloType {
+  filtroModulo: string
   accionCorrecta: (filtros: FiltroType) => void
   accionCerrar: () => void
 }
 
-export const FiltroPolitica = ({
-  filtroPolitica,
-  filtroApp,
+export const FiltroModulos = ({
+  filtroModulo,
   accionCorrecta,
-  accionCerrar,
-}: FiltroModalPoliticasType) => {
-  const { control, watch, setValue } = useForm<FiltroType>({
+}: FiltroModalModuloType) => {
+  const { control, setValue } = useForm<FiltroType>({
     defaultValues: {
-      buscar: filtroPolitica,
-      app: filtroApp,
+      buscar: filtroModulo,
     },
   })
-  const filtroBuscarWatch: string = watch('buscar')
-  const filtroAppWatch: string = watch('app')
   const debounced = useDebouncedCallback(
     // function
     (filtros: FiltroType) => {
@@ -41,10 +31,8 @@ export const FiltroPolitica = ({
     1000
   )
   const actualizacionFiltros = (filtros: FiltroType) => {
-    console.log('filtros.... actualizacionFiltros', filtros)
     debounced(filtros)
   }
-  const lapp: string[] = ['frontend', 'backend']
   return (
     <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
@@ -58,33 +46,14 @@ export const FiltroPolitica = ({
             onChange={(event) => {
               actualizacionFiltros({
                 buscar: event.target.value,
-                app: filtroAppWatch,
+                //roles: filtroRolesWatch,
               })
             }}
             onClear={() => {
               setValue('buscar', '')
               accionCorrecta({
                 buscar: '',
-                app: filtroAppWatch,
-              })
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4}>
-          <FormInputDropdown
-            id={'apps'}
-            name="app"
-            control={control}
-            label="App"
-            options={lapp.map((la) => ({
-              key: la,
-              value: la,
-              label: la,
-            }))}
-            onChange={(event) => {
-              actualizacionFiltros({
-                buscar: filtroBuscarWatch,
-                app: event.target.value,
+                //roles: filtroRolesWatch,
               })
             }}
           />

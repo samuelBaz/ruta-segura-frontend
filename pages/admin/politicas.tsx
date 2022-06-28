@@ -15,12 +15,12 @@ import { delay, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { VistaModalPolitica } from '../../modules/admin/politicas'
+import { VistaModalPolitica } from '../../modules/admin/politicas/ui'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
-import { PoliticaCRUDType } from '../../modules/admin/politicas/politicasCRUDTypes'
+import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTypes'
 
-import { FiltroPolitica } from '../../modules/admin/politicas/componente/filtroPoliticas'
+import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 
 const Politicas: NextPage = () => {
@@ -330,7 +330,6 @@ const Politicas: NextPage = () => {
                 filtroPolitica={filtroPolitica}
                 filtroApp={filtroApp}
                 accionCorrecta={(filtros) => {
-                  console.log(' filtros.......................', filtros)
                   setFiltroPolitica(filtros.buscar)
                   setFiltroApp(filtros.app)
                 }}

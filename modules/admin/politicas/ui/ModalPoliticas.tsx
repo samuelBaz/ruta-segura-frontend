@@ -1,25 +1,25 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { delay, InterpreteMensajes } from '../../../common/utils'
-import { Constantes } from '../../../config'
+import { delay, InterpreteMensajes } from '../../../../common/utils'
+import { Constantes } from '../../../../config'
 
 import { Box, Button, DialogActions, Grid } from '@mui/material'
 import {
   FormInputDropdown,
   FormInputDropdownMultiple,
   FormInputText,
-} from '../../../common/components/ui/form'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
-import { useAuth } from '../../../context/auth'
-import { useAlerts } from '../../../common/hooks'
-import { imprimir } from '../../../common/utils/imprimir'
+} from '../../../../common/components/ui/form'
+import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
+import { useAuth } from '../../../../context/auth'
+import { useAlerts } from '../../../../common/hooks'
+import { imprimir } from '../../../../common/utils/imprimir'
 import {
   CrearEditarPoliticaCRUDType,
   guardarPoliticaCRUDType,
   PoliticaCRUDType,
-} from './politicasCRUDTypes'
-import { RolType } from '../usuarios/types/usuariosCRUDTypes'
+} from '../PoliticasCRUDTypes'
+import { RolType } from '../../usuarios/types/usuariosCRUDTypes'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType
