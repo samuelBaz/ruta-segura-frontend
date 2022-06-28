@@ -1,13 +1,14 @@
 import type { NextPage } from 'next'
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, Grid, ToggleButton, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
-import React, { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { CasbinTypes, ColumnaType } from '../../common/types'
 import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
+  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import { delay, InterpreteMensajes, siteName } from '../../common/utils'
@@ -18,12 +19,16 @@ import { VistaModalPolitica } from '../../modules/admin/politicas'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { PoliticaCRUDType } from '../../modules/admin/politicas/politicasCRUDTypes'
+
+import { FiltroPolitica } from '../../modules/admin/politicas/componente/filtroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-
+  const [mostrarFiltroPolitica, setMostrarFiltroPolitica] = useState(false)
+  const [filtroPolitica, setFiltroPolitica] = useState<string>('')
+  const [filtroApp, setFiltroApp] = useState<string>('')
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
   const [errorData, setErrorData] = useState<any>()
@@ -115,6 +120,23 @@ const Politicas: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
+    <ToggleButton
+      key={'accionFiltrarUsuarioToggle'}
+      value="check"
+      sx={{
+        '&.MuiToggleButton-root': {
+          borderRadius: '4px !important',
+          border: '0px solid lightgrey !important',
+        },
+      }}
+      size={'small'}
+      selected={mostrarFiltroPolitica}
+      onChange={() => {
+        setMostrarFiltroPolitica(!mostrarFiltroPolitica)
+      }}
+    >
+      <Icono>search</Icono>
+    </ToggleButton>,
     permisos.create && (
       <IconoTooltip
         titulo={'Agregar política'}
@@ -146,6 +168,8 @@ const Politicas: NextPage = () => {
         params: {
           pagina: pagina,
           limite: limite,
+          pol: filtroPolitica,
+          app: filtroApp,
         },
       })
       setPoliticasData(respuesta.datos?.filas)
@@ -232,7 +256,14 @@ const Politicas: NextPage = () => {
         obtenerPoliticasPeticion().finally(() => {})
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite])
+  }, [estaAutenticado, pagina, limite, filtroApp, filtroPolitica])
+  useEffect(() => {
+    imprimir(`filtro cerrado: ${mostrarFiltroPolitica}`)
+    if (!mostrarFiltroPolitica) {
+      setFiltroPolitica('')
+      setFiltroApp('')
+    }
+  }, [mostrarFiltroPolitica])
 
   const eliminarPoliticaModal = (politica: PoliticaCRUDType) => {
     setPoliticaEdicion(politica) // para mostrar datos de usuario en la alerta
@@ -292,6 +323,20 @@ const Politicas: NextPage = () => {
               cambioPagina={setPagina}
               cambioLimite={setLimite}
             />
+          }
+          filtros={
+            mostrarFiltroPolitica && (
+              <FiltroPolitica
+                filtroPolitica={filtroPolitica}
+                filtroApp={filtroApp}
+                accionCorrecta={(filtros) => {
+                  console.log(' filtros.......................', filtros)
+                  setFiltroPolitica(filtros.buscar)
+                  setFiltroApp(filtros.app)
+                }}
+                accionCerrar={() => {}}
+              />
+            )
           }
         />
       </LayoutUser>
