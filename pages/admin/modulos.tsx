@@ -1,4 +1,4 @@
-import { Grid, Typography, useTheme } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { ReactNode, useEffect, useState } from "react";
 import { LayoutUser } from "../../common/components/layouts";
