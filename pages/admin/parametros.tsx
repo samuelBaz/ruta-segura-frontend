@@ -167,7 +167,7 @@ const Parametros: NextPage = () => {
   }, [estaAutenticado])
 
   useEffect(() => {
-    if (estaAutenticado) obtenerParametrosPeticion().finally(() => { })
+    if (estaAutenticado) obtenerParametrosPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
