@@ -1,12 +1,13 @@
 import type { NextPage } from 'next'
-import { Grid, Typography } from '@mui/material'
+import { Grid, ToggleButton, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
-import React, { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { CasbinTypes, ColumnaType } from '../../common/types'
 import {
   CustomDataTable,
   CustomDialog,
+  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import { delay, InterpreteMensajes, siteName } from '../../common/utils'
@@ -18,6 +19,7 @@ import { VistaModalParametro } from '../../modules/admin/parametros'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { ParametroCRUDType } from '../../modules/admin/parametros/parametrosCRUDTypes'
+import { FiltroParametros } from '../../modules/admin/parametros/FiltroParametros'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -40,6 +42,8 @@ const Parametros: NextPage = () => {
 
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
 
+  const [filtroParametro, setFiltroParametro] = useState<string>('')
+  const [mostrarFiltroParametros, setMostrarFiltroParametros] = useState(false)
   // Permisos para acciones
   const [permisos, setPermisos] = useState<CasbinTypes>({
     read: false,
@@ -97,6 +101,23 @@ const Parametros: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
+    <ToggleButton
+      key={'accionFiltrarUsuarioToggle'}
+      value="check"
+      sx={{
+        '&.MuiToggleButton-root': {
+          borderRadius: '4px !important',
+          border: '0px solid lightgrey !important',
+        },
+      }}
+      size={'small'}
+      selected={mostrarFiltroParametros}
+      onChange={() => {
+        setMostrarFiltroParametros(!mostrarFiltroParametros)
+      }}
+    >
+      <Icono>search</Icono>
+    </ToggleButton>,
     permisos.create && (
       <IconoTooltip
         titulo={'Agregar parámetro'}
@@ -126,8 +147,11 @@ const Parametros: NextPage = () => {
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros`,
         params: {
-          pagina: pagina,
-          limite: limite,
+          ...{
+            pagina: pagina,
+            limite: limite,
+          },
+          ...(filtroParametro.length == 0 ? {} : { filtro: filtroParametro}),
         },
       })
       setParametrosData(respuesta.datos?.filas)
@@ -165,11 +189,19 @@ const Parametros: NextPage = () => {
     definirPermisos().finally()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado])
+  
 
   useEffect(() => {
     if (estaAutenticado) obtenerParametrosPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite])
+  }, [estaAutenticado, pagina, limite, filtroParametro])
+
+  useEffect(() => {
+    imprimir(`filtro cerrado: ${mostrarFiltroParametros}`)
+    if (!mostrarFiltroParametros) {
+      setFiltroParametro('')
+    }
+  }, [mostrarFiltroParametros])
 
   const paginacion = (
     <Paginacion
@@ -206,6 +238,19 @@ const Parametros: NextPage = () => {
           columnas={columnas}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
+          filtros={
+            mostrarFiltroParametros && (
+              <FiltroParametros
+                filtroParametro={filtroParametro}
+                accionCorrecta={(filtros) => {
+                  setFiltroParametro(filtros.parametro)
+                }}
+                accionCerrar={() => {
+                  imprimir(`👀 cerrar`)
+                }}
+              />
+            )
+          }
         />
       </LayoutUser>
     </>

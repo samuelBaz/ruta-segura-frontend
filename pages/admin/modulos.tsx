@@ -1,11 +1,4 @@
-import {
-  Box,
-  Grid,
-  TextField,
-  ToggleButton,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Grid, ToggleButton, Typography } from '@mui/material'
 import { NextPage } from 'next'
 import { ReactNode, useEffect, useState } from 'react'
 import { LayoutUser } from '../../common/components/layouts'
@@ -25,8 +18,6 @@ import { useAuth } from '../../context/auth'
 import { IModulos } from '../../modules/admin/modulos/interfaces/imodulos'
 import { VistaModalModulo } from '../../modules/admin/modulos/componente/modalModulo'
 import { useRouter } from 'next/router'
-import { FormInputText } from '../../common/components/ui/form'
-import { useForm } from 'react-hook-form'
 import { FiltroModulo } from '../../modules/admin/modulos/componente/filtroModulo'
 
 export interface FiltroTypeM {
