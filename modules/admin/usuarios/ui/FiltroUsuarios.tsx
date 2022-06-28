@@ -4,10 +4,10 @@ import { Box, Grid } from '@mui/material'
 import {
   FormInputDropdownMultiple,
   FormInputText,
-} from '../../../common/components/ui/form'
+} from '../../../../common/components/ui/form'
 
 import { useDebouncedCallback } from 'use-debounce'
-import { RolType } from './usuariosCRUDTypes'
+import { RolType } from '../types/usuariosCRUDTypes'
 
 export interface FiltroType {
   usuario: string

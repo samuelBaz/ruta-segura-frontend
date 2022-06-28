@@ -3,20 +3,8 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Box, Button, DialogActions, Grid } from '@mui/material'
-import { FormInputDropdownMultiple } from '../../../common/components/ui/form'
-import { RolType } from './usuariosCRUDTypes'
-
-export interface FiltroType {
-  usuario: string
-  roles: string[]
-}
-
-export interface FiltroModalUsuarioType {
-  rolesDisponibles: RolType[]
-  filtroRoles: string[]
-  accionCorrecta: (filtros: FiltroType) => void
-  accionCerrar: () => void
-}
+import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
+import { FiltroModalUsuarioType, FiltroType } from './FiltroUsuarios'
 
 export const FiltroModalUsuarios = ({
   rolesDisponibles,

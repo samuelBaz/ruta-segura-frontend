@@ -19,7 +19,7 @@ import {
   guardarPoliticaCRUDType,
   PoliticaCRUDType,
 } from './politicasCRUDTypes'
-import { RolType } from '../usuarios/usuariosCRUDTypes'
+import { RolType } from '../usuarios/types/usuariosCRUDTypes'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType

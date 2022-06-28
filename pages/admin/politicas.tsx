@@ -18,7 +18,7 @@ import { VistaModalPolitica } from '../../modules/admin/politicas'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { PoliticaCRUDType } from '../../modules/admin/politicas/politicasCRUDTypes'
-import { RolType } from '../../modules/admin/usuarios/usuariosCRUDTypes'
+import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])

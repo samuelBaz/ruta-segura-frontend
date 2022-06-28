@@ -1,12 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { imprimir } from '../../common/utils/imprimir'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { imprimir } from './common/utils/imprimir'
 
-export const middleware = async (req: NextRequest | any) => {
-  const { token = '' } = req.cookies
+export const middleware = (req: NextRequest) => {
+  const token = req.cookies.get('token')
   imprimir(`token middleware 🔐️: ${token}`)
 
   try {
-    if (token != '' || null || undefined) {
+    if (token && token != '') {
       return NextResponse.next()
     } else {
       const url = req.nextUrl.clone()
@@ -19,4 +20,9 @@ export const middleware = async (req: NextRequest | any) => {
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
+}
+
+// Supports both a single string value or an array of matchers
+export const config = {
+  matcher: ['/admin/:path*'],
 }

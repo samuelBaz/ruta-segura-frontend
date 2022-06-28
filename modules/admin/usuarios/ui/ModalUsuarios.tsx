@@ -5,22 +5,22 @@ import {
   CrearEditarUsuarioType,
   RolType,
   UsuarioCRUDType,
-} from './usuariosCRUDTypes'
-import { delay, InterpreteMensajes } from '../../../common/utils'
-import { Constantes } from '../../../config'
+} from '../types/usuariosCRUDTypes'
+import { delay, InterpreteMensajes } from '../../../../common/utils'
+import { Constantes } from '../../../../config'
 import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
 import {
   FormInputDate,
   FormInputDropdownMultiple,
   FormInputText,
-} from '../../../common/components/ui/form'
-import { isValidEmail } from '../../../common/utils/validations'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
+} from '../../../../common/components/ui/form'
+import { isValidEmail } from '../../../../common/utils/validations'
+import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
 
-import { useAuth } from '../../../context/auth'
-import { useAlerts } from '../../../common/hooks'
-import { formatoFecha } from '../../../common/utils/fechas'
-import { imprimir } from '../../../common/utils/imprimir'
+import { useAuth } from '../../../../context/auth'
+import { useAlerts } from '../../../../common/hooks'
+import { formatoFecha } from '../../../../common/utils/fechas'
+import { imprimir } from '../../../../common/utils/imprimir'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null

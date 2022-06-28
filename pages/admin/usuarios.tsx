@@ -29,14 +29,16 @@ import {
 import { useAuth } from '../../context/auth'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { VistaModalUsuario } from '../../modules/admin/usuarios'
+import {
+  FiltroUsuarios,
+  VistaModalUsuario,
+} from '../../modules/admin/usuarios/ui'
 import { useAlerts } from '../../common/hooks'
-import { FiltroUsuarios } from '../../modules/admin/usuarios/FiltroUsuarios'
 import { imprimir } from '../../common/utils/imprimir'
 import {
   RolType,
   UsuarioCRUDType,
-} from '../../modules/admin/usuarios/usuariosCRUDTypes'
+} from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
