@@ -35,6 +35,7 @@ import {
 } from '../../modules/admin/usuarios/ui'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
+import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import {
   RolType,
   UsuarioCRUDType,
@@ -155,9 +156,9 @@ const Usuarios: NextPage = () => {
         ))}
       </Grid>,
       <Typography key={`${usuarioData.id}-${indexUsuario}-estado`}>
-        <Button
-          variant="outlined"
-          sx={{ borderRadius: 12 }}
+        <CustomMensajeEstado
+          titulo={usuarioData.estado}
+          descripcion={usuarioData.estado}
           color={
             usuarioData.estado == 'ACTIVO'
               ? 'success'
@@ -165,9 +166,7 @@ const Usuarios: NextPage = () => {
               ? 'error'
               : 'info'
           }
-        >
-          {usuarioData.estado}
-        </Button>
+        />
       </Typography>,
       <Grid key={`${usuarioData.id}-${indexUsuario}-acciones`}>
         {permisos.update && (
