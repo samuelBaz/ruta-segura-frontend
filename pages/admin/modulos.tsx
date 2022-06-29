@@ -11,7 +11,7 @@ import {
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { CasbinTypes, ColumnaType } from '../../common/types'
 import { imprimir } from '../../common/utils/imprimir'
-import { delay, InterpreteMensajes } from '../../common/utils'
+import { delay, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
 import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
@@ -230,7 +230,7 @@ const Modulos: NextPage = () => {
         />
       </CustomDialog>
 
-      <LayoutUser>
+      <LayoutUser title={`Módulos - ${siteName()}`}>
         <CustomDataTable
           titulo={'Módulos'}
           error={!!errorParametrosData}
