@@ -1,6 +1,6 @@
 /** @type {import("next").NextConfig} */
 module.exports = {
-  reactStrictMode: false, // se desactiva por que React 18 renderiza 2 veces y llama useEffect 2 veces 🤷‍♂️
+  reactStrictMode: false, // se desactiva porque React 18 renderiza 2 veces y llama useEffect 2 veces 🤷‍♂️
   poweredByHeader: false,
   webpack: (config, { isServer }) => {
     if (!isServer) {

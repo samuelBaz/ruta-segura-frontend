@@ -1,21 +1,28 @@
 import type { NextPage } from 'next'
 import { Grid, Typography } from '@mui/material'
-import { siteName } from '../common/utils'
+import { delay, siteName } from '../common/utils'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useFullScreenLoadingContext } from '../context/ui'
 
 const Inicio: NextPage = () => {
   const nombreSitio: string = siteName()
 
   const router = useRouter()
+  const { mostrarFullScreen } = useFullScreenLoadingContext()
 
   useEffect(() => {
     if (!router.isReady) return
-    router
-      .replace({
-        pathname: '/login',
-      })
-      .finally()
+    delay(700).finally(async () => {
+      mostrarFullScreen()
+      await delay(300)
+      router
+        .replace({
+          pathname: '/login',
+        })
+        .finally()
+    })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady])
 

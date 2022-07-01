@@ -23,7 +23,7 @@ NEXT_PUBLIC_SITE_NAME="Frontend base"
 NEXT_PUBLIC_BASE_URL="https://proyecto-base.test.gtic.gob.bo/ws/api"
 ```
 
-- **NEXT_PUBLIC_APP_ENV**: Entorno donde se esta ejecutando el proyecto, puede ser `development`, `test`, `production`
+- **NEXT_PUBLIC_APP_ENV**: Entorno donde se está ejecutando el proyecto, puede ser `development`, `test`, `production`
 - **NEXT_PUBLIC_SITE_NAME**: Nombre de la aplicación web
 - **NEXT_PUBLIC_BASE_URL**: URL de backend que consumira la aplicación
 

@@ -205,7 +205,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   }: AutorizacionLoginType) => {
     try {
       setLoading(true)
-      await delay(4000)
+      // await delay(4000)
       const respuesta = await Servicios.get({
         url: `${Constantes.baseUrl}/ciudadania-autorizar`,
         body: {},
@@ -266,7 +266,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       }
 
       imprimir(
-        `enviando 🔐🌍 : ${body ? JSON.stringify(body) : '{}'
+        `enviando 🔐🌍 : ${
+          body ? JSON.stringify(body) : '{}'
         } -> ${tipo} - ${url} - con ${JSON.stringify(cabeceras)}`
       )
       const response = await Servicios.peticionHTTP({
@@ -277,7 +278,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         params,
       })
       imprimir(
-        `respuesta 🔐📡 : ${body ? JSON.stringify(body) : '{}'
+        `respuesta 🔐📡 : ${
+          body ? JSON.stringify(body) : '{}'
         } -> ${tipo} - ${url} - con ${JSON.stringify(
           headers
         )} -->> ${JSON.stringify(response)}`

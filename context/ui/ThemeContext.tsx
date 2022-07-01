@@ -50,8 +50,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    delay(isDarkOS ? 100 : 100).then(() => {
-      // TODO: Tarda en reconocer ajuste de usuario claro en modo oscuro
+    delay(100).then(() => {
       imprimir(`useEffect isDarkOS: ${isDarkOS}`)
       if (primeraVezState || isDarkOS) {
         setThemeMode(isDarkOS ? 'dark' : 'light')
