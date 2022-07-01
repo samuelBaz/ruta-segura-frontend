@@ -1,5 +1,9 @@
-import { Box, Tooltip } from '@mui/material'
+import { Tooltip } from '@mui/material'
+import Box from '@mui/material/Box'
+
 import { useThemeContext } from '../../../context/ui/ThemeContext'
+import { alpha } from '@mui/material/styles'
+import React from 'react'
 
 export interface MensajeEstadoProps {
   titulo?: string
@@ -14,6 +18,9 @@ export interface MensajeEstadoProps {
     | 'error'
     | 'info'
     | 'warning'
+
+  opacidadFondo?: number
+  customColor?: string
 }
 const CustomMensajeEstado = ({
   color = 'error',
@@ -21,8 +28,9 @@ const CustomMensajeEstado = ({
   descripcion = '',
   fontSize = 12,
   letterSpacing = 0,
+  opacidadFondo = 0.5,
 }: MensajeEstadoProps) => {
-  const coloresClaros = {
+  const coloresFondoClaro = {
     primary: '#cce1df',
     secondary: '#dbe0df',
     info: '#cce7f6',
@@ -31,54 +39,87 @@ const CustomMensajeEstado = ({
     success: '#d5e5d6',
     inherit: '#f1d1d1',
   }
-  const coloresOscuros = {
+  const coloresFondoOscuro = {
     primary: '#001513',
     secondary: '#0f1413',
     info: '#001b2a',
     warning: '#2f1600',
     error: '#250505',
-    success: '#09190a',
+    success: '#283b39',
     inherit: '#f1d1d1',
   }
-  const { themeMode, toggleTheme } = useThemeContext()
+
+  const coloresTextoClaro = {
+    primary: '#cce1df',
+    secondary: '#555F71',
+    info: '#0288d1',
+    warning: '#ed6c02',
+    error: '#BA1B1B',
+    success: '#2e7d32',
+    inherit: '#555F71',
+  }
+  const coloresTextoOscuro = {
+    primary: '#001513',
+    secondary: '#555F71',
+    info: '#0288d1',
+    warning: '#ed6c02',
+    error: '#BA1B1B',
+    success: '#a1f7cf',
+    inherit: '#555F71',
+  }
+  // const CAMBIO_TONO_COLOR: number = 590085
+  const { themeMode } = useThemeContext()
 
   return (
     <Tooltip title={descripcion}>
-      <div>
+      <Box
+        sx={{
+          bgcolor:
+            themeMode === 'dark'
+              ? alpha(coloresFondoOscuro[color], opacidadFondo)
+              : alpha(coloresFondoClaro[color], opacidadFondo),
+          textAlign: 'center',
+          borderRadius: 1,
+          pt: 0.1,
+          pr: 1,
+          pl: 1,
+          pb: 0.1,
+          border: 1,
+          borderColor:
+            themeMode === 'dark'
+              ? // ? '#' +
+                //   (
+                //     parseInt(coloresFondoOscuro[color].split('#')[1], 16) +
+                //     CAMBIO_TONO_COLOR * 6
+                //   ).toString(16)
+                coloresTextoOscuro[color]
+              : coloresTextoClaro[color],
+          // opacity: 0.8,
+          // p: 0.3,
+          // m: 1,
+        }}
+      >
         <Box
-          component="div"
+          component={'span'}
           sx={{
-            bgcolor:
+            color:
               themeMode === 'dark'
-                ? coloresOscuros[color]
-                : coloresClaros[color],
-            textAlign: 'center',
-            borderRadius: 1,
-            pt: 0.4,
-            pr: 1,
-            pl: 1,
-            pb: 0.4,
-            // p: 0.3,
-            // m: 1,
+                ? coloresTextoOscuro[color]
+                : coloresTextoClaro[color],
+
+            // display: 'inline',
+            // textTransform: 'lowercase',
+            overflow: 'hidden',
+            // fontWeight: 'bold',
+            fontSize: fontSize,
+
+            opacity: 1,
+            letterSpacing: letterSpacing,
           }}
         >
-          <Box
-            sx={{
-              color: `${color}.main`,
-
-              display: 'inline',
-              // textTransform: 'lowercase',
-              //   overflow: 'hidden',
-              fontWeight: 'bold',
-              fontSize: fontSize,
-              opacity: 1,
-              letterSpacing: letterSpacing,
-            }}
-          >
-            {titulo}
-          </Box>
+          {titulo}
         </Box>
-      </div>
+      </Box>
     </Tooltip>
   )
 }
