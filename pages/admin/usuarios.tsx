@@ -155,7 +155,10 @@ const Usuarios: NextPage = () => {
           />
         ))}
       </Grid>,
-      <Typography key={`${usuarioData.id}-${indexUsuario}-estado`}>
+      <Typography
+        component={'div'}
+        key={`${usuarioData.id}-${indexUsuario}-estado`}
+      >
         <CustomMensajeEstado
           titulo={usuarioData.estado}
           descripcion={usuarioData.estado}
