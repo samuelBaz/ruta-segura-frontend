@@ -11,18 +11,18 @@ const Inicio: NextPage = () => {
   const router = useRouter()
   const { mostrarFullScreen } = useFullScreenLoadingContext()
 
+  const abrirLogin = async () => {
+    await delay(500)
+    mostrarFullScreen()
+    await delay(500)
+    await router.replace({
+      pathname: '/login',
+    })
+  }
+
   useEffect(() => {
     if (!router.isReady) return
-    delay(700).finally(async () => {
-      mostrarFullScreen()
-      await delay(300)
-      router
-        .replace({
-          pathname: '/login',
-        })
-        .finally()
-    })
-
+    abrirLogin().finally()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady])
 

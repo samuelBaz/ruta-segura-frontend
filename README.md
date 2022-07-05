@@ -2,7 +2,7 @@
 
 > Para proyectos de AGETIC
 
-Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/experimental) creado con NestJS en la rama `Experimental`
+Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama `Develop` o Tag `v1.1.0`
 
 ## Técnologias empleadas
 
