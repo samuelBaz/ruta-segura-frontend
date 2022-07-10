@@ -14,7 +14,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 export interface FormInputTextProps {
   id: string
   name: string
-  control: Control<any>
+  control: any // TODO: Cambiar a tipo TFieldValues con tipo genérico
   label: string
   size?: 'small' | 'medium'
   type?: 'password' | 'number' | 'search' | string | undefined

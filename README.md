@@ -1,16 +1,28 @@
 # Frontend Base - NextJS/ReactJS
 
-> Para proyectos de AGETIC
+> Para proyectos desarrollados por AGETIC
 
-Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama `Develop` o Tag `v1.1.0`
+Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/develop) o Tag [v1.1.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/v1.1.0)
 
-## Técnologias empleadas
+## Tecnologías empleadas
 
 - NextJS, framework sobre ReactJS. [Sitio oficial](https://nextjs.org)
 - ReactJS como librería para desarrollo frontend  [Sitio oficial](https://es.reactjs.org)
 - MUI (Material UI), librería de componentes UI para ReactJS. [Sitio oficial](https://mui.com)
 - Axios, para el manejo de peticiones HTTP. [Documentación](https://axios-http.com)
 - ESLint, para examinar el código en busca de problemas. [Documentación](https://eslint.org)
+
+## Recomendaciones
+
+- Se sugiere crear un Fork de este proyecto dado que se harán mejoras continuas. [Más información](https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html)
+- Para añadir este proyecto como otro origen, ejecutar dentro el proyecto Fork:
+```
+git remote add origin2 git@gitlab.agetic.gob.bo:agetic/agetic/proyectos-base/agetic-next-base-frontend.git
+```
+- Para descargar los commits desde el 2do origen, ejecutar
+```
+git pull origin2 master
+```
 
 ## Estructura general
 

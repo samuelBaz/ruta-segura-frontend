@@ -222,7 +222,7 @@ const Modulos: NextPage = () => {
         <VistaModalModulo
           modulo={parametroEdicion}
           accionCorrecta={() => {
-            cerrarModalParametro()
+            cerrarModalParametro().finally()
             obtenerModuloPeticion().finally()
           }}
           accionCancelar={cerrarModalParametro}

@@ -11,7 +11,7 @@ import { validarFechaFormato } from '../../../utils/fechas'
 export interface FormDatePickerProps {
   id: string
   name: string
-  control: Control<any>
+  control: any
   label: string
   size?: 'small' | 'medium'
   format?: string
