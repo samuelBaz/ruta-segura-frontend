@@ -26,7 +26,7 @@ Build:
     - kubernetes-runner
   script:
     - cp .env.k8s .env
-    - export NEXT_TELEMETRY_DISABLED 1
+    - export NEXT_TELEMETRY_DISABLED=1
     - npm set registry https://registry.agcs.agetic.gob.bo
     - npm set strict-ssl false
     - npm ci 
