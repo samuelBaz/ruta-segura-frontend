@@ -8,8 +8,8 @@ COPY --chown=node:node ./package.json ./package.json
 COPY --chown=node:node ./next.config.js ./next.config.js
 COPY --chown=node:node ./next-env.d.ts ./next-env.d.ts
 
-COPY --chown=node:node ./standalone ./
-COPY --chown=node:node ./static ./.next/static
+COPY --chown=node:node ./.next/standalone ./
+COPY --chown=node:node ./.next/static ./.next/static
 
 USER node
 ARG CI_COMMIT_SHORT_SHA
