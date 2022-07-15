@@ -8,7 +8,7 @@
 .dockerignore
 .eslintrc.js
 .env.sample
-.env
+# .env
 .prettierrc
 .gitignore
 .git
