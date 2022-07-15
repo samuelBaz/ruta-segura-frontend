@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Button } from '@mui/material'
 import { useThemeContext } from '../../context/ui/ThemeContext'
 import { FC, MouseEventHandler, PropsWithChildren } from 'react'
+import { Constantes } from '../../config'
 
 export interface BotonCiudadaniaType {
   altText?: string
@@ -28,8 +29,8 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
       <Image
         src={
           themeMode == 'light'
-            ? '/logo_ciudadania2.png'
-            : '/logo_ciudadania2_dark.png'
+            ? `${Constantes.sitePath}/logo_ciudadania2.png`
+            : `${Constantes.sitePath}/logo_ciudadania2_dark.png`
         }
         alt={altText}
         width="37"
