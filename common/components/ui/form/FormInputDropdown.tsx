@@ -1,5 +1,11 @@
 import { Controller } from 'react-hook-form'
-import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
+import {
+  FormHelperText,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 
 export interface optionType {
@@ -17,6 +23,7 @@ export interface FormInputDropdownProps {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: (event: SelectChangeEvent) => void
+  bgcolor?: string
   options: optionType[]
 }
 
@@ -30,6 +37,7 @@ export const FormInputDropdown = ({
   disabled,
   onChange,
   options,
+  bgcolor,
 }: FormInputDropdownProps) => {
   const generateSelectOptions = () => {
     return options.map((option) => {
@@ -53,22 +61,26 @@ export const FormInputDropdown = ({
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <Select
-            id={id}
-            sx={{ width: '100%' }}
-            size={size}
-            error={!!error}
-            disabled={disabled}
-            onChange={(event) => {
-              if (onChange) {
-                onChange(event)
-              }
-              field.onChange(event)
-            }}
-            value={field.value}
-          >
-            {generateSelectOptions()}
-          </Select>
+          <>
+            <Select
+              id={id}
+              sx={{ width: '100%', bgcolor: bgcolor }}
+              size={size}
+              error={!!error}
+              disabled={disabled}
+              onChange={(event) => {
+                if (onChange) {
+                  onChange(event)
+                }
+                field.onChange(event)
+              }}
+              inputRef={field.ref}
+              value={field.value}
+            >
+              {generateSelectOptions()}
+            </Select>
+            {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
+          </>
         )}
         defaultValue={''}
         rules={rules}
