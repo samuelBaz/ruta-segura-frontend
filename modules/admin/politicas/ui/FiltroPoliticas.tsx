@@ -80,6 +80,7 @@ export const FiltroPolitica = ({
               value: la,
               label: la,
             }))}
+            bgcolor={'background.paper'}
             onChange={(event) => {
               actualizacionFiltros({
                 buscar: filtroBuscarWatch,

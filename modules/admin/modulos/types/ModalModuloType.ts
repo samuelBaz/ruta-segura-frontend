@@ -1,8 +1,11 @@
-import { ModulosType } from './ModulosType'
+import {
+  CrearEditarModulosType,
+  ModuloCRUDType,
+} from './CrearEditarModulosType'
 
 export interface ModalModuloType {
-  modulo?: ModulosType
+  modulo?: ModuloCRUDType
   accionCorrecta: () => void
   accionCancelar: () => void
-  lmodulos: ModulosType[]
+  modulos: CrearEditarModulosType[]
 }

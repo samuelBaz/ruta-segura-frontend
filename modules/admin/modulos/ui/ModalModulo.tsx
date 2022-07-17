@@ -12,54 +12,55 @@ import { imprimir } from '../../../../common/utils/imprimir'
 import { Constantes } from '../../../../config'
 import { useAuth } from '../../../../context/auth'
 import { ModalModuloType } from '../types/ModalModuloType'
-import { ModulosType } from '../types/ModulosType'
+import {
+  CrearEditarModulosType,
+  GuardarModulosType,
+} from '../types/CrearEditarModulosType'
 
 export const VistaModalModulo = ({
   modulo,
   accionCorrecta,
   accionCancelar,
-  lmodulos,
+  modulos,
 }: ModalModuloType) => {
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
-  const [checked, setChecked] = useState<boolean>(!modulo?.fidModulo?.id)
 
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
 
   // Proveedor de la sesión
-  const { sesionPeticion } = useAuth() //hoook
+  const { sesionPeticion } = useAuth() //hook
 
-  const { handleSubmit, control, setValue } = useForm<ModulosType>({
-    defaultValues: {
-      id: modulo?.id,
-      label: modulo?.label,
-      url: modulo?.url,
-      nombre: modulo?.nombre,
-      propiedades: modulo?.propiedades,
-      estado: modulo?.estado,
-      fidModulo: modulo?.fidModulo?.id,
-    },
-  })
+  const { handleSubmit, control, setValue, watch } =
+    useForm<CrearEditarModulosType>({
+      defaultValues: {
+        id: modulo?.id,
+        label: modulo?.label,
+        url: modulo?.url,
+        nombre: modulo?.nombre,
+        propiedades: modulo?.propiedades,
+        estado: modulo?.estado,
+        fidModulo: modulo?.fidModulo?.id,
+        esPadre: !!modulo?.id && !modulo?.fidModulo?.id,
+      },
+    })
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked)
-    if (!checked) {
-      setValue('propiedades.icono', '')
-    }
-  }
+  const checked = watch('esPadre')
 
-  const guardarActualizarModulo = async (data: ModulosType) => {
+  const guardarActualizarModulo = async (data: CrearEditarModulosType) => {
     await guardarActualizarModuloPeticion(data)
   }
-  const guardarActualizarModuloPeticion = async (emodulo: ModulosType) => {
+
+  const guardarActualizarModuloPeticion = async (
+    modulo: GuardarModulosType
+  ) => {
     try {
       setLoadingModal(true)
       //await delay(1000)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/modulos`,
-        //url: `${Constantes.baseUrl}/autorizacion/modulos${emodulo.id ? `/${emodulo.id}` : ''}`,
-        tipo: !!emodulo.id ? 'patch' : 'post',
-        body: emodulo,
+        tipo: !!modulo.id ? 'patch' : 'post',
+        body: modulo,
       })
       Alerta({
         mensaje: InterpreteMensajes(respuesta),
@@ -67,7 +68,7 @@ export const VistaModalModulo = ({
       })
       accionCorrecta()
     } catch (e) {
-      imprimir(`Error al crear o actualizar parámetro: ${e}`)
+      imprimir(`Error al crear o actualizar módulo: ${e}`)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)
@@ -83,7 +84,9 @@ export const VistaModalModulo = ({
         <Grid item xs={2} sm={2} md={2}>
           <Switch
             checked={checked}
-            onChange={handleChange}
+            onChange={() => {
+              setValue('esPadre', !checked)
+            }}
             inputProps={{ 'aria-label': 'controlled' }}
           />
         </Grid>
@@ -99,7 +102,7 @@ export const VistaModalModulo = ({
               control={control}
               label="Menú padre"
               disabled={loadingModal}
-              options={lmodulos.map((lm) => ({
+              options={modulos.map((lm) => ({
                 key: lm.id,
                 value: lm.id,
                 label: lm.label,
@@ -123,6 +126,7 @@ export const VistaModalModulo = ({
           </Grid>
         </Grid>
       )}
+      <Box height={'15px'} />
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={6}>
           <FormInputText
@@ -168,8 +172,7 @@ export const VistaModalModulo = ({
             rules={{
               required: {
                 value: true,
-
-                message: 'You need to specify a valid email address',
+                message: 'Este campo es requerido',
               },
             }}
           />

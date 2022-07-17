@@ -15,7 +15,10 @@ import { delay, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
 import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
-import { ModulosType } from '../../modules/admin/modulos/types/ModulosType'
+import {
+  CrearEditarModulosType,
+  ModuloCRUDType,
+} from '../../modules/admin/modulos/types/CrearEditarModulosType'
 import { VistaModalModulo } from '../../modules/admin/modulos/ui/ModalModulo'
 import { useRouter } from 'next/router'
 import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
@@ -27,7 +30,7 @@ export interface FiltroTypeM {
 const Modulos: NextPage = () => {
   const router = useRouter()
   //const [parametrosData, setParametrosData] = useState<IModulos[]>([])
-  const [modulosData, setModulosData] = useState<ModulosType[]>([])
+  const [modulosData, setModulosData] = useState<ModuloCRUDType[]>([])
   const [errorParametrosData, setErrorParametrosData] = useState<any>()
   const [loading, setLoading] = useState<boolean>(true)
   const [mostrarFiltroModulo, setMostrarFiltroModulo] = useState(false)
@@ -59,6 +62,7 @@ const Modulos: NextPage = () => {
     setParametroEdicion(undefined)
     setModalModulo(true)
   }
+
   useEffect(() => {
     if (estaAutenticado) obtenerModuloPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,7 +70,7 @@ const Modulos: NextPage = () => {
 
   const acciones: Array<ReactNode> = [
     <ToggleButton
-      key={'accionFiltrarUsuarioToggle'}
+      key={'accionFiltrarModuloToggle'}
       value="check"
       sx={{
         '&.MuiToggleButton-root': {
@@ -105,7 +109,7 @@ const Modulos: NextPage = () => {
   ]
 
   const [parametroEdicion, setParametroEdicion] = useState<
-    ModulosType | undefined
+    CrearEditarModulosType | undefined
   >()
 
   const paginacion = (
@@ -117,15 +121,17 @@ const Modulos: NextPage = () => {
       cambioLimite={setLimite}
     />
   )
-  const editarModuloModal = (parametro: ModulosType) => {
+  const editarModuloModal = (parametro: CrearEditarModulosType) => {
     setParametroEdicion(parametro)
     setModalModulo(true)
   }
+
   const cerrarModalParametro = async () => {
     setModalModulo(false)
     await delay(500)
     setParametroEdicion(undefined)
   }
+
   const obtenerModuloPeticion = async () => {
     try {
       setLoading(true)
@@ -226,7 +232,7 @@ const Modulos: NextPage = () => {
             obtenerModuloPeticion().finally()
           }}
           accionCancelar={cerrarModalParametro}
-          lmodulos={modulosData.filter((f) => f.fidModulo === null)}
+          modulos={modulosData.filter((f) => f.fidModulo === null)}
         />
       </CustomDialog>
 
