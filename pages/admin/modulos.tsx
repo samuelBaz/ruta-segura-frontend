@@ -15,23 +15,15 @@ import { delay, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
 import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
-import {
-  CrearEditarModulosType,
-  ModuloCRUDType,
-} from '../../modules/admin/modulos/types/CrearEditarModulosType'
+import { ModuloCRUDType } from '../../modules/admin/modulos/types/CrearEditarModulosType'
 import { VistaModalModulo } from '../../modules/admin/modulos/ui/ModalModulo'
 import { useRouter } from 'next/router'
 import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
 
-export interface FiltroTypeM {
-  buscar: string
-}
-
 const Modulos: NextPage = () => {
   const router = useRouter()
-  //const [parametrosData, setParametrosData] = useState<IModulos[]>([])
   const [modulosData, setModulosData] = useState<ModuloCRUDType[]>([])
-  const [errorParametrosData, setErrorParametrosData] = useState<any>()
+  const [errorModulosData, setErrorModulosData] = useState<any>()
   const [loading, setLoading] = useState<boolean>(true)
   const [mostrarFiltroModulo, setMostrarFiltroModulo] = useState(false)
   const [modalModulo, setModalModulo] = useState(false)
@@ -43,7 +35,7 @@ const Modulos: NextPage = () => {
 
   const [filtroBuscar, setFiltroBuscar] = useState<string>('')
 
-  async function definirPermisos() {
+  const definirPermisos = async () => {
     setPermisos(await interpretarPermiso(router.pathname))
   }
 
@@ -59,7 +51,7 @@ const Modulos: NextPage = () => {
   })
 
   const agregarModuloModal = () => {
-    setParametroEdicion(undefined)
+    setModuloEdicion(undefined)
     setModalModulo(true)
   }
 
@@ -108,8 +100,8 @@ const Modulos: NextPage = () => {
     />,
   ]
 
-  const [parametroEdicion, setParametroEdicion] = useState<
-    CrearEditarModulosType | undefined
+  const [moduloEdicion, setModuloEdicion] = useState<
+    ModuloCRUDType | undefined
   >()
 
   const paginacion = (
@@ -121,15 +113,15 @@ const Modulos: NextPage = () => {
       cambioLimite={setLimite}
     />
   )
-  const editarModuloModal = (parametro: CrearEditarModulosType) => {
-    setParametroEdicion(parametro)
+  const editarModuloModal = (modulo: ModuloCRUDType) => {
+    setModuloEdicion(modulo)
     setModalModulo(true)
   }
 
-  const cerrarModalParametro = async () => {
+  const cerrarModalModulo = async () => {
     setModalModulo(false)
     await delay(500)
-    setParametroEdicion(undefined)
+    setModuloEdicion(undefined)
   }
 
   const obtenerModuloPeticion = async () => {
@@ -141,15 +133,15 @@ const Modulos: NextPage = () => {
         params: {
           pagina: pagina,
           limite: limite,
-          filtro: filtroBuscar,
+          ...(filtroBuscar.length == 0 ? {} : { filtro: filtroBuscar }),
         },
       })
       setModulosData(respuesta.datos?.filas)
       setTotal(respuesta.datos?.total)
-      setErrorParametrosData(null)
+      setErrorModulosData(null)
     } catch (e) {
-      imprimir(`Error al obtener parametros: ${e}`)
-      setErrorParametrosData(e)
+      imprimir(`Error al obtener módulos: ${e}`)
+      setErrorModulosData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -222,16 +214,16 @@ const Modulos: NextPage = () => {
     <>
       <CustomDialog
         isOpen={modalModulo}
-        handleClose={cerrarModalParametro}
-        title={parametroEdicion ? 'Editar módulo' : 'Nuevo módulo'}
+        handleClose={cerrarModalModulo}
+        title={moduloEdicion ? 'Editar módulo' : 'Nuevo módulo'}
       >
         <VistaModalModulo
-          modulo={parametroEdicion}
+          modulo={moduloEdicion}
           accionCorrecta={() => {
-            cerrarModalParametro().finally()
+            cerrarModalModulo().finally()
             obtenerModuloPeticion().finally()
           }}
-          accionCancelar={cerrarModalParametro}
+          accionCancelar={cerrarModalModulo}
           modulos={modulosData.filter((f) => f.fidModulo === null)}
         />
       </CustomDialog>
@@ -239,7 +231,7 @@ const Modulos: NextPage = () => {
       <LayoutUser title={`Módulos - ${siteName()}`}>
         <CustomDataTable
           titulo={'Módulos'}
-          error={!!errorParametrosData}
+          error={!!errorModulosData}
           cargando={loading}
           acciones={acciones}
           columnas={columnas}
