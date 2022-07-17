@@ -19,6 +19,7 @@ import { ModuloCRUDType } from '../../modules/admin/modulos/types/CrearEditarMod
 import { VistaModalModulo } from '../../modules/admin/modulos/ui/ModalModulo'
 import { useRouter } from 'next/router'
 import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
+import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -190,10 +191,18 @@ const Modulos: NextPage = () => {
         {`${moduloData.url}`}
       </Typography>,
 
-      <Typography
+      <CustomMensajeEstado
         key={`${moduloData.id}-${indexModulo}-estado`}
-        variant={'body2'}
-      >{`${moduloData.estado}`}</Typography>,
+        titulo={moduloData.estado}
+        descripcion={moduloData.estado}
+        color={
+          moduloData.estado == 'ACTIVO'
+            ? 'success'
+            : moduloData.estado == 'INACTIVO'
+            ? 'error'
+            : 'info'
+        }
+      />,
       <Grid key={`${moduloData.id}-${indexModulo}-accion`}>
         {permisos.update && (
           <IconoTooltip

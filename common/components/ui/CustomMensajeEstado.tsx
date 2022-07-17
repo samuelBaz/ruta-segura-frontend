@@ -33,18 +33,18 @@ const CustomMensajeEstado = ({
   const coloresFondoClaro = {
     primary: '#cce1df',
     secondary: '#dbe0df',
-    info: '#cce7f6',
+    info: '#EBF5FF',
     warning: '#fbe2cc',
-    error: '#f1d1d1',
-    success: '#d5e5d6',
+    error: '#FCF1F2',
+    success: '#F1FCF2',
     inherit: '#f1d1d1',
   }
   const coloresFondoOscuro = {
     primary: '#001513',
     secondary: '#0f1413',
-    info: '#001b2a',
+    info: '#1B2A43',
     warning: '#2f1600',
-    error: '#250505',
+    error: '#392127',
     success: '#283b39',
     inherit: '#f1d1d1',
   }
@@ -61,9 +61,9 @@ const CustomMensajeEstado = ({
   const coloresTextoOscuro = {
     primary: '#001513',
     secondary: '#555F71',
-    info: '#0288d1',
+    info: '#8DC7FF',
     warning: '#ed6c02',
-    error: '#BA1B1B',
+    error: '#FF7F8D',
     success: '#a1f7cf',
     inherit: '#555F71',
   }
