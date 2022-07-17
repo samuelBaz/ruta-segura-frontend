@@ -8,6 +8,7 @@ import {
   versionNumber,
 } from '../common/utils'
 import { imprimir } from '../common/utils/imprimir'
+import { Constantes } from '../config'
 
 export default class MyDocument extends Document {
   render() {
@@ -17,7 +18,7 @@ export default class MyDocument extends Document {
           {/* PWA primary color */}
           {/*<meta name="theme-color" content={theme.palette.primary.main} />*/}
 
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href={`${Constantes.sitePath}/favicon.ico`} />
 
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
