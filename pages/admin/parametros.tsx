@@ -147,10 +147,8 @@ const Parametros: NextPage = () => {
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros`,
         params: {
-          ...{
-            pagina: pagina,
-            limite: limite,
-          },
+          pagina: pagina,
+          limite: limite,
           ...(filtroParametro.length == 0 ? {} : { filtro: filtroParametro }),
         },
       })

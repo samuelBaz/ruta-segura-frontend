@@ -280,10 +280,8 @@ const Usuarios: NextPage = () => {
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios`,
         params: {
-          ...{
-            pagina: pagina,
-            limite: limite,
-          },
+          pagina: pagina,
+          limite: limite,
           ...(filtroUsuario.length == 0 ? {} : { filtro: filtroUsuario }),
           ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles.join(',') }),
         },
