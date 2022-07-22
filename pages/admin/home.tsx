@@ -85,7 +85,7 @@ const Home: NextPage = () => {
                               md: 8,
                               xl: 8,
                             }
-                          : { xs: 4, sm: 8, md: 12, xl: 12 }
+                          : { xs: 2, sm: 8, md: 12, xl: 12 }
                       }
                     >
                       {modulo.subModulo.map((subModulo, index2) => (
