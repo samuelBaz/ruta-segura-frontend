@@ -23,7 +23,7 @@ export default class MyDocument extends Document {
             href={`${Constantes.sitePath}/favicon.ico`}
           />
 
-          {/* Inject MUI styles first to match with the prepend: true configuration. */}
+          {/* Inject MUI styles first to match with to prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
           <link
             rel="stylesheet"

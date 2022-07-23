@@ -45,7 +45,7 @@ import {
 interface ContextProps {
   estaAutenticado: boolean
   usuario: UsuarioType | null
-  idRolUsuario: string | undefined
+  idRolUsuario: string | undefined | null
   rolUsuario: RoleType | undefined
   setRolUsuario: ({ idRol }: idRolType) => Promise<void>
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
@@ -79,7 +79,7 @@ interface AuthContextType {
 
 export const AuthProvider = ({ children }: AuthContextType) => {
   const [user, setUser] = useState<UsuarioType | null>(null)
-  const [idRol, setIdRol] = useState<string>()
+  const [idRol, setIdRol] = useState<string | null>()
   const [loading, setLoading] = useState<boolean>(true)
 
   // Hook para mostrar alertas
@@ -131,7 +131,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         await delay(1000)
       } catch (error: Error | any) {
         imprimir(`Error durante Auth Provider 🚨: ${JSON.stringify(error)}`)
-        eliminarCookie('token')
+        borrarSesion()
         await router.replace({
           pathname: '/login',
         })
@@ -144,9 +144,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       await delay(500)
       mostrarFullScreen()
       await delay(500)
-      await router.replace({
-        pathname: '/login',
-      })
+
+      if (router.pathname != '/desbloqueo')
+        await router.replace({
+          pathname: '/login',
+        })
     }
     setLoading(false)
     ocultarFullScreen()
@@ -193,6 +195,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     } catch (e) {
       imprimir(`Error al iniciar sesión: ${JSON.stringify(e)}`)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+      borrarSesion()
     } finally {
       setLoading(false)
       ocultarFullScreen()
@@ -301,6 +304,15 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
+  const borrarSesion = () => {
+    eliminarCookie('token') // Eliminando access_token
+    eliminarCookie('rol') // Eliminando rol
+    eliminarCookie('jid') // Eliminando refresh token
+    eliminarCookie('empresa') // Eliminando empresa
+    setUser(null)
+    setIdRol(null)
+  }
+
   const logout = async () => {
     let respuesta: { url?: string } | undefined | null
     try {
@@ -320,10 +332,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       imprimir(`finalizando con respuesta: ${JSON.stringify(respuesta)}`)
-      eliminarCookie('token') // Eliminando access_token
-      eliminarCookie('rol') // Eliminando rol
-      eliminarCookie('jid') // Eliminando refresh token
-      setUser(null)
+      borrarSesion()
       if (respuesta?.url) {
         window.location.href = respuesta?.url
       } else {

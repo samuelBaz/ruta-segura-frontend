@@ -37,7 +37,10 @@ const Desbloqueo: NextPage = () => {
       await delay(1000)
 
       const respuesta = await Servicios.get({
-        url: `${Constantes.baseUrl}/usuarios/cuenta/desbloqueo?id=${codigoDesbloqueo}`,
+        url: `${Constantes.baseUrl}/usuarios/cuenta/desbloqueo`,
+        params: {
+          id: codigoDesbloqueo,
+        },
       })
       setMensaje(InterpreteMensajes(respuesta))
       imprimir(InterpreteMensajes(respuesta))
@@ -88,7 +91,7 @@ const Desbloqueo: NextPage = () => {
               redireccionarInicio().finally()
             }}
           >
-            Ir al inicio
+            <Typography sx={{ textTransform: 'none' }}>Ir al inicio</Typography>
           </Button>
         </Box>
       </Card>
