@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
-  async function loadUserFromCookies() {
+  const loadUserFromCookies = async () => {
     const token = leerCookie('token')
 
     if (token) {
@@ -123,12 +123,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         }
         await obtenerPermisos()
 
-        if (router.pathname == '/login' || router.pathname == '/')
-          // TODO: Verificar si el usuario tiene permiso de acceder a la ruta
+        if (router.pathname == '/login' || router.pathname == '/') {
           await router.replace({
             pathname: '/admin/home',
           })
-
+        }
         await delay(1000)
       } catch (error: Error | any) {
         imprimir(`Error durante Auth Provider 🚨: ${JSON.stringify(error)}`)
@@ -142,10 +141,12 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       }
     } else {
       imprimir(`Token no definido 🥾: ${token}`)
-      /*await router.replace({
+      await delay(500)
+      mostrarFullScreen()
+      await delay(500)
+      await router.replace({
         pathname: '/login',
-      })*/
-      await delay(1000)
+      })
     }
     setLoading(false)
     ocultarFullScreen()
@@ -379,7 +380,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         .then((permitido) => {
           return permitido
         })
-        .catch((reason) => {
+        .catch(() => {
           return false
         })
     } else {

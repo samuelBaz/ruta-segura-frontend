@@ -1,30 +1,9 @@
 import type { NextPage } from 'next'
 import { Grid, Typography } from '@mui/material'
-import { delay, siteName } from '../common/utils'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { useFullScreenLoadingContext } from '../context/ui'
+import { siteName } from '../common/utils'
 
 const Inicio: NextPage = () => {
   const nombreSitio: string = siteName()
-
-  const router = useRouter()
-  const { mostrarFullScreen } = useFullScreenLoadingContext()
-
-  const abrirLogin = async () => {
-    await delay(500)
-    mostrarFullScreen()
-    await delay(500)
-    await router.replace({
-      pathname: '/login',
-    })
-  }
-
-  useEffect(() => {
-    if (!router.isReady) return
-    abrirLogin().finally()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady])
 
   return (
     <Grid
