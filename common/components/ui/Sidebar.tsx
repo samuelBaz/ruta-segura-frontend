@@ -4,6 +4,7 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemButton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -86,7 +87,9 @@ export const Sidebar = () => {
         modulos.length > 0 &&
         !progresoLogin &&
         !estadoFullScreen &&
-        !modulos.find((modulo) => rutaActiva(modulo.url, router.pathname))
+        modulos.some((moduloGrupo) =>
+          moduloGrupo.subModulo.some((modulo) => modulo.url == router.pathname)
+        )
       }
       onClose={closeSideMenu}
       ModalProps={{
@@ -128,8 +131,7 @@ export const Sidebar = () => {
               </ListItem>
               <List key={`submodulos-${index}`}>
                 {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
-                  <ListItem
-                    button
+                  <ListItemButton
                     key={`submodulo-${indexSubModulo}`}
                     selected={rutaActiva(subModuloItem.url, router.pathname)}
                     onClick={() => navigateTo(subModuloItem.url)}
@@ -152,7 +154,7 @@ export const Sidebar = () => {
                         variant={'body2'}
                       >{`${subModuloItem.label}`}</Typography>
                     </Box>
-                  </ListItem>
+                  </ListItemButton>
                 ))}
               </List>
             </div>
