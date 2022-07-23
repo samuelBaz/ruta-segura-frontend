@@ -18,7 +18,7 @@ interface Props {
 
 export const Icono: FC<PropsWithChildren<Props>> = ({
   color = 'primary',
-  fontSize = 'inherit',
+  fontSize = 'medium',
   children,
 }) => {
   return (

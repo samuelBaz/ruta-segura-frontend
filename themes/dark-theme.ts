@@ -69,5 +69,18 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiIcon: {
+      styleOverrides: {
+        fontSizeInherit: () => ({
+          fontSize: 'inherit !important',
+        }),
+        fontSizeSmall: ({ theme }) => ({
+          fontSize: `${theme.typography.pxToRem(20)} !important`,
+        }),
+        fontSizeLarge: ({ theme }) => ({
+          fontSize: `${theme.typography.pxToRem(36)} !important`,
+        }),
+      },
+    },
   },
 })
