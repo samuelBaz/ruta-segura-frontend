@@ -1,8 +1,9 @@
-import { Grid, ToggleButton, Typography } from '@mui/material'
+import { Button, Grid, ToggleButton, Typography } from '@mui/material'
 import { NextPage } from 'next'
-import { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { LayoutUser } from '../../common/components/layouts'
 import {
+  AlertDialog,
   CustomDataTable,
   CustomDialog,
   Icono,
@@ -11,7 +12,12 @@ import {
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { CasbinTypes, ColumnaType } from '../../common/types'
 import { imprimir } from '../../common/utils/imprimir'
-import { delay, InterpreteMensajes, siteName } from '../../common/utils'
+import {
+  delay,
+  InterpreteMensajes,
+  siteName,
+  titleCase,
+} from '../../common/utils'
 import { Constantes } from '../../config'
 import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
@@ -28,6 +34,11 @@ const Modulos: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [mostrarFiltroModulo, setMostrarFiltroModulo] = useState(false)
   const [modalModulo, setModalModulo] = useState(false)
+
+  /// Indicador para mostrar una vista de alerta de cambio de estado
+  const [mostrarAlertaEstadoModulo, setMostrarAlertaEstadoModulo] =
+    useState(false)
+
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
@@ -102,7 +113,7 @@ const Modulos: NextPage = () => {
   ]
 
   const [moduloEdicion, setModuloEdicion] = useState<
-    ModuloCRUDType | undefined
+    ModuloCRUDType | undefined | null
   >()
 
   const paginacion = (
@@ -149,6 +160,52 @@ const Modulos: NextPage = () => {
     }
   }
 
+  /// Método que muestra alerta de cambio de estado
+
+  const editarEstadoModuloModal = async (modulo: ModuloCRUDType) => {
+    setModuloEdicion(modulo) // para mostrar datos de modal en la alerta
+    setMostrarAlertaEstadoModulo(true) // para mostrar alerta de modulo
+  }
+
+  const cancelarAlertaEstadoModulo = async () => {
+    setMostrarAlertaEstadoModulo(false)
+    await delay(500) // para no mostrar undefined mientras el modal se cierra
+    setModuloEdicion(null)
+  }
+
+  /// Método que oculta la alerta de cambio de estado y procede al cambio
+  const aceptarAlertaEstadoModulo = async () => {
+    setMostrarAlertaEstadoModulo(false)
+    if (moduloEdicion) {
+      await cambiarEstadoModuloPeticion(moduloEdicion)
+    }
+    setModuloEdicion(null)
+  }
+
+  /// Petición que cambia el estado de un módulo
+  const cambiarEstadoModuloPeticion = async (modulo: ModuloCRUDType) => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/autorizacion/modulos/${modulo.id}/${
+          modulo.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
+        }`,
+        tipo: 'patch',
+      })
+      imprimir(`respuesta estado modulo: ${respuesta}`)
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
+      await obtenerModuloPeticion()
+    } catch (e) {
+      imprimir(`Error estado modulo: ${e}`)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const columnas: Array<ColumnaType> = [
     { campo: 'icono', nombre: 'Icono' },
     { campo: 'nombre', nombre: 'Nombre' },
@@ -158,6 +215,7 @@ const Modulos: NextPage = () => {
     { campo: 'estado', nombre: 'Estado' },
     { campo: 'acciones', nombre: 'Acciones' },
   ]
+
   const contenidoTabla: Array<Array<ReactNode>> = modulosData.map(
     (moduloData, indexModulo) => [
       <Typography
@@ -204,23 +262,52 @@ const Modulos: NextPage = () => {
         }
       />,
       <Grid key={`${moduloData.id}-${indexModulo}-accion`}>
-        {permisos.update && (
-          <IconoTooltip
-            titulo={'Editar'}
-            color={'primary'}
-            accion={() => {
-              imprimir(`Editaremos : ${JSON.stringify(moduloData)}`)
-              editarModuloModal(moduloData)
-            }}
-            icono={'edit'}
-            name={'Módulos'}
-          />
-        )}
+        <Grid key={`${moduloData.id}-${indexModulo}-acciones`}>
+          {permisos.update && (
+            <IconoTooltip
+              titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+              color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
+              accion={async () => {
+                await editarEstadoModuloModal(moduloData)
+              }}
+              desactivado={moduloData.estado == 'PENDIENTE'}
+              icono={moduloData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+              name={
+                moduloData.estado == 'ACTIVO'
+                  ? 'Inactivar Módulo'
+                  : 'Activar Módulo'
+              }
+            />
+          )}
+
+          {permisos.update && (
+            <IconoTooltip
+              titulo={'Editar'}
+              color={'primary'}
+              accion={() => {
+                imprimir(`Editaremos : ${JSON.stringify(moduloData)}`)
+                editarModuloModal(moduloData)
+              }}
+              icono={'edit'}
+              name={'Editar módulo'}
+            />
+          )}
+        </Grid>
       </Grid>,
     ]
   )
   return (
     <>
+      <AlertDialog
+        isOpen={mostrarAlertaEstadoModulo}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de ${
+          moduloEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
+        } el módulo: ${titleCase(moduloEdicion?.nombre ?? '')} ?`}
+      >
+        <Button onClick={cancelarAlertaEstadoModulo}>Cancelar</Button>
+        <Button onClick={aceptarAlertaEstadoModulo}>Aceptar</Button>
+      </AlertDialog>
       <CustomDialog
         isOpen={modalModulo}
         handleClose={cerrarModalModulo}
