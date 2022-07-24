@@ -22,7 +22,6 @@ export const FiltroPolitica = ({
   filtroPolitica,
   filtroApp,
   accionCorrecta,
-  accionCerrar,
 }: FiltroModalPoliticasType) => {
   const { control, watch, setValue } = useForm<FiltroType>({
     defaultValues: {

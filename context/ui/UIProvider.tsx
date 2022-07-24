@@ -2,11 +2,11 @@ import { FC, PropsWithChildren, useReducer } from 'react'
 import { UIContext, uiReducer } from './'
 
 export interface UIState {
-  sidemenuOpen: boolean
+  sideMenuOpen: boolean
 } // Definición de estado
 
 const UI_INITIAL_STATE: UIState = {
-  sidemenuOpen: false,
+  sideMenuOpen: false,
 } // Definición de estado inicial
 
 export const UIProvider: FC<PropsWithChildren<any>> = ({ children }) => {

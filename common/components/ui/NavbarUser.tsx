@@ -45,7 +45,7 @@ export const NavbarUser = () => {
   const { usuario, idRolUsuario, setRolUsuario, cerrarSesion, rolUsuario } =
     useAuth()
 
-  const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+  const { sideMenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
 
@@ -157,11 +157,11 @@ export const NavbarUser = () => {
         <Toolbar>
           <IconButton
             size="large"
-            name={sidemenuOpen ? 'Cerrar menú lateral' : 'Abrir menú lateral'}
+            name={sideMenuOpen ? 'Cerrar menú lateral' : 'Abrir menú lateral'}
             edge="start"
             color={'primary'}
             onClick={() => {
-              if (!sidemenuOpen) {
+              if (!sideMenuOpen) {
                 openSideMenu()
               } else {
                 closeSideMenu()
@@ -170,7 +170,7 @@ export const NavbarUser = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            {sidemenuOpen ? <MenuOpenOutlined /> : <MenuOutlinedIcon />}
+            {sideMenuOpen ? <MenuOpenOutlined /> : <MenuOutlinedIcon />}
           </IconButton>
           <Typography
             color={'text.primary'}

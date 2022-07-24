@@ -1,6 +1,10 @@
 /** @type {import("next").NextConfig} */
+
 module.exports = {
-  basePath: "" === process.env.NEXT_PUBLIC_PATH ? "" : "/" + process.env.NEXT_PUBLIC_PATH,
+  basePath:
+    (process.env.NEXT_PUBLIC_PATH ?? '').length === 0
+      ? undefined
+      : process.env.NEXT_PUBLIC_PATH,
   reactStrictMode: false, // se desactiva porque React 18 renderiza 2 veces y llama useEffect 2 veces 🤷‍♂️
   poweredByHeader: false,
   webpack: (config, { isServer }) => {
@@ -14,9 +18,6 @@ module.exports = {
     }
 
     return config
-  },
-  fallback: {
-    child_process: false,
   },
   output: 'standalone',
 }

@@ -17,13 +17,11 @@ export const FiltroParametros = ({
   filtroParametro,
   accionCorrecta,
 }: FiltroParametrosType) => {
-  const { control, watch, setValue } = useForm<FiltroType>({
+  const { control, setValue } = useForm<FiltroType>({
     defaultValues: {
       parametro: filtroParametro,
     },
   })
-
-  const filtroParametroWatch: string = watch('parametro')
 
   const debounced = useDebouncedCallback((filtros: FiltroType) => {
     accionCorrecta(filtros)

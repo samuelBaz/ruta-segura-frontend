@@ -1,10 +1,8 @@
 // import React from 'react'
 
-import { ComponentStory, ComponentMeta, storiesOf } from '@storybook/react'
-
-import { action, actions } from '@storybook/addon-actions'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { CustomDataTable } from '../../../../../common/components/ui/CustomDataTable'
-import { Button, Grid, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../../common/types/datatableTypes'
 import { ReactNode } from 'react'
 import { IconoTooltip } from '../../../../../common/components/ui/IconoTooltip'

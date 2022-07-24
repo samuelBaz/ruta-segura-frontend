@@ -1,15 +1,15 @@
 #ignoring dirs
-./node_modules
-./dist
-./.next
-./.nuxt
+node_modules/
+#dist/
+.next/
+.nuxt/
 
 #ignoring dotfiles
 .dockerignore
-.eslintrc.js
+#.eslintrc.js
 .env.sample
 # .env
-.prettierrc
+# .prettierrc
 .gitignore
 .git
 
@@ -19,5 +19,5 @@ README.md
 *dockerfile*
 *docker-compose*
 
-./.gitlab-ci.yml
-./.gitlab
+.gitlab-ci.yml
+.gitlab

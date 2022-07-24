@@ -15,7 +15,7 @@ export const LayoutUser: FC<PropsWithChildren<Props>> = ({
   title = siteName(),
   children,
 }) => {
-  const { sidemenuOpen } = useContext(UIContext)
+  const { sideMenuOpen } = useContext(UIContext)
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
@@ -40,11 +40,11 @@ export const LayoutUser: FC<PropsWithChildren<Props>> = ({
       <Box
         component="main"
         sx={{
-          width: sm || xs || md ? '100%' : sidemenuOpen ? '78%' : '100%',
+          width: sm || xs || md ? '100%' : sideMenuOpen ? '78%' : '100%',
           // backgroundColor: 'primary.main',
           display: 'flex',
           flexDirection: 'column',
-          ml: sm || xs || md ? '0%' : sidemenuOpen ? '240px' : '0%',
+          ml: sm || xs || md ? '0%' : sideMenuOpen ? '240px' : '0%',
           transition: 'all 0.1s ease-out !important',
         }}
       >

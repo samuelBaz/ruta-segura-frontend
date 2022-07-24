@@ -1,9 +1,10 @@
 // import React from 'react'
 
-import { ComponentStory, ComponentMeta, storiesOf } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { action, actions } from '@storybook/addon-actions'
+import { action } from '@storybook/addon-actions'
 import { Paginacion } from '../../../../../common/components/ui/Paginacion'
+
 export default {
   title: 'COMPONENTES/Paginacion',
   component: Paginacion,

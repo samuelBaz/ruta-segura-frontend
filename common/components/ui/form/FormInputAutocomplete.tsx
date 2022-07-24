@@ -67,11 +67,11 @@ export const FormInputAutocomplete = ({
             <>
               {options.length > 0 ? (
                 <Autocomplete
+                  id={id}
                   disableCloseOnSelect
                   multiple
                   fullWidth
                   size={size}
-                  id="fixed-tags-demo"
                   value={auxOptions}
                   onChange={(event, newValue) => {
                     setValue(newValue) // para recargar el componente con los nuevos datos. // * mejorar mógica

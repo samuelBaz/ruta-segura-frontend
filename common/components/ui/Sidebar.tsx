@@ -22,7 +22,7 @@ import { versionNumber } from '../../utils'
 const drawerWidth = 240
 
 export const Sidebar = () => {
-  const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+  const { sideMenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
 
   const { usuario, idRolUsuario, estaAutenticado, progresoLogin } = useAuth()
 
@@ -82,7 +82,7 @@ export const Sidebar = () => {
     <Drawer
       variant={sm || xs || md ? 'temporary' : 'persistent'}
       open={
-        sidemenuOpen &&
+        sideMenuOpen &&
         estaAutenticado &&
         modulos.length > 0 &&
         !progresoLogin &&
@@ -96,7 +96,7 @@ export const Sidebar = () => {
         keepMounted: true, // Better open performance on mobile.
       }}
       sx={{
-        width: sidemenuOpen ? drawerWidth : `0`,
+        width: sideMenuOpen ? drawerWidth : `0`,
         border: 'none',
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {

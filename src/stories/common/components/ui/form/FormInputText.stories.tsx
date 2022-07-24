@@ -84,7 +84,7 @@ export default {
 // ))
 // replica del componente
 const Template: ComponentStory<typeof FormInputText> = (args) => {
-  const { control, getValues } = useForm<PersonaType>({
+  const { control } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
       nombre: 'Pedro',

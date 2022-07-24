@@ -22,7 +22,7 @@ import { Constantes } from '../../config'
 import { useRouter } from 'next/router'
 import { CasbinTypes } from '../../common/types'
 import { useFullScreenLoadingContext } from '../ui'
-import { AxiosError } from 'axios'
+
 import {
   Enforcer,
   newEnforcer,
@@ -124,11 +124,12 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         await obtenerPermisos()
 
         if (router.pathname == '/login' || router.pathname == '/') {
+          mostrarFullScreen()
+          await delay(1000)
           await router.replace({
             pathname: '/admin/home',
           })
         }
-        await delay(1000)
       } catch (error: Error | any) {
         imprimir(`Error durante Auth Provider 🚨: ${JSON.stringify(error)}`)
         borrarSesion()
@@ -289,7 +290,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         )} -->> ${JSON.stringify(response)}`
       )
       return response.data
-    } catch (e: AxiosError | any) {
+    } catch (e: import('axios').AxiosError | any) {
       if (e.code === 'ECONNABORTED') {
         throw new Error('La petición está tardando demasiado')
       } else if (Servicios.isNetworkError(e))

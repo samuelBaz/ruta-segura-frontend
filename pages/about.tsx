@@ -14,12 +14,12 @@ import MailIcon from '@mui/icons-material/Mail'
 import { UIContext } from '../context/ui'
 import { useContext } from 'react'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import { IconButton } from '@mui/material'
+import { IconButton, ListItemButton } from '@mui/material'
 
 const drawerWidth = 240
 
 export default function ClippedDrawer() {
-  const { sidemenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+  const { sideMenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -33,7 +33,7 @@ export default function ClippedDrawer() {
             edge="start"
             color={'primary'}
             onClick={() => {
-              if (!sidemenuOpen) {
+              if (!sideMenuOpen) {
                 openSideMenu()
               } else {
                 closeSideMenu()
@@ -49,9 +49,9 @@ export default function ClippedDrawer() {
       </AppBar>
       <Drawer
         variant="persistent"
-        open={sidemenuOpen}
+        open={sideMenuOpen}
         sx={{
-          width: sidemenuOpen ? drawerWidth : 0,
+          width: sideMenuOpen ? drawerWidth : 0,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
@@ -74,12 +74,12 @@ export default function ClippedDrawer() {
           <Divider />
           <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
+              <ListItemButton key={text}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
-              </ListItem>
+              </ListItemButton>
             ))}
           </List>
         </Box>
