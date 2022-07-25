@@ -74,20 +74,6 @@ const Login: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (!router.isReady) return
-
-    const { code, state, session_state } = router.query
-    if (code && state && session_state) {
-      autorizarCiudadania({
-        code: code as string,
-        state: state as string,
-        session_state: session_state as string,
-      }).finally()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady])
-
   return (
     <LayoutLogin title={siteName()}>
       <Grid container justifyContent="space-evenly" alignItems={'center'}>
@@ -208,7 +194,9 @@ const Login: NextPage = () => {
                     disabled={progresoLogin}
                     onClick={handleSubmit(iniciarSesion)}
                   >
-                    <Typography sx={{ fontWeight: 'bold' }}>
+                    <Typography
+                      sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                    >
                       Ingresar
                     </Typography>
                   </Button>

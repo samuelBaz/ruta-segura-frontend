@@ -34,9 +34,9 @@ import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { verificarToken } from '../../common/utils/token'
 import {
+  AutorizacionLoginType,
   idRolType,
   LoginType,
-  AutorizacionLoginType,
   PoliticaType,
   RoleType,
   UsuarioType,
@@ -133,6 +133,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       } catch (error: Error | any) {
         imprimir(`Error durante Auth Provider 🚨: ${JSON.stringify(error)}`)
         borrarSesion()
+        imprimir(`🚨 -> login`)
         await router.replace({
           pathname: '/login',
         })
@@ -146,21 +147,34 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       mostrarFullScreen()
       await delay(500)
 
-      if (router.pathname != '/desbloqueo')
-        await router.replace({
-          pathname: '/login',
-        })
+      if (router.pathname != '/desbloqueo') {
+        const { code, state, session_state } = router.query
+        if (code && state && session_state) {
+          await autorizarCiudadania({
+            code: code as string,
+            state: state as string,
+            session_state: session_state as string,
+          })
+        } else {
+          imprimir(`🏡 -> login`)
+          await router.replace({
+            pathname: '/login',
+          })
+        }
+      }
     }
     setLoading(false)
     ocultarFullScreen()
   }
 
   useEffect(() => {
+    if (!router.isReady) return
+
     loadUserFromCookies().finally(() => {
       imprimir('Verificación de login finalizada 👨‍💻')
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [router.isReady])
 
   const login = async ({ usuario, contrasena }: LoginType) => {
     try {
@@ -210,7 +224,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   }: AutorizacionLoginType) => {
     try {
       setLoading(true)
-      // await delay(4000)
+      await delay(500)
       const respuesta = await Servicios.get({
         url: `${Constantes.baseUrl}/ciudadania-autorizar`,
         body: {},
