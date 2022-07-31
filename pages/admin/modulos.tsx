@@ -1,4 +1,13 @@
-import { Button, Grid, ToggleButton, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  ToggleButton,
+  Typography,
+} from '@mui/material'
 import { NextPage } from 'next'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { LayoutUser } from '../../common/components/layouts'
@@ -29,8 +38,16 @@ import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
+  /// Módulos
   const [modulosData, setModulosData] = useState<ModuloCRUDType[]>([])
   const [errorModulosData, setErrorModulosData] = useState<any>()
+  const [limite, setLimite] = useState<number>(10)
+  const [pagina, setPagina] = useState<number>(1)
+  const [total, setTotal] = useState<number>(0)
+
+  /// Secciones
+  const [seccionesData, setSeccionesData] = useState<ModuloCRUDType[]>([])
+
   const [loading, setLoading] = useState<boolean>(true)
   const [mostrarFiltroModulo, setMostrarFiltroModulo] = useState(false)
   const [modalModulo, setModalModulo] = useState(false)
@@ -39,13 +56,12 @@ const Modulos: NextPage = () => {
   const [mostrarAlertaEstadoModulo, setMostrarAlertaEstadoModulo] =
     useState(false)
 
-  const [limite, setLimite] = useState<number>(10)
-  const [pagina, setPagina] = useState<number>(1)
-  const [total, setTotal] = useState<number>(0)
   const { Alerta } = useAlerts()
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
 
   const [filtroBuscar, setFiltroBuscar] = useState<string>('')
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const definirPermisos = async () => {
     setPermisos(await interpretarPermiso(router.pathname))
@@ -55,6 +71,7 @@ const Modulos: NextPage = () => {
     definirPermisos().finally()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado])
+
   const [permisos, setPermisos] = useState<CasbinTypes>({
     read: false,
     create: false,
@@ -62,13 +79,26 @@ const Modulos: NextPage = () => {
     delete: false,
   })
 
-  const agregarModuloModal = () => {
-    setModuloEdicion(undefined)
+  const agregarModuloModal = ({ esSeccion }: { esSeccion: boolean }) => {
+    cerrarMenu()
+    setModuloEdicion({ esSeccion: esSeccion } as ModuloCRUDType)
     setModalModulo(true)
   }
 
+  const desplegarMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const cerrarMenu = () => {
+    setAnchorEl(null)
+  }
+
   useEffect(() => {
-    if (estaAutenticado) obtenerModuloPeticion().finally(() => {})
+    if (estaAutenticado) {
+      obtenerSeccionesPeticion().then(() => {
+        obtenerModulosPeticion().finally(() => {})
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite, filtroBuscar])
 
@@ -91,21 +121,64 @@ const Modulos: NextPage = () => {
       <Icono>search</Icono>
     </ToggleButton>,
     permisos.create && (
-      <IconoTooltip
-        titulo={'Agregar módulo'}
-        key={`accionAgregarModulo`}
-        accion={() => {
-          agregarModuloModal()
-        }}
-        icono={'add_circle_outline'}
-        name={'Agregar módulo'}
-      />
+      <div>
+        <IconButton
+          size="small"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="false"
+          onClick={desplegarMenu}
+          color="primary"
+          style={{ textTransform: 'none' }}
+        >
+          <Icono>add_circle_outline</Icono>
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={cerrarMenu}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+          autoFocus={false}
+        >
+          <MenuItem
+            sx={{ p: 2 }}
+            onClick={() => {
+              agregarModuloModal({ esSeccion: false })
+            }}
+          >
+            <Icono>menu</Icono>
+            <Box width={'20px'} />
+            <Typography variant={'body2'}>Nuevo módulo</Typography>
+          </MenuItem>
+          <MenuItem
+            sx={{ p: 2 }}
+            onClick={() => {
+              agregarModuloModal({ esSeccion: true })
+            }}
+          >
+            <Icono>list</Icono>
+            <Box width={'20px'} />
+            <Typography variant={'body2'}>Nueva sección</Typography>
+          </MenuItem>
+        </Menu>
+      </div>
     ),
     <IconoTooltip
       titulo={'Actualizar'}
       key={`accionActualizarModulo`}
       accion={async () => {
-        await obtenerModuloPeticion()
+        await obtenerModulosPeticion()
       }}
       icono={'refresh'}
       name={'Actualizar lista de parámetros'}
@@ -136,7 +209,7 @@ const Modulos: NextPage = () => {
     setModuloEdicion(undefined)
   }
 
-  const obtenerModuloPeticion = async () => {
+  const obtenerModulosPeticion = async () => {
     try {
       setLoading(true)
 
@@ -153,6 +226,28 @@ const Modulos: NextPage = () => {
       setErrorModulosData(null)
     } catch (e) {
       imprimir(`Error al obtener módulos: ${e}`)
+      setErrorModulosData(e)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const obtenerSeccionesPeticion = async () => {
+    try {
+      setLoading(true)
+
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/autorizacion/modulos`,
+        params: {
+          pagina: 1,
+          limite: 20,
+          seccion: true,
+        },
+      })
+      setSeccionesData(respuesta.datos?.filas)
+    } catch (e) {
+      imprimir(`Error al obtener secciones: ${e}`)
       setErrorModulosData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -197,7 +292,7 @@ const Modulos: NextPage = () => {
         mensaje: InterpreteMensajes(respuesta),
         variant: 'success',
       })
-      await obtenerModuloPeticion()
+      await obtenerModulosPeticion()
     } catch (e) {
       imprimir(`Error estado modulo: ${e}`)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
@@ -268,7 +363,10 @@ const Modulos: NextPage = () => {
               titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
               color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
               accion={async () => {
-                await editarEstadoModuloModal(moduloData)
+                await editarEstadoModuloModal({
+                  ...moduloData,
+                  ...{ esSeccion: moduloData?.fidModulo == null },
+                })
               }}
               desactivado={moduloData.estado == 'PENDIENTE'}
               icono={moduloData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
@@ -286,7 +384,10 @@ const Modulos: NextPage = () => {
               color={'primary'}
               accion={() => {
                 imprimir(`Editaremos : ${JSON.stringify(moduloData)}`)
-                editarModuloModal(moduloData)
+                editarModuloModal({
+                  ...moduloData,
+                  ...{ esSeccion: moduloData?.fidModulo == null },
+                })
               }}
               icono={'edit'}
               name={'Editar módulo'}
@@ -311,16 +412,26 @@ const Modulos: NextPage = () => {
       <CustomDialog
         isOpen={modalModulo}
         handleClose={cerrarModalModulo}
-        title={moduloEdicion ? 'Editar módulo' : 'Nuevo módulo'}
+        title={
+          moduloEdicion?.id
+            ? moduloEdicion.esSeccion
+              ? 'Editar Sección'
+              : 'Editar Módulo'
+            : moduloEdicion?.esSeccion
+            ? 'Nueva Sección'
+            : 'Nuevo Módulo'
+        }
       >
         <VistaModalModulo
           modulo={moduloEdicion}
           accionCorrecta={() => {
             cerrarModalModulo().finally()
-            obtenerModuloPeticion().finally()
+            obtenerSeccionesPeticion().then(() => {
+              obtenerModulosPeticion().finally()
+            })
           }}
           accionCancelar={cerrarModalModulo}
-          modulos={modulosData.filter((f) => f.fidModulo === null)}
+          modulos={seccionesData}
         />
       </CustomDialog>
 

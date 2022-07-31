@@ -1,4 +1,4 @@
-import { Box, Button, DialogActions, Grid, Switch } from '@mui/material'
+import { Box, Button, DialogActions, Grid } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
@@ -31,21 +31,20 @@ export const VistaModalModulo = ({
   // Proveedor de la sesión
   const { sesionPeticion } = useAuth() //hook
 
-  const { handleSubmit, control, setValue, watch } =
-    useForm<CrearEditarModulosType>({
-      defaultValues: {
-        id: modulo?.id,
-        label: modulo?.label,
-        url: modulo?.url,
-        nombre: modulo?.nombre,
-        propiedades: modulo?.propiedades,
-        estado: modulo?.estado,
-        fidModulo: modulo?.fidModulo?.id,
-        esPadre: !!modulo?.id && !modulo?.fidModulo?.id,
-      },
-    })
+  const { handleSubmit, control, watch } = useForm<CrearEditarModulosType>({
+    defaultValues: {
+      id: modulo?.id,
+      label: modulo?.label,
+      url: modulo?.url,
+      nombre: modulo?.nombre,
+      propiedades: modulo?.propiedades,
+      estado: modulo?.estado,
+      fidModulo: modulo?.fidModulo?.id,
+      esSeccion: modulo?.esSeccion,
+    },
+  })
 
-  const checked = watch('esPadre')
+  const checked = watch('esSeccion')
 
   const guardarActualizarModulo = async (data: CrearEditarModulosType) => {
     await guardarActualizarModuloPeticion(data)
@@ -77,20 +76,6 @@ export const VistaModalModulo = ({
 
   return (
     <Grid container direction={'column'} justifyContent="space-evenly">
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={6} sm={6} md={4}>
-          Es menú padre?
-        </Grid>
-        <Grid item xs={2} sm={2} md={2}>
-          <Switch
-            checked={checked}
-            onChange={() => {
-              setValue('esPadre', !checked)
-            }}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-        </Grid>
-      </Grid>
       {checked ? (
         <></>
       ) : (
@@ -100,7 +85,7 @@ export const VistaModalModulo = ({
               id={'fidModulo'}
               name="fidModulo"
               control={control}
-              label="Menú padre"
+              label="Sección"
               disabled={loadingModal}
               options={modulos.map((lm) => ({
                 key: lm.id,
@@ -158,6 +143,8 @@ export const VistaModalModulo = ({
             control={control}
             name="propiedades.descripcion"
             label="Descripción"
+            multiline
+            rows={2}
             disabled={loadingModal}
             rules={{ required: 'Este campo es requerido' }}
           />

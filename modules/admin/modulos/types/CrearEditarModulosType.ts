@@ -14,7 +14,7 @@ export interface ModuloCRUDType {
   label: string
   url: string
   nombre: string
-  esPadre: boolean
+  esSeccion: boolean
   propiedades: Propiedades
   estado: string
   fidModulo?: FidModulo | undefined
@@ -25,7 +25,7 @@ export interface CrearEditarModulosType {
   label: string
   url: string
   nombre: string
-  esPadre: boolean
+  esSeccion: boolean
   propiedades: Propiedades
   estado: string
   fidModulo?: string
