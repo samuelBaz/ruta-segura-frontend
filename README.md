@@ -5,7 +5,7 @@ Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.g
 ## Tecnologías empleadas
 
 - NextJS, framework sobre ReactJS. [Sitio oficial](https://nextjs.org)
-- ReactJS como librería para desarrollo frontend  [Sitio oficial](https://es.reactjs.org)
+- ReactJS como librería para desarrollo frontend [Sitio oficial](https://es.reactjs.org)
 - MUI (Material UI), librería de componentes UI para ReactJS. [Sitio oficial](https://mui.com)
 - Axios, para el manejo de peticiones HTTP. [Documentación](https://axios-http.com)
 - ESLint, para examinar el código en busca de problemas. [Documentación](https://eslint.org)
@@ -17,7 +17,7 @@ Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.g
 ```
 git remote add origin2 git@gitlab.agetic.gob.bo:agetic/agetic/proyectos-base/agetic-next-base-frontend.git
 ```
-- Para descargar los commits desde el 2do origen, ejecutar
+- Para descargar los commits desde el 2.º origen, ejecutar
 ```
 git pull origin2 master
 ```
@@ -64,7 +64,7 @@ Los archivos estáticos (imágenes, etc.) se encuentran en la carpeta `public/`.
 
 ### Iconos
 
-Los iconos de los menús son de  [material icons](https://fonts.google.com/icons).
+Los iconos de los menús son de [material icons](https://fonts.google.com/icons).
 
 ## Sistema de diseño
 

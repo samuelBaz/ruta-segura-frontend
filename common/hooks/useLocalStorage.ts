@@ -35,7 +35,7 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
         imprimir(`Definiendo por primera vez 🧨: ${item} -> ${state}`)
       }
 
-      // Allow value to be a function so we have the same API as useState
+      // Allow value to be a function, so we have the same API as useState
       const newValue = value instanceof Function ? value(state) : value
 
       // Save to local storage

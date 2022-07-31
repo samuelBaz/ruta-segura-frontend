@@ -30,7 +30,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   // imprimir(`isDarkOS inicial: ${isDarkOS}`)
 
   const [primeraVezState, setPrimeraVezState] = useState(isDarkOS)
-  // Para recuperar de storage en la 2da vez
+  // Para recuperar de storage en la 2.ª vez
 
   const [themeMode, setThemeMode] = useLocalStorage<ThemeMode>(
     'themeMode',

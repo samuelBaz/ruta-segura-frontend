@@ -74,7 +74,7 @@ export const FormInputAutocomplete = ({
                   size={size}
                   value={auxOptions}
                   onChange={(event, newValue) => {
-                    setValue(newValue) // para recargar el componente con los nuevos datos. // * mejorar mógica
+                    setValue(newValue) // Para recargar el componente con los nuevos datos. // * mejorar mógica
                     if (field.value) {
                       field.value?.splice(0, field.value.length)
                       newValue?.map((item) => {
