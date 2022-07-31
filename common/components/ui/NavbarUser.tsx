@@ -60,6 +60,7 @@ export const NavbarUser = () => {
     imprimir(`Valor al hacer el cambio: ${event.target.value}`)
     cerrarMenu()
     mostrarFullScreen(`Cambiando de rol..`)
+    await delay(1000)
     await router.replace({
       pathname: '/admin/home',
     })
@@ -250,51 +251,55 @@ export const NavbarUser = () => {
                 </Typography>
               </Box>
             </MenuItem>
-            <MenuItem
-              sx={{
-                p: 2,
-                ml: 0,
-                '&.MuiButtonBase-root:hover': {
-                  bgcolor: 'transparent',
-                },
-              }}
-            >
-              <Icono>switch_account</Icono>
-              <Box width={'20px'} />
-              <Typography variant={'body2'}>Roles </Typography>
-            </MenuItem>
-            <List key={`roles`} sx={{ p: 0 }}>
-              {roles.map((rol, indexRol) => (
-                <ListItem key={`rol-${indexRol}`}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      borderRadius: 1,
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Box width={'20px'} />
-                    <FormControlLabel
-                      value={rol.idRol}
-                      control={
-                        <Radio
-                          checked={idRolUsuario == rol.idRol}
-                          onChange={cambiarRol}
-                          color={'success'}
-                          size="small"
+            {roles.length > 1 && (
+              <Box>
+                <MenuItem
+                  sx={{
+                    p: 2,
+                    ml: 0,
+                    '&.MuiButtonBase-root:hover': {
+                      bgcolor: 'transparent',
+                    },
+                  }}
+                >
+                  <Icono>switch_account</Icono>
+                  <Box width={'20px'} />
+                  <Typography variant={'body2'}>Roles </Typography>
+                </MenuItem>
+                <List key={`roles`} sx={{ p: 0 }}>
+                  {roles.map((rol, indexRol) => (
+                    <ListItem key={`rol-${indexRol}`}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          borderRadius: 1,
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Box width={'20px'} />
+                        <FormControlLabel
                           value={rol.idRol}
-                          name="radio-buttons"
-                          inputProps={{ 'aria-label': 'A' }}
+                          control={
+                            <Radio
+                              checked={idRolUsuario == rol.idRol}
+                              onChange={cambiarRol}
+                              color={'success'}
+                              size="small"
+                              value={rol.idRol}
+                              name="radio-buttons"
+                              inputProps={{ 'aria-label': 'A' }}
+                            />
+                          }
+                          componentsProps={{ typography: { variant: 'body2' } }}
+                          label={rol.nombre}
                         />
-                      }
-                      componentsProps={{ typography: { variant: 'body2' } }}
-                      label={rol.nombre}
-                    />
-                  </Box>
-                </ListItem>
-              ))}
-            </List>
+                      </Box>
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+            )}
             <MenuItem sx={{ p: 2 }} onClick={toggleTheme}>
               {themeMode === 'light' ? (
                 <Icono>dark_mode</Icono>

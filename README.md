@@ -1,7 +1,5 @@
 # Frontend Base - NextJS/ReactJS
 
-> Para proyectos desarrollados por AGETIC
-
 Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/develop) o Tag [v1.1.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/v1.1.0)
 
 ## Tecnologías empleadas
@@ -14,8 +12,8 @@ Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.g
 
 ## Recomendaciones
 
-- Se sugiere crear un Fork de este proyecto dado que se harán mejoras continuas. [Más información](https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html)
-- Para añadir este proyecto como otro origen, ejecutar dentro el proyecto Fork:
+- Se sugiere crear un `Fork` de este proyecto dado que se harán mejoras continuas. [Más información](https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html)
+- Para añadir este proyecto como otro origen, ejecutar dentro del proyecto Fork:
 ```
 git remote add origin2 git@gitlab.agetic.gob.bo:agetic/agetic/proyectos-base/agetic-next-base-frontend.git
 ```
@@ -37,7 +35,7 @@ El proyecto cuenta con utilidades que podrían que pueden aplicarse de según el
 | Cookies            | Utilidad wrapper que ayuda a leer/guardar cookies                                                                                       | `guardarCookie('token','mi-token' )` guarda el valor de la cookie                                                             |
 | Fechas             | Utilidad wrapper de `dayjs` que puede validar y parsear fechas                                                                          | `formatoFecha('1994-07-05', '05/07/1994')`, retorna el valor de la fecha en nuevo formato                                     |
 | Imprimir           | Utilidad wrapper de `console.log` que sirve para mostrar mensajes en consola con el nombre de la función que lo invoca segun el entorno | `imprimir('hola mundo')`, imprime `🖨 funcionSaludo -> hola mundo`                                                            |
-| InterpreteMensajes | Utilidad que ayuda a extra mensajes de respuesta, pueden ser `Exception`, `strings`, objetos que contengan `message` o `mensaje`        | `interpretarMensaje({mensaje: 'hola mundo'})` retorna `Hola Mundo`                                                            |
+| InterpreteMensajes | Utilidad que ayuda a extraer mensajes de respuesta, pueden ser `Exception`, `strings`, objetos que contengan `message` o `mensaje`      | `interpretarMensaje({mensaje: 'hola mundo'})` retorna `Hola Mundo`                                                            |
 | Alerta             | Hook que muestra alertas de confirmación, error, advertencía o información                                                              | `Alerta({mensaje: 'Hola mundo', variant: 'success'})` mostrará una Alerta en color verde                                      |
 | Token              | Utilidad que valida la caducidad de un token                                                                                            | `verificarToken('mi-token')` el token devolverá `true` o `false` si caduco o no                                               |
 | AlertDialog        | Utilidad que muestra una alerta con acciones según el caso                                                                              | `<AlertDialog isOpen={mostrarAlerta} titulo={'Alerta'}, texto={'Hola mundo'}><Button onClick={'cerrarAlerta'}></AlertDialog>` |
@@ -119,4 +117,10 @@ npm run storybook
 2. Generar tag y archivo CHANGELOG
 ```bash
 npm run release
+```
+
+3. Guardar los tags generados
+
+```bash
+git push --follow-tags origin master
 ```
