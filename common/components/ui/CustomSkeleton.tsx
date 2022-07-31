@@ -6,7 +6,6 @@ import {
   TableContainer,
   TableRow,
 } from '@mui/material'
-import React from 'react'
 
 export interface ListSkeletonType {
   filas: number

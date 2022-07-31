@@ -17,7 +17,7 @@ import {
   Icono,
   IconoTooltip,
 } from '../../common/components/ui'
-import React, { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { CasbinTypes, ColumnaType } from '../../common/types'
 import { Constantes } from '../../config'
 import {
@@ -65,7 +65,7 @@ const Usuarios: NextPage = () => {
   const [mostrarAlertaRestablecerUsuario, setMostrarAlertaRestablecerUsuario] =
     useState(false)
 
-  /// Variable que contiene el estado del usuario que se esta editando
+  /// Variable que contiene el estado del usuario que se está editando
   const [usuarioEdicion, setUsuarioEdicion] = useState<
     UsuarioCRUDType | undefined | null
   >()

@@ -22,17 +22,14 @@ import { useEffect } from 'react'
 import { useAlerts } from '../common/hooks'
 import { imprimir } from '../common/utils/imprimir'
 import { LoginType } from '../modules/login/loginTypes'
-import { useRouter } from 'next/router'
 import { BotonCiudadania } from '../modules/login/BotonCiudadania'
 
 const Login: NextPage = () => {
-  const { ingresar, progresoLogin, autorizarCiudadania } = useAuth()
+  const { ingresar, progresoLogin } = useAuth()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
-
-  const router = useRouter()
 
   const { Alerta } = useAlerts()
 

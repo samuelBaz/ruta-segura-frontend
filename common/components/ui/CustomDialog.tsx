@@ -12,7 +12,7 @@ import {
   useTheme,
   Zoom,
 } from '@mui/material'
-import React, { FC, PropsWithChildren } from 'react'
+import { FC, forwardRef, PropsWithChildren } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { TransitionProps } from '@mui/material/transitions'
 
@@ -25,7 +25,7 @@ interface Props {
   paperProps?: Partial<PaperProps>
 }
 
-const Transition = React.forwardRef(function Transition(
+const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>
   },
@@ -34,7 +34,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />
 })
 
-const TransitionZoom = React.forwardRef(function Transition(
+const TransitionZoom = forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>
   },

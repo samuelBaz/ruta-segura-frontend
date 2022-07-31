@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 
 import { useThemeContext } from '../../../context/ui/ThemeContext'
 import { alpha } from '@mui/material/styles'
-import React from 'react'
 
 export interface MensajeEstadoProps {
   titulo?: string

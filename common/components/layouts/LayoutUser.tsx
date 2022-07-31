@@ -1,6 +1,6 @@
 import { Box, Grid, useMediaQuery, useTheme } from '@mui/material'
 import Head from 'next/head'
-import React, { FC, PropsWithChildren, useContext } from 'react'
+import { FC, PropsWithChildren, useContext } from 'react'
 
 import { NavbarUser } from '../ui'
 import Toolbar from '@mui/material/Toolbar'

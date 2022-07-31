@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { ColumnaType } from '../../types'
 import {
   Box,
@@ -222,7 +222,10 @@ export const CustomDataTable = ({
                         <TableRow>
                           {columnas.map((columna, index) => (
                             <TableCell key={`cabecera-id-${index}`}>
-                              <Typography variant={'caption'}>
+                              <Typography
+                                variant={'caption'}
+                                color="text.secondary"
+                              >
                                 {columna.nombre}
                               </Typography>
                             </TableCell>

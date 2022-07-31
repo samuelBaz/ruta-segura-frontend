@@ -1,9 +1,4 @@
-import React, {
-  FC,
-  MouseEventHandler,
-  PropsWithChildren,
-  ReactNode,
-} from 'react'
+import { FC, MouseEventHandler, PropsWithChildren, ReactNode } from 'react'
 import { IconButton, Tooltip } from '@mui/material'
 import { Icono } from './Icono'
 
