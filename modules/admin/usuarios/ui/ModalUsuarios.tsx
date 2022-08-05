@@ -125,7 +125,7 @@ export const VistaModalUsuario = ({
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
           <FormInputText
-            id={'nroDocumento'}
+            id={'nombre'}
             control={control}
             name="persona.nombres"
             label="Nombre"
