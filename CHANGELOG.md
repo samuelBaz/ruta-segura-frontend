@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.4.0...v1.4.2) (2022-08-07)
+
+
+### Bug Fixes
+
+* añadido name a FormInputDropdown ([f655d32](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f655d32c83454faff2cbd4d1fd8c76c376d92dab))
+* corrección en nombre de identificador campo de nombres al registrar un usuario ([d2f8632](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d2f863263b1bf6184ff4c06258ca1f76dd725346))
+* correcciones de ortografía en readme y otros componentes ([9a01dbc](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9a01dbc477a08425b6e3538ef4c0caefac0a14cc))
+
 ## 1.4.0 (2022-07-31)
 
 
