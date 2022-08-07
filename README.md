@@ -112,15 +112,15 @@ npm run storybook
 ## Changelog
 
 1. Generar tag de la versión
-> Cambiar el número de versión en archivo `package.json` 
+    > Cambiar el número de versión en archivo `package.json` 
 
 2. Generar tag y archivo CHANGELOG
-```bash
-npm run release
-```
+    ```bash
+    npm run release
+    ```
 
 3. Guardar los tags generados
-
-```bash
-git push --follow-tags origin master
-```
+    
+    ```bash
+    git push --follow-tags origin master
+    ```
