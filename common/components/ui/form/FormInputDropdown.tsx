@@ -64,6 +64,7 @@ export const FormInputDropdown = ({
           <>
             <Select
               id={id}
+              name={name}
               sx={{ width: '100%', bgcolor: bgcolor }}
               size={size}
               error={!!error}
