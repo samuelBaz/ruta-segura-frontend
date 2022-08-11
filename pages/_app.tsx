@@ -14,15 +14,31 @@ import { SnackbarProvider } from 'notistack'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
+import { init } from '@socialgouv/matomo-next'
+import { useEffect } from 'react'
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
+
+const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL
+const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   const entorno = Constantes.appEnv
   imprimir(`🚀 iniciando en modo ${entorno}`)
+
+  useEffect(() => {
+    if (
+      MATOMO_URL &&
+      MATOMO_SITE_ID &&
+      MATOMO_URL != '' &&
+      MATOMO_SITE_ID != ''
+    )
+      init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID })
+  }, [])
 
   return (
     <CacheProvider value={emotionCache}>
