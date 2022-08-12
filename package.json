@@ -12,6 +12,7 @@
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "preinstall": "mkdir -p node_modules; touch ./node_modules/.metadata_never_index",
     "release": "standard-version",
+    "prepare": "husky install",
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public"
   },
