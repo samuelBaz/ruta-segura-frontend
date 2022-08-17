@@ -14,7 +14,8 @@
     "release": "standard-version",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006 -s ./public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "e2e": "cypress open"
   },
   "dependencies": {
     "@emotion/cache": "11.10.1",
@@ -63,6 +64,7 @@
     "babel-loader": "8.2.5",
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.5",
+    "cypress": "10.4.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-storybook": "0.6.4",
     "husky": "8.0.1",
