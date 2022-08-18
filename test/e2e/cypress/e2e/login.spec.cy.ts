@@ -1,5 +1,5 @@
-import { darkTheme } from '../../themes/dark-theme';
-import { lightTheme } from '../../themes/light-theme';
+import { darkTheme } from '../../../../themes/dark-theme';
+import { lightTheme } from '../../../../themes/light-theme';
 
 function hexToRgb(hex: string): string {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)!;
