@@ -40,7 +40,7 @@ import {
   PoliticaType,
   RoleType,
   UsuarioType,
-} from '../../modules/login/loginTypes'
+} from '../../modules/login/types/loginTypes'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -147,20 +147,20 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       mostrarFullScreen()
       await delay(500)
 
-      if (router.pathname != '/desbloqueo') {
-        const { code, state, session_state } = router.query
-        if (code && state && session_state) {
-          await autorizarCiudadania({
-            code: code as string,
-            state: state as string,
-            session_state: session_state as string,
-          })
-        } else {
-          imprimir(`🏡 -> login`)
-          await router.replace({
-            pathname: '/login',
-          })
-        }
+      const { code, state, session_state } = router.query
+      if (code && state && session_state) {
+        await autorizarCiudadania({
+          code: code as string,
+          state: state as string,
+          session_state: session_state as string,
+        })
+      }
+
+      if (router.pathname == '/') {
+        imprimir(`🏡 -> login`)
+        await router.replace({
+          pathname: '/login',
+        })
       }
     }
     setLoading(false)

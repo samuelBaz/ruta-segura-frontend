@@ -116,6 +116,11 @@ npm run storybook
 
 2. Generar tag y archivo CHANGELOG
     ```bash
+    # Versión mínima, cambia de 1.1.1 a 1.1.2
+    npm run release -- --release-as patch
+    ```
+    ```bash
+    # cambio de versión, cambia de 1.1.1 a 1.2.0
     npm run release
     ```
 
