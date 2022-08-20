@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import { Alert, Box, Button, Card, Grid, Typography } from '@mui/material'
-import { delay, InterpreteMensajes, siteName } from '../common/utils'
+import { Box, Button, Card, Grid, Typography } from '@mui/material'
+import { delay, InterpreteMensajes } from '../common/utils'
 import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
@@ -12,9 +12,6 @@ import { imprimir } from '../common/utils/imprimir'
 
 const Desbloqueo: NextPage = () => {
   const [mensaje, setMensaje] = useState<string>('')
-  const [error, setError] = useState<boolean>(false)
-
-  const nombreSitio: string = siteName()
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
 
@@ -45,8 +42,11 @@ const Desbloqueo: NextPage = () => {
       setMensaje(InterpreteMensajes(respuesta))
       imprimir(InterpreteMensajes(respuesta))
     } catch (e) {
+      router.reload()
+      await router.replace({
+        pathname: '/login',
+      })
       setMensaje(InterpreteMensajes(e))
-      setError(true)
       imprimir(`Error al desbloquear usuario: ${JSON.stringify(e)}`)
     } finally {
       ocultarFullScreen()
@@ -76,13 +76,14 @@ const Desbloqueo: NextPage = () => {
       >
         <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
           <Icono fontSize={'large'}> lock_open</Icono>
-          <Typography variant={'h4'} component="h1">
-            {nombreSitio}
+          <Box height={'20px'} />
+          <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
+            Cuenta desbloqueada
           </Typography>
           <Box height={'20px'} />
-          <Alert severity={error ? 'error' : 'info'} variant={'outlined'}>
+          <Typography variant="body2" color="text.secondary" align="center">
             {mensaje}
-          </Alert>
+          </Typography>
           <Box height={'20px'} />
           <Button
             type="submit"

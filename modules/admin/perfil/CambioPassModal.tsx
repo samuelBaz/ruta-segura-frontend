@@ -1,11 +1,4 @@
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Button,
-  DialogActions,
-  Grid,
-} from '@mui/material'
+import { AlertTitle, Box, Button, DialogActions, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import { FormInputText } from '../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
@@ -20,6 +13,7 @@ import {
 import { useAlerts } from '../../../common/hooks'
 import { Constantes } from '../../../config'
 import { useAuth } from '../../../context/auth'
+import Typography from '@mui/material/Typography'
 
 export interface CambioPassModalType {
   accionCorrecta: () => void
@@ -92,14 +86,14 @@ export const CambioPassModal = ({
 
   return (
     <Grid container direction={'column'} justifyContent="space-evenly">
-      <Alert severity="info" variant={'standard'}>
-        <AlertTitle>¿Cómo es una contraseña segura?</AlertTitle>
+      <Typography variant="body2" color="text.secondary" align="inherit">
         <li>Las contraseñas deben tener 8 caracteres o más.</li>
         <li>
           Las buenas contraseñas son dificiles de adivinar y usan palabras,
           números, símbolos y letras mayúsculas poco comunes.
         </li>
-      </Alert>
+      </Typography>
+
       <Box height={'20px'} />
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={12}>
@@ -125,9 +119,11 @@ export const CambioPassModal = ({
           />
         </Grid>
 
-        <Grid item xs={12} sm={12} md={12}>
-          <NivelSeguridadPass pass={newPassword1Watch} />
-        </Grid>
+        {watch('newPassword1') && (
+          <Grid item xs={12} sm={12} md={12}>
+            <NivelSeguridadPass pass={newPassword1Watch} />
+          </Grid>
+        )}
         <Grid item xs={12} sm={12} md={12}>
           <FormInputText
             id={'newPassword2'}
