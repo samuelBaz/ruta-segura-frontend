@@ -32,7 +32,7 @@ import { Icono } from './Icono'
 import { IconoTooltip } from './IconoTooltip'
 import { AlertDialog } from './AlertDialog'
 import { imprimir } from '../../utils/imprimir'
-import { RoleType } from '../../../modules/login/loginTypes'
+import { RoleType } from '../../../modules/login/types/loginTypes'
 import { useThemeContext } from '../../../context/ui/ThemeContext'
 
 export const NavbarUser = () => {
@@ -146,7 +146,7 @@ export const NavbarUser = () => {
         title={'Información'}
       >
         <Typography variant={'body2'} sx={{ pt: 2, pb: 2 }}>
-          Propuesta de Frontend Base Administrador elaborado con NextJS y
+          Propuesta de Frontend Base Administrador creado con NextJS y
           Typescript
         </Typography>
       </CustomDialog>

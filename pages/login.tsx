@@ -1,45 +1,23 @@
 import type { NextPage } from 'next'
 import { LayoutLogin } from '../common/components/layouts'
 import Grid from '@mui/material/Grid'
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Box, Divider, useMediaQuery, useTheme } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { delay, InterpreteMensajes, siteName } from '../common/utils'
 import { Constantes } from '../config'
 import { Servicios } from '../common/services'
-import { useAuth } from '../context/auth'
-import { useForm } from 'react-hook-form'
-import ProgresoLineal from '../common/components/ui/ProgresoLineal'
 import { useFullScreenLoadingContext } from '../context/ui'
-import { FormInputText } from '../common/components/ui/form'
 import { useEffect } from 'react'
 import { useAlerts } from '../common/hooks'
 import { imprimir } from '../common/utils/imprimir'
-import { LoginType } from '../modules/login/loginTypes'
-import { BotonCiudadania } from '../modules/login/BotonCiudadania'
+import LoginRegistroTabContainer from '../modules/login/ui/LoginRegistroContainer'
 
 const Login: NextPage = () => {
-  const { ingresar, progresoLogin } = useAuth()
-
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const { Alerta } = useAlerts()
-
-  const { handleSubmit, control } = useForm<LoginType>({
-    defaultValues: {
-      usuario: 'ADMINISTRADOR-TECNICO',
-      contrasena: '123',
-    },
-  })
-
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
 
   const obtenerEstado = async () => {
@@ -60,10 +38,6 @@ const Login: NextPage = () => {
     } finally {
       ocultarFullScreen()
     }
-  }
-
-  const iniciarSesion = async ({ usuario, contrasena }: LoginType) => {
-    await ingresar({ usuario, contrasena })
   }
 
   useEffect(() => {
@@ -124,98 +98,15 @@ const Login: NextPage = () => {
         </Grid>
         <Grid item xl={4} md={5} xs={12}>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Card sx={{ borderRadius: 4, p: 4, maxWidth: '450px' }}>
-              <Box
-                display={'flex'}
-                justifyContent={'center'}
-                alignItems={'center'}
-                color={'primary'}
-              >
-                <Box
-                  display={'grid'}
-                  justifyContent={'center'}
-                  alignItems={'center'}
-                  height={400}
-                  sx={{ borderRadius: 12 }}
-                >
-                  <Typography
-                    align={'center'}
-                    color={'primary'}
-                    sx={{ flexGrow: 1, fontWeight: 'bold' }}
-                  >
-                    Iniciar Sesión
-                  </Typography>
-                  {/*<Typography
-                    variant="body2"
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    Ingresa con las credenciales proporcionadas
-                  </Typography>*/}
-                  <Box sx={{ mt: 1, mb: 1 }}></Box>
-                  <FormInputText
-                    id={'usuario'}
-                    control={control}
-                    name="usuario"
-                    label="Usuario"
-                    size={'medium'}
-                    labelVariant={'subtitle1'}
-                    disabled={progresoLogin}
-                    rules={{ required: 'Este campo es requerido' }}
-                  />
-                  <FormInputText
-                    id={'contrasena'}
-                    control={control}
-                    name="contrasena"
-                    label="Contraseña"
-                    size={'medium'}
-                    labelVariant={'subtitle1'}
-                    type={'password'}
-                    disabled={progresoLogin}
-                    rules={{
-                      required: 'Este campo es requerido',
-                      minLength: {
-                        value: 3,
-                        message: 'Mínimo 3 caracteres',
-                      },
-                    }}
-                  />
-
-                  <Box sx={{ mt: 1, mb: 1 }}>
-                    <ProgresoLineal mostrar={progresoLogin} />
-                  </Box>
-
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    disabled={progresoLogin}
-                    onClick={handleSubmit(iniciarSesion)}
-                  >
-                    <Typography
-                      sx={{ fontWeight: 'bold', textTransform: 'none' }}
-                    >
-                      Ingresar
-                    </Typography>
-                  </Button>
-                  <Box sx={{ pt: 1, pb: 1 }}>
-                    <Divider>
-                      <Typography color="text.secondary">O</Typography>
-                    </Divider>
-                  </Box>
-                  <BotonCiudadania
-                    disabled={progresoLogin}
-                    altText={'Ingresar con Ciudadanía'}
-                    accion={() => {
-                      window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
-                    }}
-                  >
-                    <Typography sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}>
-                      Ingresar con Ciudadanía
-                    </Typography>
-                  </BotonCiudadania>
-                </Box>
-              </Box>
-            </Card>
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              color={'primary'}
+            >
+              {/*<LoginNormalContainer />*/}
+              <LoginRegistroTabContainer />
+            </Box>
           </Box>
         </Grid>
       </Grid>

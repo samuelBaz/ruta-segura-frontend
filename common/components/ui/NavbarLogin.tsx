@@ -22,7 +22,7 @@ export const NavbarLogin = () => {
         title={'Información'}
       >
         <Typography variant={'body2'}>
-          Propuesta de Frontend Base Login elaborado con NextJS y Typescript
+          Propuesta de Frontend Base Login creado con NextJS y Typescript
         </Typography>
       </CustomDialog>
       <AppBar

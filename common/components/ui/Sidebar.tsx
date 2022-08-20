@@ -16,7 +16,7 @@ import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../../context/auth'
 import { imprimir } from '../../utils/imprimir'
 import { Icono } from './Icono'
-import { ModuloType, RoleType } from '../../../modules/login/loginTypes'
+import { ModuloType, RoleType } from '../../../modules/login/types/loginTypes'
 import { versionNumber } from '../../utils'
 
 const drawerWidth = 240

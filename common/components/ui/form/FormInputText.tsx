@@ -6,7 +6,7 @@ import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
 import { FormHelperText, IconButton, InputAdornment } from '@mui/material'
 import ClearOutlined from '@mui/icons-material/ClearOutlined'
 import { Variant } from '@mui/material/styles/createTypography'
-import { useState } from 'react'
+import { InputHTMLAttributes, useState } from 'react'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
@@ -16,7 +16,7 @@ export interface FormInputTextProps {
   control: any // TODO: Cambiar a tipo TFieldValues con tipo genérico
   label: string
   size?: 'small' | 'medium'
-  type?: 'password' | 'number' | 'search' | string | undefined
+  type?: InputHTMLAttributes<unknown>['type']
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: StandardInputProps['onChange']
