@@ -1,69 +1,51 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { CrearEditarUsuarioType } from '../../admin/usuarios/types/usuariosCRUDTypes'
 import { delay, InterpreteMensajes } from '../../../common/utils'
 import { Constantes } from '../../../config'
-import { formatoFecha } from '../../../common/utils/fechas'
 import { imprimir } from '../../../common/utils/imprimir'
 import { Servicios } from '../../../common/services'
 import { useAlerts } from '../../../common/hooks'
 import { Box, Button, Fade, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
-import {
-  FormInputDate,
-  FormInputText,
-} from '../../../common/components/ui/form'
+import { FormInputText } from '../../../common/components/ui/form'
 import { isValidEmail } from '../../../common/utils/validations'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 import { Icono } from '../../../common/components/ui'
+import { NivelSeguridadPass } from '../../../common/components/ui/NivelSeguridadPass'
+import { CrearCuentaType } from '../types/nuevaPassPeticionTypes'
 
 const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
   const [indicadorCarga, setIndicadorCarga] = useState<boolean>(false)
 
-  const [indicadorCreacionUsuario, setIndicadorCreacionUsuario] =
+  const [indicadorCreacionCuenta, setIndicadorCreacionCuenta] =
     useState<boolean>(false)
 
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
 
-  const { handleSubmit, control, reset } = useForm<CrearEditarUsuarioType>({
+  const { handleSubmit, control, reset, watch } = useForm<CrearCuentaType>({
     defaultValues: {},
   })
 
-  const guardarActualizarUsuario = async (data: CrearEditarUsuarioType) => {
-    await guardarActualizarUsuariosPeticion(data)
+  const newPassword1Watch = watch('newPassword1')
+
+  const guardarActualizarCuenta = async (data: CrearCuentaType) => {
+    await guardarActualizarCuentaPeticion(data)
   }
 
-  const guardarActualizarUsuariosPeticion = async (
-    usuario: CrearEditarUsuarioType
-  ) => {
+  const guardarActualizarCuentaPeticion = async (cuenta: CrearCuentaType) => {
     try {
       setIndicadorCarga(true)
       await delay(1000)
       const respuesta = await Servicios.peticion({
-        url: `${Constantes.baseUrl}/usuarios/crear-cuenta${
-          usuario.id ? `/${usuario.id}` : ''
-        }`,
+        url: `${Constantes.baseUrl}/usuarios/crear-cuenta`,
         tipo: 'post',
-        body: {
-          ...usuario,
-          ...{
-            persona: {
-              ...usuario.persona,
-              ...{
-                fechaNacimiento: formatoFecha(
-                  usuario.persona.fechaNacimiento,
-                  'YYYY-MM-DD'
-                ),
-              },
-            },
-          },
-        },
+        body: { ...cuenta, contrasenaNueva: cuenta.newPassword1 },
       })
-      setIndicadorCreacionUsuario(true)
+      setIndicadorCreacionCuenta(true)
       imprimir(InterpreteMensajes(respuesta))
     } catch (e) {
-      imprimir(`Error al crear o actualizar usuario: ${JSON.stringify(e)}`)
+      imprimir(`Error al crear o actualizar cuenta: ${JSON.stringify(e)}`)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setIndicadorCarga(false)
@@ -72,8 +54,8 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
 
   return (
     <Box>
-      {indicadorCreacionUsuario && (
-        <Fade in={indicadorCreacionUsuario} timeout={500}>
+      {indicadorCreacionCuenta && (
+        <Fade in={indicadorCreacionCuenta} timeout={500}>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
             <Icono fontSize={'large'} color={'success'}>
               check_circle
@@ -94,7 +76,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
               fullWidth
               onClick={() => {
                 reset()
-                setIndicadorCreacionUsuario(false)
+                setIndicadorCreacionCuenta(false)
                 mostrarLogin()
               }}
             >
@@ -105,68 +87,25 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
           </Box>
         </Fade>
       )}
-      {!indicadorCreacionUsuario && (
+      {!indicadorCreacionCuenta && (
         <Box>
-          <Box height={'5px'} />
-          <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
-            Datos personales
-          </Typography>
-          <Box height={'20px'} />
-          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-            <Grid item xs={12} sm={12} md={12}>
-              <FormInputText
-                id={'nroDocumento'}
-                control={control}
-                name="persona.nroDocumento"
-                label="Nro. Documento"
-                disabled={indicadorCarga}
-                rules={{ required: 'Este campo es requerido' }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <FormInputText
-                id={'nombre'}
-                control={control}
-                name="persona.nombres"
-                label="Nombre"
-                disabled={indicadorCarga}
-                rules={{ required: 'Este campo es requerido' }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <FormInputText
-                id={'primerApellido'}
-                control={control}
-                name="persona.primerApellido"
-                label="Primer Apellido"
-                disabled={indicadorCarga}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <FormInputText
-                id={'segundoApellido'}
-                control={control}
-                name="persona.segundoApellido"
-                label="Segundo apellido"
-                disabled={indicadorCarga}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <FormInputDate
-                id={'fechaNacimiento'}
-                control={control}
-                name="persona.fechaNacimiento"
-                label="Fecha de nacimiento"
-                disabled={indicadorCarga}
-                rules={{ required: 'Este campo es requerido' }}
-              />
-            </Grid>
-          </Grid>
           <Grid>
-            <Box height={'20px'} />
             <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
               Datos de usuario
             </Typography>
+            <Box height={'20px'} />
+            <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+              <Grid item xs={12} sm={12} md={12}>
+                <FormInputText
+                  id={'nombres'}
+                  control={control}
+                  name="nombres"
+                  label="Nombre de usuario"
+                  disabled={indicadorCarga}
+                  rules={{ required: 'Este campo es requerido' }}
+                />
+              </Grid>
+            </Grid>
             <Box height={'10px'} />
             <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
               <Grid item xs={12} sm={12} md={12}>
@@ -185,8 +124,45 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
                 />
               </Grid>
             </Grid>
+            <Box height={'10px'} />
+            <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+              <Grid item xs={12} sm={12} md={12}>
+                <FormInputText
+                  id={'newPassword1'}
+                  control={control}
+                  name="newPassword1"
+                  label="Nueva contraseña"
+                  disabled={indicadorCarga}
+                  type={'password'}
+                  rules={{ required: 'Este campo es requerido' }}
+                />
+              </Grid>
+
+              {watch('newPassword1') && (
+                <Grid item xs={12} sm={12} md={12}>
+                  <NivelSeguridadPass pass={newPassword1Watch} />
+                </Grid>
+              )}
+              <Grid item xs={12} sm={12} md={12}>
+                <FormInputText
+                  id={'newPassword2'}
+                  control={control}
+                  name="newPassword2"
+                  label="Repita su nueva contraseña"
+                  disabled={indicadorCarga}
+                  type={'password'}
+                  rules={{
+                    required: 'Este campo es requerido',
+                    validate: (value: string) => {
+                      if (value != newPassword1Watch)
+                        return 'La contraseña no coincide'
+                    },
+                  }}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-          <Box height={'10px'} />
+          <Box height={'20px'} />
           <ProgresoLineal mostrar={indicadorCarga} />
           <Box height={'5px'} />
           <Button
@@ -194,7 +170,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
             variant="contained"
             fullWidth
             disabled={indicadorCarga}
-            onClick={handleSubmit(guardarActualizarUsuario)}
+            onClick={handleSubmit(guardarActualizarCuenta)}
           >
             <Typography sx={{ fontWeight: 'bold', textTransform: 'none' }}>
               Crear cuenta

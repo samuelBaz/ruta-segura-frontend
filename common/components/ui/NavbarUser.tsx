@@ -239,12 +239,12 @@ export const NavbarUser = () => {
                 alignItems={'start'}
               >
                 <Typography variant={'body2'} color="text.primary">
-                  {`${titleCase(usuario?.persona.nombres ?? '')}
-                    ${titleCase(
-                      usuario?.persona.primerApellido ??
-                        usuario?.persona.segundoApellido ??
-                        ''
-                    )}`}
+                  {titleCase(usuario?.persona?.nombres ?? '')}{' '}
+                  {titleCase(
+                    usuario?.persona?.primerApellido ??
+                      usuario?.persona?.segundoApellido ??
+                      ''
+                  )}
                 </Typography>
                 <Typography variant={'caption'} color="text.secondary">
                   {`${rolUsuario?.nombre}`}
