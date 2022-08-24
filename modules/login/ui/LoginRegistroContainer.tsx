@@ -112,7 +112,7 @@ const LoginRegistroContainer = () => {
                 mostrarFullScreen()
                 await delay(500)
                 await router.replace({
-                  pathname: '/recuperar',
+                  pathname: '/recuperacion',
                 })
                 ocultarFullScreen()
               }}

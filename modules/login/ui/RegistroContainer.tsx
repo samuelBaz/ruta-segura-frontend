@@ -66,8 +66,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
             </Typography>
             <Box height={'15px'} />
             <Typography variant={'subtitle2'}>
-              Para activar tu cuenta, ingresa con las credenciales enviadas a tu
-              correo.
+              Para activar tu cuenta, ingresa al enlace enviado a tu correo
             </Typography>
             <Box height={'15px'} />
             <Button
@@ -100,6 +99,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
                   id={'nombres'}
                   control={control}
                   name="nombres"
+                  type={'text'}
                   label="Nombre de usuario"
                   disabled={indicadorCarga}
                   rules={{ required: 'Este campo es requerido' }}

@@ -25,7 +25,7 @@ export interface codigoRecuperarType {
   codigo: string
 }
 
-const Recuperar: NextPage = () => {
+const Recuperacion: NextPage = () => {
   const [mensaje, setMensaje] = useState<string>('')
   const [code, setCode] = useState<string | undefined>()
 
@@ -140,7 +140,7 @@ const Recuperar: NextPage = () => {
                   <Typography
                     sx={{ fontWeight: 'bold', textTransform: 'none' }}
                   >
-                    {mensaje}
+                    ¡Mensaje enviado!
                   </Typography>
                   <Box height={'20px'} />
                   <Typography
@@ -148,8 +148,7 @@ const Recuperar: NextPage = () => {
                     color="text.secondary"
                     align="center"
                   >
-                    Revisa tu bandeja de correo, enviamos un enlace para que
-                    puedas recuperar tu cuenta
+                    {mensaje}
                   </Typography>
                   <Box height={'25px'} />
                   <Button
@@ -250,4 +249,4 @@ const Recuperar: NextPage = () => {
   )
 }
 
-export default Recuperar
+export default Recuperacion
