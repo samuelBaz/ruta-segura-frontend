@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.4.2...v1.6.0) (2022-08-24)
+
+
+### Features
+
+* actualización de versiones MUI 5.10 y NextJS 12.2.5 ([ecc4058](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ecc4058301739ac9e404d3846ce86a3c2f41a90c))
+* añadida vista de activación de cuenta y correcciones menores de texto ([d9b5a0d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d9b5a0d01a05e01f603ac81485fe76cd185a3ad8))
+* añadido comando prepare para ejecutar 'npm run lint' ([bfd737c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/bfd737cf928d340f881f50b634739b52eac20ac2))
+* configuración inicial (opcional) de Matomo ([7b16d38](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7b16d38322d9c9a2e03a635757035704e98d4d43))
+* separada lógica de Login para tener una pestaña de creación de cuenta opcional ([c856e9e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c856e9e201b2a2aeb9777f6bf8f2bc7fbf5bba12))
+* vista de recuperación de contraseña y correcciones menores de estilos ([dc28ebd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/dc28ebd24c2e6defcb5398a57d535d2fb5d2456d))
+
+
+### Bug Fixes
+
+* actualización de dependencias MUI 5.10.1 ([693c4c9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/693c4c9bb2d947a27f49353eff5c713ef9a0ccf1))
+* corrección en Auth provider, para retirar el control de autorización a páginas fuera de /admin ([17981bb](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/17981bb0dea5bb185cbbbe692cd55945e918d9a4))
+* correciones menores en archivos install.md y readme.md ([d4e1500](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d4e15002ce700a4064147a3257f4352c32c97868))
+* filtro de politicas ([946bbc8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/946bbc893482d1fcc104a076cd97ec86761fe5ab))
+* modificado registro de cuenta con datos del usuario sin datos personales ([7278397](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7278397c77a9e8c4557c43c3d860086bc8856a68))
+* reemplazado icono de favicon en lugar de icono de Agetic ([9841379](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/984137951ecca4851eda57cc8f78315dfa7ec70c))
+
 ## [1.5.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.4.2...v1.5.0) (2022-08-14)
 
 
