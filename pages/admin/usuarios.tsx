@@ -532,6 +532,8 @@ const Usuarios: NextPage = () => {
                 filtroRoles={filtroRoles}
                 filtroUsuario={filtroUsuario}
                 accionCorrecta={(filtros) => {
+                  setPagina(1)
+                  setLimite(10)
                   setFiltroRoles(filtros.roles)
                   setFiltroUsuario(filtros.usuario)
                 }}

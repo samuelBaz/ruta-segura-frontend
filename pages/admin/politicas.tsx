@@ -330,6 +330,8 @@ const Politicas: NextPage = () => {
                 filtroPolitica={filtroPolitica}
                 filtroApp={filtroApp}
                 accionCorrecta={(filtros) => {
+                  setPagina(1)
+                  setLimite(10)
                   setFiltroPolitica(filtros.buscar)
                   setFiltroApp(filtros.app)
                 }}

@@ -240,6 +240,8 @@ const Parametros: NextPage = () => {
               <FiltroParametros
                 filtroParametro={filtroParametro}
                 accionCorrecta={(filtros) => {
+                  setPagina(1)
+                  setLimite(10)
                   setFiltroParametro(filtros.parametro)
                 }}
                 accionCerrar={() => {

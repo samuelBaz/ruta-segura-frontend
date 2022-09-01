@@ -449,6 +449,8 @@ const Modulos: NextPage = () => {
               <FiltroModulos
                 filtroModulo={filtroBuscar}
                 accionCorrecta={(filtros) => {
+                  setPagina(1)
+                  setLimite(10)
                   setFiltroBuscar(filtros.buscar)
                 }}
                 accionCerrar={() => {}}
