@@ -45,7 +45,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
       setIndicadorCreacionCuenta(true)
       imprimir(InterpreteMensajes(respuesta))
     } catch (e) {
-      imprimir(`Error al crear o actualizar cuenta: ${JSON.stringify(e)}`)
+      imprimir(`Error al crear o actualizar cuenta: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setIndicadorCarga(false)

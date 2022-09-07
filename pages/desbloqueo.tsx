@@ -20,7 +20,7 @@ const Desbloqueo: NextPage = () => {
   useEffect(() => {
     if (!router.isReady) return
     const params = router.query
-    imprimir(`queryParams: ${JSON.stringify(params)}`)
+    imprimir(`queryParams`, params)
 
     const codigoDesbloqueo = Array.isArray(params.q) ? params.q[0] : params.q
 
@@ -47,7 +47,7 @@ const Desbloqueo: NextPage = () => {
         pathname: '/login',
       })
       setMensaje(InterpreteMensajes(e))
-      imprimir(`Error al desbloquear usuario: ${JSON.stringify(e)}`)
+      imprimir(`Error al desbloquear usuario: `, e)
     } finally {
       ocultarFullScreen()
     }

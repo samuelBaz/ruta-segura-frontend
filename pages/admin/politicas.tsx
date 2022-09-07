@@ -95,7 +95,7 @@ const Politicas: NextPage = () => {
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
-              imprimir(`Editaremos : ${JSON.stringify(politicaData)}`)
+              imprimir(`Editaremos`, politicaData)
               editarPoliticaModal(politicaData)
             }}
             icono={'edit'}
@@ -108,7 +108,7 @@ const Politicas: NextPage = () => {
             titulo={'Eliminar'}
             color={'error'}
             accion={() => {
-              imprimir(`Eliminaremos : ${JSON.stringify(politicaData)}`)
+              imprimir(`Eliminaremos`, politicaData)
               eliminarPoliticaModal(politicaData)
             }}
             icono={'delete_outline'}
@@ -176,7 +176,7 @@ const Politicas: NextPage = () => {
       setTotal(respuesta.datos?.total)
       setErrorData(null)
     } catch (e) {
-      imprimir(`Error al obtener políticas: ${e}`)
+      imprimir(`Error al obtener políticas`, e)
       setErrorData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -204,7 +204,7 @@ const Politicas: NextPage = () => {
       })
       await obtenerPoliticasPeticion()
     } catch (e) {
-      imprimir(`Error al eliminar política: ${e}`)
+      imprimir(`Error al eliminar política`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -234,7 +234,7 @@ const Politicas: NextPage = () => {
       setRolesData(respuesta.datos)
       setErrorData(null)
     } catch (e) {
-      imprimir(`Error al obtener roles: ${e}`)
+      imprimir(`Error al obtener roles`, e)
       setErrorData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {

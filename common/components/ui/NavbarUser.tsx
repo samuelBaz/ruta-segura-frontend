@@ -90,7 +90,7 @@ export const NavbarUser = () => {
   }
 
   const interpretarRoles = () => {
-    // imprimir(`Cambio en roles 📜: ${JSON.stringify(usuario?.roles)}`)
+    imprimir(`Cambio en roles 📜`, usuario?.roles)
     if (usuario?.roles && usuario?.roles.length > 0) {
       setRoles(usuario?.roles)
     }

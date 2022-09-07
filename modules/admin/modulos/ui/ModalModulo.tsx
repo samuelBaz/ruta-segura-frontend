@@ -67,7 +67,7 @@ export const VistaModalModulo = ({
       })
       accionCorrecta()
     } catch (e) {
-      imprimir(`Error al crear o actualizar módulo: ${e}`)
+      imprimir(`Error al crear o actualizar módulo`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)

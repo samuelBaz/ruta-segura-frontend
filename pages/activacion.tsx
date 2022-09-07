@@ -21,7 +21,7 @@ const Activacion: NextPage = () => {
   useEffect(() => {
     if (!router.isReady) return
     const params = router.query
-    imprimir(`queryParams: ${JSON.stringify(params)}`)
+    imprimir(`queryParams`, params)
 
     const codigoActivar = `${params.q}`
 
@@ -45,7 +45,7 @@ const Activacion: NextPage = () => {
     } catch (e) {
       setError(true)
       setMensaje(InterpreteMensajes(e))
-      imprimir(`Error al desbloquear usuario: ${JSON.stringify(e)}`)
+      imprimir(`Error al desbloquear usuario: `, e)
     } finally {
       ocultarFullScreen()
     }

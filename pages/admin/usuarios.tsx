@@ -207,7 +207,7 @@ const Usuarios: NextPage = () => {
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
-              imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
+              imprimir(`Editaremos`, usuarioData)
               editarUsuarioModal(usuarioData)
             }}
             icono={'edit'}
@@ -290,7 +290,7 @@ const Usuarios: NextPage = () => {
       setTotal(respuesta.datos?.total)
       setErrorData(null)
     } catch (e) {
-      imprimir(`Error al obtener usuarios: ${e}`)
+      imprimir(`Error al obtener usuarios`, e)
       setErrorData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -308,7 +308,7 @@ const Usuarios: NextPage = () => {
       setRolesData(respuesta.datos)
       setErrorData(null)
     } catch (e) {
-      imprimir(`Error al obtener roles: ${e}`)
+      imprimir(`Error al obtener roles`, e)
       setErrorData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
       throw e
@@ -334,7 +334,7 @@ const Usuarios: NextPage = () => {
       })
       await obtenerUsuariosPeticion()
     } catch (e) {
-      imprimir(`Error al inactivar usuarios: ${e}`)
+      imprimir(`Error al inactivar usuarios`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -356,7 +356,7 @@ const Usuarios: NextPage = () => {
       })
       await obtenerUsuariosPeticion()
     } catch (e) {
-      imprimir(`Error al restablecer usuario: ${e}`)
+      imprimir(`Error al restablecer usuario`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -454,7 +454,7 @@ const Usuarios: NextPage = () => {
   }, [estaAutenticado, pagina, limite, filtroRoles, filtroUsuario])
 
   useEffect(() => {
-    imprimir(`filtro cerrado: ${mostrarFiltroUsuarios}`)
+    imprimir(`filtro cerrado`, mostrarFiltroUsuarios)
     if (!mostrarFiltroUsuarios) {
       setFiltroUsuario('')
       setFiltroRoles([])

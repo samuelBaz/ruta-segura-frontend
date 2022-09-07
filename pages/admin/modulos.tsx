@@ -225,7 +225,7 @@ const Modulos: NextPage = () => {
       setTotal(respuesta.datos?.total)
       setErrorModulosData(null)
     } catch (e) {
-      imprimir(`Error al obtener módulos: ${e}`)
+      imprimir(`Error al obtener módulos`, e)
       setErrorModulosData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -247,7 +247,7 @@ const Modulos: NextPage = () => {
       })
       setSeccionesData(respuesta.datos?.filas)
     } catch (e) {
-      imprimir(`Error al obtener secciones: ${e}`)
+      imprimir(`Error al obtener secciones`, e)
       setErrorModulosData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -294,7 +294,7 @@ const Modulos: NextPage = () => {
       })
       await obtenerModulosPeticion()
     } catch (e) {
-      imprimir(`Error estado modulo: ${e}`)
+      imprimir(`Error estado modulo`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -383,7 +383,7 @@ const Modulos: NextPage = () => {
               titulo={'Editar'}
               color={'primary'}
               accion={() => {
-                imprimir(`Editaremos : ${JSON.stringify(moduloData)}`)
+                imprimir(`Editaremos :`, moduloData)
                 editarModuloModal({
                   ...moduloData,
                   ...{ esSeccion: moduloData?.fidModulo == null },

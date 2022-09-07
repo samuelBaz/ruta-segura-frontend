@@ -41,7 +41,7 @@ const Recuperacion: NextPage = () => {
   useEffect(() => {
     if (!router.isReady) return
     const params = router.query
-    imprimir(`queryParams: ${JSON.stringify(params)}`)
+    imprimir(`queryParams`, params)
 
     const codigoDesbloqueo = Array.isArray(params.q) ? params.q[0] : params.q
 
@@ -71,7 +71,7 @@ const Recuperacion: NextPage = () => {
     } catch (e) {
       setMensaje(InterpreteMensajes(e))
       Alerta({ mensaje: InterpreteMensajes(e), variant: 'error' })
-      imprimir(`Error al desbloquear usuario: ${JSON.stringify(e)}`)
+      imprimir(`Error al desbloquear usuario: `, e)
     } finally {
       setIndicadorCarga(false)
     }
@@ -95,7 +95,7 @@ const Recuperacion: NextPage = () => {
     } catch (e) {
       setMensaje(InterpreteMensajes(e))
       Alerta({ mensaje: InterpreteMensajes(e), variant: 'error' })
-      imprimir(`Error al validar código de recuperación: ${JSON.stringify(e)}`)
+      imprimir(`Error al validar código de recuperación: `, e)
       await redireccionarInicio()
     } finally {
       setIndicadorCarga(false)

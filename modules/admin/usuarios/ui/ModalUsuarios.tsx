@@ -98,7 +98,7 @@ export const VistaModalUsuario = ({
       })
       accionCorrecta()
     } catch (e) {
-      imprimir(`Error al crear o actualizar usuario: ${JSON.stringify(e)}`)
+      imprimir(`Error al crear o actualizar usuario: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)

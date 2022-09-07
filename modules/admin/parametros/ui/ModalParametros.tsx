@@ -68,7 +68,7 @@ export const VistaModalParametro = ({
       })
       accionCorrecta()
     } catch (e) {
-      imprimir(`Error al crear o actualizar parámetro: ${e}`)
+      imprimir(`Error al crear o actualizar parámetro`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)

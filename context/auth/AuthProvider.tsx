@@ -131,7 +131,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
           })
         }
       } catch (error: Error | any) {
-        imprimir(`Error durante Auth Provider 🚨: ${JSON.stringify(error)}`)
+        imprimir(`Error durante Auth Provider 🚨`, error)
         borrarSesion()
         imprimir(`🚨 -> login`)
         await router.replace({
@@ -192,7 +192,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         imprimir(`Token ✅: ${respuesta.datos?.access_token}`)
 
         setUser(respuesta.datos)
-        imprimir(`Usuarios ✅: ${JSON.stringify(respuesta.datos)}`)
+        imprimir(`Usuarios ✅`, respuesta.datos)
 
         if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
           imprimir(`rol inicial 👨‍💻: ${respuesta.datos.roles[0].idRol}`)
@@ -208,7 +208,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         })
       }
     } catch (e) {
-      imprimir(`Error al iniciar sesión: ${JSON.stringify(e)}`)
+      imprimir(`Error al iniciar sesión: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
       borrarSesion()
     } finally {
@@ -238,11 +238,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         },
       })
 
-      imprimir(`Sesión Autorizada: ${JSON.stringify(respuesta)}`)
+      imprimir(`Sesión Autorizada`, respuesta)
       guardarCookie('token', respuesta.access_token)
       await loadUserFromCookies()
     } catch (e) {
-      imprimir(`Error al autorizar sesión: ${e}`)
+      imprimir(`Error al autorizar sesión`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -284,11 +284,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         ...headers,
       }
 
-      imprimir(
-        `enviando 🔐🌍 : ${
-          body ? JSON.stringify(body) : '{}'
-        } -> ${tipo} - ${url} - con ${JSON.stringify(cabeceras)}`
-      )
+      imprimir(`enviando 🔐🌍`, body, tipo, url, cabeceras)
       const response = await Servicios.peticionHTTP({
         url,
         tipo,
@@ -296,13 +292,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         body,
         params,
       })
-      imprimir(
-        `respuesta 🔐📡 : ${
-          body ? JSON.stringify(body) : '{}'
-        } -> ${tipo} - ${url} - con ${JSON.stringify(
-          headers
-        )} -->> ${JSON.stringify(response)}`
-      )
+      imprimir('respuesta 🔐📡', body, tipo, url, response)
       return response.data
     } catch (e: import('axios').AxiosError | any) {
       if (e.code === 'ECONNABORTED') {
@@ -343,10 +333,10 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         url: `${Constantes.baseUrl}/logout`,
       })
     } catch (e) {
-      imprimir(`Error al cerrar sesión: ${JSON.stringify(e)}`)
+      imprimir(`Error al cerrar sesión: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
-      imprimir(`finalizando con respuesta: ${JSON.stringify(respuesta)}`)
+      imprimir(`finalizando con respuesta`, respuesta)
       borrarSesion()
       if (respuesta?.url) {
         window.location.href = respuesta?.url

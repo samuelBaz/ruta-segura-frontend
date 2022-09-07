@@ -31,9 +31,9 @@ const Login: NextPage = () => {
           accept: 'application/json',
         },
       })
-      imprimir(`Se obtuvo el estado 🙌: ${JSON.stringify(respuesta)}`)
+      imprimir(`Se obtuvo el estado 🙌`, respuesta)
     } catch (e) {
-      imprimir(`Error al obtener estado: ${e}`)
+      imprimir(`Error al obtener estado`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       ocultarFullScreen()

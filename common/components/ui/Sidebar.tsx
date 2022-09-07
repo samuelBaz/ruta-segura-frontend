@@ -46,7 +46,7 @@ export const Sidebar = () => {
       rolSeleccionado = roles.find((itemRol) => itemRol.idRol == idRolUsuario)
       if (rolSeleccionado) {
         setModulos(rolSeleccionado.modulos)
-        imprimir(`rolSeleccionado: ${JSON.stringify(rolSeleccionado)}`)
+        imprimir(`rolSeleccionado`, rolSeleccionado)
       }
     }
   }

@@ -89,7 +89,7 @@ const Parametros: NextPage = () => {
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
-              imprimir(`Editaremos : ${JSON.stringify(parametroData)}`)
+              imprimir(`Editaremos`, parametroData)
               editarParametroModal(parametroData)
             }}
             icono={'edit'}
@@ -156,7 +156,7 @@ const Parametros: NextPage = () => {
       setTotal(respuesta.datos?.total)
       setErrorParametrosData(null)
     } catch (e) {
-      imprimir(`Error al obtener parametros: ${e}`)
+      imprimir(`Error al obtener parametros`, e)
       setErrorParametrosData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -194,7 +194,7 @@ const Parametros: NextPage = () => {
   }, [estaAutenticado, pagina, limite, filtroParametro])
 
   useEffect(() => {
-    imprimir(`filtro cerrado: ${mostrarFiltroParametros}`)
+    imprimir(`filtro cerrado`, mostrarFiltroParametros)
     if (!mostrarFiltroParametros) {
       setFiltroParametro('')
     }
