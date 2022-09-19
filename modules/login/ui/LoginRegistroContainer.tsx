@@ -118,6 +118,7 @@ const LoginRegistroContainer = () => {
               }}
               size={'small'}
               variant={'text'}
+              disabled={progresoLogin}
               color={'primary'}
             >
               <Typography
