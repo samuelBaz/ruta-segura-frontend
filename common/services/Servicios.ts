@@ -53,11 +53,7 @@ class ServiciosClass {
     params,
   }: peticionFormatoMetodo) {
     try {
-      imprimir(
-        `enviando 🌍 : ${
-          body ? JSON.stringify(body) : '{}'
-        } -> ${tipo} - ${url} - con ${JSON.stringify(headers)}`
-      )
+      imprimir(`enviando 🌍`, body, tipo, url, headers)
       const response = await this.peticionHTTP({
         url,
         tipo,
@@ -65,13 +61,7 @@ class ServiciosClass {
         body,
         params,
       })
-      imprimir(
-        `respuesta 📡 : ${
-          body ? JSON.stringify(body) : '{}'
-        } -> ${tipo} - ${url} - con ${JSON.stringify(
-          headers
-        )} -->> ${JSON.stringify(response)}`
-      )
+      imprimir('respuesta 📡', body, tipo, url, response)
       return response.data
     } catch (e: AxiosError | any) {
       if (e.code === 'ECONNABORTED') {

@@ -98,7 +98,7 @@ export const VistaModalUsuario = ({
       })
       accionCorrecta()
     } catch (e) {
-      imprimir(`Error al crear o actualizar usuario: ${JSON.stringify(e)}`)
+      imprimir(`Error al crear o actualizar usuario: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)
@@ -140,7 +140,6 @@ export const VistaModalUsuario = ({
             name="persona.primerApellido"
             label="Primer Apellido"
             disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
@@ -150,7 +149,6 @@ export const VistaModalUsuario = ({
             name="persona.segundoApellido"
             label="Segundo apellido"
             disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={4}>

@@ -95,7 +95,7 @@ const Politicas: NextPage = () => {
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
-              imprimir(`Editaremos : ${JSON.stringify(politicaData)}`)
+              imprimir(`Editaremos`, politicaData)
               editarPoliticaModal(politicaData)
             }}
             icono={'edit'}
@@ -108,7 +108,7 @@ const Politicas: NextPage = () => {
             titulo={'Eliminar'}
             color={'error'}
             accion={() => {
-              imprimir(`Eliminaremos : ${JSON.stringify(politicaData)}`)
+              imprimir(`Eliminaremos`, politicaData)
               eliminarPoliticaModal(politicaData)
             }}
             icono={'delete_outline'}
@@ -168,15 +168,15 @@ const Politicas: NextPage = () => {
         params: {
           pagina: pagina,
           limite: limite,
-          pol: filtroPolitica,
-          app: filtroApp,
+          filtro: filtroPolitica,
+          aplicacion: filtroApp,
         },
       })
       setPoliticasData(respuesta.datos?.filas)
       setTotal(respuesta.datos?.total)
       setErrorData(null)
     } catch (e) {
-      imprimir(`Error al obtener políticas: ${e}`)
+      imprimir(`Error al obtener políticas`, e)
       setErrorData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -204,7 +204,7 @@ const Politicas: NextPage = () => {
       })
       await obtenerPoliticasPeticion()
     } catch (e) {
-      imprimir(`Error al eliminar política: ${e}`)
+      imprimir(`Error al eliminar política`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -234,7 +234,7 @@ const Politicas: NextPage = () => {
       setRolesData(respuesta.datos)
       setErrorData(null)
     } catch (e) {
-      imprimir(`Error al obtener roles: ${e}`)
+      imprimir(`Error al obtener roles`, e)
       setErrorData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -330,6 +330,8 @@ const Politicas: NextPage = () => {
                 filtroPolitica={filtroPolitica}
                 filtroApp={filtroApp}
                 accionCorrecta={(filtros) => {
+                  setPagina(1)
+                  setLimite(10)
                   setFiltroPolitica(filtros.buscar)
                   setFiltroApp(filtros.app)
                 }}

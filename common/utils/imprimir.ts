@@ -22,15 +22,21 @@ function obtenerNombreFuncionAnterior(d: number) {
   return r
 }
 
-export const imprimir = (mensaje: any) => {
+export const imprimir = (...mensaje: any[]) => {
+  // mensaje = mensaje.filter((value) => value && Object.keys(value).length != 0)
+  mensaje = mensaje.filter((value) => value != undefined || value != null)
   const funcionAnterior: string = obtenerNombreFuncionAnterior(2)
-  const ocultarAnterior: boolean =
-    funcionAnterior.includes('callee') || false || funcionAnterior === ''
+  const ocultarDescripcion: boolean =
+    funcionAnterior.includes('callee') ||
+    funcionAnterior.includes('eval') ||
+    funcionAnterior.includes('@') ||
+    funcionAnterior === ''
   const entorno = Constantes.appEnv
+
   if (entorno != 'production') {
     // eslint-disable-next-line no-console
-    console.log(
-      `🖨 ${ocultarAnterior ? '' : `${funcionAnterior} -> `} ${mensaje}`
-    )
+    if (ocultarDescripcion) console.log(`🖨 `, ...mensaje)
+    // eslint-disable-next-line no-console
+    else console.log(`🖨 `, `${funcionAnterior}`, ...mensaje)
   }
 }

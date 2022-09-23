@@ -18,7 +18,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { formatoFecha } from '../../common/utils/fechas'
 import { CambioPassModal } from '../../modules/admin/perfil/CambioPassModal'
 import { Constantes } from '../../config'
-import { BotonCiudadania } from '../../modules/login/BotonCiudadania'
+import { BotonCiudadania } from '../../modules/login/ui/BotonCiudadania'
 
 const Perfil: NextPage = () => {
   const { usuario } = useAuth()

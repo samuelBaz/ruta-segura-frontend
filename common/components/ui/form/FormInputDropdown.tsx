@@ -1,12 +1,14 @@
 import { Controller } from 'react-hook-form'
 import {
   FormHelperText,
+  IconButton,
   MenuItem,
   Select,
   SelectChangeEvent,
   Typography,
 } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import ClearOutlined from '@mui/icons-material/ClearOutlined'
 
 export interface optionType {
   key: string
@@ -23,6 +25,7 @@ export interface FormInputDropdownProps {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: (event: SelectChangeEvent) => void
+  onClear?: () => void
   bgcolor?: string
   options: optionType[]
 }
@@ -37,6 +40,7 @@ export const FormInputDropdown = ({
   disabled,
   onChange,
   options,
+  onClear,
   bgcolor,
 }: FormInputDropdownProps) => {
   const generateSelectOptions = () => {
@@ -65,7 +69,14 @@ export const FormInputDropdown = ({
             <Select
               id={id}
               name={name}
-              sx={{ width: '100%', bgcolor: bgcolor }}
+              sx={{
+                width: '100%',
+                bgcolor: bgcolor,
+                '& .MuiSelect-iconOutlined': {
+                  display: field.value && onClear ? 'none' : '',
+                },
+                '&.Mui-focused .MuiIconButton-root': { color: 'primary.main' },
+              }}
               size={size}
               error={!!error}
               disabled={disabled}
@@ -77,6 +88,21 @@ export const FormInputDropdown = ({
               }}
               inputRef={field.ref}
               value={field.value}
+              endAdornment={
+                field.value && onClear ? (
+                  <IconButton
+                    sx={{ display: field.value ? '' : 'none' }}
+                    onClick={() => {
+                      if (onClear) {
+                        onClear()
+                      }
+                    }}
+                    color={'primary'}
+                  >
+                    <ClearOutlined />
+                  </IconButton>
+                ) : undefined
+              }
             >
               {generateSelectOptions()}
             </Select>

@@ -86,6 +86,13 @@ export const FiltroPolitica = ({
                 app: event.target.value,
               })
             }}
+            onClear={() => {
+              setValue('app', '')
+              accionCorrecta({
+                buscar: filtroBuscarWatch,
+                app: '',
+              })
+            }}
           />
         </Grid>
       </Grid>

@@ -1,13 +1,14 @@
 import Image from 'next/image'
 import { Button } from '@mui/material'
-import { useThemeContext } from '../../context/ui/ThemeContext'
+import { useThemeContext } from '../../../context/ui/ThemeContext'
 import { FC, MouseEventHandler, PropsWithChildren } from 'react'
-import { Constantes } from '../../config'
+import { Constantes } from '../../../config'
 
 export interface BotonCiudadaniaType {
   altText?: string
   disabled?: boolean | undefined
   accion: MouseEventHandler<any> | undefined
+  fullWidth?: boolean
 }
 
 export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
@@ -15,6 +16,7 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
   accion,
   children,
   altText,
+  fullWidth,
 }) => {
   const { themeMode } = useThemeContext()
   return (
@@ -22,6 +24,7 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
       type="submit"
       sx={{ borderRadius: 2, backgroundColor: 'background.paper' }}
       variant="outlined"
+      fullWidth={fullWidth}
       style={{ textTransform: 'none' }}
       disabled={disabled}
       onClick={accion}

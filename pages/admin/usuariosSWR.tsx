@@ -155,7 +155,7 @@ const UsuariosSWR: NextPage = () => {
             titulo={'Restablecer contraseña'}
             color={'info'}
             accion={() => {
-              imprimir(`Restablecer : ${JSON.stringify(usuarioData)}`)
+              imprimir(`Restablecer`, usuarioData)
             }}
             icono={'vpn_key'}
             name={'Restablecer contraseña'}
@@ -165,7 +165,7 @@ const UsuariosSWR: NextPage = () => {
               titulo={'Editar'}
               color={'success'}
               accion={() => {
-                imprimir(`Editaremos : ${JSON.stringify(usuarioData)}`)
+                imprimir(`Editaremos`, usuarioData)
                 editarUsuarioModal(usuarioData)
               }}
               icono={'edit'}
@@ -207,7 +207,7 @@ const UsuariosSWR: NextPage = () => {
       })
       setRolesData(respuesta.datos)
     } catch (e) {
-      imprimir(`Error al obtener roles: ${e}`)
+      imprimir(`Error al obtener roles`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
     }
@@ -234,7 +234,7 @@ const UsuariosSWR: NextPage = () => {
       })
       await mutate()
     } catch (e) {
-      imprimir(`Error al inactivar usuarios: ${e}`)
+      imprimir(`Error al inactivar usuarios`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoading(false)
@@ -279,7 +279,7 @@ const UsuariosSWR: NextPage = () => {
         cerrarModalUsuario()
         await mutate()
       } catch (e) {
-        imprimir(`Error al crear o actualizar usuario: ${e}`)
+        imprimir(`Error al crear o actualizar usuario`, e)
         Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
       } finally {
         setLoadingModal(false)

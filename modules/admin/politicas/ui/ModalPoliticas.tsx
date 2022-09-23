@@ -104,7 +104,7 @@ export const VistaModalPolitica = ({
       })
       accionCorrecta()
     } catch (e) {
-      imprimir(`Error al crear o actualizar política: ${e}`)
+      imprimir(`Error al crear o actualizar política`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
       setLoadingModal(false)

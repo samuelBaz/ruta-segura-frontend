@@ -32,7 +32,7 @@ import { Icono } from './Icono'
 import { IconoTooltip } from './IconoTooltip'
 import { AlertDialog } from './AlertDialog'
 import { imprimir } from '../../utils/imprimir'
-import { RoleType } from '../../../modules/login/loginTypes'
+import { RoleType } from '../../../modules/login/types/loginTypes'
 import { useThemeContext } from '../../../context/ui/ThemeContext'
 
 export const NavbarUser = () => {
@@ -90,7 +90,7 @@ export const NavbarUser = () => {
   }
 
   const interpretarRoles = () => {
-    // imprimir(`Cambio en roles 📜: ${JSON.stringify(usuario?.roles)}`)
+    imprimir(`Cambio en roles 📜`, usuario?.roles)
     if (usuario?.roles && usuario?.roles.length > 0) {
       setRoles(usuario?.roles)
     }
@@ -146,7 +146,7 @@ export const NavbarUser = () => {
         title={'Información'}
       >
         <Typography variant={'body2'} sx={{ pt: 2, pb: 2 }}>
-          Propuesta de Frontend Base Administrador elaborado con NextJS y
+          Propuesta de Frontend Base Administrador creado con NextJS y
           Typescript
         </Typography>
       </CustomDialog>
@@ -239,12 +239,12 @@ export const NavbarUser = () => {
                 alignItems={'start'}
               >
                 <Typography variant={'body2'} color="text.primary">
-                  {`${titleCase(usuario?.persona.nombres ?? '')}
-                    ${titleCase(
-                      usuario?.persona.primerApellido ??
-                        usuario?.persona.segundoApellido ??
-                        ''
-                    )}`}
+                  {titleCase(usuario?.persona?.nombres ?? '')}{' '}
+                  {titleCase(
+                    usuario?.persona?.primerApellido ??
+                      usuario?.persona?.segundoApellido ??
+                      ''
+                  )}
                 </Typography>
                 <Typography variant={'caption'} color="text.secondary">
                   {`${rolUsuario?.nombre}`}
