@@ -1,8 +1,8 @@
 export {}
 const urlPaginaLogin = 'localhost:8080'
 const urlPaginaUsuarios = 'localhost:8080/admin/usuarios'
-const rutaDatosUsuarios =
-  '/home/glimachi/projects/python/DatosServiciosFakeSEGIP.ods'
+//Ruta del archivo con nombres de prueba
+const rutaDatosUsuarios = 'DatosServiciosFakeSEGIP.ods'
 let datos: any[] = []
 
 describe('Add users ', () => {
