@@ -168,8 +168,8 @@ const Politicas: NextPage = () => {
         params: {
           pagina: pagina,
           limite: limite,
-          filtro: filtroPolitica,
-          aplicacion: filtroApp,
+          ...(filtroPolitica.length == 0 ? {} : { filtro: filtroPolitica }),
+          ...(filtroApp.length == 0 ? {} : { aplicacion: filtroApp }),
         },
       })
       setPoliticasData(respuesta.datos?.filas)
