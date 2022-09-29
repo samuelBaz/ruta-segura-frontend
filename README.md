@@ -1,92 +1,131 @@
-# correspondencia-frontend
+# Frontend Base - NextJS/ReactJS
 
+Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/develop) o Tag [v1.1.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/v1.1.0)
 
+## Tecnologías empleadas
 
-## Getting started
+- NextJS, framework sobre ReactJS. [Sitio oficial](https://nextjs.org)
+- ReactJS como librería para desarrollo frontend [Sitio oficial](https://es.reactjs.org)
+- MUI (Material UI), librería de componentes UI para ReactJS. [Sitio oficial](https://mui.com)
+- Axios, para el manejo de peticiones HTTP. [Documentación](https://axios-http.com)
+- ESLint, para examinar el código en busca de problemas. [Documentación](https://eslint.org)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Recomendaciones
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Se sugiere crear un `Fork` de este proyecto dado que se harán mejoras continuas. [Más información](https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html)
+- Para añadir este proyecto como otro origen, ejecutar dentro del proyecto Fork:
+```
+git remote add origin2 git@gitlab.agetic.gob.bo:agetic/agetic/proyectos-base/agetic-next-base-frontend.git
+```
+- Para descargar los commits desde el 2.º origen, ejecutar
+```
+git pull origin2 master
+```
 
-## Add your files
+## Estructura general
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Para la creación de la estructura general del proyecto base se hizo uso de `Next.js CLI`
+
+## Utilidades
+
+El proyecto cuenta con utilidades que podrían que pueden aplicarse de según el caso:
+
+| Utilidad           | Descripción                                                                                                                             | Ejemplo                                                                                                                       |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| Cookies            | Utilidad wrapper que ayuda a leer/guardar cookies                                                                                       | `guardarCookie('token','mi-token' )` guarda el valor de la cookie                                                             |
+| Fechas             | Utilidad wrapper de `dayjs` que puede validar y parsear fechas                                                                          | `formatoFecha('1994-07-05', '05/07/1994')`, retorna el valor de la fecha en nuevo formato                                     |
+| Imprimir           | Utilidad wrapper de `console.log` que sirve para mostrar mensajes en consola con el nombre de la función que lo invoca segun el entorno | `imprimir('hola mundo')`, imprime `🖨 funcionSaludo -> hola mundo`                                                            |
+| InterpreteMensajes | Utilidad que ayuda a extraer mensajes de respuesta, pueden ser `Exception`, `strings`, objetos que contengan `message` o `mensaje`      | `interpretarMensaje({mensaje: 'hola mundo'})` retorna `Hola Mundo`                                                            |
+| Alerta             | Hook que muestra alertas de confirmación, error, advertencía o información                                                              | `Alerta({mensaje: 'Hola mundo', variant: 'success'})` mostrará una Alerta en color verde                                      |
+| Token              | Utilidad que valida la caducidad de un token                                                                                            | `verificarToken('mi-token')` el token devolverá `true` o `false` si caduco o no                                               |
+| AlertDialog        | Utilidad que muestra una alerta con acciones según el caso                                                                              | `<AlertDialog isOpen={mostrarAlerta} titulo={'Alerta'}, texto={'Hola mundo'}><Button onClick={'cerrarAlerta'}></AlertDialog>` |
+| Servicios          | Utilidad wrapper de `Axios` con funciones para hacer peticiones HTTP                                                                    | `await Servicios.get({url: 'localhost:3000', })`                                                                              |
+
+## Navegación
+
+Todas las rutas se encuentran en la carpeta `pages` (si, así de simple)
+
+## Hooks (ciclo de vida)
+
+Funciones de React que permiten crear/acceder al estado y ciclo de vida de componentes, las usadas en el proyecto son:
+
+- useContext, es un Hook que nos permite acceder al contexto de un Provider
+- useState, es un Hook que permite añadir el estado de React a un componente de función
+- useEffect, es un Hook que permite controlar y decidir cuándo queremos que se ejecute un código concreto
+
+## Componentes
+
+Todos los componentes para uso general se encuentran en la carpeta `common/` y los componentes de uso específico por
+módulo se encuentran en  `modules/`.
+
+## Archivos estáticos
+
+Los archivos estáticos (imágenes, etc.) se encuentran en la carpeta `public/`.
+
+### Iconos
+
+Los iconos de los menús son de [material icons](https://fonts.google.com/icons).
+
+## Sistema de diseño
+
+Para cambiar los colores del sistema, se debe editar los archivos `theme/light-theme.ts` o  `theme/dark-theme.ts` según corresponda
+
+Se recomienda seguir la regla `60 - 30 - 10` para el uso de colores
+
+Para más información, se recomienda leer el articulo [How the 60-30-10 rule saved the day](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
+
+## Instalación
+
+Para instalar la aplicación se recomienda revisar el siguiente documento:
+
+> [INSTALL.md](INSTALL.md)
+
+### Ejecutar en modo desarrollo
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.agetic.gob.bo/agetic/agetic/seguimiento-academico/correspondencia-frontend.git
-git branch -M main
-git push -uf origin main
+npm run dev
 ```
 
-## Integrate with your tools
+### Compilar para producción
 
-- [ ] [Set up project integrations](https://gitlab.agetic.gob.bo/agetic/agetic/seguimiento-academico/correspondencia-frontend/-/settings/integrations)
+```
+npm run build
+```
 
-## Collaborate with your team
+### Ejecutar test
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Test's unitarios aún en progreso 🔨
+```
+npm run test
+```
 
-## Test and Deploy
+## Documentación
 
-Use the built-in continuous integration in GitLab.
+La documentación de los componentes fue elaborada usando Storybook [Más información](https://storybook.js.org/docs/react/get-started/introduction)
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Para generar la documentación ejecutar el siguiente comando:
 
-***
+```bash
+npm run storybook
+```
 
-# Editing this README
+## Changelog
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+1. Generar tag de la versión
+    > Cambiar el número de versión en archivo `package.json` 
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+2. Generar tag y archivo CHANGELOG
+    ```bash
+    # Versión mínima, cambia de 1.1.1 a 1.1.2
+    npm run release -- --release-as patch
+    ```
+    ```bash
+    # cambio de versión, cambia de 1.1.1 a 1.2.0
+    npm run release
+    ```
 
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+3. Guardar los tags generados
+    
+    ```bash
+    git push --follow-tags origin master
+    ```
