@@ -4,7 +4,7 @@ const urlPaginaModulos = 'http://localhost:8080/admin/modulos'
 const cantidad_secciones = 2
 
 describe('Add users ', () => {
-  var randomWords = require('random-words')
+  const randomWords = require('random-words')
   before('Enter the page usuarios', () => {
     //https://proyecto-base.test.gtic.gob.bo/
 

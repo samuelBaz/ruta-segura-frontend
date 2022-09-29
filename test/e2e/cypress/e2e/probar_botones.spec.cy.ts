@@ -7,7 +7,7 @@ const urlPaginaPolicy = 'http://localhost:8080/admin/politicas'
 
 const tiempoEntreAcciones = 2000
 describe('probar usuarios', () => {
-  var randomWords = require('random-words')
+  const randomWords = require('random-words')
   let palabraRandom = ''
   beforeEach('login', () => {
     //https://proyecto-base.test.gtic.gob.bo/

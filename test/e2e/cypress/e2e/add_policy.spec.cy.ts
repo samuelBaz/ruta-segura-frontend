@@ -8,7 +8,7 @@ const acciones_frontend = ['create', 'read', 'update', 'delete']
 const acciones_backend = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 
 describe('empty spec', () => {
-  var randomWords = require('random-words')
+  const randomWords = require('random-words')
   beforeEach('login', () => {
     //https://proyecto-base.test.gtic.gob.bo/
 
