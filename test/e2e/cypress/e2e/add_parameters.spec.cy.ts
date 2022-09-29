@@ -2,7 +2,7 @@ export {}
 const urlPaginaHome = 'localhost:8080/admin/home'
 const urlPaginaLogin = 'localhost:8080'
 const cantidadDeParametros = 3000
-const nombreParametro = 1
+let nombreParametro = 1
 
 describe('empty spec', () => {
   beforeEach('login', () => {
@@ -32,6 +32,7 @@ describe('empty spec', () => {
       cy.get('#grupo').type('parametro' + nombreParametro)
       cy.get('#descripcion').type('parametro' + nombreParametro)
 
+      nombreParametro+=1;
       cy.get('button:contains("Guardar")').click()
     }
   })
