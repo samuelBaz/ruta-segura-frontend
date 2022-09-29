@@ -10,7 +10,7 @@ describe('empty spec', () => {
       cy.visit(urlPaginaLogin);
       cy.get('#usuario').clear().type("ADMINISTRADOR-TECNICO");
       cy.get('#contrasena').clear().type('123');
-      cy.contains('Ingresar').click();
+      cy.contains('Iniciar sesión').click();
       cy.wait(3000)
     });
   })
