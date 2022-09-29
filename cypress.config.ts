@@ -31,7 +31,6 @@ export default defineConfig({
           }
 
           let actual = 1
-          let indice = 0
           let usuario: DatosSegipODS = {
             ComplementoVisible: '',
             NumeroDocumento: '',
@@ -46,42 +45,29 @@ export default defineConfig({
             LugarNacimientoLocalidad: '',
             Observacion: '',
           }
-          const keys = [
-            'ComplementoVisible',
-            'NumeroDocumento',
-            'Complemento',
-            'Nombres',
-            'PrimerApellido',
-            'SegundoApellido',
-            'FechaNacimiento',
-            'LugarNacimientoPais',
-            'LugarNacimientoDepartamento',
-            'LugarNacimientoProvincia',
-            'LugarNacimientoLocalidad',
-            'Observacion',
-          ]
+          const keys = {
+            A: 'ComplementoVisible',
+            B: 'NumeroDocumento',
+            C: 'Complemento',
+            D: 'Nombres',
+            E: 'PrimerApellido',
+            F: 'SegundoApellido',
+            G: 'FechaNacimiento',
+            H: 'LugarNacimientoPais',
+            I: 'LugarNacimientoDepartamento',
+            J: 'LugarNacimientoProvincia',
+            K: 'LugarNacimientoLocalidad',
+            L: 'Observacion',
+          }
           const usuarios: DatosSegipODS[] = []
-          let tieneApellido = false
+          // let tieneApellido = false
           for (const user of dataArray) {
             if (
               +user.id[user.id.length - 1] ===
               (actual + 1 === 10 ? 0 : actual + 1)
             ) {
-              if (!tieneApellido) {
-                usuario.Observacion = usuario.LugarNacimientoLocalidad
-                usuario.LugarNacimientoLocalidad =
-                  usuario.LugarNacimientoProvincia
-                usuario.LugarNacimientoProvincia =
-                  usuario.LugarNacimientoDepartamento
-                usuario.LugarNacimientoDepartamento =
-                  usuario.LugarNacimientoPais
-                ;(usuario.LugarNacimientoPais = usuario.FechaNacimiento),
-                  (usuario.FechaNacimiento = usuario.SegundoApellido),
-                  (usuario.SegundoApellido = '')
-              }
-              indice = 0
               actual = actual + 1 === 10 ? 0 : (actual += 1)
-              tieneApellido = false
+              // tieneApellido = false
               usuarios.push(usuario)
               usuario = {
                 ComplementoVisible: '',
@@ -99,12 +85,10 @@ export default defineConfig({
               }
             }
             if (user.id[0] === 'F') {
-              tieneApellido = true
+              // tieneApellido = true
             }
             // @ts-ignore
-            usuario[keys[indice]] = user.datos['v']
-            // @ts-ignore
-            indice += 1
+            usuario[keys[user.id[0]]] = user.datos['v']
           }
           usuarios.push(usuario)
           usuarios.shift()
