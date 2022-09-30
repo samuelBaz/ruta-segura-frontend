@@ -1,8 +1,8 @@
 export {}
-const urlPaginaLogin = 'localhost:8080'
-const urlPaginaUsuarios = 'localhost:8080/admin/usuarios'
+const urlPaginaLogin = Cypress.env('BASE_URL') + 'login'
+const urlPaginaUsuarios = Cypress.env('BASE_URL') + 'admin/usuarios'
 //Ruta del archivo con nombres de prueba
-const rutaDatosUsuarios = 'DatosServiciosFakeSEGIP.ods'
+const rutaDatosUsuarios = Cypress.env('PATH_DATOS_FAKE_SEGIP')
 let datos: any[] = []
 
 describe('Add users ', () => {

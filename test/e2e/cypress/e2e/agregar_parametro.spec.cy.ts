@@ -1,6 +1,6 @@
 export {}
-const urlPaginaHome = 'localhost:8080/admin/home'
-const urlPaginaLogin = 'localhost:8080'
+const urlPaginaHome = Cypress.env('BASE_URL') + 'admin/home'
+const urlPaginaLogin = Cypress.env('BASE_URL')  + 'login'
 const cantidadDeParametros = 3000
 let nombreParametro = 1
 

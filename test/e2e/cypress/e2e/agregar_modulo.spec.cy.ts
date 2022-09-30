@@ -1,12 +1,12 @@
 export {}
-const urlPaginaLogin = 'http://localhost:8080'
-const urlPaginaModulos = 'http://localhost:8080/admin/modulos'
-const cantidad_secciones = 2
+const urlPaginaLogin = Cypress.env('BASE_URL') + 'login'
+const urlPaginaModulos = Cypress.env('BASE_URL') + 'admin/modulos'
+const cantidadSecciones = 2
+let numeroNombre = 5
 
 describe('Add users ', () => {
   const randomWords = require('random-words')
   before('Enter the page usuarios', () => {
-    //https://proyecto-base.test.gtic.gob.bo/
 
     cy.session('ADMINISTRADOR-TECNICO', () => {
       cy.visit(urlPaginaLogin)
@@ -20,8 +20,8 @@ describe('Add users ', () => {
   it('add module', () => {
     const secciones = []
     cy.visit(urlPaginaModulos)
-    for (let i = 1; i < cantidad_secciones + 1; i++) {
-      const seccion = 'Prueba ' + i
+    for (let i = 1; i < cantidadSecciones + 1; i++) {
+      const seccion = 'Prueba ' + numeroNombre
       cy.get('span:contains("add_circle_outline")').click()
       cy.get('p:contains("Nueva sección")').click()
       cy.get('#nombre').type(seccion)
@@ -30,6 +30,7 @@ describe('Add users ', () => {
       cy.get('#descripcion').type('descripcion ' + seccion)
       cy.get('#url').type('/admin/' + seccion)
       cy.get('button:contains("Guardar")').click()
+      numeroNombre += 1
     }
 
     for (const seccion of secciones) {

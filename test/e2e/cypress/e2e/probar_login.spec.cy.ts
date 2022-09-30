@@ -1,16 +1,6 @@
-// import { darkTheme } from '../../../../themes/dark-theme';
-// import { lightTheme } from '../../../../themes/light-theme';
-
-// function hexToRgb(hex: string): string {
-//   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)!;
-//   const r = parseInt(result[1], 16);
-//   const g = parseInt(result[2], 16);
-//   const b = parseInt(result[3], 16)
-//   return 'rgb('+r+', '+g+', '+b+')';
-// }
 export {}
 
-const urlPaginaLogin = 'localhost:8080'
+const urlPaginaLogin = Cypress.env('BASE_URL') + 'login'
 
 describe('Visit the login page', () => {
   beforeEach('VIsit the page', () => {

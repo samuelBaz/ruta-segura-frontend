@@ -1,16 +1,15 @@
 export {}
-const urlPaginaLogin = 'http://localhost:8080/login'
-const urlPaginaUsuario = 'http://localhost:8080/admin/usuarios'
-const urlPaginaParametro = 'http://localhost:8080/admin/parametros'
-const urlModulos = 'http://localhost:8080/admin/modulos'
-const urlPaginaPolicy = 'http://localhost:8080/admin/politicas'
+const urlPaginaLogin = Cypress.env('BASE_URL') + 'login'
+const urlPaginaUsuario = Cypress.env('BASE_URL') + 'admin/usuarios'
+const urlPaginaParametro = Cypress.env('BASE_URL') + 'admin/parametros'
+const urlModulos = Cypress.env('BASE_URL') + 'admin/modulos'
+const urlPaginaPolicy = Cypress.env('BASE_URL') + 'admin/politicas'
 
 const tiempoEntreAcciones = 2000
 describe('probar usuarios', () => {
   const randomWords = require('random-words')
   let palabraRandom = ''
   beforeEach('login', () => {
-    //https://proyecto-base.test.gtic.gob.bo/
 
     cy.session('ADMINISTRADOR-TECNICO', () => {
       cy.visit(urlPaginaLogin)

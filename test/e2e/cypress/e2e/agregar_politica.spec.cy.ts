@@ -1,6 +1,6 @@
 export {}
-const urlPaginaPolicy = 'http://localhost:8080/admin/politicas'
-const urlPaginaLogin = 'http://localhost:8080/login'
+const urlPaginaPolicy = Cypress.env('BASE_URL') + 'admin/politicas'
+const urlPaginaLogin = Cypress.env('BASE_URL') + 'login'
 const sujetos = ['ADMINISTRADOR', 'TECNICO', 'USUARIO']
 const objetos = ['/admin/', '/api/']
 const apps = ['frontend', 'backend']
