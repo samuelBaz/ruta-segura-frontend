@@ -4,7 +4,7 @@ import Excel from 'exceljs'
 
 export default defineConfig({
   e2e: {
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on('task', {
         createUsersFromODS({ pth }) {
           const data = JSON.parse(
@@ -111,7 +111,7 @@ export default defineConfig({
 
           const rows = worksheet.getRows(rowStartIndex, numberOfRows) ?? []
 
-          const user = rows.map((row) => {
+          return rows.map((row) => {
             return {
               ci: getCellValue(row, 1),
               nombre: getCellValue(row, 2),
@@ -121,7 +121,6 @@ export default defineConfig({
               email: getCellValue(row, 6),
             }
           })
-          return user
         },
       })
     },
