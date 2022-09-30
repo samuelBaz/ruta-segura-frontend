@@ -42,3 +42,6 @@ yarn-error.log*
 
 # Storybook
 storybook-static
+
+# testing e2e
+cypress.env.json
