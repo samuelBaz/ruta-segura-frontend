@@ -1,6 +1,6 @@
 # Frontend Base - NextJS/ReactJS
 
-Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/develop) o Tag [v1.1.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/v1.1.0)
+Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/develop)
 
 ## Tecnologías empleadas
 
@@ -12,14 +12,15 @@ Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.g
 
 ## Recomendaciones
 
-- Se sugiere crear un `Fork` de este proyecto dado que se harán mejoras continuas. [Más información](https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html)
-- Para añadir este proyecto como otro origen, ejecutar dentro del proyecto Fork:
+Para usar este proyecto como base de un nuevo proyecto, debe seguir los siguientes pasos:
+- Crear nuevo proyecto en [Gitlab](https://gitlab.agetic.gob.bo/projects/new) y clonarlo en local
+- Añadir este proyecto como otro origen, ejecutar dentro del nuevo proyecto:
 ```
 git remote add origin2 git@gitlab.agetic.gob.bo:agetic/agetic/proyectos-base/agetic-next-base-frontend.git
 ```
-- Para descargar los commits desde el 2.º origen, ejecutar
+- Descargar los commits desde el 2.º origen, ejecutar
 ```
-git pull origin2 master
+git pull origin2 master --allow-unrelated-histories
 ```
 
 ## Estructura general
