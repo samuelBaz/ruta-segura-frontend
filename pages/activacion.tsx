@@ -9,12 +9,14 @@ import { Constantes } from '../config'
 import { useFullScreenLoadingContext } from '../context/ui'
 import { Icono } from '../common/components/ui'
 import { imprimir } from '../common/utils/imprimir'
+import ProgresoLineal from '../common/components/ui/ProgresoLineal'
 
 const Activacion: NextPage = () => {
   const [error, setError] = useState<boolean>(false)
   const [mensaje, setMensaje] = useState<string>('false')
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const [loading, setLoading] = useState<boolean>(true)
 
   const router = useRouter()
 
@@ -32,6 +34,7 @@ const Activacion: NextPage = () => {
   const activarPeticion = async (codigoActivar: string) => {
     try {
       mostrarFullScreen()
+      setLoading(true)
       await delay(1000)
 
       const respuesta = await Servicios.patch({
@@ -47,6 +50,7 @@ const Activacion: NextPage = () => {
       setMensaje(InterpreteMensajes(e))
       imprimir(`Error al desbloquear usuario: `, e)
     } finally {
+      setLoading(false)
       ocultarFullScreen()
     }
   }
@@ -73,7 +77,7 @@ const Activacion: NextPage = () => {
         }}
       >
         <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
-          {!error && (
+          {!error && !loading && (
             <Box
               display={'flex'}
               flexDirection={'column'}
@@ -91,20 +95,9 @@ const Activacion: NextPage = () => {
                 {mensaje}
               </Typography>
               <Box height={'20px'} />
-              <Button
-                type="submit"
-                variant="contained"
-                onClick={() => {
-                  redireccionarInicio().finally()
-                }}
-              >
-                <Typography sx={{ textTransform: 'none' }}>
-                  Ir al inicio
-                </Typography>
-              </Button>
             </Box>
           )}
-          {error && (
+          {error && !loading && (
             <Box
               display={'flex'}
               flexDirection={'column'}
@@ -122,18 +115,27 @@ const Activacion: NextPage = () => {
                 {mensaje}
               </Typography>
               <Box height={'20px'} />
-              <Button
-                type="submit"
-                variant="contained"
-                onClick={() => {
-                  redireccionarInicio().finally()
-                }}
-              >
-                <Typography sx={{ textTransform: 'none' }}>
-                  Ir al inicio
-                </Typography>
-              </Button>
             </Box>
+          )}
+          {loading && (
+            <Box>
+              <Typography>procesando..</Typography>
+              <Box height={'20px'} />
+              <ProgresoLineal mostrar={loading} />
+            </Box>
+          )}
+          {!loading && (
+            <Button
+              type="submit"
+              variant="contained"
+              onClick={() => {
+                redireccionarInicio().finally()
+              }}
+            >
+              <Typography sx={{ textTransform: 'none' }}>
+                Ir al inicio
+              </Typography>
+            </Button>
           )}
         </Box>
       </Card>

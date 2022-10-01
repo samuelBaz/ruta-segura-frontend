@@ -65,6 +65,10 @@ const Usuarios: NextPage = () => {
   const [mostrarAlertaRestablecerUsuario, setMostrarAlertaRestablecerUsuario] =
     useState(false)
 
+  /// Indicador para mostrar una vista de alerta de reenvio de correo de activación
+  const [mostrarAlertaReenvioCorreo, setMostrarAlertaReenvioCorreo] =
+    useState(false)
+
   /// Variable que contiene el estado del usuario que se está editando
   const [usuarioEdicion, setUsuarioEdicion] = useState<
     UsuarioCRUDType | undefined | null
@@ -188,20 +192,35 @@ const Usuarios: NextPage = () => {
             }
           />
         )}
-        <IconoTooltip
-          titulo={
-            usuarioData.ciudadaniaDigital
-              ? 'No puede restablecer la contraseña'
-              : 'Restablecer contraseña'
-          }
-          color={'info'}
-          accion={async () => {
-            await restablecimientoPassUsuarioModal(usuarioData)
-          }}
-          desactivado={usuarioData.ciudadaniaDigital}
-          icono={'vpn_key'}
-          name={'Restablecer contraseña'}
-        />
+        {(usuarioData.estado == 'ACTIVO' ||
+          usuarioData.estado == 'INACTIVO') && (
+          <IconoTooltip
+            titulo={
+              usuarioData.ciudadaniaDigital
+                ? 'No puede restablecer la contraseña'
+                : 'Restablecer contraseña'
+            }
+            color={'info'}
+            accion={async () => {
+              await restablecimientoPassUsuarioModal(usuarioData)
+            }}
+            desactivado={usuarioData.ciudadaniaDigital}
+            icono={'vpn_key'}
+            name={'Restablecer contraseña'}
+          />
+        )}
+        {usuarioData.estado == 'PENDIENTE' && (
+          <IconoTooltip
+            titulo={'Reenviar correo de activación'}
+            color={'info'}
+            accion={async () => {
+              await reenvioCorreoModal(usuarioData)
+            }}
+            desactivado={usuarioData.ciudadaniaDigital}
+            icono={'forward_to_inbox'}
+            name={'Reenviar correo de activación'}
+          />
+        )}
         {permisos.update && (
           <IconoTooltip
             titulo={'Editar'}
@@ -363,6 +382,28 @@ const Usuarios: NextPage = () => {
     }
   }
 
+  /// Petición que reenvia correo de activación
+  const reenviarCorreoActivacionPeticion = async (usuario: UsuarioCRUDType) => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/usuarios/${usuario.id}/reenviar`,
+        tipo: 'patch',
+      })
+      imprimir(`respuesta reenviar correo usuario: ${respuesta}`)
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
+      await obtenerUsuariosPeticion()
+    } catch (e) {
+      imprimir(`Error al reenvio correo usuario`, e)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   /// Método abre una ventana modal para un usuario nuevo
 
   const agregarUsuarioModal = () => {
@@ -396,6 +437,13 @@ const Usuarios: NextPage = () => {
     setMostrarAlertaRestablecerUsuario(true) // para mostrar alerta de usuarios
   }
 
+  /// Método que muestra alerta de reenvio de correo
+
+  const reenvioCorreoModal = async (usuario: UsuarioCRUDType) => {
+    setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
+    setMostrarAlertaReenvioCorreo(true) // para mostrar alerta de usuarios
+  }
+
   /// Método que cierra alerta de cambio de estado
 
   const cancelarAlertaEstadoUsuario = async () => {
@@ -426,6 +474,23 @@ const Usuarios: NextPage = () => {
     setMostrarAlertaRestablecerUsuario(false)
     if (usuarioEdicion) {
       await restablecerPassUsuarioPeticion(usuarioEdicion)
+    }
+    setUsuarioEdicion(null)
+  }
+
+  /// Método que cierra alerta de reenvio de correo
+
+  const cancelarAlertaReenvioCorreo = async () => {
+    setMostrarAlertaReenvioCorreo(false)
+    await delay(500) // para no mostrar undefined mientras el modal se cierra
+    setUsuarioEdicion(null)
+  }
+
+  /// Método que oculta la alerta de reenvio de correo y procede a llamar la petición
+  const aceptarAlertaReenvioCorreo = async () => {
+    setMostrarAlertaReenvioCorreo(false)
+    if (usuarioEdicion) {
+      await reenviarCorreoActivacionPeticion(usuarioEdicion)
     }
     setUsuarioEdicion(null)
   }
@@ -481,6 +546,15 @@ const Usuarios: NextPage = () => {
       >
         <Button onClick={cancelarAlertaRestablecerUsuario}>Cancelar</Button>
         <Button onClick={aceptarAlertaRestablecerUsuario}>Aceptar</Button>
+      </AlertDialog>
+      <AlertDialog
+        isOpen={mostrarAlertaReenvioCorreo}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de reenviar el correo de activación de
+         ${titleCase(usuarioEdicion?.persona.nombres ?? '')} ?`}
+      >
+        <Button onClick={cancelarAlertaReenvioCorreo}>Cancelar</Button>
+        <Button onClick={aceptarAlertaReenvioCorreo}>Aceptar</Button>
       </AlertDialog>
       {/*<CustomDialog
         isOpen={mostrarFiltroUsuarios}

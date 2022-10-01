@@ -227,6 +227,7 @@ const Recuperacion: NextPage = () => {
                     <Button
                       type="submit"
                       variant="contained"
+                      disabled={indicadorCarga}
                       onClick={handleSubmit(recuperarPeticion)}
                     >
                       <Typography sx={{ textTransform: 'none' }}>
