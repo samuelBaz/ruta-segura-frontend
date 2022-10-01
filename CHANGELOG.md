@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.4.2...v1.6.3) (2022-10-01)
+
+
+### Features
+
+* :hammer: Funcionalidad para mantener abierto Custom Dialog ([3489bd6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/3489bd6d2eccdd035d55ac932f416f71b889dca2))
+* actualización de librerías MUI 5.10.3 ([04c49d8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/04c49d8896042ac3fbc8a8c5a7d844979cd04e09))
+* actualización de versiones MUI 5.10 y NextJS 12.2.5 ([ecc4058](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ecc4058301739ac9e404d3846ce86a3c2f41a90c))
+* añadida opción de limpiar campo FormInputDropdown ([06f5bc0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/06f5bc0e7d69a7de10056fefcac0b1ecff3c64bf))
+* añadida vista de activación de cuenta y correcciones menores de texto ([d9b5a0d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d9b5a0d01a05e01f603ac81485fe76cd185a3ad8))
+* añadido boton que llama a servicio de reenvio de correos para cuentas pendientes de activación ([0df6783](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/0df67838e4f9202276f40ed255a7a326bb5c54aa))
+* añadido comando prepare para ejecutar 'npm run lint' ([bfd737c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/bfd737cf928d340f881f50b634739b52eac20ac2))
+* configuración inicial (opcional) de Matomo ([7b16d38](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7b16d38322d9c9a2e03a635757035704e98d4d43))
+* separada lógica de Login para tener una pestaña de creación de cuenta opcional ([c856e9e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c856e9e201b2a2aeb9777f6bf8f2bc7fbf5bba12))
+* soporte para recibir n parámetros en función imprimir 🖨 ([71c29e5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/71c29e58518dc3f7f318fcfe7dd3230c6e491bc9))
+* test e2e cypress ([1061f5d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1061f5df9ddd29ffb69d66f96819f05eceeb646a))
+* tests para la adicion de modulos, politicas, y prueba de botones ([7c9d773](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7c9d773ee8b6f4838edccd37baba2eb2357a7914))
+* vista de recuperación de contraseña y correcciones menores de estilos ([dc28ebd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/dc28ebd24c2e6defcb5398a57d535d2fb5d2456d))
+
+
+### Bug Fixes
+
+* actualización de dependencias MUI 5.10.1 ([693c4c9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/693c4c9bb2d947a27f49353eff5c713ef9a0ccf1))
+* cambio en versión de Cypress, retiradas variables sin utilizar ([c2d7e01](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c2d7e01df43553dae1ceea23a5b7b56859d13704))
+* cambios de var por let ([dfcfb63](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/dfcfb63f1822ea7215f8dc0d9e6b283613a684ef))
+* correccion de contador de parametros ([22601e9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/22601e99e5738b98a3318fca44171e7ba94920bf))
+* corrección en Auth provider, para retirar el control de autorización a páginas fuera de /admin ([17981bb](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/17981bb0dea5bb185cbbbe692cd55945e918d9a4))
+* corrección en filtro de políticas que enviaba filtros vacios ([136ee21](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/136ee21c53d75591a8b2aee9dcc4737ea12f2981))
+* corrección en interpretación de objeto error en interprete de mensajes ([705c244](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/705c244f2b5a9fec820566f7b779390c6b81ad47))
+* correcion de tests ([84d1510](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/84d1510fc6945b8d84b4db4d1f99b17c39e7fd76))
+* correciones menores en archivos install.md y readme.md ([d4e1500](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d4e15002ce700a4064147a3257f4352c32c97868))
+* corregido archivo commands.ts agregando export ([488c051](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/488c051ab4d81d4196f390003865af681c9ad075))
+* corregido error en filtro que causaba que no se muestre datos el no reiniciar página y límite ([39cf4fc](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/39cf4fcc6a61255facd0bf82e254b8f143c84450))
+* corregido path archivo con nombres de prueba ([5ab5bb0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/5ab5bb0ac3b759dde3a3dbb84905502f2cd6e0da))
+* deshabilitado boton de cambio de contraseña mientras hay una peticíón en curso ([e43665c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e43665c72ce5eb19eb9e7908fb944ee2a65168f5))
+* filtro de politicas ([946bbc8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/946bbc893482d1fcc104a076cd97ec86761fe5ab))
+* modificado registro de cuenta con datos del usuario sin datos personales ([7278397](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7278397c77a9e8c4557c43c3d860086bc8856a68))
+* reemplazado icono de favicon en lugar de icono de Agetic ([9841379](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/984137951ecca4851eda57cc8f78315dfa7ec70c))
+* retirado caracter (^) de las librerias xlsx y random-words ([9691878](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/969187862388042b2c18287c2c9aa9770d8f0607))
+* rutas de test ([1b79644](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1b79644b8a2e17a2eb300d080d5b2191dcee1be0))
+
 ## [1.6.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.4.2...v1.6.0) (2022-08-24)
 
 
