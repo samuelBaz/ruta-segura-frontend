@@ -1,4 +1,10 @@
-import axios, { AxiosError, AxiosRequestHeaders, Method } from 'axios'
+import axios, {
+  AxiosError,
+  AxiosRequestHeaders,
+  AxiosResponse,
+  Method,
+  ResponseType,
+} from 'axios'
 import { imprimir } from '../utils/imprimir'
 
 export interface peticionFormatoMetodo {
@@ -7,6 +13,7 @@ export interface peticionFormatoMetodo {
   headers?: AxiosRequestHeaders
   body?: object
   params?: any
+  responseType?: ResponseType
 }
 
 export interface peticionFormato {
@@ -14,6 +21,7 @@ export interface peticionFormato {
   headers?: AxiosRequestHeaders
   body?: object
   params?: any
+  responseType?: ResponseType
 }
 
 export const estadosCorrectos: number[] = [200, 201, 202, 204]
@@ -26,7 +34,8 @@ class ServiciosClass {
     headers,
     body,
     params,
-  }: peticionFormatoMetodo) {
+    responseType,
+  }: peticionFormatoMetodo): Promise<AxiosResponse> {
     return axios({
       method: tipo,
       url: url,
@@ -34,6 +43,7 @@ class ServiciosClass {
       timeout: 5000,
       data: body,
       params: params,
+      responseType: responseType,
       withCredentials: true,
       validateStatus(status) {
         return estadosCorrectos.some((estado: number) => status === estado)
@@ -51,6 +61,7 @@ class ServiciosClass {
     headers,
     body,
     params,
+    responseType,
   }: peticionFormatoMetodo) {
     try {
       imprimir(`enviando 🌍`, body, tipo, url, headers)
@@ -60,6 +71,7 @@ class ServiciosClass {
         headers,
         body,
         params,
+        responseType,
       })
       imprimir('respuesta 📡', body, tipo, url, response)
       return response.data
@@ -79,6 +91,7 @@ class ServiciosClass {
     body = {},
     headers = {},
     params,
+    responseType,
   }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
@@ -86,46 +99,75 @@ class ServiciosClass {
       headers,
       body,
       params,
+      responseType,
     })
   }
 
-  async post({ url, body, headers, params }: peticionFormato): Promise<any> {
+  async post({
+    url,
+    body,
+    headers,
+    params,
+    responseType,
+  }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'post',
       headers,
       body,
       params,
+      responseType,
     })
   }
 
-  async put({ url, body, headers, params }: peticionFormato): Promise<any> {
+  async put({
+    url,
+    body,
+    headers,
+    params,
+    responseType,
+  }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'put',
       headers,
       body,
       params,
+      responseType,
     })
   }
 
-  async patch({ url, body, headers, params }: peticionFormato): Promise<any> {
+  async patch({
+    url,
+    body,
+    headers,
+    params,
+    responseType,
+  }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'patch',
       headers,
       body,
       params,
+      responseType,
     })
   }
 
-  async delete({ url, body, headers, params }: peticionFormato): Promise<any> {
+  async delete({
+    url,
+    body,
+    headers,
+    params,
+    responseType,
+  }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
       tipo: 'delete',
       headers,
       body,
       params,
+      responseType,
     })
   }
 }

@@ -271,6 +271,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     body,
     headers,
     params,
+    responseType,
   }: peticionFormatoMetodo) => {
     try {
       if (!verificarToken(leerCookie('token') ?? '')) {
@@ -291,6 +292,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         headers: cabeceras,
         body,
         params,
+        responseType,
       })
       imprimir('respuesta 🔐📡', body, tipo, url, response)
       return response.data
