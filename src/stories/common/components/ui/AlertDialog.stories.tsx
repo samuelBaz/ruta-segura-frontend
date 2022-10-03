@@ -43,7 +43,7 @@ AccionesComponeneteHijo.args = {
     <div>
       {' '}
       <Button onClick={action('Cancelar accion')}>Cancelar</Button>{' '}
-      <Button onClick={action('Acpetar accion')}>Aceptar</Button>{' '}
+      <Button onClick={action('Aceptar accion')}>Aceptar</Button>{' '}
     </div>
   ),
 }
