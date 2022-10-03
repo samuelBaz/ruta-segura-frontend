@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             noWrap={true}
             sx={{ flexGrow: 1, fontWeight: 'bold' }}
           >
-            Bienveni@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}
+            Bienvenid@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}
             {titleCase(
               usuario?.persona?.primerApellido ??
                 usuario?.persona?.segundoApellido ??
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
       <Grid>
         <Box height={'20px'} />
         <Typography sx={{ fontSize: 14 }}>
-          Puedes ver los siguientes modulos:
+          Puedes ver los siguientes módulos:
         </Typography>
         <Box height={'5px'} />
       </Grid>
