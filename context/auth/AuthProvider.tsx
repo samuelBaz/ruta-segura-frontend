@@ -62,6 +62,8 @@ interface ContextProps {
     headers,
     body,
     params,
+    responseType,
+    withCredentials,
   }: peticionFormatoMetodo) => Promise<any>
   verificarPermiso: ({
     sujeto,
@@ -272,6 +274,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     headers,
     params,
     responseType,
+    withCredentials,
   }: peticionFormatoMetodo) => {
     try {
       if (!verificarToken(leerCookie('token') ?? '')) {
@@ -293,6 +296,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         body,
         params,
         responseType,
+        withCredentials,
       })
       imprimir('respuesta 🔐📡', body, tipo, url, response)
       return response.data

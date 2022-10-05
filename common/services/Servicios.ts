@@ -7,21 +7,17 @@ import axios, {
 } from 'axios'
 import { imprimir } from '../utils/imprimir'
 
-export interface peticionFormatoMetodo {
-  url: string
+export type peticionFormatoMetodo = {
   tipo?: Method
-  headers?: AxiosRequestHeaders
-  body?: object
-  params?: any
-  responseType?: ResponseType
-}
+} & peticionFormato
 
-export interface peticionFormato {
+export type peticionFormato = {
   url: string
   headers?: AxiosRequestHeaders
   body?: object
   params?: any
   responseType?: ResponseType
+  withCredentials?: boolean
 }
 
 export const estadosCorrectos: number[] = [200, 201, 202, 204]
@@ -35,6 +31,7 @@ class ServiciosClass {
     body,
     params,
     responseType,
+    withCredentials = true,
   }: peticionFormatoMetodo): Promise<AxiosResponse> {
     return axios({
       method: tipo,
@@ -44,7 +41,7 @@ class ServiciosClass {
       data: body,
       params: params,
       responseType: responseType,
-      withCredentials: true,
+      withCredentials: withCredentials,
       validateStatus(status) {
         return estadosCorrectos.some((estado: number) => status === estado)
       },
@@ -62,6 +59,7 @@ class ServiciosClass {
     body,
     params,
     responseType,
+    withCredentials = true,
   }: peticionFormatoMetodo) {
     try {
       imprimir(`enviando 🌍`, body, tipo, url, headers)
@@ -72,6 +70,7 @@ class ServiciosClass {
         body,
         params,
         responseType,
+        withCredentials,
       })
       imprimir('respuesta 📡', body, tipo, url, response)
       return response.data
@@ -92,6 +91,7 @@ class ServiciosClass {
     headers = {},
     params,
     responseType,
+    withCredentials,
   }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
@@ -100,6 +100,7 @@ class ServiciosClass {
       body,
       params,
       responseType,
+      withCredentials,
     })
   }
 
@@ -109,6 +110,7 @@ class ServiciosClass {
     headers,
     params,
     responseType,
+    withCredentials,
   }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
@@ -117,6 +119,7 @@ class ServiciosClass {
       body,
       params,
       responseType,
+      withCredentials,
     })
   }
 
@@ -126,6 +129,7 @@ class ServiciosClass {
     headers,
     params,
     responseType,
+    withCredentials,
   }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
@@ -134,6 +138,7 @@ class ServiciosClass {
       body,
       params,
       responseType,
+      withCredentials,
     })
   }
 
@@ -143,6 +148,7 @@ class ServiciosClass {
     headers,
     params,
     responseType,
+    withCredentials,
   }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
@@ -151,6 +157,7 @@ class ServiciosClass {
       body,
       params,
       responseType,
+      withCredentials,
     })
   }
 
@@ -160,6 +167,7 @@ class ServiciosClass {
     headers,
     params,
     responseType,
+    withCredentials,
   }: peticionFormato): Promise<any> {
     return await this.peticion({
       url,
@@ -168,6 +176,7 @@ class ServiciosClass {
       body,
       params,
       responseType,
+      withCredentials,
     })
   }
 }
