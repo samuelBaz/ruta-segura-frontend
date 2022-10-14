@@ -2,13 +2,13 @@ export {}
 
 const urlPaginaLogin = Cypress.env('BASE_URL') + 'login'
 
-describe('Visit the login page', () => {
+describe('Visitar la pagina login', () => {
   beforeEach('VIsit the page', () => {
     //https://proyecto-base.test.gtic.gob.bo/
     cy.visit(urlPaginaLogin)
   })
 
-  it('Clicking top buttons', () => {
+  it('Clickeando los botones superiores', () => {
     //Open the Informacion dialog and then close it.
     cy.get(`[name="Ayuda"]`).contains('help_outline').click()
     cy.get('h2')
@@ -23,7 +23,7 @@ describe('Visit the login page', () => {
     // cy.get('body').should('have.css', 'background-color', hexToRgb(lightTheme.palette.background.default));
   })
 
-  it('Empty login fields', () => {
+  it('Campos de login vacios', () => {
     cy.get('#usuario').clear()
     cy.get('#contrasena').clear()
     cy.get('#usuario').should('have.class', 'MuiInputBase-input')
@@ -40,7 +40,7 @@ describe('Visit the login page', () => {
     cy.get('p:contains("Este campo es requerido")').should('have.length', 1)
   })
 
-  it('Invalid login fields', () => {
+  it('Campos de login vacios', () => {
     cy.get('#usuario').clear().type('Prueba')
     cy.get('#contrasena').clear().type('Password123')
     cy.get('#usuario').should('have.class', 'MuiInputBase-input')
@@ -50,7 +50,7 @@ describe('Visit the login page', () => {
     cy.get(`[aria-label="Close"]`).click()
   })
 
-  it('Password visibility', () => {
+  it('Visibilidad de password', () => {
     cy.get('#contrasena').should('have.attr', 'type', 'password')
 
     cy.get('[aria-label="toggle password visibility"]').eq(2).click()
@@ -60,7 +60,7 @@ describe('Visit the login page', () => {
     cy.get('#contrasena').should('have.attr', 'type', 'password')
   })
 
-  it('Correct login', () => {
+  it('Login correcto', () => {
     cy.get('#usuario').clear().type('ADMINISTRADOR-TECNICO')
     cy.get('#contrasena').clear().type('123')
     cy.contains('Iniciar sesión').click()

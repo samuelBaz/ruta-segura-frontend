@@ -4,7 +4,7 @@ const urlPaginaLogin = Cypress.env('BASE_URL')  + 'login'
 const cantidadDeParametros = 3000
 let nombreParametro = 1
 
-describe('empty spec', () => {
+describe('Parametro', () => {
   beforeEach('login', () => {
     //https://proyecto-base.test.gtic.gob.bo/
 
@@ -17,7 +17,7 @@ describe('empty spec', () => {
     })
   })
 
-  it('Adding users from ods file', async () => {
+  it('Agregar parametro', async () => {
     cy.visit(urlPaginaHome)
     cy.url().should('include', '/admin/home')
     cy.wait(3000)

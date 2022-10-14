@@ -4,9 +4,9 @@ const urlPaginaModulos = Cypress.env('BASE_URL') + 'admin/modulos'
 const cantidadSecciones = 2
 let numeroNombre = 5
 
-describe('Add users ', () => {
+describe('Modulos ', () => {
   const randomWords = require('random-words')
-  before('Enter the page usuarios', () => {
+  before('Login', () => {
 
     cy.session('ADMINISTRADOR-TECNICO', () => {
       cy.visit(urlPaginaLogin)
@@ -17,7 +17,7 @@ describe('Add users ', () => {
     })
   })
 
-  it('add module', () => {
+  it('Agregar modulo', () => {
     const secciones = []
     cy.visit(urlPaginaModulos)
     for (let i = 1; i < cantidadSecciones + 1; i++) {

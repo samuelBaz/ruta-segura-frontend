@@ -7,7 +7,7 @@ const apps = ['frontend', 'backend']
 const acciones_frontend = ['create', 'read', 'update', 'delete']
 const acciones_backend = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 
-describe('empty spec', () => {
+describe('Politica', () => {
   const randomWords = require('random-words')
   beforeEach('login', () => {
     //https://proyecto-base.test.gtic.gob.bo/
@@ -21,7 +21,7 @@ describe('empty spec', () => {
     })
   })
 
-  it('add policy frontend', () => {
+  it('Agregar politica frontend', () => {
     cy.visit(urlPaginaPolicy)
     for (let i = 0; i < sujetos.length; i++) {
       for (let j = 0; j < acciones_frontend.length; j++) {
@@ -41,7 +41,7 @@ describe('empty spec', () => {
     }
   })
 
-  it('add policy backend', () => {
+  it('Agregar politica backend', () => {
     cy.visit(urlPaginaPolicy)
     for (let i = 0; i < sujetos.length; i++) {
       for (let j = 0; j < acciones_backend.length; j++) {

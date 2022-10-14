@@ -4,7 +4,7 @@ const urlRegistro = Cypress.env('BASE_URL') + 'login'
 
 describe('Registro', () => {
   const randomWords = require('random-words')
-  it('register user', () => {
+  it('Registro de usuario', () => {
     cy.visit(urlRegistro)
     const correo = `${randomWords()}@yopmail.com`
     const contrasena = 'contrasenaSuperSecreta'
