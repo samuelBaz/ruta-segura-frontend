@@ -1,6 +1,6 @@
 import axios, {
   AxiosError,
-  AxiosRequestHeaders,
+  RawAxiosRequestHeaders,
   AxiosResponse,
   Method,
   ResponseType,
@@ -13,7 +13,7 @@ export type peticionFormatoMetodo = {
 
 export type peticionFormato = {
   url: string
-  headers?: AxiosRequestHeaders
+  headers?: RawAxiosRequestHeaders
   body?: object
   params?: any
   responseType?: ResponseType

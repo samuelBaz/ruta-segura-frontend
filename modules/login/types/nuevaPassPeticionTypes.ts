@@ -1,5 +1,3 @@
-import { CrearPersonaType } from '../../admin/usuarios/types/usuariosCRUDTypes'
-
 export interface nuevaPassPeticionType {
   codigo: string
   contrasenaNueva: string

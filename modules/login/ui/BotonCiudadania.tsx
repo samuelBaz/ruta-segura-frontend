@@ -5,7 +5,7 @@ import { FC, MouseEventHandler, PropsWithChildren } from 'react'
 import { Constantes } from '../../../config'
 
 export interface BotonCiudadaniaType {
-  altText?: string
+  altText: string
   disabled?: boolean | undefined
   accion: MouseEventHandler<any> | undefined
   fullWidth?: boolean
