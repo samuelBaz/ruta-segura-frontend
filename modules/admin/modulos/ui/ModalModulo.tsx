@@ -39,7 +39,7 @@ export const VistaModalModulo = ({
       nombre: modulo?.nombre,
       propiedades: modulo?.propiedades,
       estado: modulo?.estado,
-      fidModulo: modulo?.fidModulo?.id,
+      idModulo: modulo?.idModulo?.id,
       esSeccion: modulo?.esSeccion,
     },
   })
@@ -82,8 +82,8 @@ export const VistaModalModulo = ({
         <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
           <Grid item xs={12} sm={12} md={6}>
             <FormInputDropdown
-              id={'fidModulo'}
-              name="fidModulo"
+              id={'idModulo'}
+              name="idModulo"
               control={control}
               label="Sección"
               disabled={loadingModal}

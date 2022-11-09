@@ -317,7 +317,7 @@ const Modulos: NextPage = () => {
         key={`${moduloData.id}-${indexModulo}-icono`}
         variant={'body2'}
       >
-        {moduloData.fidModulo === null ? (
+        {moduloData.modulo === null ? (
           <></>
         ) : (
           <Icono color="inherit">{`${moduloData.propiedades.icono}`}</Icono>
@@ -365,7 +365,7 @@ const Modulos: NextPage = () => {
               accion={async () => {
                 await editarEstadoModuloModal({
                   ...moduloData,
-                  ...{ esSeccion: moduloData?.fidModulo == null },
+                  ...{ esSeccion: moduloData?.modulo == null },
                 })
               }}
               desactivado={moduloData.estado == 'PENDIENTE'}
@@ -386,7 +386,7 @@ const Modulos: NextPage = () => {
                 imprimir(`Editaremos :`, moduloData)
                 editarModuloModal({
                   ...moduloData,
-                  ...{ esSeccion: moduloData?.fidModulo == null },
+                  ...{ esSeccion: moduloData?.modulo == null },
                 })
               }}
               icono={'edit'}
