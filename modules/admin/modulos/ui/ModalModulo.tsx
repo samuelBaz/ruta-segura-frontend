@@ -39,7 +39,7 @@ export const VistaModalModulo = ({
       nombre: modulo?.nombre,
       propiedades: modulo?.propiedades,
       estado: modulo?.estado,
-      idModulo: modulo?.idModulo?.id,
+      idModulo: modulo?.modulo?.id,
       esSeccion: modulo?.esSeccion,
     },
   })
