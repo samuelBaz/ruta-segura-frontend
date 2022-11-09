@@ -41,10 +41,10 @@ export const VistaModalRol = ({
   const guardarActualizarRol = async (
     data: RolCRUDType
   ) => {
-    await guardarActualizarRolsPeticion(data)
+    await guardarActualizarRolesPeticion(data)
   }
 
-  const guardarActualizarRolsPeticion = async (
+  const guardarActualizarRolesPeticion = async (
     Rol: RolCRUDType
   ) => {
     try {

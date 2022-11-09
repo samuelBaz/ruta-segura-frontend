@@ -21,7 +21,7 @@ import { RolCRUDType } from '../../modules/admin/rol/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/rol/ui/ModalRol'
 
-const Rol: NextPage = () => {
+const Roles: NextPage = () => {
   const [rolData, setrolData] = useState<RolCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -55,7 +55,7 @@ const Rol: NextPage = () => {
 
   const editarEstadoRolModal = async (rol: RolCRUDType) => {
     setrolEdicion(rol) // para mostrar datos de Rol en la alerta
-    setMostrarAlertaEstadoRol(true) // para mostrar alerta de Rols
+    setMostrarAlertaEstadoRol(true) // para mostrar alerta de Roles
   }
   
   const cancelarAlertaEstadoRol = async () => {
@@ -136,7 +136,7 @@ const Rol: NextPage = () => {
               editarRolModal(rolData)
             }}
             icono={'edit'}
-            name={'Parámetros'}
+            name={'Roles'}
           />
         )}
       </Grid>,
@@ -154,32 +154,32 @@ const Rol: NextPage = () => {
     //     },
     //   }}
     //   size={'small'}
-    //   selected={mostrarFiltroRols}
+    //   selected={mostrarFiltroRoles}
     //   onChange={() => {
-    //     setMostrarFiltroRols(!mostrarFiltroRols)
+    //     setMostrarFiltroRoles(!mostrarFiltroRoles)
     //   }}
     // >
     //   <Icono>search</Icono>
     // </ToggleButton>,
     permisos.create && (
       <IconoTooltip
-        titulo={'Agregar parámetro'}
+        titulo={'Agregar rol'}
         key={`accionAgregarRol`}
         accion={() => {
           agregarRolModal()
         }}
         icono={'add_circle_outline'}
-        name={'Agregar parámetro'}
+        name={'Agregar rol'}
       />
     ),
     <IconoTooltip
       titulo={'Actualizar'}
       key={`accionActualizarRol`}
       accion={async () => {
-        await obtenerRolsPeticion()
+        await obtenerRolesPeticion()
       }}
       icono={'refresh'}
-      name={'Actualizar lista de parámetros'}
+      name={'Actualizar lista de roles'}
     />,
   ]
 
@@ -197,7 +197,7 @@ const Rol: NextPage = () => {
         mensaje: InterpreteMensajes(respuesta),
         variant: 'success',
       })
-      await obtenerRolsPeticion()
+      await obtenerRolesPeticion()
     } catch (e) {
       imprimir(`Error al inactivar rol`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
@@ -206,7 +206,7 @@ const Rol: NextPage = () => {
     }
   }
 
-  const obtenerRolsPeticion = async () => {
+  const obtenerRolesPeticion = async () => {
     try {
       setLoading(true)
 
@@ -221,7 +221,7 @@ const Rol: NextPage = () => {
       setTotal(respuesta.datos?.total)
       setErrorRolData(null)
     } catch (e) {
-      imprimir(`Error al obtener Rols`, e)
+      imprimir(`Error al obtener Roles`, e)
       setErrorRolData(e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
     } finally {
@@ -255,7 +255,7 @@ const Rol: NextPage = () => {
   }, [estaAutenticado])
 
   useEffect(() => {
-    if (estaAutenticado) obtenerRolsPeticion().finally(() => {})
+    if (estaAutenticado) obtenerRolesPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite])
 
@@ -290,7 +290,7 @@ const Rol: NextPage = () => {
           rol={rolEdicion}
           accionCorrecta={() => {
             cerrarModalRol().finally()
-            obtenerRolsPeticion().finally()
+            obtenerRolesPeticion().finally()
           }}
           accionCancelar={cerrarModalRol}
         />
@@ -312,4 +312,4 @@ const Rol: NextPage = () => {
     </>
   )
 }
-export default Rol
+export default Roles
