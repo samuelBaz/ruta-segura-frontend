@@ -5,7 +5,7 @@ export interface Propiedades {
   descripcion: string
 }
 
-export interface FidModulo {
+export interface Modulo {
   id: string
 }
 
@@ -17,7 +17,7 @@ export interface ModuloCRUDType {
   esSeccion: boolean
   propiedades: Propiedades
   estado: string
-  fidModulo?: FidModulo | undefined
+  modulo?: Modulo | undefined
 }
 
 export interface CrearEditarModulosType {
@@ -28,7 +28,7 @@ export interface CrearEditarModulosType {
   esSeccion: boolean
   propiedades: Propiedades
   estado: string
-  fidModulo?: string
+  idModulo?: string
 }
 
 export interface GuardarModulosType {
@@ -38,5 +38,5 @@ export interface GuardarModulosType {
   nombre: string
   propiedades: Propiedades
   estado: string
-  fidModulo?: string
+  idModulo?: string
 }

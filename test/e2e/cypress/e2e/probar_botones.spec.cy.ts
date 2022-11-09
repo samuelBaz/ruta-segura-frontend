@@ -133,7 +133,7 @@ describe('probar usuarios', () => {
       palabraRandom = 'nombre ' + seccion
       cy.get('span:contains("add_circle_outline")').click()
       cy.get('p:contains("Nuevo módulo")').click()
-      cy.get('#fidModulo').click()
+      cy.get('#idModulo').click()
       cy.get(`li:contains("${seccion}")`).eq(0).click()
       cy.get('#icono').type('home')
       cy.get('#nombre').type('nombre ' + seccion)
