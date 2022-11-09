@@ -211,7 +211,7 @@ const Roles: NextPage = () => {
       setLoading(true)
 
       const respuesta = await sesionPeticion({
-        url: `${Constantes.baseUrl}/autorizacion/roles/table`,
+        url: `${Constantes.baseUrl}/autorizacion/roles/todos`,
         params: {
           pagina: pagina,
           limite: limite,
