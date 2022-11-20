@@ -1,6 +1,11 @@
 /** @type {import("next").NextConfig} */
 
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: false,
+  openAnalyzer: false,
+})
+
+module.exports = withBundleAnalyzer({
   basePath:
     '' === process.env.NEXT_PUBLIC_PATH
       ? undefined
@@ -20,4 +25,4 @@ module.exports = {
     return config
   },
   output: 'standalone',
-}
+})
