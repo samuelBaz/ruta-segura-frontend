@@ -49,6 +49,6 @@ export const siteName = () => {
 }
 
 export const seguridadPass = async (pass: string): Promise<IZXCVBNResult> => {
-  const zxcvbnDynamic = (await import('zxcvbn-typescript')).default
-  return zxcvbnDynamic(pass)
+  const zxcvbnLib = (await import('zxcvbn-typescript')).default
+  return zxcvbnLib(pass)
 }
