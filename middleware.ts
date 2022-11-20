@@ -7,7 +7,7 @@ export const middleware = (req: NextRequest) => {
   imprimir(`token middleware 🔐️: ${token}`)
 
   try {
-    if (token && token != '') {
+    if (token && token.value != '') {
       return NextResponse.next()
     } else {
       const url = req.nextUrl.clone()
