@@ -23,12 +23,7 @@ import { useRouter } from 'next/router'
 import { CasbinTypes } from '../../common/types'
 import { useFullScreenLoadingContext } from '../ui'
 
-import {
-  Enforcer,
-  newEnforcer,
-  newModelFromString,
-  StringAdapter,
-} from 'casbin'
+import { Enforcer } from 'casbin'
 import { basicModel, basicPolicy } from '../../common/utils/casbin'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
@@ -379,11 +374,13 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   }
 
   const inicializarCasbin = async (politicas: string[][]) => {
-    const model = newModelFromString(basicModel)
-    const policy = new StringAdapter(basicPolicy)
+    const casbinLib = await import('casbin')
+    imprimir(`casbinLib 🪄`, casbinLib)
 
-    const enforcerTemp: Enforcer = await newEnforcer(model, policy)
-    for (const p of politicas) {
+    const model = casbinLib.newModelFromString(basicModel)
+    const policy = new casbinLib.StringAdapter(basicPolicy)
+    const enforcerTemp: Enforcer = await casbinLib.newEnforcer(model, policy)
+    for await (const p of politicas) {
       await enforcerTemp.addPolicy(p[0], p[1], p[2], p[3], p[4], p[5])
     }
     setEnforcer(enforcerTemp)

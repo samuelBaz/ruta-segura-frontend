@@ -4,10 +4,10 @@ import { imprimir } from './common/utils/imprimir'
 
 export const middleware = (req: NextRequest) => {
   const token = req.cookies.get('token')
-  imprimir(`token middleware 🔐️: ${token}`)
+  imprimir(`token middleware 🔐️: ${token?.value}`)
 
   try {
-    if (token && token != '') {
+    if (token && token.value != '') {
       return NextResponse.next()
     } else {
       const url = req.nextUrl.clone()

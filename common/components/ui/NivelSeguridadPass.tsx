@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, LinearProgress } from '@mui/material'
 import { IZXCVBNResult } from 'zxcvbn-typescript'
 import Typography from '@mui/material/Typography'
@@ -25,7 +25,14 @@ export interface NivelSeguridadPassType {
 }
 
 export const NivelSeguridadPass = ({ pass }: NivelSeguridadPassType) => {
-  const resultado: IZXCVBNResult = seguridadPass(pass)
+  const [resultado, setResultado] = useState<IZXCVBNResult | undefined>(
+    undefined
+  )
+
+  useEffect(() => {
+    seguridadPass(pass).then((value) => setResultado(value))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pass])
 
   let color:
     | 'primary'
@@ -36,7 +43,7 @@ export const NivelSeguridadPass = ({ pass }: NivelSeguridadPassType) => {
     | 'warning'
     | 'inherit'
 
-  switch (resultado.score) {
+  switch (resultado?.score) {
     case 0: {
       color = 'error'
       break
@@ -71,7 +78,7 @@ export const NivelSeguridadPass = ({ pass }: NivelSeguridadPassType) => {
       >
         Nivel de seguridad
       </Typography>
-      <LinearColor color={color} progress={resultado.score * 25} />
+      <LinearColor color={color} progress={(resultado?.score ?? 0) * 25} />
     </Box>
   )
 }

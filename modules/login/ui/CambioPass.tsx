@@ -46,7 +46,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
     newPassword1,
     newPassword2,
   }: nuevaPassFormType) => {
-    if (seguridadPass(newPassword1).score != 4) {
+    if ((await seguridadPass(newPassword1)).score != 4) {
       Alerta({ mensaje: 'La contraseña no es muy segura', variant: 'error' })
       return
     }

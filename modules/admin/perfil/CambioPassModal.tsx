@@ -48,7 +48,7 @@ export const CambioPassModal = ({
       })
       return
     }
-    if (seguridadPass(newPassword1).score != 4) {
+    if ((await seguridadPass(newPassword1)).score != 4) {
       Alerta({ mensaje: 'La contraseña no es muy segura', variant: 'error' })
       return
     }
