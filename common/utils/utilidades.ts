@@ -1,6 +1,6 @@
 import childProcess from 'child_process'
 import { Constantes } from '../../config'
-import { IZXCVBNResult, zxcvbn } from 'zxcvbn-typescript'
+import { IZXCVBNResult } from 'zxcvbn-typescript'
 import packageJson from '../../package.json'
 
 export const delay = (ms: number) => {
@@ -48,6 +48,7 @@ export const siteName = () => {
   return Constantes.siteName ?? ''
 }
 
-export const seguridadPass = (pass: string): IZXCVBNResult => {
-  return zxcvbn(pass)
+export const seguridadPass = async (pass: string): Promise<IZXCVBNResult> => {
+  const zxcvbnDynamic = (await import('zxcvbn-typescript')).default
+  return zxcvbnDynamic(pass)
 }
