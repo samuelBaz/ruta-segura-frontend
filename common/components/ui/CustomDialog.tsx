@@ -54,20 +54,20 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
   maxWidth,
   paperProps,
   disableBackdropClick = false,
-  disableEscapeKeyDown = false
+  disableEscapeKeyDown = false,
 }) => {
   const theme = useTheme()
   let dsm = useMediaQuery(theme.breakpoints.down('sm'))
 
   const cerrarDialog = (event: BaseSyntheticEvent, reason: string) => {
-      if (disableBackdropClick && reason === 'backdropClick') {
-        return false
-      }
-      if (disableEscapeKeyDown && reason === 'escapeKeyDown') {
-        return false
-      }
-      handleClose()
+    if (disableBackdropClick && reason === 'backdropClick') {
+      return false
     }
+    if (disableEscapeKeyDown && reason === 'escapeKeyDown') {
+      return false
+    }
+    handleClose()
+  }
   return (
     <Dialog
       PaperProps={paperProps}
@@ -79,7 +79,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
       onClose={cerrarDialog}
     >
       <DialogTitle sx={{ mt: 1, mr: 1, ml: 1, p: 2 }}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: 20 }}>
+        <Typography sx={{ fontWeight: 'medium', fontSize: 20 }}>
           {title}
         </Typography>
         <IconButton

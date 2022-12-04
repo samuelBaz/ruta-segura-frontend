@@ -31,7 +31,7 @@ const Home: NextPage = () => {
             variant={'h5'}
             component="h1"
             noWrap={true}
-            sx={{ flexGrow: 1, fontWeight: 'bold' }}
+            sx={{ flexGrow: 1, fontWeight: 'medium' }}
           >
             Bienvenid@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}
             {titleCase(
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                   >
                     <Grid>
                       <Box height={'20px'} />
-                      <Typography sx={{ fontSize: 14, fontWeight: 'bold' }}>
+                      <Typography sx={{ fontSize: 14, fontWeight: 'medium' }}>
                         {modulo.label}
                       </Typography>
                       <Box height={'20px'} />
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
                                   <Box height={'30px'} width={'10px'} />
                                   <Typography
                                     variant="caption"
-                                    sx={{ fontSize: 14, fontWeight: 'bold' }}
+                                    sx={{ fontSize: 14, fontWeight: 'medium' }}
                                   >
                                     {`${subModulo.label}`}
                                   </Typography>

@@ -131,7 +131,7 @@ export const NavbarUser = () => {
           Cancelar
         </Button>
         <Button
-          sx={{ fontWeight: 'bold' }}
+          sx={{ fontWeight: 'medium' }}
           onClick={async () => {
             setMostrarAlertaCerrarSesion(false)
             await cerrarMenuSesion()
@@ -176,7 +176,7 @@ export const NavbarUser = () => {
           <Typography
             color={'text.primary'}
             component="div"
-            sx={{ flexGrow: 1, fontWeight: 'bold' }}
+            sx={{ flexGrow: 1, fontWeight: 'medium' }}
           >
             {siteName()}
           </Typography>

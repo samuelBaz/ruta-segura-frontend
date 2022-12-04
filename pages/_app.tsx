@@ -3,7 +3,6 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '../common/utils/createEmotionCache'
 import DebugBanner from '../common/components/DebugBanner'
-import '@fontsource/poppins'
 import { FullScreenLoadingProvider, UIProvider } from '../context/ui'
 import { imprimir } from '../common/utils/imprimir'
 import { ThemeProvider } from '../context/ui/ThemeContext'
@@ -11,11 +10,10 @@ import { AuthProvider } from '../context/auth'
 import { Sidebar } from '../common/components/ui'
 import { Constantes } from '../config'
 import { SnackbarProvider } from 'notistack'
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache()
-
 import { init } from '@socialgouv/matomo-next'
 import { useEffect } from 'react'
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache()
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache

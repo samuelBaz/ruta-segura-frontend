@@ -59,13 +59,13 @@ const LoginRegistroContainer = () => {
             variant={'fullWidth'}
           >
             <Tab
-              sx={{ fontWeight: 'bold', textTransform: 'none' }}
+              sx={{ fontWeight: 'medium', textTransform: 'none' }}
               label="Regístrate"
               {...a11yProps(0)}
             />
             <Tab
-              sx={{ fontWeight: 'bold', textTransform: 'none' }}
-              label="Inicia Sesión"
+              sx={{ fontWeight: 'medium', textTransform: 'none' }}
+              label="Inicia sesión"
               {...a11yProps(1)}
             />
           </Tabs>
@@ -123,7 +123,7 @@ const LoginRegistroContainer = () => {
             >
               <Typography
                 fontSize={'small'}
-                sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                sx={{ fontWeight: 'medium', textTransform: 'none' }}
               >
                 ¿Olvidaste tu contraseña?
               </Typography>
@@ -137,7 +137,7 @@ const LoginRegistroContainer = () => {
             disabled={progresoLogin}
             onClick={handleSubmit(iniciarSesion)}
           >
-            <Typography sx={{ fontWeight: 'bold', textTransform: 'none' }}>
+            <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
               Iniciar sesión
             </Typography>
           </Button>
@@ -155,7 +155,7 @@ const LoginRegistroContainer = () => {
               window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
             }}
           >
-            <Typography sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}>
+            <Typography sx={{ fontWeight: 'medium', pl: 1, pr: 1 }}>
               Ingresa con Ciudadanía
             </Typography>
           </BotonCiudadania>

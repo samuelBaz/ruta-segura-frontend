@@ -291,7 +291,7 @@ const UsuariosSWR: NextPage = () => {
         <Box height={'10px'} />
         <Typography
           color="text.secondary"
-          sx={{ fontSize: 14, fontWeight: 'bold' }}
+          sx={{ fontSize: 14, fontWeight: 'medium' }}
         >
           Datos personales
         </Typography>

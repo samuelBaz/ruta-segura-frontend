@@ -77,7 +77,7 @@ const Desbloqueo: NextPage = () => {
         <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
           <Icono fontSize={'large'}> lock_open</Icono>
           <Box height={'20px'} />
-          <Typography sx={{ fontWeight: 'bold' }} variant={'subtitle2'}>
+          <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
             Cuenta desbloqueada
           </Typography>
           <Box height={'20px'} />

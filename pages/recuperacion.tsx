@@ -138,7 +138,7 @@ const Recuperacion: NextPage = () => {
                   <Icono fontSize={'large'}> mark_email_unread</Icono>
                   <Box height={'20px'} />
                   <Typography
-                    sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                    sx={{ fontWeight: 'medium', textTransform: 'none' }}
                   >
                     ¡Mensaje enviado!
                   </Typography>
@@ -158,7 +158,7 @@ const Recuperacion: NextPage = () => {
                     onClick={redireccionarInicio}
                   >
                     <Typography
-                      sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                      sx={{ fontWeight: 'medium', textTransform: 'none' }}
                     >
                       Ir al inicio
                     </Typography>
@@ -175,7 +175,7 @@ const Recuperacion: NextPage = () => {
                     <Icono fontSize={'large'}> manage_search</Icono>
                     <Box height={'20px'} />
                     <Typography
-                      sx={{ fontWeight: 'bold' }}
+                      sx={{ fontWeight: 'medium' }}
                       variant={'subtitle2'}
                     >
                       Recupera tu cuenta
@@ -219,7 +219,7 @@ const Recuperacion: NextPage = () => {
                       onClick={redireccionarInicio}
                     >
                       <Typography
-                        sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                        sx={{ fontWeight: 'medium', textTransform: 'none' }}
                       >
                         Cancelar
                       </Typography>

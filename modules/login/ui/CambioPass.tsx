@@ -179,7 +179,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
             check_circle
           </Icono>
           <Box height={'20px'} />
-          <Typography sx={{ fontWeight: 'bold', textTransform: 'none' }}>
+          <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
             Nueva contraseña
           </Typography>
           <Box height={'15px'} />
@@ -192,7 +192,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
             variant="contained"
             onClick={redireccionarInicio}
           >
-            <Typography sx={{ fontWeight: 'bold', textTransform: 'none' }}>
+            <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
               Ir al inicio
             </Typography>
           </Button>

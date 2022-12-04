@@ -59,7 +59,7 @@ const Perfil: NextPage = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
+          <Typography variant={'h5'} sx={{ fontWeight: 'medium' }}>
             Perfil
           </Typography>
         </Grid>
@@ -112,7 +112,7 @@ const Perfil: NextPage = () => {
                     direction={'column'}
                   >
                     <Typography
-                      sx={{ fontWeight: 'bold' }}
+                      sx={{ fontWeight: 'medium' }}
                       variant={'subtitle2'}
                     >
                       Usuario
@@ -126,7 +126,7 @@ const Perfil: NextPage = () => {
                     direction={'column'}
                   >
                     <Typography
-                      sx={{ fontWeight: 'bold' }}
+                      sx={{ fontWeight: 'medium' }}
                       variant={'subtitle2'}
                     >
                       Número de documento
@@ -143,7 +143,7 @@ const Perfil: NextPage = () => {
                   >
                     {usuario?.persona.fechaNacimiento && (
                       <Typography
-                        sx={{ fontWeight: 'bold' }}
+                        sx={{ fontWeight: 'medium' }}
                         variant={'subtitle2'}
                       >
                         Fecha de nacimiento
@@ -165,7 +165,7 @@ const Perfil: NextPage = () => {
                     direction={'column'}
                   >
                     <Typography
-                      sx={{ fontWeight: 'bold' }}
+                      sx={{ fontWeight: 'medium' }}
                       variant={'subtitle2'}
                     >
                       Roles
@@ -194,7 +194,7 @@ const Perfil: NextPage = () => {
                         <Icono color={'inherit'}>vpn_key</Icono>
                         <Box width={'10px'} />
                         <Typography
-                          sx={{ fontWeight: 'bold' }}
+                          sx={{ fontWeight: 'medium' }}
                           variant={'body2'}
                         >
                           Cambiar contraseña
@@ -212,7 +212,7 @@ const Perfil: NextPage = () => {
                       >
                         <Typography
                           variant={'body2'}
-                          sx={{ fontWeight: 'bold', pl: 1, pr: 1 }}
+                          sx={{ fontWeight: 'medium', pl: 1, pr: 1 }}
                         >
                           Ver perfil en Ciudadanía
                         </Typography>

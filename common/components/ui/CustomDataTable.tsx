@@ -52,11 +52,11 @@ export const CustomDataTable = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography variant={'h5'} sx={{ fontWeight: 'bold', pl: 1 }}>
+        <Typography variant={'h5'} sx={{ fontWeight: 'medium', pl: 1 }}>
           {`${titulo}`}
         </Typography>
         <Fade in={!cargando} timeout={0}>
-          <Typography variant={'h5'} sx={{ fontWeight: 'bold' }}>
+          <Typography variant={'h5'} sx={{ fontWeight: 'medium' }}>
             <Grid
               container
               direction="row"
