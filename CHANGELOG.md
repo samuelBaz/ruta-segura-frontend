@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.3...v1.6.4) (2022-12-04)
+
+
+### Features
+
+* actualización nextJS 13.0.6, eliminado modulo fontsource/poppins ([c8c7ef0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c8c7ef0e72c61f0798c41844dc006df735cf669d))
+* añadida librería @next/bundle-analyzer para mostrar el tamaño del compilado ([9ba1e50](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9ba1e502fd160ca9abae5ebe896c45ed9132885c))
+* añadido flag responseType para peticiones http ([62153ec](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/62153ecffe061a5162604abc22bf9a57550dee44))
+* añadido flag sideEffects:false para reducir tamaño del compilado 🪄 ([4eb840d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/4eb840d1c09a2cc1690e81601faacec7f8b55f13))
+* carga dinámica de librería casbin 🥳 ([c10dfa4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c10dfa4ee44288a328183f1c7942e5c5915b3e13))
+* carga dinámica de librería ZXCVBN disminuyendo el tamaño del compilado 🥳 ([b09d0ac](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b09d0aca446912a4f99e936dc4463cc5492af99e))
+* crud de roles ([7196b59](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7196b592e20a080340d57319b3bfdc4bba9c591c))
+* se implementa next/font para optimización de fuentes y se reemplaza fontWeight bold por medium ([9fccb54](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9fccb540b3a6bd3b63f5372f7fd9d0f397b18deb))
+
+
+### Bug Fixes
+
+* añadido flag withCredentials para peticiones web, en true por defecto ([e36dc03](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e36dc03df6edfdacb509146b26dc925f47aeec35))
+* cambio de nombre de api de roles-table a roles-todos ([d7ca3d1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d7ca3d196cd639632b3baa6d66d2ce47bc466dc5))
+* cambio de pagina rol a roles ([9e3cf6c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9e3cf6c67d79053c4391739dbb6229b11c766531))
+* cambios de nombre de los tests y test de login ciudadania ([4adb690](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/4adb690b84770ce6e5bc277beca5cfaf56343811))
+* correccion caracteres faltantes home ([b575edf](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b575edf6d0422b1da9b1a64e2dd089c397ae4875))
+* corregido error en identificador de sección para modal de edición de módulos [#2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/issues/2) ([291d812](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/291d8128ea54b8187613594ee2a7fd48cd8d221a))
+* modificada dependencia Casbin, para evitar usar dependencia transitiva ([a5c420f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a5c420f725297311d9b24422bd13012ca53e0e9f))
+* modificada documentación mencionando que sacar un fork ya no es necesario 🤦‍♂️ ([051d34a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/051d34aabaf6074ec2a3e14351b2c5cb564357cf))
+* se cambió el nombre de fidModulo a idModulo ([d78d239](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d78d239e140f725775a5d38cf33a9392327a3a71))
+
 ### [1.6.3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.4.2...v1.6.3) (2022-10-01)
 
 
