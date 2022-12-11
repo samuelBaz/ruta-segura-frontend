@@ -7,7 +7,6 @@ let numeroNombre = 5
 describe('Modulos ', () => {
   const randomWords = require('random-words')
   before('Login', () => {
-
     cy.session('ADMINISTRADOR-TECNICO', () => {
       cy.visit(urlPaginaLogin)
       cy.get('#usuario').clear().type('ADMINISTRADOR-TECNICO')

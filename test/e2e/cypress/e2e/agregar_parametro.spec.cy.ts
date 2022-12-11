@@ -1,6 +1,6 @@
 export {}
 const urlPaginaHome = Cypress.env('BASE_URL') + 'admin/home'
-const urlPaginaLogin = Cypress.env('BASE_URL')  + 'login'
+const urlPaginaLogin = Cypress.env('BASE_URL') + 'login'
 const cantidadDeParametros = 3000
 let nombreParametro = 1
 
@@ -32,7 +32,7 @@ describe('Parametro', () => {
       cy.get('#grupo').type('parametro' + nombreParametro)
       cy.get('#descripcion').type('parametro' + nombreParametro)
 
-      nombreParametro+=1;
+      nombreParametro += 1
       cy.get('button:contains("Guardar")').click()
     }
   })

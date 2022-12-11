@@ -1,16 +1,16 @@
 import React from 'react'
 
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
-import { Icono } from '../../../../../common/components/ui/Icono'
+import { Icono } from '../../../common/components/ui'
 
 export default {
-  title: 'COMPONENTES/Icono',
+  title: 'Componentes/Icono',
   component: Icono,
-} as ComponentMeta<typeof Icono>
+} as Meta<typeof Icono>
 
 // replica del componente
-const Template: ComponentStory<typeof Icono> = (args) => <Icono {...args} />
+const Template: StoryFn<typeof Icono> = (args) => <Icono {...args} />
 
 export const FontSize = Template.bind({})
 FontSize.storyName = 'Tamaño de icono'

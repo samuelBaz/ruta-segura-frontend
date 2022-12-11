@@ -10,7 +10,12 @@ import {
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import { delay, InterpreteMensajes, siteName, titleCase } from '../../common/utils'
+import {
+  delay,
+  InterpreteMensajes,
+  siteName,
+  titleCase,
+} from '../../common/utils'
 import { Constantes } from '../../config'
 
 import { Paginacion } from '../../common/components/ui/Paginacion'
@@ -31,9 +36,7 @@ const Roles: NextPage = () => {
 
   const [modalRol, setModalRol] = useState(false)
 
-  const [rolEdicion, setrolEdicion] = useState<
-    RolCRUDType | undefined
-  >()
+  const [rolEdicion, setrolEdicion] = useState<RolCRUDType | undefined>()
 
   // Variables de páginado
   const [limite, setLimite] = useState<number>(10)
@@ -50,14 +53,13 @@ const Roles: NextPage = () => {
     delete: false,
   })
 
-  const [mostrarAlertaEstadoRol, setMostrarAlertaEstadoRol] =
-    useState(false)
+  const [mostrarAlertaEstadoRol, setMostrarAlertaEstadoRol] = useState(false)
 
   const editarEstadoRolModal = async (rol: RolCRUDType) => {
     setrolEdicion(rol) // para mostrar datos de Rol en la alerta
     setMostrarAlertaEstadoRol(true) // para mostrar alerta de Roles
   }
-  
+
   const cancelarAlertaEstadoRol = async () => {
     setMostrarAlertaEstadoRol(false)
     await delay(500)
@@ -84,20 +86,14 @@ const Roles: NextPage = () => {
 
   const contenidoTabla: Array<Array<ReactNode>> = rolData.map(
     (rolData, indexRol) => [
-      <Typography
-        key={`${rolData.id}-${indexRol}-rol`}
-        variant={'body2'}
-      >
+      <Typography key={`${rolData.id}-${indexRol}-rol`} variant={'body2'}>
         {`${rolData.rol}`}
       </Typography>,
       <Typography
         key={`${rolData.id}-${indexRol}-nombre`}
         variant={'body2'}
       >{`${rolData.nombre}`}</Typography>,
-      <Typography
-        key={`${rolData.id}-${indexRol}-estado`}
-        component={'div'}
-      >
+      <Typography key={`${rolData.id}-${indexRol}-estado`} component={'div'}>
         <CustomMensajeEstado
           titulo={rolData.estado}
           descripcion={rolData.estado}
@@ -120,11 +116,7 @@ const Roles: NextPage = () => {
             }}
             desactivado={rolData.estado == 'PENDIENTE'}
             icono={rolData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
-            name={
-              rolData.estado == 'ACTIVO'
-                ? 'Inactivar Rol'
-                : 'Activar Rol'
-            }
+            name={rolData.estado == 'ACTIVO' ? 'Inactivar Rol' : 'Activar Rol'}
           />
         )}
         {permisos.update && (
@@ -247,7 +239,6 @@ const Roles: NextPage = () => {
   async function definirPermisos() {
     setPermisos(await interpretarPermiso(router.pathname))
   }
-  
 
   useEffect(() => {
     definirPermisos().finally()
@@ -304,9 +295,7 @@ const Roles: NextPage = () => {
           columnas={columnas}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
-          filtros={
-            <></>
-          }
+          filtros={<></>}
         />
       </LayoutUser>
     </>

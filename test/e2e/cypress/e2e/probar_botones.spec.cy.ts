@@ -10,7 +10,6 @@ describe('probar usuarios', () => {
   const randomWords = require('random-words')
   let palabraRandom = ''
   beforeEach('login', () => {
-
     cy.session('ADMINISTRADOR-TECNICO', () => {
       cy.visit(urlPaginaLogin)
       cy.get('#usuario').clear().type('ADMINISTRADOR-TECNICO')
@@ -95,7 +94,7 @@ describe('probar usuarios', () => {
     })
   })
 
-  it('Probar parametro', () => {
+  it('Probar parámetro', () => {
     cy.visit(urlPaginaParametro).then(() => {
       cy.get('button:contains("search")').click()
       cy.get('#parametro').type(palabraRandom)
@@ -173,7 +172,7 @@ describe('probar usuarios', () => {
     cy.wait(2000)
   })
 
-  it('crear politica de prueba', () => {
+  it('crear política de prueba', () => {
     palabraRandom = randomWords()
     cy.visit(urlPaginaPolicy)
     cy.get('[name="Agregar política"]').click()

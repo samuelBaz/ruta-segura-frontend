@@ -1,33 +1,17 @@
-module.exports = {
-  typescript: {
-    check: false,
-    checkOptions: {},
-    reactDocgen: false,
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) =>
-        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
-    },
-  },
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+// Imports the Storybook's configuration API
+import { StorybookConfig } from '@storybook/nextjs'
+
+const config: StorybookConfig = {
+  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: {
-      name: 'webpack5',
-      options: {
-        lazyCompilation: true,
-      },
-    },
+  framework: {
+    name: '@storybook/nextjs',
+    options: {},
   },
-  features: {
-    emotionAlias: false,
-  },
-
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
@@ -40,9 +24,16 @@ module.exports = {
         fs: false,
         path: false,
         os: false,
+        assert: false,
+        util: false,
+        child_process: false,
+        stream: false,
+        buffer: false,
       },
     }
     // Return the altered config
     return config
   },
 }
+
+module.exports = config

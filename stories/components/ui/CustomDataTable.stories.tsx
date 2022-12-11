@@ -1,15 +1,14 @@
 // import React from 'react'
 
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { CustomDataTable } from '../../../../../common/components/ui/CustomDataTable'
+import { Meta, StoryFn } from '@storybook/react'
+import { CustomDataTable, IconoTooltip } from '../../../common/components/ui'
 import { Grid, Typography } from '@mui/material'
-import { ColumnaType } from '../../../../../common/types/datatableTypes'
+import { ColumnaType } from '../../../common/types'
 import { ReactNode } from 'react'
-import { IconoTooltip } from '../../../../../common/components/ui/IconoTooltip'
-import { Paginacion } from '../../../../../common/components/ui/Paginacion'
+import { Paginacion } from '../../../common/components/ui/Paginacion'
 
 export default {
-  title: 'COMPONENTES/CustomDataTable',
+  title: 'Componentes/CustomDataTable',
   component: CustomDataTable,
   //   argTypes: {
   //     // children: {
@@ -25,16 +24,16 @@ export default {
   //     handles: ['mouseover', 'CLICK aqui'],
   //   },
   // },
-} as ComponentMeta<typeof CustomDataTable>
+} as Meta<typeof CustomDataTable>
 
 // const eventsFromNames = actions('accion')
 
 // replica del componente
-const Template: ComponentStory<typeof CustomDataTable> = (args) => (
+const Template: StoryFn<typeof CustomDataTable> = (args) => (
   <CustomDataTable {...args} />
 )
 export const TablaVacia = Template.bind({})
-TablaVacia.storyName = 'Tabla vacia'
+TablaVacia.storyName = 'Tabla vaciá'
 TablaVacia.args = {
   titulo: 'Tabla mundiales de Bolivia',
   error: false,
@@ -112,7 +111,7 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
   ]
 )
 export const Columnas = Template.bind({})
-Columnas.storyName = 'Columnas'
+
 Columnas.args = {
   titulo: 'Tabla Libros',
   error: false,
@@ -146,7 +145,7 @@ const acciones: Array<ReactNode> = [
 ]
 
 export const Acciones = Template.bind({})
-Acciones.storyName = 'Acciones'
+
 Acciones.args = {
   ...Columnas.args,
   acciones: acciones,
@@ -163,7 +162,7 @@ const paginacion = (
 )
 
 export const SB_PAGINACION = Template.bind({})
-SB_PAGINACION.storyName = 'Paginacion'
+SB_PAGINACION.storyName = 'Paginación'
 SB_PAGINACION.args = {
   ...Columnas.args,
   acciones: acciones,

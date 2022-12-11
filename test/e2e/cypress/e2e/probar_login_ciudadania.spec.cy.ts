@@ -6,7 +6,7 @@ const urlRegistro = Cypress.env('BASE_URL') + 'login'
 const pathUsuarios = Cypress.env('PATH_NOMBRES_PRUEBA')
 
 describe('Registro', () => {
-  let usuarios: any[];
+  let usuarios: any[]
   let indiceUsuario = 0
 
   before('Cargar imagenes', () => {
@@ -29,7 +29,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -52,7 +52,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -75,7 +75,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -98,7 +98,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -121,7 +121,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -144,7 +144,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -167,7 +167,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -190,7 +190,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -213,7 +213,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -222,7 +222,7 @@ describe('Registro', () => {
     cy.wait(3500)
     indiceUsuario += 1
   })
-  
+
   it('Registrar usuario 10', () => {
     const usuarioActual = usuarios[indiceUsuario]
     cy.visit(urlRegistro)
@@ -236,7 +236,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -259,7 +259,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -282,7 +282,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -305,7 +305,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -328,7 +328,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -337,7 +337,7 @@ describe('Registro', () => {
     cy.wait(3500)
     indiceUsuario += 1
   })
-  
+
   it('Registrar usuario 15', () => {
     const usuarioActual = usuarios[indiceUsuario]
     cy.visit(urlRegistro)
@@ -351,7 +351,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -374,7 +374,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -397,7 +397,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -420,7 +420,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -443,7 +443,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -452,7 +452,7 @@ describe('Registro', () => {
     cy.wait(3500)
     indiceUsuario += 1
   })
-  
+
   it('Registrar usuario 20', () => {
     const usuarioActual = usuarios[indiceUsuario]
     cy.visit(urlRegistro)
@@ -466,7 +466,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -489,7 +489,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -512,7 +512,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -535,7 +535,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -558,7 +558,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -567,7 +567,7 @@ describe('Registro', () => {
     cy.wait(3500)
     indiceUsuario += 1
   })
-  
+
   it('Registrar usuario 25', () => {
     const usuarioActual = usuarios[indiceUsuario]
     cy.visit(urlRegistro)
@@ -581,7 +581,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -604,7 +604,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -627,7 +627,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -650,7 +650,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -673,7 +673,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()
@@ -682,7 +682,7 @@ describe('Registro', () => {
     cy.wait(3500)
     indiceUsuario += 1
   })
-  
+
   it('Registrar usuario 30', () => {
     const usuarioActual = usuarios[indiceUsuario]
     cy.visit(urlRegistro)
@@ -696,7 +696,7 @@ describe('Registro', () => {
         cy.get('button:contains("Continuar")').click()
         cy.get('#code').type('123456')
         cy.get('button:contains("Continuar")').first().click()
-      },
+      }
     )
     cy.wait(3500)
     cy.get(`p:contains("${usuarioActual.nombre}")`).click()

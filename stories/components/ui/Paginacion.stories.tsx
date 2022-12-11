@@ -1,21 +1,19 @@
 // import React from 'react'
 
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
-import { Paginacion } from '../../../../../common/components/ui/Paginacion'
+import { Paginacion } from '../../../common/components/ui/Paginacion'
 
 export default {
-  title: 'COMPONENTES/Paginacion',
+  title: 'Componentes/Paginación',
   component: Paginacion,
   argTypes: {
     accion: { type: 'function', control: () => {} },
   },
-} as ComponentMeta<typeof Paginacion>
+} as Meta<typeof Paginacion>
 
-const Template: ComponentStory<typeof Paginacion> = (args) => (
-  <Paginacion {...args} />
-)
+const Template: StoryFn<typeof Paginacion> = (args) => <Paginacion {...args} />
 
 export const SB_Paginacion = Template.bind({})
 SB_Paginacion.storyName = 'Icono tooltip'

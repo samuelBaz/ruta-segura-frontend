@@ -1,4 +1,4 @@
-export{}
+export {}
 
 const urlRegistro = Cypress.env('BASE_URL') + 'login'
 

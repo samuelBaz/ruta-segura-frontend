@@ -1,12 +1,12 @@
 // import React from 'react'
 
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
-import { CustomDialog } from '../../../../../common/components/ui/CustomDialog'
+import { CustomDialog } from '../../../common/components/ui'
 
 export default {
-  title: 'COMPONENTES/CustomDialog',
+  title: 'Componentes/CustomDialog',
   component: CustomDialog,
   argTypes: {
     children: {
@@ -19,12 +19,12 @@ export default {
   //     handles: ['mouseover', 'CLICK aqui'],
   //   },
   // },
-} as ComponentMeta<typeof CustomDialog>
+} as Meta<typeof CustomDialog>
 
 // const eventsFromNames = actions('accion')
 
 // replica del componente
-const Template: ComponentStory<typeof CustomDialog> = (args) => (
+const Template: StoryFn<typeof CustomDialog> = (args) => (
   <CustomDialog {...args} />
 )
 export const Activo = Template.bind({})

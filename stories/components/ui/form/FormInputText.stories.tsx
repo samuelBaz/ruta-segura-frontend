@@ -1,9 +1,9 @@
 // import React from 'react'
 
-import { ComponentStory, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
-import { FormInputText } from '../../../../../../common/components/ui/form/FormInputText'
+import { FormInputText } from '../../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -44,8 +44,8 @@ export default {
           '\n   defaultValues: {' +
           '\n     id: 12,' +
           "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'El Escamoso'," +
-          "\n     carnet: '7047052 lp'," +
+          "\n     apellido: 'Picapiedra'," +
+          "\n     carnet: '9999999'," +
           '\n     edad: 32,' +
           "\n     historialCriminal: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
           "\n                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
@@ -83,14 +83,14 @@ export default {
 //   <FormInputText id={'123123'} name="apellido" control={}></FormInputText>
 // ))
 // replica del componente
-const Template: ComponentStory<typeof FormInputText> = (args) => {
+const Template: StoryFn<typeof FormInputText> = (args) => {
   const { control } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
       nombre: 'Pedro',
-      apellido: 'El Escamoso',
+      apellido: 'Picapiedra',
       edad: 32,
-      carnet: '7047052 lp',
+      carnet: '9999999',
       historialCriminal: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
       Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
       when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into

@@ -38,15 +38,11 @@ export const VistaModalRol = ({
     },
   })
 
-  const guardarActualizarRol = async (
-    data: RolCRUDType
-  ) => {
+  const guardarActualizarRol = async (data: RolCRUDType) => {
     await guardarActualizarRolesPeticion(data)
   }
 
-  const guardarActualizarRolesPeticion = async (
-    Rol: RolCRUDType
-  ) => {
+  const guardarActualizarRolesPeticion = async (Rol: RolCRUDType) => {
     try {
       setLoadingModal(true)
       await delay(1000)

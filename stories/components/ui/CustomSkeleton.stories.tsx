@@ -1,10 +1,10 @@
 // import React from 'react'
 
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { TableSkeleton } from '../../../../../common/components/ui/CustomSkeleton'
+import { Meta, StoryFn } from '@storybook/react'
+import { TableSkeleton } from '../../../common/components/ui'
 
 export default {
-  title: 'COMPONENTES/TableSkeleton',
+  title: 'Componentes/TableSkeleton',
   component: TableSkeleton,
   argTypes: {
     accion: { type: 'function', control: () => {} },
@@ -14,7 +14,7 @@ export default {
   //     handles: ['mouseover', 'CLICK aqui'],
   //   },
   // },
-} as ComponentMeta<typeof TableSkeleton>
+} as Meta<typeof TableSkeleton>
 
 // const eventsFromNames = actions('accion')
 
@@ -28,7 +28,7 @@ export default {
 //   ></TableSkeleton>
 // ))
 // replica del componente
-const Template: ComponentStory<typeof TableSkeleton> = (args) => (
+const Template: StoryFn<typeof TableSkeleton> = (args) => (
   <TableSkeleton {...args} />
 )
 

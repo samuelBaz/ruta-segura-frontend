@@ -1,12 +1,12 @@
 // import React from 'react'
 
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
-import { IconoTooltip } from '../../../../../common/components/ui/IconoTooltip'
+import { IconoTooltip } from '../../../common/components/ui'
 import { action } from '@storybook/addon-actions'
 
 export default {
-  title: 'COMPONENTES/IconoTooltip',
+  title: 'Componentes/IconoTooltip',
   component: IconoTooltip,
   argTypes: {
     accion: { type: 'function', control: () => {} },
@@ -16,7 +16,7 @@ export default {
   //     handles: ['mouseover', 'CLICK aqui'],
   //   },
   // },
-} as ComponentMeta<typeof IconoTooltip>
+} as Meta<typeof IconoTooltip>
 
 // const eventsFromNames = actions('accion')
 
@@ -30,7 +30,7 @@ export default {
 //   ></IconoTooltip>
 // ))
 // replica del componente
-const Template: ComponentStory<typeof IconoTooltip> = (args) => (
+const Template: StoryFn<typeof IconoTooltip> = (args) => (
   <IconoTooltip {...args} />
 )
 

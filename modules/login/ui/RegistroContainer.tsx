@@ -65,7 +65,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
               ¡Tu cuenta ha sido registrada!
             </Typography>
             <Box height={'15px'} />
-            <Typography variant={'subtitle2'}>
+            <Typography variant="body2" color="text.secondary">
               Para activar tu cuenta, ingresa al enlace enviado a tu correo
             </Typography>
             <Box height={'15px'} />

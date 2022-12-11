@@ -1,13 +1,13 @@
 // import React from 'react'
 
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-import ProgresoLineal from '../../../../../common/components/ui/ProgresoLineal'
+import { Meta, StoryFn } from '@storybook/react'
+import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 export default {
-  title: 'COMPONENTES/ProgresoLineal',
+  title: 'Componentes/ProgresoLineal',
   component: ProgresoLineal,
-} as ComponentMeta<typeof ProgresoLineal>
+} as Meta<typeof ProgresoLineal>
 
-const Template: ComponentStory<typeof ProgresoLineal> = (args) => (
+const Template: StoryFn<typeof ProgresoLineal> = (args) => (
   <ProgresoLineal {...args} />
 )
 
