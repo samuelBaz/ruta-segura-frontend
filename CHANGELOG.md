@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.4...v1.6.5) (2022-12-11)
+
+
+### Bug Fixes
+
+* corrección en validación por defecto para campo de fecha, permitiendo valores nulos ([48d6b4f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/48d6b4fd8fd9845fd09422b4b86381838fd1e0e5))
+
 ### [1.6.4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.3...v1.6.4) (2022-12-04)
 
 
