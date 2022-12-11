@@ -113,9 +113,9 @@ SB_Requerido.args = {
   id: 'textfield-form-1',
 }
 
-export const SB_Desabilitado = Template.bind({})
-SB_Desabilitado.storyName = 'Desabilidado'
-SB_Desabilitado.args = {
+export const SB_Deshabilitado = Template.bind({})
+SB_Deshabilitado.storyName = 'Deshabilitado'
+SB_Deshabilitado.args = {
   ...SB_Requerido.args,
   disabled: true,
 }

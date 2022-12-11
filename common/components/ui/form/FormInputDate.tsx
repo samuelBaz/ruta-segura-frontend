@@ -63,14 +63,14 @@ export const FormInputDate = ({
           </LocalizationProvider>
         )}
         rules={{
-          ...rules,
           ...{
-            validate: (val: string) => {
-              if (!validarFechaFormato(val, format)) {
+            validate: (val?: string) => {
+              if (val && !validarFechaFormato(val, format)) {
                 return 'La fecha no es válida'
               }
             },
           },
+          ...rules,
         }}
         defaultValue={''}
       />

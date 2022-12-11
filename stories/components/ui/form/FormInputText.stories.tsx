@@ -128,7 +128,7 @@ SB_multilinea.args = {
 }
 
 export const SB_Disabled = Template.bind({})
-SB_Disabled.storyName = 'Desabilitado'
+SB_Disabled.storyName = 'Deshabilitado'
 SB_Disabled.args = {
   name: 'carnet',
   label: 'Carnet de identificación',
