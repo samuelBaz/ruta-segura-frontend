@@ -4,11 +4,11 @@ Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.g
 
 ## Tecnologías empleadas
 
-- NextJS, framework sobre ReactJS. [Sitio oficial](https://nextjs.org)
-- ReactJS como librería para desarrollo frontend [Sitio oficial](https://es.reactjs.org)
-- MUI (Material UI), librería de componentes UI para ReactJS. [Sitio oficial](https://mui.com)
-- Axios, para el manejo de peticiones HTTP. [Documentación](https://axios-http.com)
-- ESLint, para examinar el código en busca de problemas. [Documentación](https://eslint.org)
+- [NextJS](https://nextjs.org), framework sobre ReactJS.
+- [ReactJS](https://es.reactjs.org) como librería para desarrollo frontend.
+- [MUI (Material UI)](https://mui.com), librería de componentes UI para ReactJS.
+- [Axios](https://axios-http.com), para el manejo de peticiones HTTP.
+- [ESLint](https://eslint.org), para examinar el código en busca de problemas. 
 
 ## Recomendaciones
 
