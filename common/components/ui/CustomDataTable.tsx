@@ -19,10 +19,10 @@ import {
 import { ListSkeleton, TableSkeleton } from './CustomSkeleton'
 
 export interface CustomDataTableType {
-  titulo: string
-  error: boolean
+  titulo?: string
+  error?: boolean
   cargando?: boolean
-  acciones: Array<ReactNode>
+  acciones?: Array<ReactNode>
   columnas: Array<ColumnaType>
   filtros?: ReactNode
   contenidoTabla: Array<Array<ReactNode>>
@@ -33,7 +33,7 @@ export const CustomDataTable = ({
   titulo,
   error = false,
   cargando = false,
-  acciones,
+  acciones = [],
   columnas,
   filtros,
   contenidoTabla,
@@ -52,11 +52,15 @@ export const CustomDataTable = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography variant={'h5'} sx={{ fontWeight: 'medium', pl: 1 }}>
-          {`${titulo}`}
-        </Typography>
+        {titulo ? (
+          <Typography variant={'h5'} sx={{ fontWeight: 'medium', pl: 1 }}>
+            {`${titulo}`}
+          </Typography>
+        ) : (
+          <Box />
+        )}
         <Fade in={!cargando} timeout={0}>
-          <Typography variant={'h5'} sx={{ fontWeight: 'medium' }}>
+          <Box>
             <Grid
               container
               direction="row"
@@ -67,7 +71,7 @@ export const CustomDataTable = ({
                 <div key={`accion-id-${index}`}>{accion}</div>
               ))}
             </Grid>
-          </Typography>
+          </Box>
         </Fade>
       </Grid>
       {/* filtros */}
