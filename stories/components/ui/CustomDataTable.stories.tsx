@@ -33,7 +33,7 @@ const Template: StoryFn<typeof CustomDataTable> = (args) => (
   <CustomDataTable {...args} />
 )
 export const TablaVacia = Template.bind({})
-TablaVacia.storyName = 'Tabla vaciá'
+TablaVacia.storyName = 'Tabla vacía'
 TablaVacia.args = {
   titulo: 'Tabla mundiales de Bolivia',
   error: false,
