@@ -129,7 +129,7 @@ export const SB_Vacio = Template.bind({})
 SB_Vacio.storyName = 'Vacío'
 SB_Vacio.args = {
   id: '1232131',
-  label: 'Pelicula favorita',
+  label: 'Película favorita',
   name: 'idPeliculaFavorita',
   options: peliculas.map((item) => ({
     key: item.id + '',

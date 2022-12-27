@@ -31,6 +31,9 @@ const nextConfig = {
     return config
   },
   output: 'standalone',
+  eslint: {
+    dirs: ['common', 'context', 'modules', 'pages', 'themes'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
+  },
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
