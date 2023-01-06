@@ -5,12 +5,6 @@ export interface LoginType {
   contrasena: string
 }
 
-export interface AutorizacionLoginType {
-  code: string
-  state: string
-  session_state: string
-}
-
 export interface idRolType {
   idRol: string
 }
