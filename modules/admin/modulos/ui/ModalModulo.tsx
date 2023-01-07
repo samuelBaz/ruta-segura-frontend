@@ -47,7 +47,15 @@ export const VistaModalModulo = ({
   const checked = watch('esSeccion')
 
   const guardarActualizarModulo = async (data: CrearEditarModulosType) => {
-    await guardarActualizarModuloPeticion(data)
+    await guardarActualizarModuloPeticion({
+      idModulo: data.idModulo,
+      label: data.label,
+      url: data.url,
+      estado: data.estado,
+      nombre: data.nombre,
+      id: data.id,
+      propiedades: data.propiedades,
+    })
   }
 
   const guardarActualizarModuloPeticion = async (
@@ -57,7 +65,9 @@ export const VistaModalModulo = ({
       setLoadingModal(true)
       //await delay(1000)
       const respuesta = await sesionPeticion({
-        url: `${Constantes.baseUrl}/autorizacion/modulos`,
+        url: `${Constantes.baseUrl}/autorizacion/modulos${
+          modulo.id ? `/${modulo.id}` : ''
+        }`,
         tipo: !!modulo.id ? 'patch' : 'post',
         body: modulo,
       })

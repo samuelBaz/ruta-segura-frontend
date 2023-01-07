@@ -27,7 +27,7 @@ import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/rol/ui/ModalRol'
 
 const Roles: NextPage = () => {
-  const [rolData, setrolData] = useState<RolCRUDType[]>([])
+  const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   // Hook para mostrar alertas
@@ -36,7 +36,7 @@ const Roles: NextPage = () => {
 
   const [modalRol, setModalRol] = useState(false)
 
-  const [rolEdicion, setrolEdicion] = useState<RolCRUDType | undefined>()
+  const [rolEdicion, setRolEdicion] = useState<RolCRUDType | undefined>()
 
   // Variables de páginado
   const [limite, setLimite] = useState<number>(10)
@@ -56,14 +56,14 @@ const Roles: NextPage = () => {
   const [mostrarAlertaEstadoRol, setMostrarAlertaEstadoRol] = useState(false)
 
   const editarEstadoRolModal = async (rol: RolCRUDType) => {
-    setrolEdicion(rol) // para mostrar datos de Rol en la alerta
+    setRolEdicion(rol) // para mostrar datos de Rol en la alerta
     setMostrarAlertaEstadoRol(true) // para mostrar alerta de Roles
   }
 
   const cancelarAlertaEstadoRol = async () => {
     setMostrarAlertaEstadoRol(false)
     await delay(500)
-    setrolEdicion(undefined)
+    setRolEdicion(undefined)
   }
 
   const aceptarAlertaEstadoRol = async () => {
@@ -71,7 +71,7 @@ const Roles: NextPage = () => {
     if (rolEdicion) {
       await cambiarEstadoRolPeticion(rolEdicion)
     }
-    setrolEdicion(undefined)
+    setRolEdicion(undefined)
   }
 
   // router para conocer la ruta actual
@@ -84,7 +84,7 @@ const Roles: NextPage = () => {
     { campo: 'acciones', nombre: 'Acciones' },
   ]
 
-  const contenidoTabla: Array<Array<ReactNode>> = rolData.map(
+  const contenidoTabla: Array<Array<ReactNode>> = rolesData.map(
     (rolData, indexRol) => [
       <Typography key={`${rolData.id}-${indexRol}-rol`} variant={'body2'}>
         {`${rolData.rol}`}
@@ -209,7 +209,7 @@ const Roles: NextPage = () => {
           limite: limite,
         },
       })
-      setrolData(respuesta.datos?.filas)
+      setRolesData(respuesta.datos?.filas)
       setTotal(respuesta.datos?.total)
       setErrorRolData(null)
     } catch (e) {
@@ -222,18 +222,18 @@ const Roles: NextPage = () => {
   }
 
   const agregarRolModal = () => {
-    setrolEdicion(undefined)
+    setRolEdicion(undefined)
     setModalRol(true)
   }
   const editarRolModal = (Rol: RolCRUDType) => {
-    setrolEdicion(Rol)
+    setRolEdicion(Rol)
     setModalRol(true)
   }
 
   const cerrarModalRol = async () => {
     setModalRol(false)
     await delay(500)
-    setrolEdicion(undefined)
+    setRolEdicion(undefined)
   }
 
   async function definirPermisos() {
@@ -295,7 +295,6 @@ const Roles: NextPage = () => {
           columnas={columnas}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
-          filtros={<></>}
         />
       </LayoutUser>
     </>
