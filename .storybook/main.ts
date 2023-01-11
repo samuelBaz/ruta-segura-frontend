@@ -10,7 +10,10 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: '@storybook/nextjs',
-    options: {},
+    options: {
+      strictMode: false,
+      legacyRootApi: true,
+    },
   },
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -34,6 +37,8 @@ const config: StorybookConfig = {
     // Return the altered config
     return config
   },
+  docs: {
+    autodocs: true,
+  },
 }
-
 module.exports = config
