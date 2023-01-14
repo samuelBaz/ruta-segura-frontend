@@ -20,63 +20,89 @@ describe('probar usuarios', () => {
   })
 
   it('Probar usuario', () => {
-    cy.visit(urlPaginaUsuario).then(() => {
-      cy.wait(tiempoEntreAcciones)
-      cy.log(
-        '#############Restableciendo nueva contrasena###########'.toUpperCase()
-      )
-      cy.get('button[name="Restablecer contraseña"]').eq(0).click()
-      cy.get('button:contains("Aceptar")').click()
-      cy.wait(tiempoEntreAcciones)
-      cy.log('#############Inactivando usuario###########'.toUpperCase())
-      cy.get('[name="Inactivar Usuario"]').eq(0).click()
-      cy.get('button:contains("Aceptar")').click()
-      cy.wait(tiempoEntreAcciones)
-      cy.log(
-        '#############Restableciendo nueva contrasena despues de inactivar usuario###########'.toUpperCase()
-      )
-      cy.get('button[name="Restablecer contraseña"]').eq(0).click()
-      cy.get('button:contains("Aceptar")').click()
-      cy.wait(tiempoEntreAcciones)
-      cy.log('#############Editando usuario###########'.toUpperCase())
-      cy.get('button[name="Editar usuario"]').eq(0).click()
-      cy.get('#nombre').type('Nombre de prueba')
-      cy.get('button:contains("Guardar")').click()
-      cy.wait(tiempoEntreAcciones)
-      cy.log('#############Activando usuario de nuevo###########'.toUpperCase())
-      cy.get('[name="Activar Usuario"]').first().click()
-      cy.get('button:contains("Aceptar")').click()
-      cy.wait(tiempoEntreAcciones)
-      cy.get('button[name="Actualizar lista de usuario"]').click()
+    cy.visit(urlPaginaUsuario)
+    cy.wait(tiempoEntreAcciones)
 
-      cy.wait(tiempoEntreAcciones)
+    cy.get('tbody').children('tr').then($tbody => {
+      let indice = 1
+      let usuario = 0
+      let usuarioLogeado = 0
+      let visitado = false
+      let text: string
+      for(const tr of $tbody){
+        text = tr.textContent!
+        if((!text.includes("PENDIENTE") || !text.includes("INACTIVO") ) && !text.includes('MARIA') && !visitado){
+          usuario = indice
+          visitado = true
+        }
+        if(text.includes('MARIA')){
+          usuarioLogeado = indice
+        }
+        indice += 1
+      }
+
+      if(visitado){
+
+        cy.log(
+          '#############Restableciendo nueva contrasena###########'.toUpperCase()
+        )
+        cy.get('tr').eq(usuario).find('[name="Restablecer contraseña"]').click()
+        cy.get('button:contains("Aceptar")').click()
+        cy.wait(tiempoEntreAcciones)
+        cy.log('#############Inactivando usuario###########'.toUpperCase())
+        cy.get('tr').eq(usuario).find('[name="Inactivar Usuario"]').click()
+        cy.get('button:contains("Aceptar")').click()
+        cy.wait(tiempoEntreAcciones)
+        cy.log(
+          '#############Restableciendo nueva contrasena despues de inactivar usuario###########'.toUpperCase()
+        )
+        cy.get('tr').eq(usuario).find('button[name="Restablecer contraseña"]').click()
+        cy.get('button:contains("Aceptar")').click()
+        cy.wait(tiempoEntreAcciones)
+        cy.log('#############Editando usuario###########'.toUpperCase())
+        cy.get('tr').eq(usuario).find('button[name="Editar usuario"]').click()
+        cy.get('#nombre').type('Nombre de prueba')
+        cy.get('button:contains("Guardar")').click()
+        cy.get('body').type('{esc}')
+        cy.wait(tiempoEntreAcciones)
+        cy.log('#############Activando usuario de nuevo###########'.toUpperCase())
+        cy.get('tr').eq(usuario).find('[name="Activar Usuario"]').click()
+        cy.get('button:contains("Aceptar")').click()
+        cy.wait(tiempoEntreAcciones)
+        cy.get('button[name="Actualizar lista de usuario"]').click()
+    
+        cy.wait(tiempoEntreAcciones)
+      }
+
+
       cy.log(
         '#############Restableciendo nueva contrasena###########'.toUpperCase()
       )
-      cy.get('button[name="Restablecer contraseña"]').eq(1).click()
+      cy.get('tr').eq(usuarioLogeado).find('[name="Restablecer contraseña"]').click()
       cy.get('button:contains("Aceptar")').click()
       cy.wait(tiempoEntreAcciones)
       cy.log('#############Inactivando usuario###########'.toUpperCase())
-      cy.get('[name="Inactivar Usuario"]').eq(0).click()
+      cy.get('tr').eq(usuarioLogeado).find('[name="Inactivar Usuario"]').click()
       cy.get('button:contains("Aceptar")').click()
       cy.wait(tiempoEntreAcciones)
       cy.log(
         '#############Restableciendo nueva contrasena despues de inactivar usuario###########'.toUpperCase()
       )
-      cy.get('button[name="Restablecer contraseña"]').eq(1).click()
+      cy.get('tr').eq(usuarioLogeado).find('button[name="Restablecer contraseña"]').click()
       cy.get('button:contains("Aceptar")').click()
       cy.wait(tiempoEntreAcciones)
       cy.log('#############Editando usuario###########'.toUpperCase())
-      cy.get('button[name="Editar usuario"]').eq(1).click()
+      cy.get('tr').eq(usuarioLogeado).find('button[name="Editar usuario"]').click()
       cy.get('#nombre').type('Nombre de prueba')
       cy.get('button:contains("Guardar")').click()
       cy.get('body').type('{esc}')
       cy.wait(tiempoEntreAcciones)
       cy.get('button[name="Actualizar lista de usuario"]').click()
-
+  
       cy.wait(tiempoEntreAcciones)
-      // })
     })
+
+
   })
 
   it('adicionar parametros', () => {
