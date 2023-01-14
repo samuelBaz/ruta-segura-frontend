@@ -40,6 +40,7 @@ import {
   RolType,
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
+import { BotonAcciones } from '../../common/components/ui/BotonAcciones'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -176,63 +177,64 @@ const Usuarios: NextPage = () => {
         />
       </Typography>,
       <Grid key={`${usuarioData.id}-${indexUsuario}-acciones`}>
-        {permisos.update && (
-          <IconoTooltip
-            titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
-            accion={async () => {
-              await editarEstadoUsuarioModal(usuarioData)
-            }}
-            desactivado={usuarioData.estado == 'PENDIENTE'}
-            icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
-            name={
-              usuarioData.estado == 'ACTIVO'
-                ? 'Inactivar Usuario'
-                : 'Activar Usuario'
-            }
-          />
-        )}
-        {(usuarioData.estado == 'ACTIVO' ||
-          usuarioData.estado == 'INACTIVO') && (
-          <IconoTooltip
-            titulo={
-              usuarioData.ciudadaniaDigital
+        <BotonAcciones
+          acciones={[
+            {
+              mostrar: permisos.update,
+              titulo: usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar',
+              color: usuarioData.estado == 'ACTIVO' ? 'error' : 'success',
+              accion: async () => {
+                await editarEstadoUsuarioModal(usuarioData)
+              },
+              desactivado: usuarioData.estado == 'PENDIENTE',
+              icono:
+                usuarioData.estado == 'ACTIVO' ? 'toggle_off' : 'toggle_on',
+              name:
+                usuarioData.estado == 'ACTIVO'
+                  ? 'Inactivar Usuario'
+                  : 'Activar Usuario',
+            },
+            {
+              mostrar:
+                usuarioData.estado == 'ACTIVO' ||
+                usuarioData.estado == 'INACTIVO',
+              titulo: usuarioData.ciudadaniaDigital
                 ? 'No puede restablecer la contraseña'
-                : 'Restablecer contraseña'
-            }
-            color={'info'}
-            accion={async () => {
-              await restablecimientoPassUsuarioModal(usuarioData)
-            }}
-            desactivado={usuarioData.ciudadaniaDigital}
-            icono={'vpn_key'}
-            name={'Restablecer contraseña'}
-          />
-        )}
-        {usuarioData.estado == 'PENDIENTE' && (
-          <IconoTooltip
-            titulo={'Reenviar correo de activación'}
-            color={'info'}
-            accion={async () => {
-              await reenvioCorreoModal(usuarioData)
-            }}
-            desactivado={usuarioData.ciudadaniaDigital}
-            icono={'forward_to_inbox'}
-            name={'Reenviar correo de activación'}
-          />
-        )}
-        {permisos.update && (
-          <IconoTooltip
-            titulo={'Editar'}
-            color={'primary'}
-            accion={() => {
-              imprimir(`Editaremos`, usuarioData)
-              editarUsuarioModal(usuarioData)
-            }}
-            icono={'edit'}
-            name={'Editar usuario'}
-          />
-        )}
+                : 'Restablecer contraseña',
+              color: 'info',
+              accion: async () => {
+                await restablecimientoPassUsuarioModal(usuarioData)
+              },
+              desactivado: usuarioData.ciudadaniaDigital,
+
+              icono: 'vpn_key',
+              name: 'Restablecer contraseña',
+            },
+            {
+              mostrar: usuarioData.estado == 'PENDIENTE',
+              titulo: 'Reenviar correo de activación',
+              color: 'info',
+              accion: async () => {
+                await reenvioCorreoModal(usuarioData)
+              },
+              desactivado: usuarioData.ciudadaniaDigital,
+              icono: 'forward_to_inbox',
+              name: 'Reenviar correo de activación',
+            },
+            {
+              mostrar: permisos.update,
+              titulo: 'Editar',
+              color: 'primary',
+              accion: async () => {
+                imprimir(`Editaremos`, usuarioData)
+                editarUsuarioModal(usuarioData)
+              },
+              desactivado: usuarioData.ciudadaniaDigital,
+              icono: 'edit',
+              name: 'Editar usuario',
+            },
+          ]}
+        />
       </Grid>,
     ]
   )
