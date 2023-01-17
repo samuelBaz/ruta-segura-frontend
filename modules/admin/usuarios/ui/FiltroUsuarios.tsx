@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Box, Grid } from '@mui/material'
 import {
@@ -51,6 +51,14 @@ export const FiltroUsuarios = ({
     debounced(filtros)
   }
 
+  useEffect(() => {
+    actualizacionFiltros({
+      usuario: filtroUsuarioWatch,
+      roles: filtroRolesWatch,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtroUsuarioWatch, filtroRolesWatch])
+
   return (
     <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
@@ -61,18 +69,8 @@ export const FiltroUsuarios = ({
             control={control}
             label={'Nombre'}
             bgcolor={'background.paper'}
-            onChange={(event) => {
-              actualizacionFiltros({
-                usuario: event.target.value,
-                roles: filtroRolesWatch,
-              })
-            }}
             onClear={() => {
               setValue('usuario', '')
-              accionCorrecta({
-                usuario: '',
-                roles: filtroRolesWatch,
-              })
             }}
           />
         </Grid>
@@ -88,14 +86,6 @@ export const FiltroUsuarios = ({
               value: rol.id,
               label: rol.nombre,
             }))}
-            onChange={(event) => {
-              actualizacionFiltros({
-                usuario: filtroUsuarioWatch,
-                roles: Array.isArray(event.target.value)
-                  ? event.target.value
-                  : [event.target.value],
-              })
-            }}
           />
         </Grid>
       </Grid>

@@ -5,6 +5,7 @@ import {
   FormInputDropdown,
   FormInputText,
 } from '../../../../common/components/ui/form'
+import { useEffect } from 'react'
 
 export interface FiltroType {
   buscar: string
@@ -31,6 +32,7 @@ export const FiltroPolitica = ({
   })
   const filtroBuscarWatch: string = watch('buscar')
   const filtroAppWatch: string = watch('app')
+
   const debounced = useDebouncedCallback(
     // function
     (filtros: FiltroType) => {
@@ -43,6 +45,15 @@ export const FiltroPolitica = ({
     debounced(filtros)
   }
   const lapp: string[] = ['frontend', 'backend']
+
+  useEffect(() => {
+    actualizacionFiltros({
+      buscar: filtroBuscarWatch,
+      app: filtroAppWatch,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtroBuscarWatch, filtroAppWatch])
+
   return (
     <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
@@ -53,18 +64,8 @@ export const FiltroPolitica = ({
             control={control}
             label={'Filtro'}
             bgcolor={'background.paper'}
-            onChange={(event) => {
-              actualizacionFiltros({
-                buscar: event.target.value,
-                app: filtroAppWatch,
-              })
-            }}
             onClear={() => {
               setValue('buscar', '')
-              accionCorrecta({
-                buscar: '',
-                app: filtroAppWatch,
-              })
             }}
           />
         </Grid>
@@ -80,18 +81,8 @@ export const FiltroPolitica = ({
               label: la,
             }))}
             bgcolor={'background.paper'}
-            onChange={(event) => {
-              actualizacionFiltros({
-                buscar: filtroBuscarWatch,
-                app: event.target.value,
-              })
-            }}
             onClear={() => {
               setValue('app', '')
-              accionCorrecta({
-                buscar: filtroBuscarWatch,
-                app: '',
-              })
             }}
           />
         </Grid>

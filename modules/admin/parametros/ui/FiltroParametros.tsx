@@ -2,6 +2,7 @@ import { Box, Grid } from '@mui/material'
 import { FormInputText } from '../../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
+import { useEffect } from 'react'
 
 export interface FiltroType {
   parametro: string
@@ -17,11 +18,20 @@ export const FiltroParametros = ({
   filtroParametro,
   accionCorrecta,
 }: FiltroParametrosType) => {
-  const { control, setValue } = useForm<FiltroType>({
+  const { control, setValue, watch } = useForm<FiltroType>({
     defaultValues: {
       parametro: filtroParametro,
     },
   })
+
+  const parametroFiltro: string | undefined = watch('parametro')
+
+  useEffect(() => {
+    actualizacionFiltros({
+      parametro: parametroFiltro,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parametroFiltro])
 
   const debounced = useDebouncedCallback((filtros: FiltroType) => {
     accionCorrecta(filtros)
@@ -41,16 +51,8 @@ export const FiltroParametros = ({
             control={control}
             label={'Buscar parámetro'}
             bgcolor={'background.paper'}
-            onChange={(event) => {
-              actualizacionFiltros({
-                parametro: event.target.value,
-              })
-            }}
             onClear={() => {
               setValue('parametro', '')
-              accionCorrecta({
-                parametro: '',
-              })
             }}
           />
         </Grid>

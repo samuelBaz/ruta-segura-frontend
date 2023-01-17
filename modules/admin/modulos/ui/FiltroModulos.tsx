@@ -2,6 +2,7 @@ import { Box, Grid } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { FormInputText } from '../../../../common/components/ui/form'
+import { useEffect } from 'react'
 
 export interface FiltroType {
   buscar: string
@@ -17,11 +18,14 @@ export const FiltroModulos = ({
   filtroModulo,
   accionCorrecta,
 }: FiltroModalModuloType) => {
-  const { control, setValue } = useForm<FiltroType>({
+  const { control, setValue, watch } = useForm<FiltroType>({
     defaultValues: {
       buscar: filtroModulo,
     },
   })
+
+  const filtroBuscarWatch: string = watch('buscar')
+
   const debounced = useDebouncedCallback(
     // function
     (filtros: FiltroType) => {
@@ -30,9 +34,16 @@ export const FiltroModulos = ({
     // delay in ms
     1000
   )
+
   const actualizacionFiltros = (filtros: FiltroType) => {
     debounced(filtros)
   }
+
+  useEffect(() => {
+    actualizacionFiltros({ buscar: filtroBuscarWatch })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtroBuscarWatch])
+
   return (
     <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
@@ -43,18 +54,8 @@ export const FiltroModulos = ({
             control={control}
             label={'Filtro'}
             bgcolor={'background.paper'}
-            onChange={(event) => {
-              actualizacionFiltros({
-                buscar: event.target.value,
-                //roles: filtroRolesWatch,
-              })
-            }}
             onClear={() => {
               setValue('buscar', '')
-              accionCorrecta({
-                buscar: '',
-                //roles: filtroRolesWatch,
-              })
             }}
           />
         </Grid>
