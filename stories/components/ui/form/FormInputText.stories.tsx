@@ -4,7 +4,7 @@ import { StoryFn, Meta } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
 import { FormInputText } from '../../../../common/components/ui/form'
-import { useForm } from 'react-hook-form'
+import { Path, useForm } from 'react-hook-form'
 
 import {
   ArgsTable,
@@ -98,7 +98,13 @@ const Template: StoryFn<typeof FormInputText> = (args) => {
     },
   })
 
-  return <FormInputText {...args} control={control} />
+  return (
+    <FormInputText
+      {...args}
+      control={control}
+      name={args.name as Path<PersonaType>}
+    />
+  )
 }
 
 export const SB_Apellido = Template.bind({})

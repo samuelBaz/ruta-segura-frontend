@@ -10,7 +10,7 @@ import {
   Title,
 } from '@storybook/addon-docs'
 import { StoryFn, Meta } from '@storybook/react'
-import { useForm } from 'react-hook-form'
+import { Path, useForm } from 'react-hook-form'
 import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
 
 export interface PersonaType {
@@ -70,18 +70,6 @@ export default {
   // },
 } as Meta
 
-// const eventsFromNames = actions('accion')
-
-// click en componenete
-// storiesOf('FormInputDropdownMultiple', module).add('Click', () => (
-//   <FormInputDropdownMultiple
-//     name="HOla"
-//     titulo="ACCION ICONO"
-//     icono="face"
-//     accion={action('HOLA MUNDO ')}
-//   ></FormInputDropdownMultiple>
-// ))
-// replica del componente
 const Template: StoryFn<typeof FormInputDropdownMultiple> = (args) => {
   const { control } = useForm<PersonaType>({
     defaultValues: {
@@ -94,7 +82,13 @@ const Template: StoryFn<typeof FormInputDropdownMultiple> = (args) => {
     },
   })
 
-  return <FormInputDropdownMultiple {...args} control={control} />
+  return (
+    <FormInputDropdownMultiple
+      {...args}
+      control={control}
+      name={args.name as Path<PersonaType>}
+    />
+  )
 }
 
 const peliculas = [
