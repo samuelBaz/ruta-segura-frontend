@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.5...v1.6.6) (2023-01-17)
+
+
+### Features
+
+* añadida documentación Storybook para Input Radio, Multi check, Slider y correcciones de tipado ([6a29877](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6a298770151abf6296b67f5cb605daec87c5267a))
+* añadida referencia de directorios en eslint para una mejor corrección de linter 🧹 ([e8281a9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e8281a93f6260bc93e2a9e9964dc70ed62cc2438))
+* añadido tipado para componentes de formulario en función a valores admitidos 🎉 ([20371b8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/20371b88de74a8ff6f2fe375f006ed917fb2f2cd))
+
+
+### Bug Fixes
+
+* corrección en custom-data-table para no mostrar espacio en caso de no tener títulos o acciones ([b36a35f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b36a35f077639ec17ad1357f4bb7e1a55217515a))
+* correccion test de probar_botones ([9aba732](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9aba732f01815b4b25859abc9873d481253d72ed))
+* corregida generación de documentos de Storybook y actualización de dependencias ([5cefef1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/5cefef1b346ce78716dd04e56ee0721b3930bb00))
+* mitigación de problema de seguridad actualizando la dependencia eslint-config-prettier ([b03639d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b03639da7652161f81fd01c9a7a9e547562a6867))
+* modificado formato de petición de actualización de módulos y denominación de variables de roles ([7d8004c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7d8004c0a3fb9f270ed443d323cc260af59fac97))
+* optimizado código de filtros, para evitar redundancia en llamada de métodos de actualización 🧹 ([e2e4a6b](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e2e4a6b3774bdbff10b0edbdf3267b750aadc09f))
+
 ### [1.6.5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.4...v1.6.5) (2022-12-11)
 
 
