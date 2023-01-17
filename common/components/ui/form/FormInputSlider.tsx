@@ -1,23 +1,29 @@
 import React, { useEffect } from 'react'
 
-import { Controller } from 'react-hook-form'
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+} from 'react-hook-form'
 import { Slider, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { Variant } from '@mui/material/styles/createTypography'
 import { UseFormSetValue } from 'react-hook-form/dist/types/form'
 
-export interface FormInputSliderProps {
+type FormInputSliderProps<T extends FieldValues> = {
   id: string
-  name: string
-  control: any
+  name: Path<T>
+  control: Control<T, object>
   label: string
-  setValue: UseFormSetValue<any>
+  setValue: UseFormSetValue<T>
   size?: 'small' | 'medium'
   rules?: RegisterOptions
   labelVariant?: Variant
 }
 
-export const FormInputSlider = ({
+export const FormInputSlider = <T extends FieldValues>({
   id,
   name,
   control,
@@ -26,15 +32,15 @@ export const FormInputSlider = ({
   size = 'small',
   rules,
   labelVariant = 'subtitle2',
-}: FormInputSliderProps) => {
+}: FormInputSliderProps<T>) => {
   const [sliderValue, setSliderValue] = React.useState(0)
 
   useEffect(() => {
-    if (sliderValue) setValue(name, sliderValue)
+    if (sliderValue) setValue(name, sliderValue as PathValue<T, Path<T>>)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sliderValue])
 
-  const handleChange = (event: any, newValue: number | number[]) => {
+  const handleChange = (event: Event, newValue: number | number[]) => {
     setSliderValue(newValue as number)
   }
 

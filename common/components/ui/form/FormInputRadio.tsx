@@ -1,26 +1,29 @@
-import { Controller } from 'react-hook-form'
+import { Control, Controller, FieldValues, Path } from 'react-hook-form'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import React from 'react'
 
-export interface FormInputRadioProps {
+type FormInputRadioProps<T extends FieldValues> = {
   id: string
-  name: string
-  control: any
+  name: Path<T>
+  control: Control<T, object>
   label: string
   size?: 'small' | 'medium'
   options: any[]
   rules?: RegisterOptions
+  disabled?: boolean
 }
 
-export const FormInputRadio = ({
+export const FormInputRadio = <T extends FieldValues>({
   id,
   name,
   control,
   label,
   options,
   rules,
-}: FormInputRadioProps) => (
+  disabled,
+}: FormInputRadioProps<T>) => (
   <div>
     <Typography
       variant={'subtitle2'}
@@ -37,6 +40,7 @@ export const FormInputRadio = ({
             return (
               <FormControlLabel
                 key={index}
+                disabled={disabled}
                 value={singleOption.value}
                 label={singleOption.label}
                 control={<Radio />}

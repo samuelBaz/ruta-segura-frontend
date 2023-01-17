@@ -1,4 +1,10 @@
-import { Controller } from 'react-hook-form'
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+} from 'react-hook-form'
 import {
   Box,
   Checkbox,
@@ -12,10 +18,10 @@ import {
 import { optionType } from './FormInputDropdown'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 
-export interface FormInputDropdownMultipleProps {
+type FormInputDropdownMultipleProps<T extends FieldValues> = {
   id: string
-  name: string
-  control: any
+  name: Path<T>
+  control: Control<T, object>
   label: string
   size?: 'small' | 'medium'
   rules?: RegisterOptions
@@ -26,18 +32,19 @@ export interface FormInputDropdownMultipleProps {
   options: optionType[]
 }
 
-export const FormInputDropdownMultiple = ({
+export const FormInputDropdownMultiple = <T extends FieldValues>({
   id,
   name,
   control,
   label,
   size = 'small',
   rules,
+  disabled,
   onChange,
   variant,
   bgcolor,
   options,
-}: FormInputDropdownMultipleProps) => {
+}: FormInputDropdownMultipleProps<T>) => {
   const generateSelectOptions = (value: string[]) => {
     return options.map((option) => {
       return (
@@ -92,6 +99,7 @@ export const FormInputDropdownMultiple = ({
               }}
               inputRef={field.ref}
               value={field.value}
+              disabled={disabled}
               multiple
             >
               {generateSelectOptions(field.value)}
@@ -100,7 +108,7 @@ export const FormInputDropdownMultiple = ({
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
           </>
         )}
-        defaultValue={[]}
+        defaultValue={[] as PathValue<T, Path<T>>}
         rules={rules}
       />
     </div>

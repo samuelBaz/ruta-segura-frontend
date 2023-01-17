@@ -1,24 +1,27 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { Controller } from 'react-hook-form'
+import { Controller, FieldValues, Path, PathValue } from 'react-hook-form'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { FormHelperText, TextField, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import esMX from 'dayjs/locale/es-mx'
 import { validarFechaFormato } from '../../../utils/fechas'
+import { Variant } from '@mui/material/styles/createTypography'
 
-export interface FormDatePickerProps {
+type FormDatePickerProps<T extends FieldValues> = {
   id: string
-  name: string
+  name: Path<T>
   control: any
   label: string
   size?: 'small' | 'medium'
   format?: string
   disabled?: boolean
   rules?: RegisterOptions
+  bgcolor?: string
+  labelVariant?: Variant
 }
 
-export const FormInputDate = ({
+export const FormInputDate = <T extends FieldValues>({
   id,
   name,
   control,
@@ -27,10 +30,15 @@ export const FormInputDate = ({
   format = 'DD/MM/YYYY',
   disabled,
   rules,
-}: FormDatePickerProps) => {
+  bgcolor,
+  labelVariant = 'subtitle2',
+}: FormDatePickerProps<T>) => {
   return (
     <div>
-      <Typography variant={'subtitle2'} sx={{ fontWeight: 'fontWeightMedium' }}>
+      <Typography
+        variant={labelVariant}
+        sx={{ fontWeight: 'fontWeightMedium' }}
+      >
         {label}
       </Typography>
       <Controller
@@ -49,7 +57,7 @@ export const FormInputDate = ({
                 <>
                   <TextField
                     id={id}
-                    sx={{ width: '100%' }}
+                    sx={{ width: '100%', bgcolor: bgcolor }}
                     size={size}
                     {...params}
                     error={!!error}
@@ -72,7 +80,7 @@ export const FormInputDate = ({
           },
           ...rules,
         }}
-        defaultValue={''}
+        defaultValue={'' as PathValue<T, Path<T>>}
       />
     </div>
   )

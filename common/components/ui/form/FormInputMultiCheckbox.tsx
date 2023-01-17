@@ -1,13 +1,19 @@
-import { Controller } from 'react-hook-form'
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+} from 'react-hook-form'
 import {
   Checkbox,
   FormControl,
   FormControlLabel,
   FormLabel,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { UseFormSetValue } from 'react-hook-form/dist/types/form'
+import React from 'react'
 
 export interface multiOptionType {
   key: string
@@ -15,18 +21,19 @@ export interface multiOptionType {
   label: string
 }
 
-export interface FormInputMultiCheckboxProps {
+type FormInputMultiCheckboxProps<T extends FieldValues> = {
   id: string
-  name: string
-  control: any
+  name: Path<T>
+  control: Control<T, object>
   label: string
-  setValue: UseFormSetValue<any>
+  setValue: UseFormSetValue<T>
   options: multiOptionType[]
   size?: 'small' | 'medium'
   rules?: RegisterOptions
+  disabled?: boolean
 }
 
-export const FormInputMultiCheckbox = ({
+export const FormInputMultiCheckbox = <T extends FieldValues>({
   id,
   name,
   control,
@@ -35,26 +42,8 @@ export const FormInputMultiCheckbox = ({
   size = 'small',
   options,
   rules,
-}: FormInputMultiCheckboxProps) => {
-  const [selectedItems, setSelectedItems] = useState<any>([])
-
-  // we are handling the selection manually here
-  const handleSelect = (value: any) => {
-    const isPresent = selectedItems.indexOf(value)
-    if (isPresent !== -1) {
-      const remaining = selectedItems.filter((item: any) => item !== value)
-      setSelectedItems(remaining)
-    } else {
-      setSelectedItems((prevItems: any) => [...prevItems, value])
-    }
-  }
-
-  // we are setting form value manually here
-  useEffect(() => {
-    setValue(name, selectedItems)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedItems])
-
+  disabled,
+}: FormInputMultiCheckboxProps<T>) => {
   return (
     <FormControl size={'small'} variant={'outlined'}>
       <FormLabel component="legend">{label}</FormLabel>
@@ -66,19 +55,32 @@ export const FormInputMultiCheckbox = ({
                 <Controller
                   name={name}
                   control={control}
-                  render={({}) => {
+                  render={({ field }) => {
                     return (
                       <Checkbox
                         id={id}
                         size={size}
-                        checked={selectedItems.includes(option.value)}
-                        onChange={() => handleSelect(option.value)}
+                        checked={field.value.includes(option.value)}
+                        onChange={() => {
+                          const isPresent = field.value.indexOf(option.value)
+                          if (isPresent !== -1) {
+                            const remaining = field.value.filter(
+                              (item: string) => item !== option.value
+                            )
+                            setValue(name, remaining)
+                          } else {
+                            setValue(name, [
+                              ...new Set([...field.value, option.value]),
+                            ] as PathValue<T, Path<T>>)
+                          }
+                        }}
                       />
                     )
                   }}
                   rules={rules}
                 />
               }
+              disabled={disabled}
               label={option.label}
               key={option.value}
             />

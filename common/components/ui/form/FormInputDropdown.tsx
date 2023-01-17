@@ -1,4 +1,10 @@
-import { Controller } from 'react-hook-form'
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+} from 'react-hook-form'
 import {
   FormHelperText,
   IconButton,
@@ -16,10 +22,10 @@ export interface optionType {
   label: string
 }
 
-export interface FormInputDropdownProps {
+type FormInputDropdownProps<T extends FieldValues> = {
   id: string
-  name: string
-  control: any
+  name: Path<T>
+  control: Control<T, object>
   label: string
   size?: 'small' | 'medium'
   rules?: RegisterOptions
@@ -30,7 +36,7 @@ export interface FormInputDropdownProps {
   options: optionType[]
 }
 
-export const FormInputDropdown = ({
+export const FormInputDropdown = <T extends FieldValues>({
   id,
   name,
   control,
@@ -42,7 +48,7 @@ export const FormInputDropdown = ({
   options,
   onClear,
   bgcolor,
-}: FormInputDropdownProps) => {
+}: FormInputDropdownProps<T>) => {
   const generateSelectOptions = () => {
     return options.map((option) => {
       return (
@@ -109,7 +115,7 @@ export const FormInputDropdown = ({
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
           </>
         )}
-        defaultValue={''}
+        defaultValue={'' as PathValue<T, Path<T>>}
         rules={rules}
       />
     </div>

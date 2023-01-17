@@ -1,5 +1,11 @@
 import TextField from '@mui/material/TextField'
-import { Controller } from 'react-hook-form'
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+} from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
@@ -10,10 +16,10 @@ import { InputHTMLAttributes, useState } from 'react'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-export interface FormInputTextProps {
+type FormInputTextProps<T extends FieldValues> = {
   id: string
-  name: string
-  control: any // TODO: Cambiar a tipo TFieldValues con tipo genérico
+  name: Path<T>
+  control: Control<T, object>
   label: string
   size?: 'small' | 'medium'
   type?: InputHTMLAttributes<unknown>['type']
@@ -29,7 +35,7 @@ export interface FormInputTextProps {
   labelVariant?: Variant
 }
 
-export const FormInputText = ({
+export const FormInputText = <T extends FieldValues>({
   id,
   name,
   control,
@@ -46,7 +52,7 @@ export const FormInputText = ({
   multiline = false,
   bgcolor,
   labelVariant = 'subtitle2',
-}: FormInputTextProps) => {
+}: FormInputTextProps<T>) => {
   // Add these variables to your component to track the state
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -124,7 +130,7 @@ export const FormInputText = ({
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
           </>
         )}
-        defaultValue={''}
+        defaultValue={'' as PathValue<T, Path<T>>}
         rules={rules}
       />
     </div>
