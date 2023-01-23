@@ -2,6 +2,7 @@ import {
   AppBar,
   Box,
   Button,
+  DialogContent,
   FormControlLabel,
   IconButton,
   List,
@@ -145,10 +146,12 @@ export const NavbarUser = () => {
         handleClose={cerrarModalAyuda}
         title={'Información'}
       >
-        <Typography variant={'body2'} sx={{ pt: 2, pb: 2 }}>
-          Propuesta de Frontend Base Administrador creado con NextJS y
-          Typescript
-        </Typography>
+        <DialogContent>
+          <Typography variant={'body2'} sx={{ pt: 2, pb: 2 }}>
+            Propuesta de Frontend Base Administrador creado con NextJS y
+            Typescript
+          </Typography>
+        </DialogContent>
       </CustomDialog>
       <AppBar
         position="fixed"

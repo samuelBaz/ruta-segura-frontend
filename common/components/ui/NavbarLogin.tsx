@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography } from '@mui/material'
+import { AppBar, DialogContent, Toolbar, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { CustomDialog } from './CustomDialog'
 import React, { useState } from 'react'
@@ -21,9 +21,11 @@ export const NavbarLogin = () => {
         handleClose={cerrarModalAyuda}
         title={'Información'}
       >
-        <Typography variant={'body2'}>
-          Propuesta de Frontend Base Login creado con NextJS y Typescript
-        </Typography>
+        <DialogContent>
+          <Typography variant={'body2'}>
+            Propuesta de Frontend Base Login creado con NextJS y Typescript
+          </Typography>
+        </DialogContent>
       </CustomDialog>
       <AppBar
         position="fixed"

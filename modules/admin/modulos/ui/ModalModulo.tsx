@@ -1,5 +1,5 @@
-import { Box, Button, DialogActions, Grid } from '@mui/material'
-import { useState } from 'react'
+import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   FormInputDropdown,
@@ -85,108 +85,114 @@ export const VistaModalModulo = ({
   }
 
   return (
-    <Grid container direction={'column'} justifyContent="space-evenly">
-      {checked ? (
-        <></>
-      ) : (
-        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-          <Grid item xs={12} sm={12} md={6}>
-            <FormInputDropdown
-              id={'idModulo'}
-              name="idModulo"
-              control={control}
-              label="Sección"
-              disabled={loadingModal}
-              options={modulos.map((lm) => ({
-                key: lm.id,
-                value: lm.id,
-                label: lm.label,
-              }))}
-              onChange={(event) => {
-                imprimir(event.target.value)
-                //setValue('accion', [])
-              }}
-              rules={{ required: 'Este campo es requerido' }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <FormInputText
-              id={'icono'}
-              control={control}
-              name="propiedades.icono"
-              label="Icono"
-              disabled={loadingModal || checked}
-              rules={!checked ? { required: 'Este campo es requerido' } : {}}
-            />
-          </Grid>
-        </Grid>
-      )}
-      <Box height={'15px'} />
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'nombre'}
-            control={control}
-            name="nombre"
-            label="Nombre"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
+    <>
+      <DialogContent dividers>
+        <Grid container direction={'column'} justifyContent="space-evenly">
+          {checked ? (
+            <></>
+          ) : (
+            <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+              <Grid item xs={12} sm={12} md={6}>
+                <FormInputDropdown
+                  id={'idModulo'}
+                  name="idModulo"
+                  control={control}
+                  label="Sección"
+                  disabled={loadingModal}
+                  options={modulos.map((lm) => ({
+                    key: lm.id,
+                    value: lm.id,
+                    label: lm.label,
+                  }))}
+                  onChange={(event) => {
+                    imprimir(event.target.value)
+                    //setValue('accion', [])
+                  }}
+                  rules={{ required: 'Este campo es requerido' }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <FormInputText
+                  id={'icono'}
+                  control={control}
+                  name="propiedades.icono"
+                  label="Icono"
+                  disabled={loadingModal || checked}
+                  rules={
+                    !checked ? { required: 'Este campo es requerido' } : {}
+                  }
+                />
+              </Grid>
+            </Grid>
+          )}
+          <Box height={'15px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'nombre'}
+                control={control}
+                name="nombre"
+                label="Nombre"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'label'}
-            control={control}
-            name="label"
-            label="Label"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'label'}
+                control={control}
+                name="label"
+                label="Label"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+          </Grid>
+          <Box height={'15px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'descripcion'}
+                control={control}
+                name="propiedades.descripcion"
+                label="Descripción"
+                multiline
+                rows={2}
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'url'}
+                control={control}
+                name="url"
+                label="URL"
+                disabled={loadingModal}
+                rules={{
+                  required: {
+                    value: true,
+                    message: 'Este campo es requerido',
+                  },
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Box height={'20px'} />
+          <ProgresoLineal mostrar={loadingModal} />
         </Grid>
-      </Grid>
-      <Box height={'15px'} />
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'descripcion'}
-            control={control}
-            name="propiedades.descripcion"
-            label="Descripción"
-            multiline
-            rows={2}
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'url'}
-            control={control}
-            name="url"
-            label="URL"
-            disabled={loadingModal}
-            rules={{
-              required: {
-                value: true,
-                message: 'Este campo es requerido',
-              },
-            }}
-          />
-        </Grid>
-      </Grid>
-      <Box height={'15px'} />
-      <ProgresoLineal mostrar={loadingModal} />
-      <Box height={'5px'} />
+      </DialogContent>
       <DialogActions
         sx={{
+          my: 1,
+          mx: 2,
           justifyContent: {
             lg: 'flex-end',
             md: 'flex-end',
             xs: 'center',
             sm: 'center',
           },
-          pt: 2,
         }}
       >
         <Button
@@ -204,6 +210,6 @@ export const VistaModalModulo = ({
           Guardar
         </Button>
       </DialogActions>
-    </Grid>
+    </>
   )
 }

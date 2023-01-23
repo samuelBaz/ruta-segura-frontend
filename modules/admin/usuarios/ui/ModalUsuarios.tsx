@@ -8,7 +8,14 @@ import {
 } from '../types/usuariosCRUDTypes'
 import { delay, InterpreteMensajes } from '../../../../common/utils'
 import { Constantes } from '../../../../config'
-import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  DialogActions,
+  DialogContent,
+  Grid,
+  Typography,
+} from '@mui/material'
 import {
   FormInputDate,
   FormInputDropdownMultiple,
@@ -35,7 +42,7 @@ export const VistaModalUsuario = ({
   accionCorrecta,
   accionCancelar,
 }: ModalUsuarioType) => {
-  // Flag que indica que hay un proceso en ventana modal cargando visualmente
+  // Flag que índica que hay un proceso en ventana modal cargando visualmente
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
 
   // Hook para mostrar alertas
@@ -106,106 +113,111 @@ export const VistaModalUsuario = ({
   }
 
   return (
-    <Grid container direction={'column'} justifyContent="space-evenly">
-      <Box height={'5px'} />
-      <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
-        Datos personales
-      </Typography>
-      <Box height={'20px'} />
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={4}>
-          <FormInputText
-            id={'nroDocumento'}
-            control={control}
-            name="persona.nroDocumento"
-            label="Nro. Documento"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4}>
-          <FormInputText
-            id={'nombre'}
-            control={control}
-            name="persona.nombres"
-            label="Nombre"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4}>
-          <FormInputText
-            id={'primerApellido'}
-            control={control}
-            name="persona.primerApellido"
-            label="Primer Apellido"
-            disabled={loadingModal}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4}>
-          <FormInputText
-            id={'segundoApellido'}
-            control={control}
-            name="persona.segundoApellido"
-            label="Segundo apellido"
-            disabled={loadingModal}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4}>
-          <FormInputDate
-            id={'fechaNacimiento'}
-            control={control}
-            name="persona.fechaNacimiento"
-            label="Fecha de nacimiento"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-      </Grid>
-      <Grid>
-        <Box height={'20px'} />
-        <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
-          Datos de usuario
-        </Typography>
-        <Box height={'10px'} />
-        <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-          <Grid item xs={12} sm={12} md={12}>
-            <FormInputDropdownMultiple
-              id={'roles'}
-              name="roles"
-              control={control}
-              label="Roles"
-              disabled={loadingModal}
-              options={roles.map((rol) => ({
-                key: rol.id,
-                value: rol.id,
-                label: rol.nombre,
-              }))}
-              rules={{ required: 'Este campo es requerido' }}
-            />
+    <>
+      <DialogContent dividers>
+        <Grid container direction={'column'} justifyContent="space-evenly">
+          <Box height={'5px'} />
+          <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
+            Datos personales
+          </Typography>
+          <Box height={'20px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={4}>
+              <FormInputText
+                id={'nroDocumento'}
+                control={control}
+                name="persona.nroDocumento"
+                label="Nro. Documento"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <FormInputText
+                id={'nombre'}
+                control={control}
+                name="persona.nombres"
+                label="Nombre"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <FormInputText
+                id={'primerApellido'}
+                control={control}
+                name="persona.primerApellido"
+                label="Primer Apellido"
+                disabled={loadingModal}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <FormInputText
+                id={'segundoApellido'}
+                control={control}
+                name="persona.segundoApellido"
+                label="Segundo apellido"
+                disabled={loadingModal}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <FormInputDate
+                id={'fechaNacimiento'}
+                control={control}
+                name="persona.fechaNacimiento"
+                label="Fecha de nacimiento"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <FormInputText
-              id={'correoElectronico'}
-              control={control}
-              name="correoElectronico"
-              label="Correo electrónico"
-              disabled={loadingModal}
-              rules={{
-                required: 'Este campo es requerido',
-                validate: (value) => {
-                  if (!isValidEmail(value)) return 'No es un correo válido'
-                },
-              }}
-            />
+          <Grid>
+            <Box height={'20px'} />
+            <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
+              Datos de usuario
+            </Typography>
+            <Box height={'10px'} />
+            <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+              <Grid item xs={12} sm={12} md={12}>
+                <FormInputDropdownMultiple
+                  id={'roles'}
+                  name="roles"
+                  control={control}
+                  label="Roles"
+                  disabled={loadingModal}
+                  options={roles.map((rol) => ({
+                    key: rol.id,
+                    value: rol.id,
+                    label: rol.nombre,
+                  }))}
+                  rules={{ required: 'Este campo es requerido' }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <FormInputText
+                  id={'correoElectronico'}
+                  control={control}
+                  name="correoElectronico"
+                  label="Correo electrónico"
+                  disabled={loadingModal}
+                  rules={{
+                    required: 'Este campo es requerido',
+                    validate: (value) => {
+                      if (!isValidEmail(value)) return 'No es un correo válido'
+                    },
+                  }}
+                />
+              </Grid>
+            </Grid>
           </Grid>
+          <Box height={'20px'} />
+          <ProgresoLineal mostrar={loadingModal} />
         </Grid>
-      </Grid>
-      <Box height={'10px'} />
-      <ProgresoLineal mostrar={loadingModal} />
-      <Box height={'5px'} />
+      </DialogContent>
       <DialogActions
         sx={{
+          my: 1,
+          mx: 2,
           justifyContent: {
             lg: 'flex-end',
             md: 'flex-end',
@@ -229,6 +241,6 @@ export const VistaModalUsuario = ({
           Guardar
         </Button>
       </DialogActions>
-    </Grid>
+    </>
   )
 }

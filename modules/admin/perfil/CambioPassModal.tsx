@@ -1,4 +1,4 @@
-import { Box, Button, DialogActions, Grid } from '@mui/material'
+import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import { FormInputText } from '../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
@@ -85,67 +85,72 @@ export const CambioPassModal = ({
   const newPassword1Watch = watch('newPassword1')
 
   return (
-    <Grid container direction={'column'} justifyContent="space-evenly">
-      <Typography variant="body2" color="text.secondary" align="inherit">
-        <li>Las contraseñas deben tener 8 caracteres o más.</li>
-        <li>
-          Las buenas contraseñas son dificiles de adivinar y usan palabras,
-          números, símbolos y letras mayúsculas poco comunes.
-        </li>
-      </Typography>
+    <>
+      <DialogContent dividers>
+        <Grid container direction={'column'} justifyContent="space-evenly">
+          <Typography variant="body2" color="text.secondary" align="inherit">
+            <li>Las contraseñas deben tener 8 caracteres o más.</li>
+            <li>
+              Las buenas contraseñas son dificiles de adivinar y usan palabras,
+              números, símbolos y letras mayúsculas poco comunes.
+            </li>
+          </Typography>
 
-      <Box height={'20px'} />
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormInputText
-            id={'oldPassword'}
-            control={control}
-            name="oldPassword"
-            label="Contraseña actual"
-            disabled={loadingModal}
-            type={'password'}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormInputText
-            id={'newPassword1'}
-            control={control}
-            name="newPassword1"
-            label="Nueva contraseña"
-            disabled={loadingModal}
-            type={'password'}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
+          <Box height={'20px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={12}>
+              <FormInputText
+                id={'oldPassword'}
+                control={control}
+                name="oldPassword"
+                label="Contraseña actual"
+                disabled={loadingModal}
+                type={'password'}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <FormInputText
+                id={'newPassword1'}
+                control={control}
+                name="newPassword1"
+                label="Nueva contraseña"
+                disabled={loadingModal}
+                type={'password'}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
 
-        {watch('newPassword1') && (
-          <Grid item xs={12} sm={12} md={12}>
-            <NivelSeguridadPass pass={newPassword1Watch} />
+            {watch('newPassword1') && (
+              <Grid item xs={12} sm={12} md={12}>
+                <NivelSeguridadPass pass={newPassword1Watch} />
+              </Grid>
+            )}
+            <Grid item xs={12} sm={12} md={12}>
+              <FormInputText
+                id={'newPassword2'}
+                control={control}
+                name="newPassword2"
+                label="Repita su nueva contraseña"
+                disabled={loadingModal}
+                type={'password'}
+                rules={{
+                  required: 'Este campo es requerido',
+                  validate: (value: string) => {
+                    if (value != newPassword1Watch)
+                      return 'La contraseña no coincide'
+                  },
+                }}
+              />
+            </Grid>
           </Grid>
-        )}
-        <Grid item xs={12} sm={12} md={12}>
-          <FormInputText
-            id={'newPassword2'}
-            control={control}
-            name="newPassword2"
-            label="Repita su nueva contraseña"
-            disabled={loadingModal}
-            type={'password'}
-            rules={{
-              required: 'Este campo es requerido',
-              validate: (value: string) => {
-                if (value != newPassword1Watch)
-                  return 'La contraseña no coincide'
-              },
-            }}
-          />
+          <Box height={'20px'} />
+          <ProgresoLineal mostrar={loadingModal} />
         </Grid>
-      </Grid>
-      <ProgresoLineal mostrar={loadingModal} />
-      <Box height={'15px'} />
+      </DialogContent>
       <DialogActions
         sx={{
+          m: 1,
           justifyContent: {
             lg: 'flex-end',
             md: 'flex-end',
@@ -169,6 +174,6 @@ export const CambioPassModal = ({
           Modificar
         </Button>
       </DialogActions>
-    </Grid>
+    </>
   )
 }
