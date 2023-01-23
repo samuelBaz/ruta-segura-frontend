@@ -2,7 +2,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Box, Button, DialogActions, Grid } from '@mui/material'
+import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
 import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
 import { FiltroModalUsuarioType, FiltroType } from './FiltroUsuarios'
 
@@ -18,25 +18,29 @@ export const FiltroModalUsuarios = ({
   })
 
   return (
-    <Grid container direction={'column'} justifyContent="space-evenly">
-      <Box height={'10px'} />
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormInputDropdownMultiple
-            id={'roles'}
-            name="roles"
-            control={control}
-            label="Roles"
-            options={rolesDisponibles.map((rol) => ({
-              key: rol.id,
-              value: rol.id,
-              label: rol.nombre,
-            }))}
-            rules={{ required: 'Este campo es requerido' }}
-          />
+    <>
+      <DialogContent>
+        <Grid container direction={'column'} justifyContent="space-evenly">
+          <Box height={'10px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={12}>
+              <FormInputDropdownMultiple
+                id={'roles'}
+                name="roles"
+                control={control}
+                label="Roles"
+                options={rolesDisponibles.map((rol) => ({
+                  key: rol.id,
+                  value: rol.id,
+                  label: rol.nombre,
+                }))}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+          </Grid>
+          <Box height={'30px'} />
         </Grid>
-      </Grid>
-      <Box height={'30px'} />
+      </DialogContent>
       <DialogActions
         sx={{
           justifyContent: {
@@ -48,6 +52,6 @@ export const FiltroModalUsuarios = ({
           Aplicar
         </Button>
       </DialogActions>
-    </Grid>
+    </>
   )
 }

@@ -1,9 +1,9 @@
 import {
+  Box,
   Breakpoint,
   Dialog,
-  DialogContent,
   DialogTitle,
-  Divider,
+  Grid,
   IconButton,
   PaperProps,
   Slide,
@@ -19,12 +19,14 @@ import { TransitionProps } from '@mui/material/transitions'
 interface Props {
   isOpen: boolean
   handleClose: () => void
-  title: string
+  title?: string
   fullScreen?: boolean
   maxWidth?: Breakpoint | undefined
   paperProps?: Partial<PaperProps>
   disableBackdropClick?: boolean
   disableEscapeKeyDown?: boolean
+  scroll?: 'body' | 'paper'
+  noTitle?: boolean
 }
 
 const Transition = forwardRef(function Transition(
@@ -55,6 +57,8 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
   paperProps,
   disableBackdropClick = false,
   disableEscapeKeyDown = false,
+  scroll = 'body',
+  noTitle = false,
 }) => {
   const theme = useTheme()
   let dsm = useMediaQuery(theme.breakpoints.down('sm'))
@@ -77,26 +81,37 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
       open={isOpen}
       TransitionComponent={dsm ? Transition : TransitionZoom}
       onClose={cerrarDialog}
+      scroll={scroll}
     >
-      <DialogTitle sx={{ mt: 1, mr: 1, ml: 1, p: 2 }}>
-        <Typography sx={{ fontWeight: 'medium', fontSize: 20 }}>
-          {title}
-        </Typography>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          color={'primary'}
-          sx={{
-            position: 'absolute',
-            right: 10,
-            top: 17,
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <Divider />
-      <DialogContent>{children}</DialogContent>
+      {noTitle ? (
+        <Box />
+      ) : (
+        <DialogTitle>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            {title ? (
+              <Typography sx={{ fontWeight: 'medium', fontSize: 18 }}>
+                {title}
+              </Typography>
+            ) : (
+              <Box />
+            )}
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              color={'primary'}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+        </DialogTitle>
+      )}
+
+      {children}
     </Dialog>
   )
 }

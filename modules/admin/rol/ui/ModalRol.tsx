@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { delay, InterpreteMensajes } from '../../../../common/utils'
 import { Constantes } from '../../../../config'
 
-import { Box, Button, DialogActions, Grid } from '@mui/material'
+import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
 import { FormInputText } from '../../../../common/components/ui/form'
 import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
 import { useAuth } from '../../../../context/auth'
@@ -67,41 +67,45 @@ export const VistaModalRol = ({
   }
 
   return (
-    <Grid container direction={'column'} justifyContent="space-evenly">
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'rol'}
-            control={control}
-            name="rol"
-            label="Rol"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
+    <>
+      <DialogContent dividers>
+        <Grid container direction={'column'} justifyContent="space-evenly">
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'rol'}
+                control={control}
+                name="rol"
+                label="Rol"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'nombre'}
+                control={control}
+                name="nombre"
+                label="Nombre"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+          </Grid>
+          <Box height={'20px'} />
+          <ProgresoLineal mostrar={loadingModal} />
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'nombre'}
-            control={control}
-            name="nombre"
-            label="Nombre"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-      </Grid>
-      <Box height={'10px'} />
-      <ProgresoLineal mostrar={loadingModal} />
-      <Box height={'5px'} />
+      </DialogContent>
       <DialogActions
         sx={{
+          my: 1,
+          mx: 2,
           justifyContent: {
             lg: 'flex-end',
             md: 'flex-end',
             xs: 'center',
             sm: 'center',
           },
-          pt: 2,
         }}
       >
         <Button
@@ -119,6 +123,6 @@ export const VistaModalRol = ({
           Guardar
         </Button>
       </DialogActions>
-    </Grid>
+    </>
   )
 }

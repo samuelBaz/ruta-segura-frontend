@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { delay, InterpreteMensajes } from '../../../../common/utils'
 import { Constantes } from '../../../../config'
 
-import { Box, Button, DialogActions, Grid } from '@mui/material'
+import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
 import {
   FormInputDropdown,
   FormInputDropdownMultiple,
@@ -112,88 +112,92 @@ export const VistaModalPolitica = ({
   }
 
   return (
-    <Grid container direction={'column'} justifyContent="space-evenly">
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputDropdown
-            id={'sujeto'}
-            name="sujeto"
-            control={control}
-            label="Sujeto"
-            disabled={loadingModal}
-            options={roles.map((rol) => ({
-              key: rol.rol,
-              value: rol.rol,
-              label: rol.rol,
-            }))}
-            rules={{ required: 'Este campo es requerido' }}
-          />
+    <>
+      <DialogContent dividers>
+        <Grid container direction={'column'} justifyContent="space-evenly">
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputDropdown
+                id={'sujeto'}
+                name="sujeto"
+                control={control}
+                label="Sujeto"
+                disabled={loadingModal}
+                options={roles.map((rol) => ({
+                  key: rol.rol,
+                  value: rol.rol,
+                  label: rol.rol,
+                }))}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'objeto'}
+                control={control}
+                name="objeto"
+                label="Objeto"
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+          </Grid>
+          <Box height={'15px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputDropdown
+                id={'app'}
+                name="app"
+                control={control}
+                label="App"
+                disabled={loadingModal}
+                options={opcionesApp.map((app) => ({
+                  key: app,
+                  value: app,
+                  label: app,
+                }))}
+                onChange={(event) => {
+                  imprimir(event.target.value)
+                  setValue('accion', [])
+                }}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputDropdownMultiple
+                id={'accion'}
+                name="accion"
+                control={control}
+                label="Acción"
+                disabled={loadingModal}
+                options={(valorApp == 'frontend'
+                  ? opcionesAccionesFrontend
+                  : valorApp == 'backend'
+                  ? opcionesAccionesBackend
+                  : []
+                ).map((opcionAccion) => ({
+                  key: opcionAccion,
+                  value: opcionAccion,
+                  label: opcionAccion,
+                }))}
+                rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+          </Grid>
+          <Box height={'20px'} />
+          <ProgresoLineal mostrar={loadingModal} />
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputText
-            id={'objeto'}
-            control={control}
-            name="objeto"
-            label="Objeto"
-            disabled={loadingModal}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-      </Grid>
-      <Box height={'15px'} />
-      <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputDropdown
-            id={'app'}
-            name="app"
-            control={control}
-            label="App"
-            disabled={loadingModal}
-            options={opcionesApp.map((app) => ({
-              key: app,
-              value: app,
-              label: app,
-            }))}
-            onChange={(event) => {
-              imprimir(event.target.value)
-              setValue('accion', [])
-            }}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormInputDropdownMultiple
-            id={'accion'}
-            name="accion"
-            control={control}
-            label="Acción"
-            disabled={loadingModal}
-            options={(valorApp == 'frontend'
-              ? opcionesAccionesFrontend
-              : valorApp == 'backend'
-              ? opcionesAccionesBackend
-              : []
-            ).map((opcionAccion) => ({
-              key: opcionAccion,
-              value: opcionAccion,
-              label: opcionAccion,
-            }))}
-            rules={{ required: 'Este campo es requerido' }}
-          />
-        </Grid>
-      </Grid>
-      <Box height={'10px'} />
-      <ProgresoLineal mostrar={loadingModal} />
-      <Box height={'5px'} />
+      </DialogContent>
       <DialogActions
         sx={{
+          my: 1,
+          mx: 2,
           justifyContent: {
             lg: 'flex-end',
             md: 'flex-end',
             xs: 'center',
             sm: 'center',
           },
-          pt: 2,
         }}
       >
         <Button
@@ -211,6 +215,6 @@ export const VistaModalPolitica = ({
           Guardar
         </Button>
       </DialogActions>
-    </Grid>
+    </>
   )
 }
