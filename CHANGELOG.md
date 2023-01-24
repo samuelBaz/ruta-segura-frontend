@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.7](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.6...v1.6.7) (2023-01-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* se requiere DialogContent para vista modal compatible con propiedad scroll
+
+### Bug Fixes
+
+* corregido error en Storybook que ocasionaba que la primera página no se visualizara ([36b51c2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/36b51c2cd7fc2ca9a24f00edfd47f6f4daaae72b))
+
+
+* cambio de formato en vista modal ([66b726f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/66b726f1df6164a20ef55343d7caf6773ac6af18))
+
 ### [1.6.6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.5...v1.6.6) (2023-01-17)
 
 
