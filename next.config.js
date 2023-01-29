@@ -16,7 +16,7 @@ const nextConfig = {
     '' === process.env.NEXT_PUBLIC_PATH
       ? undefined
       : '/' + process.env.NEXT_PUBLIC_PATH,
-  reactStrictMode: false, // se desactiva porque React 18 renderiza 2 veces y llama useEffect 2 veces 🤷‍♂️
+  reactStrictMode: false, // se desactiva porque React 18 renderiza y llama useEffect 2 veces 🤷‍♂️
   poweredByHeader: false,
   /** @type {NextWebpackConfig} */
   webpack: (config, { isServer }) => {
@@ -32,7 +32,7 @@ const nextConfig = {
   },
   output: 'standalone',
   eslint: {
-    dirs: ['common', 'context', 'modules', 'pages', 'themes'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
+    dirs: ['common', 'context', 'modules', 'pages', 'themes'],
   },
 }
 
