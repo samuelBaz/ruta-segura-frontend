@@ -15,13 +15,13 @@ export const decodeBase64 = (data: string) => {
 }
 
 export const titleCase = (word: string) => {
-  if (word.length > 1)
-    return word
-      .toLowerCase()
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
-  else word.toUpperCase()
+  return word.length <= 1
+    ? word.toUpperCase()
+    : word
+        .toLowerCase()
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
 }
 
 export const execChildProcess = async (comando: string) => {
@@ -30,11 +30,7 @@ export const execChildProcess = async (comando: string) => {
     childProcess.exec(
       comando,
       (error: childProcess.ExecException, stdout: string, stderr: string) => {
-        if (error) {
-          reject(stderr)
-        } else {
-          resolve(stdout)
-        }
+        return error ? reject(stderr) : resolve(stdout)
       }
     )
   })

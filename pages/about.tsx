@@ -32,10 +32,10 @@ export default function ClippedDrawer() {
             edge="start"
             color={'primary'}
             onClick={() => {
-              if (!sideMenuOpen) {
-                openSideMenu()
-              } else {
+              if (sideMenuOpen) {
                 closeSideMenu()
+              } else {
+                openSideMenu()
               }
             }}
           >

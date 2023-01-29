@@ -77,11 +77,13 @@ class ServiciosClass {
     } catch (e: AxiosError | any) {
       if (e.code === 'ECONNABORTED') {
         throw new Error('La petición está tardando demasiado')
-      } else if (this.isNetworkError(e))
-        throw new Error('Error en la conexión 🌎')
-      else {
-        throw e.response?.data || 'Ocurrio un error desconocido'
       }
+
+      if (this.isNetworkError(e)) {
+        throw new Error('Error en la conexión 🌎')
+      }
+
+      throw e.response?.data || 'Ocurrio un error desconocido'
     }
   }
 

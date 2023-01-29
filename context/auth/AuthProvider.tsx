@@ -91,54 +91,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const loadUserFromCookies = async () => {
     const token = leerCookie('token')
 
-    if (token) {
-      try {
-        mostrarFullScreen()
-
-        const respuestaUsuario = await sesionPeticion({
-          url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
-        })
-
-        imprimir(
-          `respuestaUsuario: ${respuestaUsuario.datos.ciudadania_digital}`
-        )
-
-        if (respuestaUsuario.datos) {
-          setUser(respuestaUsuario.datos)
-
-          if (
-            respuestaUsuario.datos.roles &&
-            respuestaUsuario.datos.roles.length > 0
-          ) {
-            imprimir(
-              `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
-            )
-            await AlmacenarRol({
-              idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
-            })
-          }
-        }
-        await obtenerPermisos()
-
-        if (router.pathname == '/login' || router.pathname == '/') {
-          mostrarFullScreen()
-          await delay(1000)
-          await router.replace({
-            pathname: '/admin/home',
-          })
-        }
-      } catch (error: Error | any) {
-        imprimir(`Error durante Auth Provider 🚨`, error)
-        borrarSesion()
-        imprimir(`🚨 -> login`)
-        await router.replace({
-          pathname: '/login',
-        })
-        throw error
-      } finally {
-        setLoading(false)
-      }
-    } else {
+    if (!token) {
       imprimir(`Token no definido 🥾: ${token}`)
       await delay(500)
       mostrarFullScreen()
@@ -159,7 +112,54 @@ export const AuthProvider = ({ children }: AuthContextType) => {
           pathname: '/login',
         })
       }
+      setLoading(false)
+      ocultarFullScreen()
+      return
     }
+
+    try {
+      mostrarFullScreen()
+
+      const respuestaUsuario = await sesionPeticion({
+        url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
+      })
+
+      imprimir(`respuestaUsuario: ${respuestaUsuario.datos.ciudadania_digital}`)
+
+      if (
+        respuestaUsuario.datos &&
+        respuestaUsuario.datos.roles &&
+        respuestaUsuario.datos.roles.length > 0
+      ) {
+        setUser(respuestaUsuario.datos)
+        imprimir(
+          `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
+        )
+        await AlmacenarRol({
+          idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
+        })
+      }
+      await obtenerPermisos()
+
+      if (router.pathname == '/login' || router.pathname == '/') {
+        mostrarFullScreen()
+        await delay(1000)
+        await router.replace({
+          pathname: '/admin/home',
+        })
+      }
+    } catch (error: Error | any) {
+      imprimir(`Error durante Auth Provider 🚨`, error)
+      borrarSesion()
+      imprimir(`🚨 -> login`)
+      await router.replace({
+        pathname: '/login',
+      })
+      throw error
+    } finally {
+      setLoading(false)
+    }
+
     setLoading(false)
     ocultarFullScreen()
   }
@@ -298,15 +298,20 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     } catch (e: import('axios').AxiosError | any) {
       if (e.code === 'ECONNABORTED') {
         throw new Error('La petición está tardando demasiado')
-      } else if (Servicios.isNetworkError(e))
+      }
+
+      if (Servicios.isNetworkError(e)) {
         throw new Error('Error en la conexión 🌎')
-      else if (estadosSinPermiso.includes(e.response?.status)) {
+      }
+
+      if (estadosSinPermiso.includes(e.response?.status)) {
         mostrarFullScreen()
         await logout()
         ocultarFullScreen()
-      } else {
-        throw e.response?.data || 'Ocurrio un error desconocido'
+        return
       }
+
+      throw e.response?.data || 'Ocurrio un error desconocido'
     }
   }
 
@@ -391,18 +396,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     objeto,
     accion,
   }: PoliticaType): Promise<boolean> => {
-    if (enforcer) {
-      return enforcer
-        .enforce(sujeto, objeto, accion)
-        .then((permitido) => {
-          return permitido
-        })
-        .catch(() => {
-          return false
-        })
-    } else {
-      return false
-    }
+    return (await enforcer?.enforce(sujeto, objeto, accion)) ?? false
   }
 
   const obtenerRolUsuario = () => user?.roles.find((rol) => rol.idRol == idRol)
@@ -422,36 +416,37 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         sesionPeticion: sesionPeticion,
         verificarPermiso: verificarAutorizacion,
         interpretarPermiso: async (routerName) => {
-          if (obtenerRolUsuario()) {
-            return {
-              read: await verificarAutorizacion({
-                sujeto: obtenerRolUsuario()?.rol ?? '',
-                objeto: routerName,
-                accion: 'read',
-              }),
-              create: await verificarAutorizacion({
-                sujeto: obtenerRolUsuario()?.rol ?? '',
-                objeto: routerName,
-                accion: 'create',
-              }),
-              update: await verificarAutorizacion({
-                sujeto: obtenerRolUsuario()?.rol ?? '',
-                objeto: routerName,
-                accion: 'update',
-              }),
-              delete: await verificarAutorizacion({
-                sujeto: obtenerRolUsuario()?.rol ?? '',
-                objeto: routerName,
-                accion: 'delete',
-              }),
-            }
-          } else
+          if (!obtenerRolUsuario()) {
             return {
               read: false,
               create: false,
               update: false,
               delete: false,
             }
+          }
+
+          return {
+            read: await verificarAutorizacion({
+              sujeto: obtenerRolUsuario()?.rol ?? '',
+              objeto: routerName,
+              accion: 'read',
+            }),
+            create: await verificarAutorizacion({
+              sujeto: obtenerRolUsuario()?.rol ?? '',
+              objeto: routerName,
+              accion: 'create',
+            }),
+            update: await verificarAutorizacion({
+              sujeto: obtenerRolUsuario()?.rol ?? '',
+              objeto: routerName,
+              accion: 'update',
+            }),
+            delete: await verificarAutorizacion({
+              sujeto: obtenerRolUsuario()?.rol ?? '',
+              objeto: routerName,
+              accion: 'delete',
+            }),
+          }
         },
       }}
     >
