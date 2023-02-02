@@ -15,14 +15,14 @@ export const middleware = (req: NextRequest) => {
       return NextResponse.redirect(url)
     }
   } catch (e) {
-    imprimir(`Error verificando token en midleware`)
+    imprimir(`Error verificando token en middleware`)
     const url = req.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 }
 
-// Supports both a single string value or an array of matchers
+// Supports both a single string value or an array of matchers.
 export const config = {
   matcher: ['/admin/:path*'],
 }

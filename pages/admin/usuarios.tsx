@@ -452,7 +452,7 @@ const Usuarios: NextPage = () => {
     setUsuarioEdicion(null)
   }
 
-  /// Método que oculta la alerta de cambio de estado y procede al cambio
+  /// Método que oculta la alerta y procede al cambio
   const aceptarAlertaEstadoUsuario = async () => {
     setMostrarAlertaEstadoUsuario(false)
     if (usuarioEdicion) {
@@ -469,7 +469,7 @@ const Usuarios: NextPage = () => {
     setUsuarioEdicion(null)
   }
 
-  /// Método que oculta la alerta de cambio de estado y procede al cambio
+  /// Método que oculta la alerta y procede al cambio
   const aceptarAlertaRestablecerUsuario = async () => {
     setMostrarAlertaRestablecerUsuario(false)
     if (usuarioEdicion) {
@@ -496,7 +496,7 @@ const Usuarios: NextPage = () => {
   }
 
   /// Método que define permisos por rol desde la sesión
-  async function definirPermisos() {
+  const definirPermisos = async () => {
     setPermisos(await interpretarPermiso(router.pathname))
   }
 
@@ -516,7 +516,14 @@ const Usuarios: NextPage = () => {
         .catch(() => {})
         .finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroRoles, filtroUsuario])
+  }, [
+    estaAutenticado,
+    pagina,
+    limite,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(filtroRoles),
+    filtroUsuario,
+  ])
 
   useEffect(() => {
     imprimir(`filtro cerrado`, mostrarFiltroUsuarios)
@@ -556,25 +563,6 @@ const Usuarios: NextPage = () => {
         <Button onClick={cancelarAlertaReenvioCorreo}>Cancelar</Button>
         <Button onClick={aceptarAlertaReenvioCorreo}>Aceptar</Button>
       </AlertDialog>
-      {/*<CustomDialog
-        isOpen={mostrarFiltroUsuarios}
-        handleClose={() => {
-          setMostrarFiltroUsuarios(false)
-        }}
-        title={`Filtros`}
-      >
-        <FiltroModalUsuarios
-          filtroRoles={[...filtroRoles]}
-          rolesDisponibles={rolesData}
-          accionCorrecta={(filtros) => {
-            setMostrarFiltroUsuarios(false)
-            setFiltroRoles(filtros.roles)
-          }}
-          accionCerrar={() => {
-            setMostrarFiltroUsuarios(false)
-          }}
-        ></FiltroModalUsuarios>
-      </CustomDialog>*/}
 
       <CustomDialog
         isOpen={modalUsuario}

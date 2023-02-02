@@ -6,15 +6,13 @@ import {
   Grid,
   IconButton,
   PaperProps,
-  Slide,
   Typography,
   useMediaQuery,
   useTheme,
-  Zoom,
 } from '@mui/material'
-import { BaseSyntheticEvent, FC, forwardRef, PropsWithChildren } from 'react'
+import { BaseSyntheticEvent, FC, PropsWithChildren } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
-import { TransitionProps } from '@mui/material/transitions'
+import { TransitionSlide, TransitionZoom } from './Animations'
 
 interface Props {
   isOpen: boolean
@@ -28,24 +26,6 @@ interface Props {
   scroll?: 'body' | 'paper'
   noTitle?: boolean
 }
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
-
-const TransitionZoom = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Zoom ref={ref} {...props} />
-})
 
 export const CustomDialog: FC<PropsWithChildren<Props>> = ({
   isOpen,
@@ -79,7 +59,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
       fullWidth={true}
       maxWidth={maxWidth}
       open={isOpen}
-      TransitionComponent={dsm ? Transition : TransitionZoom}
+      TransitionComponent={dsm ? TransitionSlide : TransitionZoom}
       onClose={cerrarDialog}
       scroll={scroll}
     >

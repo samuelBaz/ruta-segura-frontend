@@ -1,6 +1,6 @@
 import { Constantes } from '../../config'
 
-function obtenerNombreFuncionAnterior(d: number) {
+const obtenerNombreFuncionAnterior = (d: number) => {
   const error = new Error()
   let r = ''
   if (error.stack != null) {

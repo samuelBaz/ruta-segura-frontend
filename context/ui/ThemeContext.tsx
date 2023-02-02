@@ -3,14 +3,15 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react'
 import { ThemeProvider as MuiThemeProvider, useMediaQuery } from '@mui/material'
 
 import { darkTheme, lightTheme } from '../../themes'
-import useLocalStorage from '../../common/hooks/useLocalStorage'
-import { delay } from '../../common/utils'
+import { guardarCookie, leerCookie } from '../../common/utils'
 import { imprimir } from '../../common/utils/imprimir'
+import { useDebouncedCallback } from 'use-debounce'
 
 const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)'
 
@@ -27,45 +28,80 @@ const useThemeContext = () => useContext(ThemeContext)
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const isDarkOS = useMediaQuery(DARK_SCHEME_QUERY)
 
-  // imprimir(`isDarkOS inicial: ${isDarkOS}`)
+  const isMountRef = useRef(false)
 
-  const [primeraVezState, setPrimeraVezState] = useState(isDarkOS)
-  // Para recuperar de storage en la 2.ª vez
-
-  const [themeMode, setThemeMode] = useLocalStorage<ThemeMode>(
-    'themeMode',
+  const [themeMode, setThemeMode] = useState<ThemeMode>(
     isDarkOS ? 'dark' : 'light'
   )
+
+  const debounced = useDebouncedCallback(() => {
+    isMountRef.current = true
+  }, 500)
+
+  const guardarModoOscuro = () => {
+    setThemeMode('dark')
+    guardarCookie('themeMode', 'dark')
+    imprimir('🌙')
+  }
+
+  const guardarModoClaro = () => {
+    setThemeMode('light')
+    guardarCookie('themeMode', 'light')
+    imprimir('☀️')
+  }
+
+  const guardarModoAutomatico = () => {
+    setThemeMode(isDarkOS ? 'dark' : 'light')
+    guardarCookie('themeMode', isDarkOS ? 'dark' : 'light')
+    imprimir('isDarkOS: ', isDarkOS ? '🌙' : '☀️')
+  }
 
   const toggleTheme = () => {
     switch (themeMode) {
       case 'light':
-        setThemeMode('dark')
+        guardarModoOscuro()
         break
       case 'dark':
-        setThemeMode('light')
+        guardarModoClaro()
         break
       default:
     }
   }
 
   useEffect(() => {
-    delay(100).then(() => {
-      imprimir(`useEffect isDarkOS: ${isDarkOS}`)
-      if (primeraVezState || isDarkOS) {
-        setThemeMode(isDarkOS ? 'dark' : 'light')
-      } else {
-        setPrimeraVezState(true)
-      }
-    })
+    const themeModeSaved = leerCookie('themeMode')
+    imprimir('themeMode', themeModeSaved)
+
+    if (!themeModeSaved) {
+      guardarModoAutomatico()
+      isMountRef.current = false
+      return
+    }
+
+    switch (themeModeSaved) {
+      case 'dark':
+        guardarModoOscuro()
+        break
+      case 'light':
+        guardarModoClaro()
+        break
+      default:
+        guardarModoClaro()
+        break
+    }
+    isMountRef.current = false
+    return
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDarkOS])
+  }, [])
 
   useEffect(() => {
-    // imprimir(`useEffect primeraVezState: ${primeraVezState}`)
+    if (isMountRef.current) {
+      guardarModoAutomatico()
+    }
+    debounced()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [primeraVezState])
+  }, [isDarkOS])
 
   return (
     <ThemeContext.Provider value={{ themeMode, toggleTheme }}>

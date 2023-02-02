@@ -165,10 +165,10 @@ export const NavbarUser = () => {
             edge="start"
             color={'primary'}
             onClick={() => {
-              if (!sideMenuOpen) {
-                openSideMenu()
-              } else {
+              if (sideMenuOpen) {
                 closeSideMenu()
+              } else {
+                openSideMenu()
               }
             }}
             aria-label="menu"
