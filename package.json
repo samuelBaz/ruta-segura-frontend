@@ -15,7 +15,9 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "e2e": "cypress open"
+    "e2e": "cypress open",
+    "test:e2e": "playwright test",
+    "test:codegen": "npx playwright codegen -b wk"
   },
   "dependencies": {
     "@emotion/cache": "11.10.5",
@@ -48,6 +50,7 @@
     "@commitlint/config-conventional": "17.4.2",
     "@mdx-js/react": "2.2.1",
     "@next/bundle-analyzer": "13.1.6",
+    "@playwright/test": "1.30.0",
     "@storybook/addon-actions": "7.0.0-beta.30",
     "@storybook/addon-docs": "7.0.0-beta.30",
     "@storybook/addon-essentials": "7.0.0-beta.30",
