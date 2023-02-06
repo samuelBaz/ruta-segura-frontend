@@ -184,12 +184,13 @@ export const NavbarUser = () => {
             {siteName()}
           </Typography>
           <IconoTooltip
+            id={'ayudaUser'}
+            name={'Ayuda'}
             titulo={'Ayuda'}
             accion={() => {
               abrirModalAyuda()
             }}
             icono={'help_outline'}
-            name={'Ayuda'}
           />
           {!xs && <ThemeSwitcherButton />}
           <Button

@@ -86,6 +86,7 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
     <Grid key={`${solicitudData.id}-${index}-acciones`}>
       <>
         <IconoTooltip
+          id={'editarLibro'}
           titulo={'Editar libro'}
           color={'success'}
           accion={() => {}}
@@ -93,6 +94,7 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
           name={'Editar libro'}
         />
         <IconoTooltip
+          id={'verLibro'}
           titulo={'Ver libro'}
           color={'info'}
           accion={() => {}}
@@ -100,6 +102,7 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
           name={'Ver libro'}
         />
         <IconoTooltip
+          id={'eliminarLibro'}
           titulo={'Eliminar libro'}
           color={'warning'}
           accion={() => {}}
@@ -122,25 +125,28 @@ Columnas.args = {
 
 const acciones: Array<ReactNode> = [
   <IconoTooltip
-    titulo={'Actualizar'}
-    key={`accionActualizarProyecto`}
+    id={'buscarProyecto'}
+    titulo={'Buscar proyecto'}
+    key={`BuscarProyecto`}
     accion={() => {}}
     icono={'search'}
-    name={'Actualizar lista de proyectos'}
+    name={'buscarProyecto'}
   />,
   <IconoTooltip
-    titulo={'Actualizar'}
+    id={'actualizarProyecto'}
+    titulo={'Actualizar proyecto'}
     key={`accionActualizarProyecto`}
     accion={() => {}}
     icono={'refresh'}
-    name={'Actualizar lista de proyectos'}
+    name={'actualizarProyecto'}
   />,
   <IconoTooltip
+    id={'agregarProyecto'}
     titulo={'Agregar proyecto'}
     key={`accionAgregarProyecto`}
     accion={() => {}}
     icono={'add_circle_outline'}
-    name={'Agregar proyecto'}
+    name={'agregarProyecto'}
   />,
 ]
 

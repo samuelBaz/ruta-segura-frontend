@@ -34,12 +34,13 @@ export const NavbarLogin = () => {
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />
           <IconoTooltip
+            id={'ayudaLogin'}
+            name={'Ayuda'}
             titulo={'Ayuda'}
             accion={() => {
               abrirModalAyuda()
             }}
             icono={'help_outline'}
-            name={'Ayuda'}
           />
           <ThemeSwitcherButton />
         </Toolbar>

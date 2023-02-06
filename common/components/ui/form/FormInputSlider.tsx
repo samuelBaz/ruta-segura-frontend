@@ -58,6 +58,7 @@ export const FormInputSlider = <T extends FieldValues>({
         render={() => (
           <Slider
             id={id}
+            name={name}
             size={size}
             sx={{ width: '100%' }}
             value={sliderValue}

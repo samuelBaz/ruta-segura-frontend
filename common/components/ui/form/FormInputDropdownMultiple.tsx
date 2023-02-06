@@ -71,6 +71,7 @@ export const FormInputDropdownMultiple = <T extends FieldValues>({
           <>
             <Select
               id={id}
+              name={name}
               sx={{
                 width: '100%',
                 bgcolor: bgcolor,
