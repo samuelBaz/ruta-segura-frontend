@@ -57,6 +57,7 @@ export const FormInputDate = <T extends FieldValues>({
                 <>
                   <TextField
                     id={id}
+                    name={name}
                     sx={{ width: '100%', bgcolor: bgcolor }}
                     size={size}
                     {...params}

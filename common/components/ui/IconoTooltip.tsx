@@ -18,7 +18,7 @@ interface Props {
   accion: MouseEventHandler<any> | undefined
   desactivado?: boolean
   name: string
-  id?: string | undefined
+  id: string
 }
 
 export const IconoTooltip: FC<PropsWithChildren<Props>> = ({

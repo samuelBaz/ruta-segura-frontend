@@ -92,6 +92,7 @@ const Politicas: NextPage = () => {
       <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
         {permisos.update && (
           <IconoTooltip
+            id={'editarPolitica'}
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
@@ -105,6 +106,7 @@ const Politicas: NextPage = () => {
 
         {permisos.delete && (
           <IconoTooltip
+            id={'eliminarPolitica'}
             titulo={'Eliminar'}
             color={'error'}
             accion={() => {
@@ -139,6 +141,7 @@ const Politicas: NextPage = () => {
     </ToggleButton>,
     permisos.create && (
       <IconoTooltip
+        id={'agregarPolitica'}
         titulo={'Agregar política'}
         key={`accionAgregarPolitica`}
         accion={() => {
@@ -149,6 +152,7 @@ const Politicas: NextPage = () => {
       />
     ),
     <IconoTooltip
+      id={'actualizarPolitica'}
       titulo={'Actualizar'}
       key={`accionActualizarPolitica`}
       accion={async () => {

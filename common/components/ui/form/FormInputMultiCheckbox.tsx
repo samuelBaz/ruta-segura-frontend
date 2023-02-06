@@ -51,6 +51,7 @@ export const FormInputMultiCheckbox = <T extends FieldValues>({
         {options.map((option: multiOptionType) => {
           return (
             <FormControlLabel
+              name={name}
               control={
                 <Controller
                   name={name}

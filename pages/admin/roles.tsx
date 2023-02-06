@@ -109,6 +109,7 @@ const Roles: NextPage = () => {
       <Grid key={`${rolData.id}-${indexRol}-accion`}>
         {permisos.update && (
           <IconoTooltip
+            id={'cambiarEstadoRol'}
             titulo={rolData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
             color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={async () => {
@@ -121,6 +122,7 @@ const Roles: NextPage = () => {
         )}
         {permisos.update && (
           <IconoTooltip
+            id={'editarRol'}
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
@@ -155,6 +157,7 @@ const Roles: NextPage = () => {
     // </ToggleButton>,
     permisos.create && (
       <IconoTooltip
+        id={'agregarRol'}
         titulo={'Agregar rol'}
         key={`accionAgregarRol`}
         accion={() => {
@@ -165,6 +168,7 @@ const Roles: NextPage = () => {
       />
     ),
     <IconoTooltip
+      id={'actualizarRol'}
       titulo={'Actualizar'}
       key={`accionActualizarRol`}
       accion={async () => {

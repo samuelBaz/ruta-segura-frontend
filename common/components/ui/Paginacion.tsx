@@ -113,22 +113,24 @@ export const Paginacion: FC<Props> = ({
             )} de ${total}`}
           </Typography>
           <IconoTooltip
+            id={'anteriorPagina'}
+            name={'Anterior página'}
             desactivado={pagina == 1}
             titulo={'Anterior página'}
             accion={async () => {
               await cambioPagina(pagina - 1)
             }}
             icono={'chevron_left'}
-            name={'Anterior página'}
           />
           <IconoTooltip
+            id={'siguientePagina'}
+            name={'Siguiente página'}
             desactivado={pagina * limite >= total}
             titulo={'Siguiente página'}
             accion={async () => {
               await cambioPagina(pagina + 1)
             }}
             icono={'chevron_right'}
-            name={'Siguiente página'}
           />
         </Box>
       </Grid>

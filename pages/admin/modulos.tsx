@@ -123,8 +123,9 @@ const Modulos: NextPage = () => {
     permisos.create && (
       <div>
         <IconButton
+          id={'agregarModulo'}
           size="small"
-          aria-label="account of current user"
+          aria-label="agregar nuevo módulo"
           aria-controls="menu-appbar"
           aria-haspopup="false"
           onClick={desplegarMenu}
@@ -175,8 +176,9 @@ const Modulos: NextPage = () => {
       </div>
     ),
     <IconoTooltip
+      id={`ActualizarModulo`}
       titulo={'Actualizar'}
-      key={`accionActualizarModulo`}
+      key={`ActualizarModulo`}
       accion={async () => {
         await obtenerModulosPeticion()
       }}
@@ -360,6 +362,7 @@ const Modulos: NextPage = () => {
         <Grid key={`${moduloData.id}-${indexModulo}-acciones`}>
           {permisos.update && (
             <IconoTooltip
+              id={'cambiarEstadoModulo'}
               titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
               color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
               accion={async () => {
@@ -380,6 +383,7 @@ const Modulos: NextPage = () => {
 
           {permisos.update && (
             <IconoTooltip
+              id={'editarModulo'}
               titulo={'Editar'}
               color={'primary'}
               accion={() => {

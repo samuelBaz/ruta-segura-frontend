@@ -35,18 +35,16 @@ export const FormInputRadio = <T extends FieldValues>({
       name={name}
       control={control}
       render={({ field: { onChange, value } }) => (
-        <RadioGroup value={value} onChange={onChange} id={id}>
-          {options.map((singleOption, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                disabled={disabled}
-                value={singleOption.value}
-                label={singleOption.label}
-                control={<Radio />}
-              />
-            )
-          })}
+        <RadioGroup value={value} onChange={onChange} id={id} name={name}>
+          {options.map((singleOption, index) => (
+            <FormControlLabel
+              key={index}
+              disabled={disabled}
+              value={singleOption.value}
+              label={singleOption.label}
+              control={<Radio />}
+            />
+          ))}
         </RadioGroup>
       )}
       rules={rules}

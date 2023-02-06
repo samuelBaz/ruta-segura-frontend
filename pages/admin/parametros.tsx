@@ -86,6 +86,8 @@ const Parametros: NextPage = () => {
       <Grid key={`${parametroData.id}-${indexParametro}-accion`}>
         {permisos.update && (
           <IconoTooltip
+            id={'editarParametros'}
+            name={'Parámetros'}
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
@@ -93,7 +95,6 @@ const Parametros: NextPage = () => {
               editarParametroModal(parametroData)
             }}
             icono={'edit'}
-            name={'Parámetros'}
           />
         )}
       </Grid>,
@@ -120,6 +121,7 @@ const Parametros: NextPage = () => {
     </ToggleButton>,
     permisos.create && (
       <IconoTooltip
+        id={'agregarParametro'}
         titulo={'Agregar parámetro'}
         key={`accionAgregarParametro`}
         accion={() => {
@@ -130,6 +132,7 @@ const Parametros: NextPage = () => {
       />
     ),
     <IconoTooltip
+      id={'actualizarParametro'}
       titulo={'Actualizar'}
       key={`accionActualizarParametro`}
       accion={async () => {
