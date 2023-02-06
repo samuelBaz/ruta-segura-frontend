@@ -18,6 +18,5 @@ test('Parámetros - Nuevo parámetro', async ({ page }) => {
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.getByRole('button').filter({ hasText: 'search' }).click()
   await page.locator('#parametro').fill(palabra)
-  await page.waitForTimeout(1000)
   expect(page.getByRole('cell', { name: palabra })).toBeDefined()
 })

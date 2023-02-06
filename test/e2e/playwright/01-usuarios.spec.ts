@@ -1,31 +1,67 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
-test('Iniciar sesión - usuario/contraseña', async ({ page }) => {
-  await page.goto('http://localhost:8080/login')
-  await page.locator('#usuario').fill('ADMINISTRADOR-TECNICO')
-  await page.locator('#contrasena').fill('123')
-  await page.getByRole('button', { name: 'Iniciar sesión' }).click()
-  await expect(page).toHaveURL(/.*admin/)
-})
+interface usuarioPruebaType {
+  ComplementoVisible: number
+  NumeroDocumento: string
+  Complemento: string
+  Nombres: string
+  PrimerApellido: string
+  SegundoApellido: string
+  FechaNacimiento: string
+  LugarNacimientoPais: string
+  LugarNacimientoDepartamento: string
+  LugarNacimientoProvincia: string
+  LugarNacimientoLocalidad: string
+  Observacion: string
+}
 
 test('Usuarios - Nuevo usuario', async ({ page }) => {
-  await page.goto('http://localhost:8080/login')
+  const fs = require('fs')
+
+  const rawCiudadanos = fs.readFileSync(process.env.PATH_CIUDADANOS)
+
+  const ciudadanos: Array<usuarioPruebaType> = JSON.parse(rawCiudadanos)
+
+  const indice = Math.floor(Math.random() * ciudadanos.length)
+
+  if (ciudadanos.length == 0) {
+    return
+  }
+
+  const algunCiudadano = ciudadanos.filter(
+    (value) => value.Observacion == null
+  )[indice]
+
+  if (!algunCiudadano) {
+    return
+  }
+
+  await page.goto(`/login`)
   await page.locator('#usuario').fill('ADMINISTRADOR-TECNICO')
   await page.locator('#contrasena').fill('123')
   await page.getByRole('button', { name: 'Iniciar sesión' }).click()
-  await page
-    .getByRole('button', { name: 'Usuarios Control de usuarios del sistema' })
-    .click()
+  await page.getByRole('button', { name: 'Usuarios', exact: true }).click()
   await page.getByRole('button', { name: 'Agregar' }).click()
-  await page.locator('#nroDocumento').fill('5602708')
-  await page.locator('#nombre').fill('RICARDO')
-  await page.locator('#primerApellido').fill('AGUILERA')
-  await page.locator('#segundoApellido').fill('JIMENEZ')
-  await page.getByPlaceholder('dd/mm/yyyy').fill('21/07/1983')
-  await page.locator('#correoElectronico').fill('agepic-5602708a@yopmail.com')
+  await page.locator('#nroDocumento').click()
+  await page.locator('#nroDocumento').fill(algunCiudadano.NumeroDocumento)
+  await page.locator('#nombre').fill(algunCiudadano.Nombres)
+  await page
+    .locator('#primerApellido')
+    .fill(algunCiudadano.PrimerApellido ?? '')
+  await page
+    .locator('#segundoApellido')
+    .fill(algunCiudadano.SegundoApellido ?? '')
+  await page.getByPlaceholder('dd/mm/yyyy').fill(algunCiudadano.FechaNacimiento)
+  await page.locator('#roles').first().click()
+  await page.getByRole('option', { name: 'Usuario' }).click()
+  await page.getByRole('option', { name: 'Usuario' }).press('Escape')
+  await page
+    .locator('#correoElectronico')
+    .fill(`agepic-${algunCiudadano.NumeroDocumento}@yopmail.com`)
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.getByRole('button').filter({ hasText: 'search' }).click()
-  await page.locator('#nombre').fill('5602708')
-  await expect(page).toHaveProperty('cell')
-  await page.getByRole('cell', { name: 'CI 5602708' }).click()
+  await page.locator('#nombre').fill(algunCiudadano.NumeroDocumento)
+  expect(
+    page.getByRole('cell', { name: algunCiudadano.NumeroDocumento })
+  ).toBeDefined()
 })

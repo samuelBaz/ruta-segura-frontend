@@ -1,6 +1,13 @@
 import type { PlaywrightTestConfig } from '@playwright/test'
 import { devices } from '@playwright/test'
 
+import dotenv from 'dotenv'
+import path from 'path'
+
+dotenv.config({
+  path: path.resolve(__dirname, 'test/e2e/playwright/config', '.env'),
+})
+
 const config: PlaywrightTestConfig = {
   testDir: './test/e2e/playwright',
   timeout: 30 * 1000,
@@ -13,12 +20,12 @@ const config: PlaywrightTestConfig = {
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:8080', //https://base.agcs.agetic.gob.bo
+    baseURL: process.env.BASE_URL,
     actionTimeout: 0,
     trace: 'on-first-retry',
     launchOptions: {
-      headless: false,
-      slowMo: 400,
+      headless: process.env.HEADLESS == 'true',
+      slowMo: Number(process.env.SLOWMO ?? '0'),
     },
   },
   projects: [
