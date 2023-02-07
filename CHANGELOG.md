@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.7...v1.6.8) (2023-02-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* el campo id del componente IconoToolTip es obligatorio para futuras pruebas e2e
+
+### Bug Fixes
+
+* corregido array de depencias de página de usuarios que ocasionaba que se ejecuten 2 peticiones ([71ce6ec](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/71ce6ecf6e8854e53ae367436cd033e727f5e308))
+* corregido error de modo claro en SO en modo oscuro guardando configuración en una cookie ([6b7a203](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6b7a203156f01da3baaa6e0d1d491ddf320e721b))
+
+
+* agregado valor de id en instancias de  IconoToolTip ([d7efada](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d7efadab9db9a882606a4bf625fc4e773ff4cc50))
+
 ### [1.6.7](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.6...v1.6.7) (2023-01-24)
 
 
