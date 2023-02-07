@@ -28,5 +28,21 @@ test('Módulos - Nuevo módulo', async ({ page }) => {
   await page.locator('#btnFiltro').click()
   await page.locator('#buscar').click()
   await page.locator('#buscar').fill(nombreAleatorio)
+
+  await page.waitForTimeout(2000)
+  await page.getByRole('button', { name: 'Editar' }).click()
+
+  const nombreAleatoria2 = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
+  await page.locator('#icono').fill('check')
+  await page.locator('#nombre').fill(nombreAleatoria2)
+  await page.locator('#label').fill(nombreAleatoria2)
+  await page.locator('#descripcion').fill(nombreAleatoria2)
+  await page.locator('#url').fill(nombreAleatoria2)
+
+  await page.waitForTimeout(2000)
+  await page.getByRole('button', { name: 'Guardar' }).click()
+  await page.waitForTimeout(2000)
+  await page.locator('#buscar').fill(nombreAleatoria2)
+
   expect(page.getByRole('cell', { name: nombreAleatorio })).toBeDefined()
 })

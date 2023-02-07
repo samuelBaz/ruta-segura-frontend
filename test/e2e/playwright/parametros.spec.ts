@@ -17,5 +17,19 @@ test('Parámetros - Nuevo parámetro', async ({ page }) => {
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.getByRole('button').filter({ hasText: 'search' }).click()
   await page.locator('#parametro').fill(parametroAleatorio)
-  expect(page.getByRole('cell', { name: parametroAleatorio })).toBeDefined()
+
+
+  await page.waitForTimeout(2000)
+  await page.getByRole('button', { name: 'Editar' }).click()
+  const parametroAleatorio2 = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
+  await page.locator('#codigo').fill(parametroAleatorio2)
+  await page.locator('#nombre').fill(parametroAleatorio2)
+  await page.locator('#grupo').fill(parametroAleatorio2)
+  await page.locator('#descripcion').fill(parametroAleatorio2)
+  await page.waitForTimeout(2000)
+  await page.getByRole('button', { name: 'Guardar' }).click()
+  await page.waitForTimeout(2000)
+  await page.locator('#parametro').fill(parametroAleatorio2)
+  
+  expect(page.getByRole('cell', { name: parametroAleatorio2 })).toBeDefined()
 })
