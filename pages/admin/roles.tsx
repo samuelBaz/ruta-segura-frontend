@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, Grid, ToggleButton, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import { ReactNode, useEffect, useState } from 'react'
@@ -8,6 +8,7 @@ import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
+  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import {
@@ -25,6 +26,7 @@ import { imprimir } from '../../common/utils/imprimir'
 import { RolCRUDType } from '../../modules/admin/rol/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/rol/ui/ModalRol'
+import { FiltroRol } from '../../modules/admin/rol/ui/filtroRol'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -42,6 +44,11 @@ const Roles: NextPage = () => {
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
+
+  //filtros
+
+  const [filtroRol, setFiltroRol] = useState<string>('')
+  const [mostrarFiltroRol, setMostrarFiltroRol] = useState(false)
 
   const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
 
@@ -138,23 +145,23 @@ const Roles: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    // <ToggleButton
-    //   key={'accionFiltrarRolToggle'}
-    //   value="check"
-    //   sx={{
-    //     '&.MuiToggleButton-root': {
-    //       borderRadius: '4px !important',
-    //       border: '0px solid lightgrey !important',
-    //     },
-    //   }}
-    //   size={'small'}
-    //   selected={mostrarFiltroRoles}
-    //   onChange={() => {
-    //     setMostrarFiltroRoles(!mostrarFiltroRoles)
-    //   }}
-    // >
-    //   <Icono>search</Icono>
-    // </ToggleButton>,
+    <ToggleButton
+      key={'accionFiltrarRolToggle'}
+      value="check"
+      sx={{
+        '&.MuiToggleButton-root': {
+          borderRadius: '4px !important',
+          border: '0px solid lightgrey !important',
+        },
+      }}
+      size={'small'}
+      selected={mostrarFiltroRol}
+      onChange={() => {
+        setMostrarFiltroRol(!mostrarFiltroRol)
+      }}
+    >
+      <Icono>search</Icono>
+    </ToggleButton>,
     permisos.create && (
       <IconoTooltip
         id={'agregarRol'}
@@ -211,6 +218,7 @@ const Roles: NextPage = () => {
         params: {
           pagina: pagina,
           limite: limite,
+          ...(filtroRol.length == 0 ? {} : { filtro: filtroRol }),
         },
       })
       setRolesData(respuesta.datos?.filas)
@@ -252,7 +260,7 @@ const Roles: NextPage = () => {
   useEffect(() => {
     if (estaAutenticado) obtenerRolesPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite])
+  }, [estaAutenticado, pagina, limite, filtroRol])
 
   const paginacion = (
     <Paginacion
@@ -299,6 +307,19 @@ const Roles: NextPage = () => {
           columnas={columnas}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
+          filtros={
+            mostrarFiltroRol && (
+              <FiltroRol
+                filtroRol={filtroRol}
+                accionCorrecta={(filtros) => {
+                  setPagina(1)
+                  setLimite(10)
+                  setFiltroRol(filtros.rol)
+                }}
+                accionCerrar={() => {}}
+              ></FiltroRol>
+            )
+          }
         />
       </LayoutUser>
     </>
