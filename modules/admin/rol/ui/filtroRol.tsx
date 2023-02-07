@@ -46,7 +46,7 @@ export const FiltroRol = ({
       <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
         <Grid item xs={12} sm={12} md={6}>
           <FormInputText
-            id={'rol'}
+            id={'filtroRol'}
             name={'rol'}
             control={control}
             label={'Buscar rol'}
