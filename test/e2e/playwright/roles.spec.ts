@@ -1,4 +1,4 @@
-import { test } from '@playwright/test'
+import {expect, test } from '@playwright/test'
 
 import randomWords from 'random-words'
 const rolAleatorio = randomWords({ exactly: 1 }).pop() ?? ''
@@ -13,22 +13,19 @@ test('Roles - Nuevo rol', async ({ page }) => {
   await page.locator('#nombre').fill(rolAleatorio)
   await page.getByRole('button', { name: 'Guardar' }).click()
 
-  // const row =  page.locator('tr:has-text("rol20")');
-  // const row = page.locator('tr:has-text("rol20")')
-  // await page.waitForTimeout(2000)
-  // console.log('====== NRO', await row.count())
-  // console.log('DATOS DE FILA', await row.innerText())
-  // const tableRows: number = await page.locator('//table/tbody/tr').count()
-  // console.log('====== NRO v2', tableRows)
-  // await page.waitForTimeout(2000)
-  // const randomIndex = Math.round(Math.random() * (tableRows - 2)) + 1
+  await page.getByRole('button').filter({ hasText: 'search' }).click()
+  await page.locator('#filtroRol').fill(rolAleatorio)
 
-  // const rowSel = await page.locator(`//table/tbody/tr[${randomIndex}]`)
-  // await page.waitForTimeout(2000)
-  // console.log(`DATOS DE FILA RAMDOM ${randomIndex}`, await rowSel.innerText())
+  await page.waitForTimeout(2000)
+  await page.getByRole('button', { name: 'Editar' }).click()
+  const rolAleatorio2 = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
 
-  // //   await page.getByRole('button', { name: 'Editar' }).click()
-  // await page.waitForTimeout(2000)
-  // rowSel.getByRole('button', { name: 'Editar' }).click()
-  // console.log('Editando producto')
+  await page.locator('#rol').fill(rolAleatorio2)
+  await page.locator('#nombre').fill(rolAleatorio2)
+  await page.waitForTimeout(2000)
+  await page.getByRole('button', { name: 'Guardar' }).click()
+  await page.waitForTimeout(2000)
+  await page.locator('#filtroRol').fill(rolAleatorio2)
+  expect(page.getByRole('cell', { name: rolAleatorio2 })).toBeDefined()
+  
 })
