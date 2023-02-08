@@ -15,7 +15,6 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "e2e": "cypress open",
     "test:e2e": "playwright test",
     "test:codegen": "npx playwright codegen -b wk"
   },
@@ -68,7 +67,6 @@
     "@typescript-eslint/parser": "5.50.0",
     "babel-loader": "9.1.2",
     "css-loader": "6.7.3",
-    "cypress": "12.5.0",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "eslint-config-prettier": "8.6.0",

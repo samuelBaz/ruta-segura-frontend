@@ -44,7 +44,6 @@ yarn-error.log*
 storybook-static
 
 # testing e2e
-cypress.env.json
 /test-results/
 /playwright-report/
 /playwright/.cache/
