@@ -1,6 +1,12 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { Controller, FieldValues, Path, PathValue } from 'react-hook-form'
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+} from 'react-hook-form'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { FormHelperText, TextField, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
@@ -11,7 +17,7 @@ import { Variant } from '@mui/material/styles/createTypography'
 type FormDatePickerProps<T extends FieldValues> = {
   id: string
   name: Path<T>
-  control: any
+  control: Control<T, object>
   label: string
   size?: 'small' | 'medium'
   format?: string

@@ -38,7 +38,7 @@ export const Sidebar = () => {
   const { estadoFullScreen } = useFullScreenLoadingContext()
 
   const interpretarModulos = () => {
-    imprimir(`Cambio en modulos`)
+    imprimir(`Cambio en módulos`)
     let roles: RoleType[]
     let rolSeleccionado: RoleType | undefined
     roles = usuario?.roles ?? []
@@ -132,7 +132,8 @@ export const Sidebar = () => {
               <List key={`submodulos-${index}`}>
                 {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
                   <ListItemButton
-                    key={`submodulo-${indexSubModulo}`}
+                    id={`submodulo-${index}-${indexSubModulo}`}
+                    key={`submodulo-${index}-${indexSubModulo}`}
                     selected={rutaActiva(subModuloItem.url, router.pathname)}
                     onClick={() => navigateTo(subModuloItem.url)}
                   >

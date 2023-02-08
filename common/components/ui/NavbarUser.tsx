@@ -160,6 +160,7 @@ export const NavbarUser = () => {
       >
         <Toolbar>
           <IconButton
+            id={'menu-sidebar'}
             size="large"
             name={sideMenuOpen ? 'Cerrar menú lateral' : 'Abrir menú lateral'}
             edge="start"

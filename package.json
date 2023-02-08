@@ -16,7 +16,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test:e2e": "playwright test",
-    "test:codegen": "npx playwright codegen -b wk"
+    "test:codegen": "npx playwright codegen -b chromium"
   },
   "dependencies": {
     "@emotion/cache": "11.10.5",
