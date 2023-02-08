@@ -2,7 +2,7 @@
 
 import { StoryFn, Meta } from '@storybook/react'
 import { FormInputDate } from '../../../../common/components/ui/form'
-import { useForm } from 'react-hook-form'
+import { Path, useForm } from 'react-hook-form'
 
 import {
   ArgsTable,
@@ -22,6 +22,7 @@ export interface PersonaType {
   fechaNacimiento: string
   edad: number
 }
+
 export default {
   title: 'Form/FormInputDate',
   component: FormInputDate,
@@ -94,7 +95,13 @@ const Template: StoryFn<typeof FormInputDate> = (args) => {
     },
   })
 
-  return <FormInputDate {...args} control={control} />
+  return (
+    <FormInputDate
+      {...args}
+      control={control}
+      name={args.name as Path<PersonaType>}
+    />
+  )
 }
 
 export const SB_Requerido = Template.bind({})
@@ -103,7 +110,7 @@ SB_Requerido.parameters = {
   docs: {
     description: {
       story:
-        'Antes de enviar el FormInputDate UseForm nos pedirá llenar el campo vacio',
+        'Antes de enviar el FormInputDate UseForm nos pedirá llenar el campo vacío',
     },
   },
 }
