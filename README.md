@@ -1,6 +1,9 @@
 # Frontend Base - NextJS/ReactJS
 
-Este proyecto es compatible con el actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con NestJS en la rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/develop)
+Este proyecto es compatible con el
+actual [Backend Base](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend) creado con
+NestJS en la
+rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-nestjs-base-backend/-/tree/develop)
 
 ## Tecnologías empleadas
 
@@ -73,11 +76,13 @@ Los iconos de los menús son de [material icons](https://fonts.google.com/icons)
 
 ## Sistema de diseño
 
-Para cambiar los colores del sistema, se debe editar los archivos `theme/light-theme.ts` o `theme/dark-theme.ts` según corresponda
+Para cambiar los colores del sistema, se debe editar los archivos `theme/light-theme.ts` o `theme/dark-theme.ts` según
+corresponda
 
 Se recomienda seguir la regla `60 - 30 - 10` para el uso de colores
 
-Para más información, se recomienda leer el articulo [How the 60-30-10 rule saved the day](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
+Para más información, se recomienda leer el
+articulo [How the 60-30-10 rule saved the day](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
 
 ## Instalación
 
@@ -97,17 +102,22 @@ npm run dev
 npm run build
 ```
 
-### Ejecutar test
+### Ejecutar test (e2e)
 
-Test's unitarios aún en progreso 🔨
+Los test e2e están escritos en [Playwright](https://playwright.dev)
 
 ```
-npm run test
+npm run test:e2e
 ```
+
+Para ver la ejecución de los test, modificar el
+archivo [test/e2e/playwright/env.sample](test/e2e/playwright/config/.env.sample) y definir
+variables `headless : false` y `slowMo : 400`
 
 ## Documentación
 
-La documentación de los componentes fue elaborada usando Storybook [Más información](https://storybook.js.org/docs/react/get-started/introduction)
+La documentación de los componentes fue elaborada
+usando [Storybook](https://storybook.js.org/docs/react/get-started/introduction)
 
 Para generar la documentación ejecutar el siguiente comando:
 

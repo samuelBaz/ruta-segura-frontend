@@ -208,6 +208,7 @@ export const VistaModalPolitica = ({
           Cancelar
         </Button>
         <Button
+          name={'guardar_politica'}
           variant={'contained'}
           disabled={loadingModal}
           onClick={handleSubmit(guardarActualizarPolitica)}

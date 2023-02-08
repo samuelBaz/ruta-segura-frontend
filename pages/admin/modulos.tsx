@@ -117,6 +117,9 @@ const Modulos: NextPage = () => {
       onChange={() => {
         setMostrarFiltroModulo(!mostrarFiltroModulo)
       }}
+      // name="filtroModulo"
+      // aria-label="account of current user filtro"
+      id={'btnFiltro'}
     >
       <Icono>search</Icono>
     </ToggleButton>,
