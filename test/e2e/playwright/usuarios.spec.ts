@@ -1,21 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-interface usuarioPruebaType {
-  ComplementoVisible: number
-  NumeroDocumento: string
-  Complemento: string
-  Nombres: string
-  PrimerApellido: string
-  SegundoApellido: string
-  FechaNacimiento: string
-  LugarNacimientoPais: string
-  LugarNacimientoDepartamento: string
-  LugarNacimientoProvincia: string
-  LugarNacimientoLocalidad: string
-  Observacion: string
-}
-
-test('Usuarios - Nuevo usuario', async ({ page }) => {
+test('Usuarios - crear/editar usuario', async ({ page }) => {
   const fs = require('fs')
 
   const rawCiudadanos = fs.readFileSync(process.env.PATH_CIUDADANOS)
@@ -65,3 +50,18 @@ test('Usuarios - Nuevo usuario', async ({ page }) => {
     page.getByRole('cell', { name: algunCiudadano.NumeroDocumento })
   ).toBeDefined()
 })
+
+interface usuarioPruebaType {
+  ComplementoVisible: number
+  NumeroDocumento: string
+  Complemento: string
+  Nombres: string
+  PrimerApellido: string
+  SegundoApellido: string
+  FechaNacimiento: string
+  LugarNacimientoPais: string
+  LugarNacimientoDepartamento: string
+  LugarNacimientoProvincia: string
+  LugarNacimientoLocalidad: string
+  Observacion: string
+}

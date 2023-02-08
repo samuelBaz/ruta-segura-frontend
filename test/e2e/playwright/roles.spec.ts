@@ -1,8 +1,9 @@
-import {expect, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 import randomWords from 'random-words'
+
 const rolAleatorio = randomWords({ exactly: 1 }).pop() ?? ''
-test('Roles - Nuevo rol', async ({ page }) => {
+test('Roles - crear/editar rol', async ({ page }) => {
   await page.goto(`/login`)
   await page.locator('#usuario').fill('ADMINISTRADOR-TECNICO')
   await page.locator('#contrasena').fill('123')
@@ -22,10 +23,8 @@ test('Roles - Nuevo rol', async ({ page }) => {
 
   await page.locator('#rol').fill(rolAleatorio2)
   await page.locator('#nombre').fill(rolAleatorio2)
-  await page.waitForTimeout(2000)
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.waitForTimeout(2000)
   await page.locator('#filtroRol').fill(rolAleatorio2)
   expect(page.getByRole('cell', { name: rolAleatorio2 })).toBeDefined()
-  
 })
