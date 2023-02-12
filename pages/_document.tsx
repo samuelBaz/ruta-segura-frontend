@@ -25,10 +25,7 @@ export default class MyDocument extends Document {
 
           {/* Inject MUI styles first to match with to prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
-          />
+
           <meta name={'br'} content={`${(this.props as any).branch}`} />
           <meta name={'c-id'} content={`${(this.props as any).commitId}`} />
           <meta
