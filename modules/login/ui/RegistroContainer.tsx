@@ -87,7 +87,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
         </Fade>
       )}
       {!indicadorCreacionCuenta && (
-        <Box>
+        <form onSubmit={handleSubmit(guardarActualizarCuenta)}>
           <Grid>
             <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
               Datos de usuario
@@ -170,13 +170,12 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
             variant="contained"
             fullWidth
             disabled={indicadorCarga}
-            onClick={handleSubmit(guardarActualizarCuenta)}
           >
             <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
               Crear cuenta
             </Typography>
           </Button>
-        </Box>
+        </form>
       )}
     </Box>
   )

@@ -166,76 +166,77 @@ const Recuperacion: NextPage = () => {
                 </Box>
               )}
               {!indicadorTareaRealizada && (
-                <Box display={'flex'} flexDirection={'column'}>
-                  <Box
-                    display={'flex'}
-                    flexDirection={'column'}
-                    alignItems={'center'}
-                  >
-                    <Icono fontSize={'large'}> manage_search</Icono>
-                    <Box height={'20px'} />
-                    <Typography
-                      sx={{ fontWeight: 'medium' }}
-                      variant={'subtitle2'}
+                <form onSubmit={handleSubmit(recuperarPeticion)}>
+                  <Box display={'flex'} flexDirection={'column'}>
+                    <Box
+                      display={'flex'}
+                      flexDirection={'column'}
+                      alignItems={'center'}
                     >
-                      Recupera tu cuenta
-                    </Typography>
-                  </Box>
-                  <Box height={'20px'} />
-                  <Typography variant="body2" color="text.secondary">
-                    Ingresa tu correo electrónico, enviaremos un enlace para que
-                    puedas recuperar tu cuenta
-                  </Typography>
-                  <Box height={'20px'} />
-                  <FormInputText
-                    id={'correo'}
-                    control={control}
-                    name="correo"
-                    type={'email'}
-                    label="Correo"
-                    size={'small'}
-                    labelVariant={'subtitle1'}
-                    disabled={indicadorCarga}
-                    rules={{
-                      required: 'Este campo es requerido',
-                      validate: (value) => {
-                        if (!isValidEmail(value))
-                          return 'No es un correo válido'
-                      },
-                    }}
-                  />
-                  <Box height={'15px'} />
-                  <ProgresoLineal mostrar={indicadorCarga} />
-                  <Box height={'15px'} />
-                  <Grid
-                    container
-                    justifyContent="space-evenly"
-                    alignItems={'center'}
-                  >
-                    <Button
-                      type="button"
-                      variant="text"
-                      disabled={indicadorCarga}
-                      onClick={redireccionarInicio}
-                    >
+                      <Icono fontSize={'large'}> manage_search</Icono>
+                      <Box height={'20px'} />
                       <Typography
-                        sx={{ fontWeight: 'medium', textTransform: 'none' }}
+                        sx={{ fontWeight: 'medium' }}
+                        variant={'subtitle2'}
                       >
-                        Cancelar
+                        Recupera tu cuenta
                       </Typography>
-                    </Button>
-                    <Button
-                      type="submit"
-                      variant="contained"
+                    </Box>
+                    <Box height={'20px'} />
+                    <Typography variant="body2" color="text.secondary">
+                      Ingresa tu correo electrónico, enviaremos un enlace para
+                      que puedas recuperar tu cuenta
+                    </Typography>
+                    <Box height={'20px'} />
+                    <FormInputText
+                      id={'correo'}
+                      control={control}
+                      name="correo"
+                      type={'email'}
+                      label="Correo"
+                      size={'small'}
+                      labelVariant={'subtitle1'}
                       disabled={indicadorCarga}
-                      onClick={handleSubmit(recuperarPeticion)}
+                      rules={{
+                        required: 'Este campo es requerido',
+                        validate: (value) => {
+                          if (!isValidEmail(value))
+                            return 'No es un correo válido'
+                        },
+                      }}
+                    />
+                    <Box height={'15px'} />
+                    <ProgresoLineal mostrar={indicadorCarga} />
+                    <Box height={'15px'} />
+                    <Grid
+                      container
+                      justifyContent="space-evenly"
+                      alignItems={'center'}
                     >
-                      <Typography sx={{ textTransform: 'none' }}>
-                        Enviar enlace
-                      </Typography>
-                    </Button>
-                  </Grid>
-                </Box>
+                      <Button
+                        type="button"
+                        variant="text"
+                        disabled={indicadorCarga}
+                        onClick={redireccionarInicio}
+                      >
+                        <Typography
+                          sx={{ fontWeight: 'medium', textTransform: 'none' }}
+                        >
+                          Cancelar
+                        </Typography>
+                      </Button>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        disabled={indicadorCarga}
+                      >
+                        <Typography sx={{ textTransform: 'none' }}>
+                          Enviar enlace
+                        </Typography>
+                      </Button>
+                    </Grid>
+                  </Box>
+                </form>
               )}
             </Box>
           )}

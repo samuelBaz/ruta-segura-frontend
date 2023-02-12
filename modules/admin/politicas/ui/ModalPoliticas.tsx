@@ -112,7 +112,7 @@ export const VistaModalPolitica = ({
   }
 
   return (
-    <>
+    <form onSubmit={handleSubmit(guardarActualizarPolitica)}>
       <DialogContent dividers>
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
@@ -211,11 +211,11 @@ export const VistaModalPolitica = ({
           name={'guardar_politica'}
           variant={'contained'}
           disabled={loadingModal}
-          onClick={handleSubmit(guardarActualizarPolitica)}
+          type={'submit'}
         >
           Guardar
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }

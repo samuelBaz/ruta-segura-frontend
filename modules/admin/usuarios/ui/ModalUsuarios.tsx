@@ -113,7 +113,7 @@ export const VistaModalUsuario = ({
   }
 
   return (
-    <>
+    <form onSubmit={handleSubmit(guardarActualizarUsuario)}>
       <DialogContent dividers>
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Box height={'5px'} />
@@ -233,14 +233,10 @@ export const VistaModalUsuario = ({
         >
           Cancelar
         </Button>
-        <Button
-          variant={'contained'}
-          disabled={loadingModal}
-          onClick={handleSubmit(guardarActualizarUsuario)}
-        >
+        <Button variant={'contained'} disabled={loadingModal} type={'submit'}>
           Guardar
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }

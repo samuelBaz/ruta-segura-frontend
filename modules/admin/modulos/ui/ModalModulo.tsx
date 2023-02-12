@@ -85,7 +85,7 @@ export const VistaModalModulo = ({
   }
 
   return (
-    <>
+    <form onSubmit={handleSubmit(guardarActualizarModulo)}>
       <DialogContent dividers>
         <Grid container direction={'column'} justifyContent="space-evenly">
           {checked ? (
@@ -202,14 +202,10 @@ export const VistaModalModulo = ({
         >
           Cancelar
         </Button>
-        <Button
-          variant={'contained'}
-          disabled={loadingModal}
-          onClick={handleSubmit(guardarActualizarModulo)}
-        >
+        <Button variant={'contained'} disabled={loadingModal} type={'submit'}>
           Guardar
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }

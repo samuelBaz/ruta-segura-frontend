@@ -85,7 +85,7 @@ export const CambioPassModal = ({
   const newPassword1Watch = watch('newPassword1')
 
   return (
-    <>
+    <form onSubmit={handleSubmit(validarPass)}>
       <DialogContent dividers>
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Typography variant="body2" color="text.secondary" align="inherit">
@@ -166,14 +166,10 @@ export const CambioPassModal = ({
         >
           Cancelar
         </Button>
-        <Button
-          variant={'contained'}
-          disabled={loadingModal}
-          onClick={handleSubmit(validarPass)}
-        >
+        <Button variant={'contained'} disabled={loadingModal} type={'submit'}>
           Modificar
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }

@@ -67,7 +67,7 @@ export const VistaModalRol = ({
   }
 
   return (
-    <>
+    <form onSubmit={handleSubmit(guardarActualizarRol)}>
       <DialogContent dividers>
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
@@ -115,14 +115,10 @@ export const VistaModalRol = ({
         >
           Cancelar
         </Button>
-        <Button
-          variant={'contained'}
-          disabled={loadingModal}
-          onClick={handleSubmit(guardarActualizarRol)}
-        >
+        <Button variant={'contained'} disabled={loadingModal} type={'submit'}>
           Guardar
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }

@@ -114,7 +114,7 @@ const Politicas: NextPage = () => {
               eliminarPoliticaModal(politicaData)
             }}
             icono={'delete_outline'}
-            name={'Editar política'}
+            name={'Eliminar política'}
           />
         )}
       </Grid>,

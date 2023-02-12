@@ -94,7 +94,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
   return (
     <Box>
       {!indicadorTareaRealizada && (
-        <Box>
+        <form onSubmit={handleSubmit(validarPass)}>
           <Grid
             container
             direction={'column'}
@@ -165,13 +165,13 @@ export const CambioPass = ({ code }: CambioPassParams) => {
               <Button
                 variant={'contained'}
                 disabled={loadingModal}
-                onClick={handleSubmit(validarPass)}
+                type={'submit'}
               >
                 Modificar
               </Button>
             </Grid>
           </Grid>
-        </Box>
+        </form>
       )}
       {indicadorTareaRealizada && (
         <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>

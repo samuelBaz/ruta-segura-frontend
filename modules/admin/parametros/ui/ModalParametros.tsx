@@ -76,7 +76,7 @@ export const VistaModalParametro = ({
   }
 
   return (
-    <>
+    <form onSubmit={handleSubmit(guardarActualizarParametro)}>
       <DialogContent dividers>
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
@@ -148,14 +148,10 @@ export const VistaModalParametro = ({
         >
           Cancelar
         </Button>
-        <Button
-          variant={'contained'}
-          disabled={loadingModal}
-          onClick={handleSubmit(guardarActualizarParametro)}
-        >
+        <Button variant={'contained'} disabled={loadingModal} type={'submit'}>
           Guardar
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }

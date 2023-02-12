@@ -18,7 +18,7 @@ export const FiltroModalUsuarios = ({
   })
 
   return (
-    <>
+    <form onSubmit={handleSubmit(accionCorrecta)}>
       <DialogContent>
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Box height={'10px'} />
@@ -48,10 +48,10 @@ export const FiltroModalUsuarios = ({
           },
         }}
       >
-        <Button variant={'contained'} onClick={handleSubmit(accionCorrecta)}>
+        <Button variant={'contained'} type={'submit'}>
           Aplicar
         </Button>
       </DialogActions>
-    </>
+    </form>
   )
 }
