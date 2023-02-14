@@ -21,7 +21,7 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
   const { themeMode } = useThemeContext()
   return (
     <Button
-      type="submit"
+      type="button"
       sx={{ borderRadius: 2, backgroundColor: 'background.paper' }}
       variant="outlined"
       fullWidth={fullWidth}
