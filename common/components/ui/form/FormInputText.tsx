@@ -15,6 +15,7 @@ import { Variant } from '@mui/material/styles/createTypography'
 import { InputHTMLAttributes, useState } from 'react'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import { InputBaseProps } from '@mui/material/InputBase'
 
 type FormInputTextProps<T extends FieldValues> = {
   id: string
@@ -26,6 +27,7 @@ type FormInputTextProps<T extends FieldValues> = {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: StandardInputProps['onChange']
+  inputProps?: InputBaseProps['inputProps']
   onEnter?: () => void
   onClear?: () => void
   variant?: 'standard' | 'outlined' | 'filled'
@@ -45,6 +47,7 @@ export const FormInputText = <T extends FieldValues>({
   rules,
   disabled,
   onChange,
+  inputProps,
   onEnter,
   onClear,
   variant,
@@ -100,6 +103,7 @@ export const FormInputText = <T extends FieldValues>({
               }}
               value={field.value}
               disabled={disabled}
+              inputProps={inputProps}
               InputProps={{
                 endAdornment:
                   field.value && onClear ? (
