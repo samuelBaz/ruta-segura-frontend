@@ -22,7 +22,7 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
   return (
     <Button
       type="button"
-      sx={{ borderRadius: 2, backgroundColor: 'background.paper' }}
+      sx={{ borderRadius: 2, border: 1 }}
       variant="outlined"
       fullWidth={fullWidth}
       style={{ textTransform: 'none' }}
@@ -36,8 +36,10 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
             : `${Constantes.sitePath}/logo_ciudadania2_dark.png`
         }
         alt={altText}
-        width="37"
-        height="30"
+        width="35"
+        height="35"
+        quality={'100'}
+        style={{ objectFit: 'contain' }}
       />
       {children}
     </Button>
