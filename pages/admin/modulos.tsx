@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  ToggleButton,
-  Typography,
-} from '@mui/material'
+import { Button, Grid, ToggleButton, Typography } from '@mui/material'
 import { NextPage } from 'next'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { LayoutUser } from '../../common/components/layouts'
@@ -35,6 +26,7 @@ import { VistaModalModulo } from '../../modules/admin/modulos/ui/ModalModulo'
 import { useRouter } from 'next/router'
 import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
+import { BotonAcciones } from '../../common/components/ui/BotonAcciones'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -61,8 +53,6 @@ const Modulos: NextPage = () => {
 
   const [filtroBuscar, setFiltroBuscar] = useState<string>('')
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
   const definirPermisos = async () => {
     setPermisos(await interpretarPermiso(router.pathname))
   }
@@ -80,17 +70,8 @@ const Modulos: NextPage = () => {
   })
 
   const agregarModuloModal = ({ esSeccion }: { esSeccion: boolean }) => {
-    cerrarMenu()
     setModuloEdicion({ esSeccion: esSeccion } as ModuloCRUDType)
     setModalModulo(true)
-  }
-
-  const desplegarMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const cerrarMenu = () => {
-    setAnchorEl(null)
   }
 
   useEffect(() => {
@@ -124,59 +105,35 @@ const Modulos: NextPage = () => {
       <Icono>search</Icono>
     </ToggleButton>,
     permisos.create && (
-      <div>
-        <IconButton
-          id={'agregarModulo'}
-          size="small"
-          aria-label="agregar nuevo módulo"
-          aria-controls="menu-appbar"
-          aria-haspopup="false"
-          onClick={desplegarMenu}
-          color="primary"
-          style={{ textTransform: 'none' }}
-        >
-          <Icono>add_circle_outline</Icono>
-        </IconButton>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          open={Boolean(anchorEl)}
-          onClose={cerrarMenu}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-          autoFocus={false}
-        >
-          <MenuItem
-            sx={{ p: 2 }}
-            onClick={() => {
+      <BotonAcciones
+        id={'agregarModuloSeccion'}
+        key={'agregarModuloSeccion'}
+        icono={'add_circle_outline'}
+        acciones={[
+          {
+            id: 'agregarModulo',
+            mostrar: true,
+            titulo: 'Nuevo módulo',
+            accion: async () => {
               agregarModuloModal({ esSeccion: false })
-            }}
-          >
-            <Icono>menu</Icono>
-            <Box width={'20px'} />
-            <Typography variant={'body2'}>Nuevo módulo</Typography>
-          </MenuItem>
-          <MenuItem
-            sx={{ p: 2 }}
-            onClick={() => {
+            },
+            desactivado: false,
+            icono: 'menu',
+            name: 'Nuevo módulo',
+          },
+          {
+            id: '1',
+            mostrar: true,
+            titulo: 'Nueva sección',
+            accion: async () => {
               agregarModuloModal({ esSeccion: true })
-            }}
-          >
-            <Icono>list</Icono>
-            <Box width={'20px'} />
-            <Typography variant={'body2'}>Nueva sección</Typography>
-          </MenuItem>
-        </Menu>
-      </div>
+            },
+            desactivado: false,
+            icono: 'list',
+            name: 'Nueva sección',
+          },
+        ]}
+      />
     ),
     <IconoTooltip
       id={`ActualizarModulo`}
