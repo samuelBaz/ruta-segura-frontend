@@ -12,10 +12,9 @@ test('Módulos - crear/editar módulo', async ({ page }) => {
   await page.getByRole('button', { name: 'Iniciar sesión' }).click()
   // Abriendo ruta de módulos
   await page.getByRole('button', { name: 'Módulos', exact: true }).click()
-  await page.getByRole('button', { name: 'agregar nuevo módulo' }).click()
-  await page.getByText('Nuevo módulo').click()
+  await page.locator('#agregarModuloSeccion').click()
+  await page.getByRole('menuitem', { name: 'Nuevo módulo' }).click()
   await page.locator('#idModulo').click()
-
   await page.getByRole('option', { name: 'Configuración' }).click()
   await page.locator('#icono').fill('check')
   await page.locator('#nombre').fill(moduloAleatorio)
