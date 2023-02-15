@@ -67,7 +67,7 @@ export const FormInputText = <T extends FieldValues>({
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
   return (
-    <>
+    <div>
       <InputLabel htmlFor={id}>
         <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
           {label}
@@ -140,6 +140,6 @@ export const FormInputText = <T extends FieldValues>({
         defaultValue={'' as PathValue<T, Path<T>>}
         rules={rules}
       />
-    </>
+    </div>
   )
 }

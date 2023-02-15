@@ -14,10 +14,7 @@ export interface FiltroRolType {
   accionCerrar: () => void
 }
 
-export const FiltroRol = ({
-  filtroRol,
-  accionCorrecta,
-}: FiltroRolType) => {
+export const FiltroRol = ({ filtroRol, accionCorrecta }: FiltroRolType) => {
   const { control, setValue, watch } = useForm<FiltroType>({
     defaultValues: {
       rol: filtroRol,
