@@ -172,7 +172,6 @@ export const NavbarUser = () => {
                 openSideMenu()
               }
             }}
-            aria-label="menu"
             sx={{ mr: 2 }}
           >
             {sideMenuOpen ? <MenuOpenOutlined /> : <MenuOutlinedIcon />}
@@ -196,9 +195,6 @@ export const NavbarUser = () => {
           {!xs && <ThemeSwitcherButton />}
           <Button
             size="small"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="false"
             onClick={desplegarMenu}
             color="primary"
             style={{ textTransform: 'none' }}
@@ -230,9 +226,6 @@ export const NavbarUser = () => {
             }}
             open={Boolean(anchorEl)}
             onClose={cerrarMenu}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
             autoFocus={false}
           >
             <MenuItem sx={{ p: 2 }} onClick={abrirPerfil}>
@@ -293,7 +286,6 @@ export const NavbarUser = () => {
                               size="small"
                               value={rol.idRol}
                               name="radio-buttons"
-                              inputProps={{ 'aria-label': 'A' }}
                             />
                           }
                           componentsProps={{ typography: { variant: 'body2' } }}

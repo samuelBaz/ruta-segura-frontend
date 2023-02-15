@@ -80,11 +80,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
             ) : (
               <Box />
             )}
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
-              color={'primary'}
-            >
+            <IconButton onClick={handleClose} color={'primary'}>
               <CloseIcon />
             </IconButton>
           </Grid>

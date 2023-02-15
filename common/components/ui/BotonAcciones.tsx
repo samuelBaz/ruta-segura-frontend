@@ -63,9 +63,6 @@ export const BotonAcciones = ({
       <IconButton
         id={id}
         size="small"
-        aria-label="acciones"
-        aria-controls="menu-acciones"
-        aria-haspopup="false"
         onClick={desplegarMenu}
         color="primary"
         style={{ textTransform: 'none' }}
@@ -85,9 +82,6 @@ export const BotonAcciones = ({
         }}
         open={Boolean(anchorEl)}
         onClose={cerrarMenu}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
         autoFocus={false}
       >
         {acciones

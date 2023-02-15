@@ -19,7 +19,6 @@ export const useAlerts = () => {
       },
       action: (key) => (
         <IconButton
-          aria-label="Close"
           color="inherit"
           onClick={() => {
             closeSnackbar(key)
