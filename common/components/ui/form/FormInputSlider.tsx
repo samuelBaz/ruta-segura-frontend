@@ -7,7 +7,7 @@ import {
   Path,
   PathValue,
 } from 'react-hook-form'
-import { Slider, Typography } from '@mui/material'
+import { InputLabel, Slider, Typography } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { Variant } from '@mui/material/styles/createTypography'
 import { UseFormSetValue } from 'react-hook-form/dist/types/form'
@@ -46,12 +46,14 @@ export const FormInputSlider = <T extends FieldValues>({
 
   return (
     <div>
-      <Typography
-        variant={labelVariant}
-        sx={{ pb: 1, fontWeight: 'fontWeightMedium' }}
-      >
-        {label}
-      </Typography>
+      <InputLabel htmlFor={id}>
+        <Typography
+          variant={labelVariant}
+          sx={{ fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+        >
+          {label}
+        </Typography>
+      </InputLabel>
       <Controller
         name={name}
         control={control}

@@ -1,8 +1,9 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form'
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import { FormControlLabel, InputLabel, Radio, RadioGroup } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import React from 'react'
+import { Variant } from '@mui/material/styles/createTypography'
 
 type FormInputRadioProps<T extends FieldValues> = {
   id: string
@@ -13,6 +14,7 @@ type FormInputRadioProps<T extends FieldValues> = {
   options: any[]
   rules?: RegisterOptions
   disabled?: boolean
+  labelVariant?: Variant
 }
 
 export const FormInputRadio = <T extends FieldValues>({
@@ -23,14 +25,17 @@ export const FormInputRadio = <T extends FieldValues>({
   options,
   rules,
   disabled,
+  labelVariant = 'subtitle2',
 }: FormInputRadioProps<T>) => (
   <div>
-    <Typography
-      variant={'subtitle2'}
-      sx={{ pb: 1, fontWeight: 'fontWeightMedium' }}
-    >
-      {label}
-    </Typography>
+    <InputLabel htmlFor={id}>
+      <Typography
+        variant={labelVariant}
+        sx={{ fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+      >
+        {label}
+      </Typography>
+    </InputLabel>
     <Controller
       name={name}
       control={control}

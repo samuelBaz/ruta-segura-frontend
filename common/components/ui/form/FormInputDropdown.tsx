@@ -8,6 +8,7 @@ import {
 import {
   FormHelperText,
   IconButton,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -15,6 +16,8 @@ import {
 } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import ClearOutlined from '@mui/icons-material/ClearOutlined'
+import React from 'react'
+import { Variant } from '@mui/material/styles/createTypography'
 
 export interface optionType {
   key: string
@@ -34,6 +37,7 @@ type FormInputDropdownProps<T extends FieldValues> = {
   onClear?: () => void
   bgcolor?: string
   options: optionType[]
+  labelVariant?: Variant
 }
 
 export const FormInputDropdown = <T extends FieldValues>({
@@ -48,6 +52,7 @@ export const FormInputDropdown = <T extends FieldValues>({
   options,
   onClear,
   bgcolor,
+  labelVariant = 'subtitle2',
 }: FormInputDropdownProps<T>) => {
   const generateSelectOptions = () => {
     return options.map((option) => {
@@ -61,12 +66,14 @@ export const FormInputDropdown = <T extends FieldValues>({
 
   return (
     <div>
-      <Typography
-        variant={'subtitle2'}
-        sx={{ pb: 1, fontWeight: 'fontWeightMedium' }}
-      >
-        {label}
-      </Typography>
+      <InputLabel htmlFor={id}>
+        <Typography
+          variant={labelVariant}
+          sx={{ pb: 1, fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+        >
+          {label}
+        </Typography>
+      </InputLabel>
       <Controller
         name={name}
         control={control}

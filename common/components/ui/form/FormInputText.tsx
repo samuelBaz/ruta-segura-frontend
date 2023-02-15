@@ -9,7 +9,12 @@ import {
 import Typography from '@mui/material/Typography'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import { InputProps as StandardInputProps } from '@mui/material/Input/Input'
-import { FormHelperText, IconButton, InputAdornment } from '@mui/material'
+import {
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+} from '@mui/material'
 import ClearOutlined from '@mui/icons-material/ClearOutlined'
 import { Variant } from '@mui/material/styles/createTypography'
 import { InputHTMLAttributes, useState } from 'react'
@@ -62,13 +67,12 @@ export const FormInputText = <T extends FieldValues>({
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
   return (
-    <div>
-      <Typography
-        variant={labelVariant}
-        sx={{ fontWeight: 'fontWeightMedium' }}
-      >
-        {label}
-      </Typography>
+    <>
+      <InputLabel htmlFor={id}>
+        <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
+          {label}
+        </Typography>
+      </InputLabel>
       <Controller
         name={name}
         control={control}
@@ -121,7 +125,6 @@ export const FormInputText = <T extends FieldValues>({
                   ) : type == 'password' ? (
                     <InputAdornment position="end">
                       <IconButton
-                        aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
@@ -137,6 +140,6 @@ export const FormInputText = <T extends FieldValues>({
         defaultValue={'' as PathValue<T, Path<T>>}
         rules={rules}
       />
-    </div>
+    </>
   )
 }

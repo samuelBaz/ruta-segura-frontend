@@ -48,45 +48,43 @@ export const FormInputMultiCheckbox = <T extends FieldValues>({
     <FormControl size={'small'} variant={'outlined'}>
       <FormLabel component="legend">{label}</FormLabel>
       <div>
-        {options.map((option: multiOptionType) => {
-          return (
-            <FormControlLabel
-              name={name}
-              control={
-                <Controller
-                  name={name}
-                  control={control}
-                  render={({ field }) => {
-                    return (
-                      <Checkbox
-                        id={id}
-                        size={size}
-                        checked={field.value.includes(option.value)}
-                        onChange={() => {
-                          const isPresent = field.value.indexOf(option.value)
-                          if (isPresent !== -1) {
-                            const remaining = field.value.filter(
-                              (item: string) => item !== option.value
-                            )
-                            setValue(name, remaining)
-                          } else {
-                            setValue(name, [
-                              ...new Set([...field.value, option.value]),
-                            ] as PathValue<T, Path<T>>)
-                          }
-                        }}
-                      />
-                    )
-                  }}
-                  rules={rules}
-                />
-              }
-              disabled={disabled}
-              label={option.label}
-              key={option.value}
-            />
-          )
-        })}
+        {options.map((option: multiOptionType) => (
+          <FormControlLabel
+            name={name}
+            control={
+              <Controller
+                name={name}
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <Checkbox
+                      id={id}
+                      size={size}
+                      checked={field.value.includes(option.value)}
+                      onChange={() => {
+                        const isPresent = field.value.indexOf(option.value)
+                        if (isPresent !== -1) {
+                          const remaining = field.value.filter(
+                            (item: string) => item !== option.value
+                          )
+                          setValue(name, remaining)
+                        } else {
+                          setValue(name, [
+                            ...new Set([...field.value, option.value]),
+                          ] as PathValue<T, Path<T>>)
+                        }
+                      }}
+                    />
+                  )
+                }}
+                rules={rules}
+              />
+            }
+            disabled={disabled}
+            label={option.label}
+            key={option.value}
+          />
+        ))}
       </div>
     </FormControl>
   )

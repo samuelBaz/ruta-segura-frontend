@@ -10,6 +10,7 @@ import {
   Checkbox,
   Chip,
   FormHelperText,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -17,6 +18,8 @@ import {
 } from '@mui/material'
 import { optionType } from './FormInputDropdown'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import React from 'react'
+import { Variant } from '@mui/material/styles/createTypography'
 
 type FormInputDropdownMultipleProps<T extends FieldValues> = {
   id: string
@@ -30,6 +33,7 @@ type FormInputDropdownMultipleProps<T extends FieldValues> = {
   variant?: 'standard' | 'outlined' | 'filled'
   bgcolor?: string
   options: optionType[]
+  labelVariant?: Variant
 }
 
 export const FormInputDropdownMultiple = <T extends FieldValues>({
@@ -44,6 +48,7 @@ export const FormInputDropdownMultiple = <T extends FieldValues>({
   variant,
   bgcolor,
   options,
+  labelVariant = 'subtitle2',
 }: FormInputDropdownMultipleProps<T>) => {
   const generateSelectOptions = (value: string[]) => {
     return options.map((option) => {
@@ -58,12 +63,14 @@ export const FormInputDropdownMultiple = <T extends FieldValues>({
 
   return (
     <div>
-      <Typography
-        variant={'subtitle2'}
-        sx={{ pb: 1, fontWeight: 'fontWeightMedium' }}
-      >
-        {label}
-      </Typography>
+      <InputLabel htmlFor={id}>
+        <Typography
+          variant={labelVariant}
+          sx={{ pb: 1, fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+        >
+          {label}
+        </Typography>
+      </InputLabel>
       <Controller
         name={name}
         control={control}

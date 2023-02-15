@@ -8,7 +8,12 @@ import {
   PathValue,
 } from 'react-hook-form'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { FormHelperText, TextField, Typography } from '@mui/material'
+import {
+  FormHelperText,
+  InputLabel,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import esMX from 'dayjs/locale/es-mx'
 import { validarFechaFormato } from '../../../utils/fechas'
@@ -41,12 +46,14 @@ export const FormInputDate = <T extends FieldValues>({
 }: FormDatePickerProps<T>) => {
   return (
     <div>
-      <Typography
-        variant={labelVariant}
-        sx={{ fontWeight: 'fontWeightMedium' }}
-      >
-        {label}
-      </Typography>
+      <InputLabel htmlFor={id}>
+        <Typography
+          variant={labelVariant}
+          sx={{ fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+        >
+          {label}
+        </Typography>
+      </InputLabel>
       <Controller
         name={name}
         control={control}
