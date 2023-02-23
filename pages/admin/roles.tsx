@@ -23,10 +23,10 @@ import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
-import { RolCRUDType } from '../../modules/admin/rol/types/rolCRUDType'
+import { RolCRUDType } from '../../modules/admin/roles/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
-import { VistaModalRol } from '../../modules/admin/rol/ui/ModalRol'
-import { FiltroRol } from '../../modules/admin/rol/ui/filtroRol'
+import { VistaModalRol } from '../../modules/admin/roles/ui/ModalRol'
+import { FiltroRol } from '../../modules/admin/roles/ui/FiltroRol'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
