@@ -32,6 +32,7 @@ const config: StorybookConfig = {
         child_process: false,
         stream: false,
         buffer: false,
+        crypto: false,
       },
     }
     // Return the altered config
