@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.8...v1.6.9) (2023-02-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* el campo id del componente IconoToolTip es obligatorio para futuras pruebas e2e
+
+### Features
+
+* actualización NextJS 13.2.1, ya no se requiere @next/font ([ed0eb74](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ed0eb74d068d0e7f40d61dddce12cb347e900b34))
+* añadido campo de orden para definir la secuencia en que se muestran los módulos ([ffaeb3b](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ffaeb3b6cb80d431bcc0b3054f09c7d116ae09af))
+* añadido evento onSubmit para todos los formularios ([04a81a2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/04a81a29aec985a31236c09040910a172e26a646))
+* añadido menú contextual, para ser usado cuando haya demasiadas acciones por registros ([a31bd94](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a31bd9425c335335a2e7ded6bd5bb05a2c46ecd7))
+* añadido test de módulo de usuarios y configuración con variables de entorno ✅ ([7593aee](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7593aee799e2304197c19ba9378e195c0cd63cef))
+* añadido valor InputBaseProps para FormInputText ([e4072e9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e4072e98a6b852b20d454574d4af55bef1913f54))
+* añadidos labels para campos de formulario y mejoras de accesibilidad ([f62e1f2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f62e1f22a7b5cfbc8594faecabd903ec8ac4c280))
+* completado test de parámetros ✅ ([1b6fd94](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1b6fd9450b3143e41d2c94495b91ad33cc9780d2))
+* configuración inicial de Playwright 🚀 ([fe44703](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/fe4470317932b1113aad12bdf7502e77bc2ff0ab))
+* modificado boton de agregar nuevo módulo con nuevo componente de boton de acciones ([1e61078](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1e61078d765c10dee4515e305f6171e55a0061e3))
+* **Playwright:** configuración inicial de ruta base global para pruebas ([53010a9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/53010a92621dd6d1995e79169788d7958d1fbce0))
+* se ha añadio una librería que permite cargar iconos de Google Material desde servidor local ([a79b71e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a79b71e8d464711db93d700bb631413cbccebd55))
+
+
+### Bug Fixes
+
+* adición de filtro al componente de rol ([a33756e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a33756eb01c23a40983c36e0fad733540896a101))
+* cambio de tipo de boton ciudadanía de "submit" a "button" ([f3459e0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f3459e0716cefaf0ad56c08bc9c5e643fccb8e76))
+* corregido error en componentes de Storybook habilitando crypto en configuración de Webpack ([e838a89](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e838a8996ec6444aa5b05d0d6d13872c7f77082f))
+* corregido id para boton sidebar, módulos de menú lateral y tipado de control para FormInputDate ([24ebd83](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/24ebd8357f2403092a9d7c4083246363ed9cb906))
+* corregido test e2e de creación de módulos, compatible con nuevo boton de acciones ([6418206](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/64182066c54b5111268b18926790c56205f32f94))
+* corregido tipado de Story de FormInputDate ([44dbd89](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/44dbd89242ca6507693b06485f6ea3c7adbba495))
+* corregidos test e2e dando prioridad a selectores con id ([9b691db](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9b691db119eee7b35e1252603bef7c51901a9367))
+* modificado estilo de boton ciudadanía ([c9b1554](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c9b1554439ce42145fc0c72bcdde3baf8edf6eb8))
+* pruebas de e2e para politicas, modulos, y roles ([b2677b9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b2677b9c780a844c704a67d16efd943932cd4469))
+* renombrado directorio rol por roles, para mantener el estandar de notación de modulos ([f6afb5a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f6afb5ab9e679b6267d06eebe96ecdc346c211f3))
+* test e2e al componene de rol, edición de datos ([45d95e1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/45d95e1ed97071edceeea7ff56de043f9b8e640a))
+* test e2e, para modulos, políticas y roles, para crear, búsqueda y edicion ([404aebd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/404aebd492cdbb1f46377a735b613651b7c1c404))
+
+
+* agregado valor de id en instancias de  IconoToolTip ([b263be6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b263be6b5f562d0a7f3a88902249f48ebff7f365))
+
 ### [1.6.8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.7...v1.6.8) (2023-02-07)
 
 
