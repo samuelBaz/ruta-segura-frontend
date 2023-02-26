@@ -69,7 +69,13 @@ export const VistaModalModulo = ({
           modulo.id ? `/${modulo.id}` : ''
         }`,
         tipo: !!modulo.id ? 'patch' : 'post',
-        body: modulo,
+        body: {
+          ...modulo,
+          propiedades: {
+            ...modulo.propiedades,
+            ...{ orden: Number(modulo.propiedades.orden) },
+          },
+        },
       })
       Alerta({
         mensaje: InterpreteMensajes(respuesta),
@@ -137,7 +143,6 @@ export const VistaModalModulo = ({
                 rules={{ required: 'Este campo es requerido' }}
               />
             </Grid>
-
             <Grid item xs={12} sm={12} md={6}>
               <FormInputText
                 id={'label'}
@@ -153,18 +158,6 @@ export const VistaModalModulo = ({
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
             <Grid item xs={12} sm={12} md={6}>
               <FormInputText
-                id={'descripcion'}
-                control={control}
-                name="propiedades.descripcion"
-                label="Descripción"
-                multiline
-                rows={2}
-                disabled={loadingModal}
-                rules={{ required: 'Este campo es requerido' }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <FormInputText
                 id={'url'}
                 control={control}
                 name="url"
@@ -175,6 +168,40 @@ export const VistaModalModulo = ({
                     value: true,
                     message: 'Este campo es requerido',
                   },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <FormInputText
+                id={'orden'}
+                control={control}
+                type={'number'}
+                inputProps={{ type: 'number' }}
+                name="propiedades.orden"
+                label="Orden"
+                disabled={loadingModal}
+                rules={{
+                  required: 'Este campo es requerido',
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Box height={'15px'} />
+          <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
+            <Box height={'20px'} />
+            <Grid item xs={12} sm={12} md={12}>
+              <FormInputText
+                id={'descripcion'}
+                control={control}
+                name="propiedades.descripcion"
+                label="Descripción"
+                multiline
+                rows={2}
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+                onChange={(event) => {
+                  const value = event.target.value
+                  return Number(value)
                 }}
               />
             </Grid>

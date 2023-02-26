@@ -1,8 +1,7 @@
 export interface Propiedades {
-  icono: string
-  color_dark: string
-  color_light: string
-  descripcion: string
+  icono?: string
+  descripcion?: string
+  orden: number
 }
 
 export interface Modulo {

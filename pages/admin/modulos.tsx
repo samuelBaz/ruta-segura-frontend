@@ -264,6 +264,7 @@ const Modulos: NextPage = () => {
 
   const columnas: Array<ColumnaType> = [
     { campo: 'icono', nombre: 'Icono' },
+    { campo: 'orden', nombre: 'Orden' },
     { campo: 'nombre', nombre: 'Nombre' },
     { campo: 'label', nombre: 'Label' },
     { campo: 'descripcion', nombre: 'Descripción' },
@@ -283,6 +284,12 @@ const Modulos: NextPage = () => {
         ) : (
           <Icono color="inherit">{`${moduloData.propiedades.icono}`}</Icono>
         )}
+      </Typography>,
+      <Typography
+        key={`${moduloData.id}-${indexModulo}-orden`}
+        variant={'body2'}
+      >
+        {moduloData.propiedades.orden}
       </Typography>,
       <Typography
         key={`${moduloData.id}-${indexModulo}-nombre`}

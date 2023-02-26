@@ -18,10 +18,9 @@ export interface idRolType {
 /// Usuario que iniciar sesión
 
 export interface PropiedadesType {
-  icono: string
-  descripcion: string
-  color_dark: string
-  color_light: string
+  icono?: string
+  descripcion?: string
+  orden: number
 }
 
 export interface SubModuloType {
