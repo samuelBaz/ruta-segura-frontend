@@ -1,8 +1,7 @@
 import { expect, test } from '@playwright/test'
+import { palabraAleatoria } from './utils/generador'
 
-import randomWords from 'random-words'
-
-const politicaAleatoria = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
+const politicaAleatoria = palabraAleatoria()
 
 test('Políticas - crear/editar política', async ({ page }) => {
   await page.goto(`/login`)
@@ -28,7 +27,7 @@ test('Políticas - crear/editar política', async ({ page }) => {
   await page.waitForTimeout(2000)
   await page.getByRole('button', { name: 'Editar' }).click()
   await page.locator('#objeto').click()
-  const politicaAleatoria2 = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
+  const politicaAleatoria2 = palabraAleatoria()
   await page.locator('#objeto').fill(politicaAleatoria2)
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.waitForTimeout(2000)

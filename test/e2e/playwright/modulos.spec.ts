@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test'
-
-import randomWords from 'random-words'
+import { numeroAleatorio, palabraAleatoria } from './utils/generador'
 
 test('Módulos - crear/editar módulo', async ({ page }) => {
   // Generando palabra aleatoria
-  const moduloAleatorio = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
+  const moduloAleatorio = palabraAleatoria()
+
   // Iniciando sesión
   await page.goto('/login')
   await page.locator('#usuario').fill('ADMINISTRADOR-TECNICO')
@@ -19,8 +19,9 @@ test('Módulos - crear/editar módulo', async ({ page }) => {
   await page.locator('#icono').fill('check')
   await page.locator('#nombre').fill(moduloAleatorio)
   await page.locator('#label').fill(moduloAleatorio)
-  await page.locator('#descripcion').fill(moduloAleatorio)
   await page.locator('#url').fill(moduloAleatorio)
+  await page.locator('#orden').fill(numeroAleatorio(1, 100).toString())
+  await page.locator('#descripcion').fill(moduloAleatorio)
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.locator('#btnFiltro').click()
   await page.locator('#buscar').click()
@@ -29,15 +30,17 @@ test('Módulos - crear/editar módulo', async ({ page }) => {
   await page.waitForTimeout(2000)
   await page.getByRole('button', { name: 'Editar' }).click()
 
-  const nombreAleatoria2 = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
+  const moduloAleatorio2 = palabraAleatoria()
+
   await page.locator('#icono').fill('check')
-  await page.locator('#nombre').fill(nombreAleatoria2)
-  await page.locator('#label').fill(nombreAleatoria2)
-  await page.locator('#descripcion').fill(nombreAleatoria2)
-  await page.locator('#url').fill(nombreAleatoria2)
+  await page.locator('#nombre').fill(moduloAleatorio2)
+  await page.locator('#label').fill(moduloAleatorio2)
+  await page.locator('#url').fill(moduloAleatorio2)
+  await page.locator('#orden').fill(numeroAleatorio(1, 100).toString())
+  await page.locator('#descripcion').fill(moduloAleatorio2)
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.waitForTimeout(2000)
-  await page.locator('#buscar').fill(nombreAleatoria2)
+  await page.locator('#buscar').fill(moduloAleatorio2)
 
   expect(page.getByRole('cell', { name: moduloAleatorio })).toBeDefined()
 })

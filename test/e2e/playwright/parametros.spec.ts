@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test'
 
 import randomWords from 'random-words'
+import { palabraAleatoria } from './utils/generador'
 
 test('Parámetros - crear/editar parámetro', async ({ page }) => {
-  const parametroAleatorio = randomWords({ exactly: 1, min: 5 }).pop() ?? ''
+  const parametroAleatorio = palabraAleatoria()
+
   await page.goto(`/login`)
   await page.locator('#usuario').fill('ADMINISTRADOR-TECNICO')
   await page.locator('#contrasena').fill('123')
