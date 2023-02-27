@@ -21,7 +21,7 @@ import {
 import { Constantes } from '../../config'
 import { useRouter } from 'next/router'
 import { CasbinTypes } from '../../common/types'
-import { useFullScreenLoadingContext } from '../ui'
+import { useFullScreenLoading } from '../ui'
 
 import { Enforcer } from 'casbin'
 import { basicModel, basicPolicy } from '../../common/utils/casbin'
@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
 
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const router = useRouter()
 
@@ -319,7 +319,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     eliminarCookie('token') // Eliminando access_token
     eliminarCookie('rol') // Eliminando rol
     eliminarCookie('jid') // Eliminando refresh token
-    eliminarCookie('empresa') // Eliminando empresa
     setUser(null)
     setIdRol(null)
   }

@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '../common/utils/createEmotionCache'
 import DebugBanner from '../common/components/DebugBanner'
-import { FullScreenLoadingProvider, UIProvider } from '../context/ui'
+import { FullScreenLoadingProvider, SideBarProvider } from '../context/ui'
 import { imprimir } from '../common/utils/imprimir'
 import { ThemeProvider } from '../context/ui/ThemeContext'
 import { AuthProvider } from '../context/auth'
@@ -47,14 +47,14 @@ export default function MyApp(props: MyAppProps) {
         <SnackbarProvider maxSnack={1}>
           <DebugBanner />
           <AuthProvider>
-            <UIProvider>
+            <SideBarProvider>
               <ThemeProvider>
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <Sidebar />
                 <Component {...pageProps} />
               </ThemeProvider>
-            </UIProvider>
+            </SideBarProvider>
           </AuthProvider>
         </SnackbarProvider>
       </FullScreenLoadingProvider>

@@ -52,5 +52,4 @@ export const FullScreenLoadingProvider = ({
   )
 }
 
-export const useFullScreenLoadingContext = () =>
-  useContext(FullScreenLoadingContext)
+export const useFullScreenLoading = () => useContext(FullScreenLoadingContext)

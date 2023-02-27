@@ -1,10 +1,10 @@
 import { Box, Grid, useMediaQuery, useTheme } from '@mui/material'
 import Head from 'next/head'
-import { FC, PropsWithChildren, useContext } from 'react'
+import { FC, PropsWithChildren } from 'react'
 
 import { NavbarUser } from '../ui'
 import Toolbar from '@mui/material/Toolbar'
-import { UIContext } from '../../../context/ui'
+import { useSidebar } from '../../../context/ui'
 import { siteName } from '../../utils'
 
 interface Props {
@@ -15,7 +15,7 @@ export const LayoutUser: FC<PropsWithChildren<Props>> = ({
   title = siteName(),
   children,
 }) => {
-  const { sideMenuOpen } = useContext(UIContext)
+  const { sideMenuOpen } = useSidebar()
 
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))

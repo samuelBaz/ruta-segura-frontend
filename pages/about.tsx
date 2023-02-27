@@ -10,15 +10,14 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
-import { UIContext } from '../context/ui'
-import { useContext } from 'react'
+import { useSidebar } from '../context/ui'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import { IconButton, ListItemButton } from '@mui/material'
 
 const drawerWidth = 240
 
 export default function ClippedDrawer() {
-  const { sideMenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+  const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

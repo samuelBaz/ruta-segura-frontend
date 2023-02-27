@@ -20,9 +20,9 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import MenuOpenOutlined from '@mui/icons-material/MenuOpenOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
-import { UIContext, useFullScreenLoadingContext } from '../../../context/ui'
+import { useFullScreenLoading, useSidebar } from '../../../context/ui'
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { CustomDialog } from './CustomDialog'
 
@@ -46,9 +46,9 @@ export const NavbarUser = () => {
   const { usuario, idRolUsuario, setRolUsuario, cerrarSesion, rolUsuario } =
     useAuth()
 
-  const { sideMenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+  const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
 
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const [mostrarAlertaCerrarSesion, setMostrarAlertaCerrarSesion] =
     useState(false)

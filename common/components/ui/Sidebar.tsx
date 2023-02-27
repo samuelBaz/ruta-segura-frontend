@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Box,
   Drawer,
@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 
 import { useRouter } from 'next/router'
-import { UIContext, useFullScreenLoadingContext } from '../../../context/ui'
+import { useFullScreenLoading, useSidebar } from '../../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../../context/auth'
 import { imprimir } from '../../utils/imprimir'
@@ -22,7 +22,7 @@ import { versionNumber } from '../../utils'
 const drawerWidth = 240
 
 export const Sidebar = () => {
-  const { sideMenuOpen, closeSideMenu, openSideMenu } = useContext(UIContext)
+  const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
 
   const { usuario, idRolUsuario, estaAutenticado, progresoLogin } = useAuth()
 
@@ -35,7 +35,7 @@ export const Sidebar = () => {
   const md = useMediaQuery(theme.breakpoints.only('md'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
-  const { estadoFullScreen } = useFullScreenLoadingContext()
+  const { estadoFullScreen } = useFullScreenLoading()
 
   const interpretarModulos = () => {
     imprimir(`Cambio en módulos`)

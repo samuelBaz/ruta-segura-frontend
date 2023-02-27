@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form'
 import { LoginType } from '../types/loginTypes'
 import RegistroContainer from './RegistroContainer'
 import { useRouter } from 'next/router'
-import { useFullScreenLoadingContext } from '../../../context/ui'
+import { useFullScreenLoading } from '../../../context/ui'
 import { delay } from '../../../common/utils'
 
 const LoginRegistroContainer = () => {
@@ -23,7 +23,7 @@ const LoginRegistroContainer = () => {
     setValue(newValue)
   }
 
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const router = useRouter()
 

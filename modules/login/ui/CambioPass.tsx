@@ -14,7 +14,7 @@ import { useAlerts } from '../../../common/hooks'
 import { Constantes } from '../../../config'
 import Typography from '@mui/material/Typography'
 
-import { useFullScreenLoadingContext } from '../../../context/ui'
+import { useFullScreenLoading } from '../../../context/ui'
 import { useRouter } from 'next/router'
 import { Servicios } from '../../../common/services'
 import {
@@ -33,7 +33,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
   const [indicadorTareaRealizada, setIndicadorTareaRealizada] =
     useState<boolean>(false)
   const router = useRouter()
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
   const { handleSubmit, control, watch } = useForm<nuevaPassFormType>({
     defaultValues: {

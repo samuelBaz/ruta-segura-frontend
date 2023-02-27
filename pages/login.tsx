@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import { delay, InterpreteMensajes, siteName } from '../common/utils'
 import { Constantes } from '../config'
 import { Servicios } from '../common/services'
-import { useFullScreenLoadingContext } from '../context/ui'
+import { useFullScreenLoading } from '../context/ui'
 import { useEffect } from 'react'
 import { useAlerts } from '../common/hooks'
 import { imprimir } from '../common/utils/imprimir'
@@ -18,7 +18,7 @@ const Login: NextPage = () => {
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
   const { Alerta } = useAlerts()
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const obtenerEstado = async () => {
     try {

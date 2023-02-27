@@ -6,14 +6,14 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Servicios } from '../common/services'
 import { Constantes } from '../config'
-import { useFullScreenLoadingContext } from '../context/ui'
+import { useFullScreenLoading } from '../context/ui'
 import { Icono } from '../common/components/ui'
 import { imprimir } from '../common/utils/imprimir'
 
 const Desbloqueo: NextPage = () => {
   const [mensaje, setMensaje] = useState<string>('')
 
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const router = useRouter()
 

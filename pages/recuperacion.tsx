@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Servicios } from '../common/services'
 import { Constantes } from '../config'
-import { useFullScreenLoadingContext } from '../context/ui'
+import { useFullScreenLoading } from '../context/ui'
 import { Icono } from '../common/components/ui'
 import { imprimir } from '../common/utils/imprimir'
 import { FormInputText } from '../common/components/ui/form'
@@ -29,7 +29,7 @@ const Recuperacion: NextPage = () => {
   const [mensaje, setMensaje] = useState<string>('')
   const [code, setCode] = useState<string | undefined>()
 
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoadingContext()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const [indicadorCarga, setIndicadorCarga] = useState<boolean>(false)
 
