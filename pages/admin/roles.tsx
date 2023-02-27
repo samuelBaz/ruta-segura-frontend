@@ -21,7 +21,7 @@ import { Constantes } from '../../config'
 
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
-import { useAlerts } from '../../common/hooks'
+import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { RolCRUDType } from '../../modules/admin/roles/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
@@ -50,7 +50,8 @@ const Roles: NextPage = () => {
   const [filtroRol, setFiltroRol] = useState<string>('')
   const [mostrarFiltroRol, setMostrarFiltroRol] = useState(false)
 
-  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
+  const { sesionPeticion } = useSession()
+  const { estaAutenticado, permisoUsuario } = useAuth()
 
   // Permisos para acciones
   const [permisos, setPermisos] = useState<CasbinTypes>({
@@ -249,7 +250,7 @@ const Roles: NextPage = () => {
   }
 
   async function definirPermisos() {
-    setPermisos(await interpretarPermiso(router.pathname))
+    setPermisos(await permisoUsuario(router.pathname))
   }
 
   useEffect(() => {

@@ -7,35 +7,29 @@ import React, {
 } from 'react'
 import {
   delay,
-  eliminarCookie,
+  eliminarCookies,
   encodeBase64,
   guardarCookie,
   InterpreteMensajes,
   leerCookie,
 } from '../../common/utils'
-import {
-  estadosSinPermiso,
-  peticionFormatoMetodo,
-  Servicios,
-} from '../../common/services'
+import { Servicios } from '../../common/services'
 import { Constantes } from '../../config'
 import { useRouter } from 'next/router'
-import { CasbinTypes } from '../../common/types'
 import { useFullScreenLoading } from '../ui'
-
-import { Enforcer } from 'casbin'
-import { basicModel, basicPolicy } from '../../common/utils/casbin'
-import { useAlerts } from '../../common/hooks'
+import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
-import { verificarToken } from '../../common/utils/token'
 import {
   AutorizacionLoginType,
   idRolType,
   LoginType,
-  PoliticaType,
   RoleType,
   UsuarioType,
 } from '../../modules/login/types/loginTypes'
+import { Enforcer } from 'casbin'
+
+import { CasbinTypes } from '../../common/types'
+import { useCasbinEnforcer } from '../../common/hooks'
 
 interface ContextProps {
   estaAutenticado: boolean
@@ -44,28 +38,8 @@ interface ContextProps {
   rolUsuario: RoleType | undefined
   setRolUsuario: ({ idRol }: idRolType) => Promise<void>
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
-  autorizarCiudadania: ({
-    code,
-    state,
-    session_state,
-  }: AutorizacionLoginType) => Promise<void>
   progresoLogin: boolean
-  cerrarSesion: () => void
-  sesionPeticion: ({
-    url,
-    tipo,
-    headers,
-    body,
-    params,
-    responseType,
-    withCredentials,
-  }: peticionFormatoMetodo) => Promise<any>
-  verificarPermiso: ({
-    sujeto,
-    objeto,
-    accion,
-  }: PoliticaType) => Promise<boolean>
-  interpretarPermiso: (routerName: string) => Promise<CasbinTypes>
+  permisoUsuario: (routerName: string) => Promise<CasbinTypes>
 }
 
 const AuthContext = createContext<ContextProps>({} as ContextProps)
@@ -86,6 +60,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const router = useRouter()
 
+  const { sesionPeticion } = useSession()
+  const { interpretarPermiso, inicializarCasbin } = useCasbinEnforcer()
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
   const loadUserFromCookies = async () => {
@@ -124,7 +100,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
       })
 
-      imprimir(`respuestaUsuario: ${respuestaUsuario.datos.ciudadania_digital}`)
+      imprimir(`es ciudadano?: ${respuestaUsuario.datos.ciudadania_digital}`)
 
       if (
         respuestaUsuario.datos &&
@@ -150,7 +126,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       }
     } catch (error: Error | any) {
       imprimir(`Error durante Auth Provider 🚨`, error)
-      borrarSesion()
+      eliminarCookies()
+
+      setUser(null)
+      setIdRol(null)
+
       imprimir(`🚨 -> login`)
       await router.replace({
         pathname: '/login',
@@ -207,7 +187,10 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     } catch (e) {
       imprimir(`Error al iniciar sesión: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
-      borrarSesion()
+      eliminarCookies()
+
+      setUser(null)
+      setIdRol(null)
     } finally {
       setLoading(false)
       ocultarFullScreen()
@@ -246,114 +229,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
-  const actualizarSesion = async () => {
-    imprimir(`Actualizando token 🚨`)
-
-    try {
-      const respuesta = await Servicios.post({
-        url: `${Constantes.baseUrl}/token`,
-      })
-
-      guardarCookie('token', respuesta.datos?.access_token)
-
-      await delay(500)
-    } catch (e) {
-      await logout()
-    }
-  }
-
-  const sesionPeticion = async ({
-    url,
-    tipo = 'get',
-    body,
-    headers,
-    params,
-    responseType,
-    withCredentials,
-  }: peticionFormatoMetodo) => {
-    try {
-      if (!verificarToken(leerCookie('token') ?? '')) {
-        imprimir(`Token caducado ⏳`)
-        await actualizarSesion()
-      }
-
-      const cabeceras = {
-        accept: 'application/json',
-        Authorization: `Bearer ${leerCookie('token') ?? ''}`,
-        ...headers,
-      }
-
-      imprimir(`enviando 🔐🌍`, body, tipo, url, cabeceras)
-      const response = await Servicios.peticionHTTP({
-        url,
-        tipo,
-        headers: cabeceras,
-        body,
-        params,
-        responseType,
-        withCredentials,
-      })
-      imprimir('respuesta 🔐📡', body, tipo, url, response)
-      return response.data
-    } catch (e: import('axios').AxiosError | any) {
-      if (e.code === 'ECONNABORTED') {
-        throw new Error('La petición está tardando demasiado')
-      }
-
-      if (Servicios.isNetworkError(e)) {
-        throw new Error('Error en la conexión 🌎')
-      }
-
-      if (estadosSinPermiso.includes(e.response?.status)) {
-        mostrarFullScreen()
-        await logout()
-        ocultarFullScreen()
-        return
-      }
-
-      throw e.response?.data || 'Ocurrio un error desconocido'
-    }
-  }
-
-  const borrarSesion = () => {
-    eliminarCookie('token') // Eliminando access_token
-    eliminarCookie('rol') // Eliminando rol
-    eliminarCookie('jid') // Eliminando refresh token
-    setUser(null)
-    setIdRol(null)
-  }
-
-  const logout = async () => {
-    let respuesta: { url?: string } | undefined | null
-    try {
-      setLoading(true)
-      mostrarFullScreen()
-      // await delay(1000)
-
-      respuesta = await Servicios.get({
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${leerCookie('token') ?? ''}`,
-        },
-        url: `${Constantes.baseUrl}/logout`,
-      })
-    } catch (e) {
-      imprimir(`Error al cerrar sesión: `, e)
-      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
-    } finally {
-      imprimir(`finalizando con respuesta`, respuesta)
-      borrarSesion()
-      if (respuesta?.url) {
-        window.location.href = respuesta?.url
-      } else {
-        router.reload()
-        await delay(1000)
-        setLoading(false)
-        ocultarFullScreen()
-      }
-    }
-  }
-
   const AlmacenarRol = async ({ idRol }: idRolType) => {
     imprimir(`Almacenando rol 👮‍♂️: ${idRol}`)
     setIdRol(idRol)
@@ -373,29 +248,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     })
 
     if (respuestaPermisos.datos) {
-      await inicializarCasbin(respuestaPermisos.datos)
+      setEnforcer(await inicializarCasbin(respuestaPermisos.datos))
     }
-  }
-
-  const inicializarCasbin = async (politicas: string[][]) => {
-    const casbinLib = await import('casbin')
-    imprimir(`casbinLib 🪄`, casbinLib)
-
-    const model = casbinLib.newModelFromString(basicModel)
-    const policy = new casbinLib.StringAdapter(basicPolicy)
-    const enforcerTemp: Enforcer = await casbinLib.newEnforcer(model, policy)
-    for await (const p of politicas) {
-      await enforcerTemp.addPolicy(p[0], p[1], p[2], p[3], p[4], p[5])
-    }
-    setEnforcer(enforcerTemp)
-  }
-
-  const verificarAutorizacion = async ({
-    sujeto,
-    objeto,
-    accion,
-  }: PoliticaType): Promise<boolean> => {
-    return (await enforcer?.enforce(sujeto, objeto, accion)) ?? false
   }
 
   const obtenerRolUsuario = () => user?.roles.find((rol) => rol.idRol == idRol)
@@ -409,44 +263,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         rolUsuario: obtenerRolUsuario(),
         setRolUsuario: CambiarRol,
         ingresar: login,
-        autorizarCiudadania: autorizarCiudadania,
         progresoLogin: loading,
-        cerrarSesion: logout,
-        sesionPeticion: sesionPeticion,
-        verificarPermiso: verificarAutorizacion,
-        interpretarPermiso: async (routerName) => {
-          if (!obtenerRolUsuario()) {
-            return {
-              read: false,
-              create: false,
-              update: false,
-              delete: false,
-            }
-          }
-
-          return {
-            read: await verificarAutorizacion({
-              sujeto: obtenerRolUsuario()?.rol ?? '',
-              objeto: routerName,
-              accion: 'read',
-            }),
-            create: await verificarAutorizacion({
-              sujeto: obtenerRolUsuario()?.rol ?? '',
-              objeto: routerName,
-              accion: 'create',
-            }),
-            update: await verificarAutorizacion({
-              sujeto: obtenerRolUsuario()?.rol ?? '',
-              objeto: routerName,
-              accion: 'update',
-            }),
-            delete: await verificarAutorizacion({
-              sujeto: obtenerRolUsuario()?.rol ?? '',
-              objeto: routerName,
-              accion: 'delete',
-            }),
-          }
-        },
+        permisoUsuario: (routerName) =>
+          interpretarPermiso(routerName, enforcer, obtenerRolUsuario()?.rol),
       }}
     >
       {children}

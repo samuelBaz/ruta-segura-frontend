@@ -23,9 +23,7 @@ import {
 } from '../../../../common/components/ui/form'
 import { isValidEmail } from '../../../../common/utils/validations'
 import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
-
-import { useAuth } from '../../../../context/auth'
-import { useAlerts } from '../../../../common/hooks'
+import { useAlerts, useSession } from '../../../../common/hooks'
 import { formatoFecha } from '../../../../common/utils/fechas'
 import { imprimir } from '../../../../common/utils/imprimir'
 
@@ -49,7 +47,7 @@ export const VistaModalUsuario = ({
   const { Alerta } = useAlerts()
 
   // Proveedor de la sesión
-  const { sesionPeticion } = useAuth()
+  const { sesionPeticion } = useSession()
 
   const { handleSubmit, control } = useForm<CrearEditarUsuarioType>({
     defaultValues: {

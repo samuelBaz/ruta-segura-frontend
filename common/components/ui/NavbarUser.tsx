@@ -35,6 +35,7 @@ import { AlertDialog } from './AlertDialog'
 import { imprimir } from '../../utils/imprimir'
 import { RoleType } from '../../../modules/login/types/loginTypes'
 import { useThemeContext } from '../../../context/ui/ThemeContext'
+import { useSession } from '../../hooks'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -43,8 +44,9 @@ export const NavbarUser = () => {
 
   const [roles, setRoles] = useState<RoleType[]>([])
 
-  const { usuario, idRolUsuario, setRolUsuario, cerrarSesion, rolUsuario } =
-    useAuth()
+  const { cerrarSesion } = useSession()
+
+  const { usuario, idRolUsuario, setRolUsuario, rolUsuario } = useAuth()
 
   const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
 
@@ -86,8 +88,7 @@ export const NavbarUser = () => {
 
   const cerrarMenuSesion = async () => {
     cerrarMenu()
-    await delay(100)
-    cerrarSesion()
+    await cerrarSesion()
   }
 
   const interpretarRoles = () => {

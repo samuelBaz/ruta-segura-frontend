@@ -16,7 +16,7 @@ import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
 import { VistaModalParametro } from '../../modules/admin/parametros/ui'
-import { useAlerts } from '../../common/hooks'
+import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametrosCRUDTypes'
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
@@ -40,7 +40,8 @@ const Parametros: NextPage = () => {
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
-  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
+  const { sesionPeticion } = useSession()
+  const { estaAutenticado, permisoUsuario } = useAuth()
 
   const [filtroParametro, setFiltroParametro] = useState<string>('')
   const [mostrarFiltroParametros, setMostrarFiltroParametros] = useState(false)
@@ -183,7 +184,7 @@ const Parametros: NextPage = () => {
   }
 
   async function definirPermisos() {
-    setPermisos(await interpretarPermiso(router.pathname))
+    setPermisos(await permisoUsuario(router.pathname))
   }
 
   useEffect(() => {
@@ -197,7 +198,6 @@ const Parametros: NextPage = () => {
   }, [estaAutenticado, pagina, limite, filtroParametro])
 
   useEffect(() => {
-    imprimir(`filtro cerrado`, mostrarFiltroParametros)
     if (!mostrarFiltroParametros) {
       setFiltroParametro('')
     }

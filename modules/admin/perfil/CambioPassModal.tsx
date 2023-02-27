@@ -10,9 +10,8 @@ import {
   InterpreteMensajes,
   seguridadPass,
 } from '../../../common/utils'
-import { useAlerts } from '../../../common/hooks'
+import { useAlerts, useSession } from '../../../common/hooks'
 import { Constantes } from '../../../config'
-import { useAuth } from '../../../context/auth'
 import Typography from '@mui/material/Typography'
 
 export interface CambioPassModalType {
@@ -34,7 +33,7 @@ export const CambioPassModal = ({
     },
   })
 
-  const { sesionPeticion } = useAuth()
+  const { sesionPeticion } = useSession()
 
   const validarPass = async ({
     oldPassword,

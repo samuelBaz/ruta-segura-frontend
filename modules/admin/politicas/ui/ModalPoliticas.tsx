@@ -11,8 +11,7 @@ import {
   FormInputText,
 } from '../../../../common/components/ui/form'
 import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
-import { useAuth } from '../../../../context/auth'
-import { useAlerts } from '../../../../common/hooks'
+import { useAlerts, useSession } from '../../../../common/hooks'
 import { imprimir } from '../../../../common/utils/imprimir'
 import {
   CrearEditarPoliticaCRUDType,
@@ -39,7 +38,7 @@ export const VistaModalPolitica = ({
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
   // Proveedor de la sesión
-  const { sesionPeticion } = useAuth()
+  const { sesionPeticion } = useSession()
 
   const politicaActual: PoliticaCRUDType | undefined = politica
 

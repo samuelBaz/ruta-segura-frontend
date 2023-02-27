@@ -33,7 +33,7 @@ import {
   FiltroUsuarios,
   VistaModalUsuario,
 } from '../../modules/admin/usuarios/ui'
-import { useAlerts } from '../../common/hooks'
+import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import {
@@ -90,7 +90,9 @@ const Usuarios: NextPage = () => {
   const [mostrarFiltroUsuarios, setMostrarFiltroUsuarios] = useState(false)
 
   // Proveedor de la sesión
-  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
+
+  const { sesionPeticion } = useSession()
+  const { estaAutenticado, permisoUsuario } = useAuth()
 
   // Permisos para acciones
   const [permisos, setPermisos] = useState<CasbinTypes>({
@@ -503,8 +505,12 @@ const Usuarios: NextPage = () => {
 
   /// Método que define permisos por rol desde la sesión
   const definirPermisos = async () => {
-    setPermisos(await interpretarPermiso(router.pathname))
+    setPermisos(await permisoUsuario(router.pathname))
   }
+
+  useEffect(() => {
+    imprimir('🔒', permisos)
+  }, [permisos])
 
   useEffect(() => {
     definirPermisos().finally()
@@ -532,7 +538,6 @@ const Usuarios: NextPage = () => {
   ])
 
   useEffect(() => {
-    imprimir(`filtro cerrado`, mostrarFiltroUsuarios)
     if (!mostrarFiltroUsuarios) {
       setFiltroUsuario('')
       setFiltroRoles([])

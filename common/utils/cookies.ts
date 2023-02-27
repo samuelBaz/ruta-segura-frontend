@@ -18,3 +18,10 @@ export const eliminarCookie = (key: string) => {
   imprimir(`🍪 🗑`, key)
   return Cookies.remove(key)
 }
+
+export const eliminarCookies = () => {
+  Object.keys(Cookies.get()).forEach((cookieName) => {
+    imprimir(`🍪 🗑`, cookieName)
+    Cookies.remove(cookieName)
+  })
+}

@@ -16,7 +16,7 @@ import { Constantes } from '../../config'
 import { Paginacion } from '../../common/components/ui/Paginacion'
 import { useRouter } from 'next/router'
 import { VistaModalPolitica } from '../../modules/admin/politicas/ui'
-import { useAlerts } from '../../common/hooks'
+import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTypes'
 
@@ -49,7 +49,8 @@ const Politicas: NextPage = () => {
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
-  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
+  const { sesionPeticion } = useSession()
+  const { estaAutenticado, permisoUsuario } = useAuth()
 
   // Permisos para acciones
   const [permisos, setPermisos] = useState<CasbinTypes>({
@@ -246,7 +247,7 @@ const Politicas: NextPage = () => {
   }
 
   async function definirPermisos() {
-    setPermisos(await interpretarPermiso(router.pathname))
+    setPermisos(await permisoUsuario(router.pathname))
   }
 
   useEffect(() => {
@@ -262,7 +263,6 @@ const Politicas: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado, pagina, limite, filtroApp, filtroPolitica])
   useEffect(() => {
-    imprimir(`filtro cerrado: ${mostrarFiltroPolitica}`)
     if (!mostrarFiltroPolitica) {
       setFiltroPolitica('')
       setFiltroApp('')

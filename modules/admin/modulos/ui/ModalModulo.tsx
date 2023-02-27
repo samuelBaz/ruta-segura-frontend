@@ -6,11 +6,10 @@ import {
   FormInputText,
 } from '../../../../common/components/ui/form'
 import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
-import { useAlerts } from '../../../../common/hooks'
+import { useAlerts, useSession } from '../../../../common/hooks'
 import { InterpreteMensajes } from '../../../../common/utils'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { Constantes } from '../../../../config'
-import { useAuth } from '../../../../context/auth'
 import { ModalModuloType } from '../types/ModalModuloType'
 import {
   CrearEditarModulosType,
@@ -29,7 +28,7 @@ export const VistaModalModulo = ({
   const { Alerta } = useAlerts()
 
   // Proveedor de la sesión
-  const { sesionPeticion } = useAuth() //hook
+  const { sesionPeticion } = useSession()
 
   const { handleSubmit, control, watch } = useForm<CrearEditarModulosType>({
     defaultValues: {

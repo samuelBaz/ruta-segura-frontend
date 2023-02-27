@@ -19,7 +19,6 @@ import {
   titleCase,
 } from '../../common/utils'
 import { Constantes } from '../../config'
-import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
 import { ModuloCRUDType } from '../../modules/admin/modulos/types/CrearEditarModulosType'
 import { VistaModalModulo } from '../../modules/admin/modulos/ui/ModalModulo'
@@ -27,6 +26,7 @@ import { useRouter } from 'next/router'
 import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { BotonAcciones } from '../../common/components/ui/BotonAcciones'
+import { useAlerts, useSession } from '../../common/hooks'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -49,12 +49,13 @@ const Modulos: NextPage = () => {
     useState(false)
 
   const { Alerta } = useAlerts()
-  const { sesionPeticion, estaAutenticado, interpretarPermiso } = useAuth()
+  const { sesionPeticion } = useSession()
+  const { estaAutenticado, permisoUsuario } = useAuth()
 
   const [filtroBuscar, setFiltroBuscar] = useState<string>('')
 
   const definirPermisos = async () => {
-    setPermisos(await interpretarPermiso(router.pathname))
+    setPermisos(await permisoUsuario(router.pathname))
   }
 
   useEffect(() => {
