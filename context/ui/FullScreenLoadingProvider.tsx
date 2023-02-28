@@ -40,13 +40,21 @@ export const FullScreenLoadingProvider = ({
         mostrarFullScreen: mostrarFullScreen,
       }}
     >
-      {mostrar ? (
+      {mostrar && (
         <Box minHeight="100vh">
           <FullScreenLoading mensaje={mensaje} />
         </Box>
-      ) : null}
+      )}
       <Fade in={!mostrar} timeout={1000}>
-        <Box minHeight="100vh">{children}</Box>
+        <Box
+          sx={{
+            display: mostrar ? 'none' : 'block',
+            displayPrint: mostrar ? 'none' : 'block',
+          }}
+          minHeight="100vh"
+        >
+          {children}
+        </Box>
       </Fade>
     </FullScreenLoadingContext.Provider>
   )

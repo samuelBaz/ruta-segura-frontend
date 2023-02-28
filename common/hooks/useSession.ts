@@ -1,10 +1,4 @@
-import {
-  delay,
-  eliminarCookies,
-  guardarCookie,
-  InterpreteMensajes,
-  leerCookie,
-} from '../utils'
+import { delay, eliminarCookies, guardarCookie, leerCookie } from '../utils'
 import { imprimir } from '../utils/imprimir'
 import {
   estadosSinPermiso,
@@ -14,13 +8,10 @@ import {
 import { verificarToken } from '../utils/token'
 import { Constantes } from '../../config'
 import { useFullScreenLoading } from '../../context/ui'
-import { useAlerts } from './useAlerts'
 import { useRouter } from 'next/router'
 
 export const useSession = () => {
   const router = useRouter()
-
-  const { Alerta } = useAlerts()
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
   const sesionPeticion = async ({
