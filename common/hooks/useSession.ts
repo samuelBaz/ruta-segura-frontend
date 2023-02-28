@@ -77,31 +77,30 @@ export const useSession = () => {
   }
 
   const cerrarSesion = async () => {
-    let respuesta: { url?: string } | undefined | null
     try {
       mostrarFullScreen()
-      // await delay(1000)
+      await delay(1000)
+      const token = leerCookie('token')
+      eliminarCookies()
 
-      respuesta = await Servicios.get({
+      const respuesta = await Servicios.get({
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer ${leerCookie('token') ?? ''}`,
+          Authorization: `Bearer ${token}`,
         },
         url: `${Constantes.baseUrl}/logout`,
       })
-    } catch (e) {
-      imprimir(`Error al cerrar sesión: `, e)
-      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
-    } finally {
       imprimir(`finalizando con respuesta`, respuesta)
-      eliminarCookies()
+
       if (respuesta?.url) {
         window.location.href = respuesta?.url
       } else {
         router.reload()
-        await delay(1000)
-        ocultarFullScreen()
       }
+    } catch (e) {
+      imprimir(`Error al cerrar sesión: `, e)
+    } finally {
+      ocultarFullScreen()
     }
   }
 

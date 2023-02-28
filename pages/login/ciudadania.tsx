@@ -9,6 +9,7 @@ import { Constantes } from '../../config'
 import { imprimir } from '../../common/utils/imprimir'
 import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
+import { ParsedUrlQuery } from 'querystring'
 
 const Ciudadania: NextPage = () => {
   const router = useRouter()
@@ -16,7 +17,7 @@ const Ciudadania: NextPage = () => {
   const { Alerta } = useAlerts()
   const { cargarUsuarioManual } = useAuth()
 
-  const autorizarCiudadania = async (parametros: any) => {
+  const autorizarCiudadania = async (parametros: ParsedUrlQuery) => {
     try {
       const respuesta = await Servicios.get({
         url: `${Constantes.baseUrl}/ciudadania-autorizar`,
