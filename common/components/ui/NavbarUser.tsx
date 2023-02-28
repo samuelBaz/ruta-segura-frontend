@@ -46,7 +46,7 @@ export const NavbarUser = () => {
 
   const { cerrarSesion } = useSession()
 
-  const { usuario, idRolUsuario, setRolUsuario, rolUsuario } = useAuth()
+  const { usuario, setRolUsuario, rolUsuario } = useAuth()
 
   const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
 
@@ -281,7 +281,7 @@ export const NavbarUser = () => {
                           value={rol.idRol}
                           control={
                             <Radio
-                              checked={idRolUsuario == rol.idRol}
+                              checked={rolUsuario?.idRol == rol.idRol}
                               onChange={cambiarRol}
                               color={'success'}
                               size="small"

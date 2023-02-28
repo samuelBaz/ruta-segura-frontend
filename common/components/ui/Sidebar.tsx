@@ -24,7 +24,7 @@ const drawerWidth = 240
 export const Sidebar = () => {
   const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
 
-  const { usuario, idRolUsuario, estaAutenticado, progresoLogin } = useAuth()
+  const { usuario, rolUsuario, estaAutenticado, progresoLogin } = useAuth()
 
   const [modulos, setModulos] = useState<ModuloType[]>([])
 
@@ -43,7 +43,9 @@ export const Sidebar = () => {
     let rolSeleccionado: RoleType | undefined
     roles = usuario?.roles ?? []
     if (roles && roles.length > 0) {
-      rolSeleccionado = roles.find((itemRol) => itemRol.idRol == idRolUsuario)
+      rolSeleccionado = roles.find(
+        (itemRol) => itemRol.idRol == rolUsuario?.idRol
+      )
       if (rolSeleccionado) {
         setModulos(rolSeleccionado.modulos)
         imprimir(`rolSeleccionado`, rolSeleccionado)

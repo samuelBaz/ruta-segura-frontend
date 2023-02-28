@@ -19,10 +19,10 @@ interface FullScreenProviderContextType {
 export const FullScreenLoadingProvider = ({
   children,
 }: FullScreenProviderContextType) => {
-  const [mensaje, setMensaje] = useState<string | undefined | null>()
+  const [mensaje, setMensaje] = useState<string | null>()
   const [mostrar, setMostrar] = useState<boolean>(false)
 
-  const mostrarFullScreen = (mensaje?: string | undefined | null) => {
+  const mostrarFullScreen = (mensaje?: string | null) => {
     setMensaje(mensaje)
     setMostrar(true)
   }

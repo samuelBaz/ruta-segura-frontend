@@ -17,10 +17,9 @@ import { Servicios } from '../../common/services'
 import { Constantes } from '../../config'
 import { useRouter } from 'next/router'
 import { useFullScreenLoading } from '../ui'
-import { useAlerts, useSession } from '../../common/hooks'
+import { useAlerts, useCasbinEnforcer, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import {
-  AutorizacionLoginType,
   idRolType,
   LoginType,
   RoleType,
@@ -29,12 +28,11 @@ import {
 import { Enforcer } from 'casbin'
 
 import { CasbinTypes } from '../../common/types'
-import { useCasbinEnforcer } from '../../common/hooks'
 
 interface ContextProps {
+  cargarUsuarioManual: () => Promise<void>
   estaAutenticado: boolean
   usuario: UsuarioType | null
-  idRolUsuario: string | undefined | null
   rolUsuario: RoleType | undefined
   setRolUsuario: ({ idRol }: idRolType) => Promise<void>
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
@@ -64,23 +62,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const { interpretarPermiso, inicializarCasbin } = useCasbinEnforcer()
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
-  const loadUserFromCookies = async () => {
+  const inicializarUsuario = async () => {
     const token = leerCookie('token')
 
     if (!token) {
       imprimir(`Token no definido 🥾: ${token}`)
-      await delay(500)
-      mostrarFullScreen()
-      await delay(500)
-
-      const { code, state, session_state } = router.query
-      if (code && state && session_state) {
-        await autorizarCiudadania({
-          code: code as string,
-          state: state as string,
-          session_state: session_state as string,
-        })
-      }
 
       if (router.pathname == '/') {
         imprimir(`🏡 -> login`)
@@ -89,43 +75,24 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         })
       }
       setLoading(false)
-      ocultarFullScreen()
+
       return
     }
 
     try {
       mostrarFullScreen()
 
-      const respuestaUsuario = await sesionPeticion({
-        url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
-      })
+      await obtenerUsuarioRol()
 
-      imprimir(`es ciudadano?: ${respuestaUsuario.datos.ciudadania_digital}`)
-
-      if (
-        respuestaUsuario.datos &&
-        respuestaUsuario.datos.roles &&
-        respuestaUsuario.datos.roles.length > 0
-      ) {
-        setUser(respuestaUsuario.datos)
-        imprimir(
-          `rol definido en loadUserFromCookies 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
-        )
-        await AlmacenarRol({
-          idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
-        })
-      }
       await obtenerPermisos()
-
+      await delay(1000)
       if (router.pathname == '/login' || router.pathname == '/') {
-        mostrarFullScreen()
-        await delay(1000)
         await router.replace({
           pathname: '/admin/home',
         })
       }
     } catch (error: Error | any) {
-      imprimir(`Error durante Auth Provider 🚨`, error)
+      imprimir(`Error durante inicializarUsuario 🚨`, error)
       eliminarCookies()
 
       setUser(null)
@@ -138,16 +105,42 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       throw error
     } finally {
       setLoading(false)
+      ocultarFullScreen()
     }
+  }
 
-    setLoading(false)
-    ocultarFullScreen()
+  const cargarUsuarioManual = async () => {
+    try {
+      await obtenerUsuarioRol()
+      await obtenerPermisos()
+
+      mostrarFullScreen()
+      await delay(1000)
+
+      await router.replace({
+        pathname: '/admin/home',
+      })
+    } catch (error: Error | any) {
+      imprimir(`Error durante cargarUsuarioManual 🚨`, error)
+      eliminarCookies()
+
+      setUser(null)
+      setIdRol(null)
+
+      imprimir(`🚨 -> login`)
+      await router.replace({
+        pathname: '/login',
+      })
+      throw error
+    } finally {
+      ocultarFullScreen()
+    }
   }
 
   useEffect(() => {
     if (!router.isReady) return
 
-    loadUserFromCookies().finally(() => {
+    inicializarUsuario().finally(() => {
       imprimir('Verificación de login finalizada 👨‍💻')
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,26 +157,24 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         headers: {},
       })
 
-      if (respuesta.datos?.access_token) {
-        guardarCookie('token', respuesta.datos?.access_token)
-        imprimir(`Token ✅: ${respuesta.datos?.access_token}`)
+      guardarCookie('token', respuesta.datos?.access_token)
+      imprimir(`Token ✅: ${respuesta.datos?.access_token}`)
 
-        setUser(respuesta.datos)
-        imprimir(`Usuarios ✅`, respuesta.datos)
+      setUser(respuesta.datos)
+      imprimir(`Usuarios ✅`, respuesta.datos)
 
-        if (respuesta.datos.roles && respuesta.datos.roles.length > 0) {
-          imprimir(`rol inicial 👨‍💻: ${respuesta.datos.roles[0].idRol}`)
-          await AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
-        }
-
-        await obtenerPermisos()
-
-        mostrarFullScreen()
-        await delay(1000)
-        await router.replace({
-          pathname: '/admin/home',
-        })
+      if (respuesta?.datos?.roles?.length > 0) {
+        imprimir(`rol inicial 👨‍💻: ${respuesta.datos.roles[0].idRol}`)
+        await AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
       }
+
+      await obtenerPermisos()
+
+      mostrarFullScreen()
+      await delay(1000)
+      await router.replace({
+        pathname: '/admin/home',
+      })
     } catch (e) {
       imprimir(`Error al iniciar sesión: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
@@ -197,38 +188,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
-  const autorizarCiudadania = async ({
-    code,
-    state,
-    session_state,
-  }: AutorizacionLoginType) => {
-    try {
-      setLoading(true)
-      await delay(500)
-      const respuesta = await Servicios.get({
-        url: `${Constantes.baseUrl}/ciudadania-autorizar`,
-        body: {},
-        params: {
-          code: code,
-          state: state,
-          session_state: session_state,
-        },
-        headers: {
-          accept: 'application/json',
-        },
-      })
-
-      imprimir(`Sesión Autorizada`, respuesta)
-      guardarCookie('token', respuesta.access_token)
-      await loadUserFromCookies()
-    } catch (e) {
-      imprimir(`Error al autorizar sesión`, e)
-      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const AlmacenarRol = async ({ idRol }: idRolType) => {
     imprimir(`Almacenando rol 👮‍♂️: ${idRol}`)
     setIdRol(idRol)
@@ -239,7 +198,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     imprimir(`Cambiando rol 👮‍♂️: ${idRol}`)
     setIdRol(idRol)
     guardarCookie('rol', idRol)
-    await loadUserFromCookies()
+    await inicializarUsuario()
   }
 
   const obtenerPermisos = async () => {
@@ -252,20 +211,38 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
-  const obtenerRolUsuario = () => user?.roles.find((rol) => rol.idRol == idRol)
+  const obtenerUsuarioRol = async () => {
+    const respuestaUsuario = await sesionPeticion({
+      url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
+    })
+
+    if (respuestaUsuario?.datos?.roles?.length == 0) {
+      throw new Error('Error, no tienes los roles necesarios para acceder')
+    }
+
+    setUser(respuestaUsuario.datos)
+    imprimir(
+      `rol definido en obtenerUsuarioRol 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
+    )
+    await AlmacenarRol({
+      idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
+    })
+  }
+
+  const rolUsuario = () => user?.roles.find((rol) => rol.idRol == idRol)
 
   return (
     <AuthContext.Provider
       value={{
+        cargarUsuarioManual,
         estaAutenticado: !!user && !loading,
         usuario: user,
-        idRolUsuario: idRol,
-        rolUsuario: obtenerRolUsuario(),
+        rolUsuario: rolUsuario(),
         setRolUsuario: CambiarRol,
         ingresar: login,
         progresoLogin: loading,
-        permisoUsuario: (routerName) =>
-          interpretarPermiso(routerName, enforcer, obtenerRolUsuario()?.rol),
+        permisoUsuario: (routerName: string) =>
+          interpretarPermiso(routerName, enforcer, rolUsuario()?.rol),
       }}
     >
       {children}

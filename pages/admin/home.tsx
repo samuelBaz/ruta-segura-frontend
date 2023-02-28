@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import { siteName, titleCase } from '../../common/utils'
 
 const Home: NextPage = () => {
-  const { usuario, rolUsuario, idRolUsuario } = useAuth()
+  const { usuario, rolUsuario } = useAuth()
 
   const router = useRouter()
 
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
       <Grid container direction="row" alignItems="center">
         <Grid container direction="row">
           {usuario?.roles
-            .filter((ur) => ur.idRol == idRolUsuario)
+            .filter((ur) => ur.idRol == rolUsuario?.idRol)
             .map((rolUsuario, index) => (
               <div key={`usuario-${index}`}>
                 {rolUsuario.modulos.map((modulo, index1) => (
