@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.9...v1.7.0) (2023-02-28)
+
+
+### Features
+
+* reorganización de lógica de inicio de sesión con Ciudadanía Digital ([9213b9b](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9213b9b2ffc29a6ed067bb826a69ad5a8bdd2f21))
+* separada lógica de peticiones con sesiones y verificación de permisos ([781fea4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/781fea4f697ec305c540549f5d8a37a13acff04b))
+
+
+### Bug Fixes
+
+* ajuste parámetros autorización ciudadanía ([6cd2e95](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6cd2e95b404a194bd6c6f009ee32f73f2cabc541))
+* corregido error en componente de carga que muestra el espacio de contenido en la parte inferior ([cddc749](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/cddc749ada3ce912a142efc9b87b47fc25a4c989))
+* mejorado método de cierre de sesión, con y sin ciudadanía ([eefc819](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/eefc81948f10eb358800f9f36485ede5c7252091))
+
 ### [1.6.9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.8...v1.6.9) (2023-02-26)
 
 
