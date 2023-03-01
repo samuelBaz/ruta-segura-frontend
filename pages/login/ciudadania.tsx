@@ -3,19 +3,26 @@ import React, { useEffect } from 'react'
 import { NextPage } from 'next'
 import { FullScreenLoading } from '../../common/components/ui/FullScreenLoading'
 import { useRouter } from 'next/router'
-import { delay, guardarCookie, InterpreteMensajes } from '../../common/utils'
+import {
+  delay,
+  eliminarCookies,
+  guardarCookie,
+  InterpreteMensajes,
+} from '../../common/utils'
 import { Servicios } from '../../common/services'
 import { Constantes } from '../../config'
 import { imprimir } from '../../common/utils/imprimir'
 import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
 import { ParsedUrlQuery } from 'querystring'
+import { useFullScreenLoading } from '../../context/ui'
 
 const Ciudadania: NextPage = () => {
   const router = useRouter()
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
   const { cargarUsuarioManual } = useAuth()
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const autorizarCiudadania = async (parametros: ParsedUrlQuery) => {
     try {
@@ -34,6 +41,15 @@ const Ciudadania: NextPage = () => {
     } catch (e) {
       imprimir(`Error al autorizar sesión`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+      eliminarCookies()
+
+      imprimir(`🚨 -> login`)
+      mostrarFullScreen()
+      await delay(1000)
+      await router.replace({
+        pathname: '/login',
+      })
+      ocultarFullScreen()
     }
   }
 
