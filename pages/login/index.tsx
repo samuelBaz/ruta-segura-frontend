@@ -1,18 +1,18 @@
 import type { NextPage } from 'next'
-import { LayoutLogin } from '../common/components/layouts'
+import { LayoutLogin } from '../../common/components/layouts'
 import Grid from '@mui/material/Grid'
 import { Box, Divider, useMediaQuery, useTheme } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { delay, InterpreteMensajes, siteName } from '../common/utils'
-import { Constantes } from '../config'
-import { Servicios } from '../common/services'
-import { useFullScreenLoading } from '../context/ui'
+import { delay, InterpreteMensajes, siteName } from '../../common/utils'
+import { Constantes } from '../../config'
+import { Servicios } from '../../common/services'
+import { useFullScreenLoading } from '../../context/ui'
 import { useEffect } from 'react'
-import { useAlerts } from '../common/hooks'
-import { imprimir } from '../common/utils/imprimir'
-import LoginRegistroTabContainer from '../modules/login/ui/LoginRegistroContainer'
+import { useAlerts } from '../../common/hooks'
+import { imprimir } from '../../common/utils/imprimir'
+import LoginRegistroTabContainer from '../../modules/login/ui/LoginRegistroContainer'
 
-const Login: NextPage = () => {
+const Index: NextPage = () => {
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
@@ -114,4 +114,4 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
+export default Index
