@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import { Button, ButtonProps } from '@mui/material'
-import { useThemeContext } from '../../../context/ui/ThemeContext'
 import { FC, MouseEventHandler, PropsWithChildren } from 'react'
-import { Constantes } from '../../../config'
 import { styled } from '@mui/system'
+import { Constantes } from '../../../config'
+import { useThemeContext } from '../../../context/ui/ThemeContext'
 
 export interface BotonCiudadaniaType {
   altText: string
@@ -15,7 +15,10 @@ export interface BotonCiudadaniaType {
 const ColorButton = styled(Button)<ButtonProps>(({}) => {
   const { themeMode } = useThemeContext()
   return {
-    color: themeMode == 'light' ? '#3C5BA9' : '#B3C5FF',
+    backgroundColor: themeMode == 'light' ? '#3C5BA9' : '#B3C5FF',
+    '&:hover': {
+      backgroundColor: themeMode == 'light' ? '#334c8d' : '#8e9dcc',
+    },
   }
 })
 
@@ -29,20 +32,19 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
   return (
     <ColorButton
       type="button"
-      sx={{ borderRadius: 2, border: 1, bgcolor: 'background.paper' }}
-      variant="outlined"
+      sx={{ borderRadius: 2 }}
+      variant="contained"
       fullWidth={fullWidth}
       style={{ textTransform: 'none' }}
       disabled={disabled}
       onClick={accion}
+      color={'primary'}
     >
       <Image
         src={`${Constantes.sitePath}/logo_ciudadania_redondo.png`}
         alt={altText}
         width="35"
         height="35"
-        quality={'100'}
-        style={{ objectFit: 'contain' }}
       />
       {children}
     </ColorButton>
