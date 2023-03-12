@@ -66,6 +66,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
   const nuevaPassPeticion = async (params: nuevaPassPeticionType) => {
     try {
       setLoadingModal(true)
+      await delay(1000)
       const respuesta = await Servicios.peticion({
         url: `${Constantes.baseUrl}/usuarios/cuenta/nueva-contrasena`,
         tipo: 'patch',

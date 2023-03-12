@@ -1,4 +1,4 @@
-import { delay, eliminarCookies, guardarCookie, leerCookie } from '../utils'
+import { delay, eliminarCookie, guardarCookie, leerCookie } from '../utils'
 import { imprimir } from '../utils/imprimir'
 import {
   estadosSinPermiso,
@@ -67,12 +67,18 @@ export const useSession = () => {
     }
   }
 
+  const borrarCookiesSesion = () => {
+    eliminarCookie('token') // Eliminando access_token
+    eliminarCookie('rol') // Eliminando rol
+    eliminarCookie('jid') // Eliminando refresh token
+  }
+
   const cerrarSesion = async () => {
     try {
       mostrarFullScreen()
       await delay(1000)
       const token = leerCookie('token')
-      eliminarCookies()
+      borrarCookiesSesion()
 
       const respuesta = await Servicios.get({
         headers: {
@@ -111,5 +117,5 @@ export const useSession = () => {
     }
   }
 
-  return { sesionPeticion, cerrarSesion }
+  return { sesionPeticion, cerrarSesion, borrarCookiesSesion }
 }

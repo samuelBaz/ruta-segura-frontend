@@ -3,12 +3,7 @@ import React, { useEffect } from 'react'
 import { NextPage } from 'next'
 import { FullScreenLoading } from '../../common/components/ui/FullScreenLoading'
 import { useRouter } from 'next/router'
-import {
-  delay,
-  eliminarCookies,
-  guardarCookie,
-  InterpreteMensajes,
-} from '../../common/utils'
+import { delay, guardarCookie, InterpreteMensajes } from '../../common/utils'
 import { Servicios } from '../../common/services'
 import { Constantes } from '../../config'
 import { imprimir } from '../../common/utils/imprimir'
@@ -41,9 +36,7 @@ const Ciudadania: NextPage = () => {
     } catch (e) {
       imprimir(`Error al autorizar sesión`, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
-      eliminarCookies()
 
-      imprimir(`🚨 -> login`)
       mostrarFullScreen()
       await delay(1000)
       await router.replace({

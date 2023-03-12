@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 import {
   delay,
-  eliminarCookies,
   encodeBase64,
   guardarCookie,
   InterpreteMensajes,
@@ -58,7 +57,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const router = useRouter()
 
-  const { sesionPeticion } = useSession()
+  const { sesionPeticion, borrarCookiesSesion } = useSession()
   const { interpretarPermiso, inicializarCasbin } = useCasbinEnforcer()
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
@@ -66,39 +65,18 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     const token = leerCookie('token')
 
     if (!token) {
-      imprimir(`Token no definido 🥾: ${token}`)
-
-      if (router.pathname == '/') {
-        imprimir(`🏡 -> login`)
-        await router.replace({
-          pathname: '/login',
-        })
-      }
       setLoading(false)
-
       return
     }
 
     try {
       mostrarFullScreen()
-
       await obtenerUsuarioRol()
-
       await obtenerPermisos()
       await delay(1000)
-      if (router.pathname == '/login' || router.pathname == '/') {
-        await router.replace({
-          pathname: '/admin/home',
-        })
-      }
     } catch (error: Error | any) {
-      imprimir(`Error durante inicializarUsuario 🚨`, error)
-      eliminarCookies()
-
-      setUser(null)
-      setIdRol(null)
-
-      imprimir(`🚨 -> login`)
+      imprimir(`Error durante inicializarUsuario 🚨`, typeof error, error)
+      borrarSesionUsuario()
       await router.replace({
         pathname: '/login',
       })
@@ -107,6 +85,12 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       setLoading(false)
       ocultarFullScreen()
     }
+  }
+
+  const borrarSesionUsuario = () => {
+    setUser(null)
+    setIdRol(null)
+    borrarCookiesSesion()
   }
 
   const cargarUsuarioManual = async () => {
@@ -122,10 +106,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       })
     } catch (error: Error | any) {
       imprimir(`Error durante cargarUsuarioManual 🚨`, error)
-      eliminarCookies()
-
-      setUser(null)
-      setIdRol(null)
+      borrarSesionUsuario()
 
       imprimir(`🚨 -> login`)
       await router.replace({
@@ -140,9 +121,11 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   useEffect(() => {
     if (!router.isReady) return
 
-    inicializarUsuario().finally(() => {
-      imprimir('Verificación de login finalizada 👨‍💻')
-    })
+    inicializarUsuario()
+      .catch(imprimir)
+      .finally(() => {
+        imprimir('Verificación de login finalizada 👨‍💻')
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady])
 
@@ -178,10 +161,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     } catch (e) {
       imprimir(`Error al iniciar sesión: `, e)
       Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
-      eliminarCookies()
-
-      setUser(null)
-      setIdRol(null)
+      borrarSesionUsuario()
     } finally {
       setLoading(false)
       ocultarFullScreen()
@@ -199,6 +179,9 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     setIdRol(idRol)
     guardarCookie('rol', idRol)
     await inicializarUsuario()
+    await router.replace({
+      pathname: '/admin/home',
+    })
   }
 
   const obtenerPermisos = async () => {
