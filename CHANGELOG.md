@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.7.0...v1.8.0) (2023-04-02)
+
+
+### Features
+
+* se mejora la lógica de redirecciones moviendo las reglas a archivo middleware ([99b9d89](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/99b9d8913fd689735f313cc3e0e8e4d41790e7c8))
+
+
+### Bug Fixes
+
+* añadida validación antes de renovar el token en caso de valor no definido ([03731c5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/03731c5d0f96ac883cad8fdd5192f00aa590667d))
+* corregido error en función de impresión ocasionado por no encontrar valor en regex ([0fe07e8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/0fe07e804d14e752478c74f43e9757ab11da4aaf))
+* corregido error en redirección de oauth de usuarios no autorizados ([ab52659](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ab52659743ee61cf7442fa73cdc38230960ddbf7))
+
 ## [1.7.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.6.9...v1.7.0) (2023-02-28)
 
 
