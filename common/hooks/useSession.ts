@@ -24,6 +24,11 @@ export const useSession = () => {
     withCredentials,
   }: peticionFormatoMetodo) => {
     try {
+      if (!leerCookie('token')) {
+        borrarCookiesSesion()
+        router.reload()
+      }
+
       if (!verificarToken(leerCookie('token') ?? '')) {
         imprimir(`Token caducado ⏳`)
         await actualizarSesion()
@@ -96,6 +101,7 @@ export const useSession = () => {
       }
     } catch (e) {
       imprimir(`Error al cerrar sesión: `, e)
+      router.reload()
     } finally {
       ocultarFullScreen()
     }
