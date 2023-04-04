@@ -74,7 +74,6 @@ export const useSession = () => {
 
   const borrarCookiesSesion = () => {
     eliminarCookie('token') // Eliminando access_token
-    eliminarCookie('rol') // Eliminando rol
     eliminarCookie('jid') // Eliminando refresh token
   }
 
