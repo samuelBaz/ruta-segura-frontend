@@ -14,6 +14,7 @@ export const useSession = () => {
   const router = useRouter()
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
+
   const sesionPeticion = async ({
     url,
     tipo = 'get',
@@ -112,6 +113,9 @@ export const useSession = () => {
     try {
       const respuesta = await Servicios.post({
         url: `${Constantes.baseUrl}/token`,
+        body: {
+          token: leerCookie('token'),
+        },
       })
 
       guardarCookie('token', respuesta.datos?.access_token)
