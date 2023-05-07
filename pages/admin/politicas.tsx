@@ -93,7 +93,7 @@ const Politicas: NextPage = () => {
       <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
         {permisos.update && (
           <IconoTooltip
-            id={'editarPolitica'}
+            id={`editarPolitica-${indexPolitica}`}
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
@@ -107,7 +107,7 @@ const Politicas: NextPage = () => {
 
         {permisos.delete && (
           <IconoTooltip
-            id={'eliminarPolitica'}
+            id={`eliminarPolitica-${indexPolitica}`}
             titulo={'Eliminar'}
             color={'error'}
             accion={() => {
@@ -137,6 +137,7 @@ const Politicas: NextPage = () => {
       onChange={() => {
         setMostrarFiltroPolitica(!mostrarFiltroPolitica)
       }}
+      aria-label="search"
     >
       <Icono>search</Icono>
     </ToggleButton>,

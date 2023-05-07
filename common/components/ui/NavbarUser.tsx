@@ -163,6 +163,7 @@ export const NavbarUser = () => {
           <IconButton
             id={'menu-sidebar'}
             size="large"
+            aria-label="Menu lateral"
             name={sideMenuOpen ? 'Cerrar menú lateral' : 'Abrir menú lateral'}
             edge="start"
             color={'primary'}

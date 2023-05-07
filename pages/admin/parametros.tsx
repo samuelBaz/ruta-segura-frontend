@@ -87,7 +87,7 @@ const Parametros: NextPage = () => {
       <Grid key={`${parametroData.id}-${indexParametro}-accion`}>
         {permisos.update && (
           <IconoTooltip
-            id={'editarParametros'}
+            id={`editarParametros-${parametroData.id}`}
             name={'Parámetros'}
             titulo={'Editar'}
             color={'primary'}
@@ -117,6 +117,7 @@ const Parametros: NextPage = () => {
       onChange={() => {
         setMostrarFiltroParametros(!mostrarFiltroParametros)
       }}
+      aria-label="search"
     >
       <Icono>search</Icono>
     </ToggleButton>,

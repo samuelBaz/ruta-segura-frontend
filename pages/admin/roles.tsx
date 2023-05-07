@@ -117,7 +117,7 @@ const Roles: NextPage = () => {
       <Grid key={`${rolData.id}-${indexRol}-accion`}>
         {permisos.update && (
           <IconoTooltip
-            id={'cambiarEstadoRol'}
+            id={`cambiarEstadoRol-${rolData.id}`}
             titulo={rolData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
             color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={async () => {
@@ -130,7 +130,7 @@ const Roles: NextPage = () => {
         )}
         {permisos.update && (
           <IconoTooltip
-            id={'editarRol'}
+            id={`editarRol-${rolData.id}`}
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
@@ -160,6 +160,7 @@ const Roles: NextPage = () => {
       onChange={() => {
         setMostrarFiltroRol(!mostrarFiltroRol)
       }}
+      aria-label="search"
     >
       <Icono>search</Icono>
     </ToggleButton>,

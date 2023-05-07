@@ -180,7 +180,7 @@ const Usuarios: NextPage = () => {
       <Grid key={`${usuarioData.id}-${indexUsuario}-acciones`}>
         {permisos.update && (
           <IconoTooltip
-            id={'editarEstadoUsuario'}
+            id={`editarEstadoUsuario-${usuarioData.id}`}
             titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
             color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={async () => {
@@ -198,7 +198,7 @@ const Usuarios: NextPage = () => {
         {(usuarioData.estado == 'ACTIVO' ||
           usuarioData.estado == 'INACTIVO') && (
           <IconoTooltip
-            id={'restablecerContrasena'}
+            id={`restablecerContrasena-${usuarioData.id}`}
             titulo={
               usuarioData.ciudadaniaDigital
                 ? 'No puede restablecer la contraseña'
@@ -215,7 +215,7 @@ const Usuarios: NextPage = () => {
         )}
         {usuarioData.estado == 'PENDIENTE' && (
           <IconoTooltip
-            id={'reenviarCorreoActivacion'}
+            id={`reenviarCorreoActivacion-${usuarioData.id}`}
             titulo={'Reenviar correo de activación'}
             color={'info'}
             accion={async () => {
@@ -228,7 +228,7 @@ const Usuarios: NextPage = () => {
         )}
         {permisos.update && (
           <IconoTooltip
-            id={'editarUsusario'}
+            id={`editarUsusario-${usuarioData.id}`}
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
@@ -259,6 +259,7 @@ const Usuarios: NextPage = () => {
       onChange={() => {
         setMostrarFiltroUsuarios(!mostrarFiltroUsuarios)
       }}
+      aria-label="search"
     >
       <Icono>search</Icono>
     </ToggleButton>,

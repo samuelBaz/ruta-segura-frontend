@@ -101,6 +101,7 @@ const Modulos: NextPage = () => {
       }}
       // name="filtroModulo"
       id={'btnFiltro'}
+      aria-label="search"
     >
       <Icono>search</Icono>
     </ToggleButton>,
@@ -109,6 +110,7 @@ const Modulos: NextPage = () => {
         id={'agregarModuloSeccion'}
         key={'agregarModuloSeccion'}
         icono={'add_circle_outline'}
+        label={'Agregar nueva sección o módulo'}
         acciones={[
           {
             id: 'agregarModulo',
@@ -329,7 +331,7 @@ const Modulos: NextPage = () => {
         <Grid key={`${moduloData.id}-${indexModulo}-acciones`}>
           {permisos.update && (
             <IconoTooltip
-              id={'cambiarEstadoModulo'}
+              id={`cambiarEstadoModulo-${moduloData.id}`}
               titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
               color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
               accion={async () => {
@@ -350,7 +352,7 @@ const Modulos: NextPage = () => {
 
           {permisos.update && (
             <IconoTooltip
-              id={'editarModulo'}
+              id={`editarModulo-${moduloData.id}`}
               titulo={'Editar'}
               color={'primary'}
               accion={() => {

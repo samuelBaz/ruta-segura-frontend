@@ -38,6 +38,7 @@ interface BotonAccionesParams {
 
   acciones: Array<TipoAccion>
   icono?: ReactNode
+  label: string
   id: string
 }
 
@@ -46,6 +47,7 @@ export const BotonAcciones = ({
   color = 'primary',
   acciones = [],
   icono = 'more_horiz',
+  label,
   id,
 }: BotonAccionesParams) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -62,6 +64,7 @@ export const BotonAcciones = ({
     <>
       <IconButton
         id={id}
+        aria-label={label}
         size="small"
         onClick={desplegarMenu}
         color="primary"
