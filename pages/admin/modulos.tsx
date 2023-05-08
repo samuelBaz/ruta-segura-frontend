@@ -1,4 +1,4 @@
-import { Button, Grid, ToggleButton, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import { NextPage } from 'next'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { LayoutUser } from '../../common/components/layouts'
@@ -27,6 +27,7 @@ import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { BotonAcciones } from '../../common/components/ui/BotonAcciones'
 import { useAlerts, useSession } from '../../common/hooks'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -85,26 +86,11 @@ const Modulos: NextPage = () => {
   }, [estaAutenticado, pagina, limite, filtroBuscar])
 
   const acciones: Array<ReactNode> = [
-    <ToggleButton
+    <BotonBuscar
       key={'accionFiltrarModuloToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroModulo}
-      onChange={() => {
-        setMostrarFiltroModulo(!mostrarFiltroModulo)
-      }}
-      // name="filtroModulo"
-      id={'btnFiltro'}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
+      mostrar={mostrarFiltroModulo}
+      cambiar={setMostrarFiltroModulo}
+    />,
     permisos.create && (
       <BotonAcciones
         id={'agregarModuloSeccion'}
@@ -159,7 +145,10 @@ const Modulos: NextPage = () => {
       limite={limite}
       total={total}
       cambioPagina={setPagina}
-      cambioLimite={setLimite}
+      cambioLimite={(nuevoLimite) => {
+        setPagina(1)
+        setLimite(nuevoLimite)
+      }}
     />
   )
   const editarModuloModal = (modulo: ModuloCRUDType) => {

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Button, Grid, ToggleButton, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import { ReactNode, useEffect, useState } from 'react'
@@ -8,7 +8,6 @@ import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import {
@@ -27,6 +26,7 @@ import { RolCRUDType } from '../../modules/admin/roles/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/roles/ui/ModalRol'
 import { FiltroRol } from '../../modules/admin/roles/ui/FiltroRol'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -146,24 +146,11 @@ const Roles: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <ToggleButton
+    <BotonBuscar
       key={'accionFiltrarRolToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroRol}
-      onChange={() => {
-        setMostrarFiltroRol(!mostrarFiltroRol)
-      }}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
+      mostrar={mostrarFiltroRol}
+      cambiar={setMostrarFiltroRol}
+    />,
     permisos.create && (
       <IconoTooltip
         id={'agregarRol'}
@@ -270,7 +257,10 @@ const Roles: NextPage = () => {
       limite={limite}
       total={total}
       cambioPagina={setPagina}
-      cambioLimite={setLimite}
+      cambioLimite={(nuevoLimite) => {
+        setPagina(1)
+        setLimite(nuevoLimite)
+      }}
     />
   )
 

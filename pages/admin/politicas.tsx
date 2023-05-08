@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Button, Grid, ToggleButton, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import { ReactNode, useEffect, useState } from 'react'
@@ -8,7 +8,6 @@ import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import { delay, InterpreteMensajes, siteName } from '../../common/utils'
@@ -22,6 +21,7 @@ import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTyp
 
 import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -123,24 +123,11 @@ const Politicas: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <ToggleButton
-      key={'accionFiltrarUsuarioToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroPolitica}
-      onChange={() => {
-        setMostrarFiltroPolitica(!mostrarFiltroPolitica)
-      }}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
+    <BotonBuscar
+      key={'accionFiltrarPoliticasToggle'}
+      mostrar={mostrarFiltroPolitica}
+      cambiar={setMostrarFiltroPolitica}
+    />,
     permisos.create && (
       <IconoTooltip
         id={'agregarPolitica'}
@@ -326,7 +313,10 @@ const Politicas: NextPage = () => {
               limite={limite}
               total={total}
               cambioPagina={setPagina}
-              cambioLimite={setLimite}
+              cambioLimite={(nuevoLimite) => {
+                setPagina(1)
+                setLimite(nuevoLimite)
+              }}
             />
           }
           filtros={

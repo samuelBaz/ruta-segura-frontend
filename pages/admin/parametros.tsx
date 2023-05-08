@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Grid, ToggleButton, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import { ReactNode, useEffect, useState } from 'react'
@@ -7,7 +7,6 @@ import { CasbinTypes, ColumnaType } from '../../common/types'
 import {
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import { delay, InterpreteMensajes, siteName } from '../../common/utils'
@@ -20,6 +19,7 @@ import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametrosCRUDTypes'
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -103,24 +103,11 @@ const Parametros: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <ToggleButton
-      key={'accionFiltrarUsuarioToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroParametros}
-      onChange={() => {
-        setMostrarFiltroParametros(!mostrarFiltroParametros)
-      }}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
+    <BotonBuscar
+      key={'accionFiltrarParametrosToggle'}
+      mostrar={mostrarFiltroParametros}
+      cambiar={setMostrarFiltroParametros}
+    />,
     permisos.create && (
       <IconoTooltip
         id={'agregarParametro'}
@@ -210,7 +197,10 @@ const Parametros: NextPage = () => {
       limite={limite}
       total={total}
       cambioPagina={setPagina}
-      cambioLimite={setLimite}
+      cambioLimite={(nuevoLimite) => {
+        setPagina(1)
+        setLimite(nuevoLimite)
+      }}
     />
   )
 
