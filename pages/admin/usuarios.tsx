@@ -4,7 +4,6 @@ import {
   Button,
   Chip,
   Grid,
-  ToggleButton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -14,7 +13,6 @@ import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import { ReactNode, useEffect, useState } from 'react'
@@ -40,6 +38,12 @@ import {
   RolType,
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
+import {
+  BotonOrdenar,
+  ordenFiltrado,
+} from '../../common/components/ui/BotonOrdenar'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -77,13 +81,13 @@ const Usuarios: NextPage = () => {
   // Roles de usuario
   const [rolesData, setRolesData] = useState<RolType[]>([])
 
-  // Variables de páginado
+  // Variables de paginado
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
+  // Filtros
   const [filtroUsuario, setFiltroUsuario] = useState<string>('')
-
   const [filtroRoles, setFiltroRoles] = useState<string[]>([])
 
   /// Indicador para mostrar el filtro de usuarios
@@ -107,6 +111,17 @@ const Usuarios: NextPage = () => {
 
   // router para conocer la ruta actual
   const router = useRouter()
+
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'nroDocumento', nombre: 'Nro. Documento' },
+    { campo: 'nombres', nombre: 'Nombres' },
+    { campo: 'usuario', nombre: 'Usuario' },
+    { campo: 'rol', nombre: 'Roles' },
+    { campo: 'estado', nombre: 'Estado' },
+  ])
 
   /// Columnas para data table
   const columnas: Array<ColumnaType> = [
@@ -245,24 +260,18 @@ const Usuarios: NextPage = () => {
 
   /// Acciones para data table
   const acciones: Array<ReactNode> = [
-    <ToggleButton
+    <BotonBuscar
       key={'accionFiltrarUsuarioToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroUsuarios}
-      onChange={() => {
-        setMostrarFiltroUsuarios(!mostrarFiltroUsuarios)
-      }}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
+      mostrar={mostrarFiltroUsuarios}
+      cambiar={setMostrarFiltroUsuarios}
+    />,
+    <BotonOrdenar
+      id={'ordenarUsuarios'}
+      key={`ordenarUsuarios`}
+      label={'Ordenar usuarios'}
+      criterios={ordenCriterios}
+      cambioCriterios={setOrdenCriterios}
+    />,
     <IconoTooltip
       id={'actualizarUsuario'}
       titulo={'Actualizar'}
@@ -273,6 +282,7 @@ const Usuarios: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de usuario'}
     />,
+
     permisos.create && xs && (
       <IconoTooltip
         id={'agregarUsuario'}
@@ -312,6 +322,11 @@ const Usuarios: NextPage = () => {
           limite: limite,
           ...(filtroUsuario.length == 0 ? {} : { filtro: filtroUsuario }),
           ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles.join(',') }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setUsuariosData(respuesta.datos?.filas)
@@ -535,6 +550,8 @@ const Usuarios: NextPage = () => {
     limite,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     JSON.stringify(filtroRoles),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
     filtroUsuario,
   ])
 
@@ -621,7 +638,10 @@ const Usuarios: NextPage = () => {
               limite={limite}
               total={total}
               cambioPagina={setPagina}
-              cambioLimite={setLimite}
+              cambioLimite={(nuevoLimite) => {
+                setPagina(1)
+                setLimite(nuevoLimite)
+              }}
             />
           }
         ></CustomDataTable>
