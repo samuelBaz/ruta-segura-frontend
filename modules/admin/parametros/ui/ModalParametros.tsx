@@ -14,7 +14,7 @@ import {
 } from '../types/parametrosCRUDTypes'
 
 export interface ModalParametroType {
-  parametro?: ParametroCRUDType
+  parametro?: ParametroCRUDType | null
   accionCorrecta: () => void
   accionCancelar: () => void
 }

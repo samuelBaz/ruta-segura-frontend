@@ -6,6 +6,7 @@ export interface ParametroCRUDType {
   nombre: string
   grupo: string
   descripcion: string
+  estado: string
 }
 
 export interface CrearEditarParametroCRUDType {
