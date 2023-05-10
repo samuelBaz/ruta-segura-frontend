@@ -56,10 +56,12 @@ const Activacion: NextPage = () => {
   }
 
   const redireccionarInicio = async () => {
-    router.reload()
+    mostrarFullScreen()
+    await delay(1000)
     await router.replace({
       pathname: '/login',
     })
+    ocultarFullScreen()
   }
 
   return (
