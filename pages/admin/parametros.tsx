@@ -1,15 +1,21 @@
 import type { NextPage } from 'next'
-import { Grid, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
-import { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { CasbinTypes, ColumnaType } from '../../common/types'
 import {
+  AlertDialog,
   CustomDataTable,
   CustomDialog,
   IconoTooltip,
 } from '../../common/components/ui'
-import { delay, InterpreteMensajes, siteName } from '../../common/utils'
+import {
+  delay,
+  InterpreteMensajes,
+  siteName,
+  titleCase,
+} from '../../common/utils'
 import { Constantes } from '../../config'
 
 import { Paginacion } from '../../common/components/ui/Paginacion'
@@ -20,6 +26,7 @@ import { imprimir } from '../../common/utils/imprimir'
 import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametrosCRUDTypes'
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
 import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -31,8 +38,12 @@ const Parametros: NextPage = () => {
 
   const [modalParametro, setModalParametro] = useState(false)
 
+  /// Indicador para mostrar una vista de alerta de cambio de estado
+  const [mostrarAlertaEstadoParametro, setMostrarAlertaEstadoParametro] =
+    useState(false)
+
   const [parametroEdicion, setParametroEdicion] = useState<
-    ParametroCRUDType | undefined
+    ParametroCRUDType | undefined | null
   >()
 
   // Variables de páginado
@@ -53,6 +64,54 @@ const Parametros: NextPage = () => {
     delete: false,
   })
 
+  /// Método que muestra alerta de cambio de estado
+
+  const editarEstadoParametroModal = async (parametro: ParametroCRUDType) => {
+    setParametroEdicion(parametro) // para mostrar datos de modal en la alerta
+    setMostrarAlertaEstadoParametro(true) // para mostrar alerta de parametro
+  }
+
+  const cancelarAlertaEstadoParametro = async () => {
+    setMostrarAlertaEstadoParametro(false)
+    await delay(500) // para no mostrar undefined mientras el modal se cierra
+    setParametroEdicion(null)
+  }
+
+  /// Método que oculta la alerta de cambio de estado y procede
+  const aceptarAlertaEstadoParametro = async () => {
+    setMostrarAlertaEstadoParametro(false)
+    if (parametroEdicion) {
+      await cambiarEstadoParametroPeticion(parametroEdicion)
+    }
+    setParametroEdicion(null)
+  }
+
+  /// Petición que cambia el estado de un parámetro
+  const cambiarEstadoParametroPeticion = async (
+    parametro: ParametroCRUDType
+  ) => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/parametros/${parametro.id}/${
+          parametro.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
+        }`,
+        tipo: 'patch',
+      })
+      imprimir(`respuesta estado parametro: ${respuesta}`)
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
+      await obtenerParametrosPeticion()
+    } catch (e) {
+      imprimir(`Error estado parametro`, e)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   // router para conocer la ruta actual
   const router = useRouter()
 
@@ -61,6 +120,7 @@ const Parametros: NextPage = () => {
     { campo: 'nombre', nombre: 'Nombre' },
     { campo: 'descripcion', nombre: 'Descripción' },
     { campo: 'grupo', nombre: 'Grupo' },
+    { campo: 'estado', nombre: 'Estado' },
     { campo: 'acciones', nombre: 'Acciones' },
   ]
 
@@ -84,7 +144,41 @@ const Parametros: NextPage = () => {
         key={`${parametroData.id}-${indexParametro}-grupo`}
         variant={'body2'}
       >{`${parametroData.grupo}`}</Typography>,
-      <Grid key={`${parametroData.id}-${indexParametro}-accion`}>
+
+      <CustomMensajeEstado
+        key={`${parametroData.id}-${indexParametro}-estado`}
+        titulo={parametroData.estado}
+        descripcion={parametroData.estado}
+        color={
+          parametroData.estado == 'ACTIVO'
+            ? 'success'
+            : parametroData.estado == 'INACTIVO'
+            ? 'error'
+            : 'info'
+        }
+      />,
+
+      <Grid key={`${parametroData.id}-${indexParametro}-acciones`}>
+        {permisos.update && (
+          <IconoTooltip
+            id={`cambiarEstadoParametro-${parametroData.id}`}
+            titulo={parametroData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
+            accion={async () => {
+              await editarEstadoParametroModal(parametroData)
+            }}
+            desactivado={parametroData.estado == 'PENDIENTE'}
+            icono={
+              parametroData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
+            }
+            name={
+              parametroData.estado == 'ACTIVO'
+                ? 'Inactivar Parámetro'
+                : 'Activar Parámetro'
+            }
+          />
+        )}
+
         {permisos.update && (
           <IconoTooltip
             id={`editarParametros-${parametroData.id}`}
@@ -206,6 +300,16 @@ const Parametros: NextPage = () => {
 
   return (
     <>
+      <AlertDialog
+        isOpen={mostrarAlertaEstadoParametro}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de ${
+          parametroEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
+        } el parámetro: ${titleCase(parametroEdicion?.nombre ?? '')} ?`}
+      >
+        <Button onClick={cancelarAlertaEstadoParametro}>Cancelar</Button>
+        <Button onClick={aceptarAlertaEstadoParametro}>Aceptar</Button>
+      </AlertDialog>
       <CustomDialog
         isOpen={modalParametro}
         handleClose={cerrarModalParametro}
