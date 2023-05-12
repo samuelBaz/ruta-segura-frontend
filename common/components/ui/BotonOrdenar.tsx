@@ -31,12 +31,12 @@ export const ToggleOrden = (
   ordenAnterior: OrdenEnum | undefined
 ): OrdenEnum | undefined => {
   switch (ordenAnterior) {
-    case OrdenEnum.ASC:
-      return OrdenEnum.DESC
     case OrdenEnum.DESC:
+      return OrdenEnum.ASC
+    case OrdenEnum.ASC:
       return undefined
     default:
-      return OrdenEnum.ASC
+      return OrdenEnum.DESC
   }
 }
 
@@ -94,14 +94,14 @@ export const BotonOrdenar = ({
             onClick={() => {
               cerrarMenu()
               const nuevosCriterios = [...criterios] // crea una copia del array original
-              nuevosCriterios[index].orden = ToggleOrden(
-                nuevosCriterios[index].orden
-              )
+
               cambioCriterios(
-                nuevosCriterios.map((value) => ({
-                  campo: value.campo,
-                  nombre: value.nombre,
-                  orden: value.orden,
+                nuevosCriterios.map((value, indice) => ({
+                  ...value,
+                  ...{
+                    orden:
+                      index == indice ? ToggleOrden(value.orden) : undefined,
+                  },
                 }))
               )
             }}
