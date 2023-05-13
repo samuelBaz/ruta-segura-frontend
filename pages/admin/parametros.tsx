@@ -1,9 +1,15 @@
 import type { NextPage } from 'next'
-import { Button, Grid, Typography } from '@mui/material'
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import { CasbinTypes } from '../../common/types'
 import {
   AlertDialog,
   CustomDataTable,
@@ -27,6 +33,9 @@ import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametr
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
 import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -63,6 +72,10 @@ const Parametros: NextPage = () => {
     update: false,
     delete: false,
   })
+
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
+  const sm = useMediaQuery(theme.breakpoints.only('sm'))
 
   /// Método que muestra alerta de cambio de estado
 
@@ -115,14 +128,17 @@ const Parametros: NextPage = () => {
   // router para conocer la ruta actual
   const router = useRouter()
 
-  const columnas: Array<ColumnaType> = [
-    { campo: 'codigo', nombre: 'Código' },
-    { campo: 'nombre', nombre: 'Nombre' },
-    { campo: 'descripcion', nombre: 'Descripción' },
-    { campo: 'grupo', nombre: 'Grupo' },
-    { campo: 'estado', nombre: 'Estado' },
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'codigo', nombre: 'Código', ordenar: true },
+    { campo: 'nombre', nombre: 'Nombre', ordenar: true },
+    { campo: 'descripcion', nombre: 'Descripción', ordenar: true },
+    { campo: 'grupo', nombre: 'Grupo', ordenar: true },
+    { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
-  ]
+  ])
 
   const contenidoTabla: Array<Array<ReactNode>> = parametrosData.map(
     (parametroData, indexParametro) => [
@@ -202,6 +218,15 @@ const Parametros: NextPage = () => {
       mostrar={mostrarFiltroParametros}
       cambiar={setMostrarFiltroParametros}
     />,
+    (xs || sm) && (
+      <BotonOrdenar
+        id={'ordenarUsuarios'}
+        key={`ordenarUsuarios`}
+        label={'Ordenar usuarios'}
+        criterios={ordenCriterios}
+        cambioCriterios={setOrdenCriterios}
+      />
+    ),
     permisos.create && (
       <IconoTooltip
         id={'agregarParametro'}
@@ -236,6 +261,11 @@ const Parametros: NextPage = () => {
           pagina: pagina,
           limite: limite,
           ...(filtroParametro.length == 0 ? {} : { filtro: filtroParametro }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setParametrosData(respuesta.datos?.filas)
@@ -277,7 +307,14 @@ const Parametros: NextPage = () => {
   useEffect(() => {
     if (estaAutenticado) obtenerParametrosPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroParametro])
+  }, [
+    estaAutenticado,
+    pagina,
+    limite,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
+    filtroParametro,
+  ])
 
   useEffect(() => {
     if (!mostrarFiltroParametros) {
@@ -330,7 +367,8 @@ const Parametros: NextPage = () => {
           error={!!errorParametrosData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
           filtros={
