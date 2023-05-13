@@ -8,7 +8,8 @@ import {
 } from '@mui/material'
 import { Icono } from './Icono'
 import React, { ReactNode, useState } from 'react'
-import { CriterioOrdenType, OrdenEnum } from '../../types/ordenTypes'
+import { CriterioOrdenType } from '../../types/ordenTypes'
+import { ToggleOrden } from '../../utils/orden'
 
 interface BotonOrdenarParams {
   desactivado?: false
@@ -27,24 +28,6 @@ interface BotonOrdenarParams {
   icono?: ReactNode
   label: string
   id: string
-}
-
-export const ordenFiltrado = (ordenCriterios: Array<CriterioOrdenType>) =>
-  ordenCriterios
-    .filter((value) => value.orden)
-    .map((value) => (value.orden == 'asc' ? value.campo : `-${value.campo}`))
-
-export const ToggleOrden = (
-  ordenAnterior: OrdenEnum | undefined
-): OrdenEnum | undefined => {
-  switch (ordenAnterior) {
-    case OrdenEnum.DESC:
-      return OrdenEnum.ASC
-    case OrdenEnum.ASC:
-      return undefined
-    default:
-      return OrdenEnum.DESC
-  }
 }
 
 export const BotonOrdenar = ({

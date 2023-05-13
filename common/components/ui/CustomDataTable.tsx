@@ -19,7 +19,7 @@ import {
 import { ListSkeleton, TableSkeletonBody } from './CustomSkeleton'
 import { Icono } from './Icono'
 import { CriterioOrdenType } from '../../types/ordenTypes'
-import { ToggleOrden } from './BotonOrdenar'
+import { ToggleOrden } from '../../utils/orden'
 
 export interface CustomDataTableType {
   titulo?: string
@@ -235,8 +235,8 @@ export const CustomDataTable = ({
 
                                     if (cambioOrdenCriterios) {
                                       cambioOrdenCriterios(
-                                        nuevosCriterios.map(
-                                          (value, indice) => ({
+                                        nuevosCriterios.map((value, indice) => {
+                                          return {
                                             ...value,
                                             ...{
                                               orden:
@@ -244,8 +244,8 @@ export const CustomDataTable = ({
                                                   ? ToggleOrden(value.orden)
                                                   : undefined,
                                             },
-                                          })
-                                        )
+                                          }
+                                        })
                                       )
                                     }
                                   }}

@@ -38,12 +38,10 @@ import {
   RolType,
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
-import {
-  BotonOrdenar,
-  ordenFiltrado,
-} from '../../common/components/ui/BotonOrdenar'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { ordenFiltrado } from '../../common/utils/orden'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
