@@ -1,4 +1,11 @@
-import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
+import {
+  Badge,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material'
 import { Icono } from './Icono'
 import React, { ReactNode, useState } from 'react'
 import { CriterioOrdenType, OrdenEnum } from '../../types/ordenTypes'
@@ -69,7 +76,15 @@ export const BotonOrdenar = ({
         color="primary"
         style={{ textTransform: 'none' }}
       >
-        <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
+        <Badge
+          color="secondary"
+          variant="dot"
+          badgeContent={
+            criterios.filter((value) => value.ordenar && value.orden).length
+          }
+        >
+          <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
+        </Badge>
       </IconButton>
       <Menu
         id="menu-acciones"
@@ -86,36 +101,38 @@ export const BotonOrdenar = ({
         onClose={cerrarMenu}
         autoFocus={false}
       >
-        {criterios.map((accion, index) => (
-          <MenuItem
-            sx={{ p: 2 }}
-            id={`${index}-id-orden`}
-            key={`${index}-id-orden`}
-            onClick={() => {
-              cerrarMenu()
-              const nuevosCriterios = [...criterios] // crea una copia del array original
+        {criterios
+          .filter((value) => value.ordenar)
+          .map((accion, index) => (
+            <MenuItem
+              sx={{ p: 2 }}
+              id={`${index}-id-orden`}
+              key={`${index}-id-orden`}
+              onClick={() => {
+                cerrarMenu()
+                const nuevosCriterios = [...criterios] // crea una copia del array original
 
-              cambioCriterios(
-                nuevosCriterios.map((value, indice) => ({
-                  ...value,
-                  ...{
-                    orden:
-                      index == indice ? ToggleOrden(value.orden) : undefined,
-                  },
-                }))
-              )
-            }}
-          >
-            {accion.orden && (
-              <Icono color={'primary'} fontSize={'small'}>
-                {accion.orden == 'asc' ? 'north' : 'south'}
-              </Icono>
-            )}
-            {!accion.orden && <Box width={'25px'} />}
-            <Box width={'20px'} />
-            <Typography variant={'body2'}>{accion.nombre}</Typography>
-          </MenuItem>
-        ))}
+                cambioCriterios(
+                  nuevosCriterios.map((value, indice) => ({
+                    ...value,
+                    ...{
+                      orden:
+                        index == indice ? ToggleOrden(value.orden) : undefined,
+                    },
+                  }))
+                )
+              }}
+            >
+              {accion.orden && (
+                <Icono color={'primary'} fontSize={'small'}>
+                  {accion.orden == 'asc' ? 'north' : 'south'}
+                </Icono>
+              )}
+              {!accion.orden && <Box width={'25px'} />}
+              <Box width={'20px'} />
+              <Typography variant={'body2'}>{accion.nombre}</Typography>
+            </MenuItem>
+          ))}
       </Menu>
     </>
   )
