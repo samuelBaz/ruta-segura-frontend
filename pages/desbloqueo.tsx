@@ -58,7 +58,7 @@ const Desbloqueo: NextPage = () => {
     await router.replace({
       pathname: '/login',
     })
-    ocultarFullScreen
+    ocultarFullScreen()
   }
 
   return (

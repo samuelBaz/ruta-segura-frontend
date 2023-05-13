@@ -16,7 +16,7 @@ import {
   IconoTooltip,
 } from '../../common/components/ui'
 import { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import { CasbinTypes } from '../../common/types'
 import { Constantes } from '../../config'
 import {
   delay,
@@ -117,23 +117,14 @@ const Usuarios: NextPage = () => {
   const [ordenCriterios, setOrdenCriterios] = useState<
     Array<CriterioOrdenType>
   >([
-    { campo: 'nroDocumento', nombre: 'Nro. Documento' },
-    { campo: 'nombres', nombre: 'Nombres' },
-    { campo: 'usuario', nombre: 'Usuario' },
-    { campo: 'rol', nombre: 'Roles' },
-    { campo: 'estado', nombre: 'Estado' },
-  ])
-
-  /// Columnas para data table
-  const columnas: Array<ColumnaType> = [
-    { campo: 'nro_documento', nombre: 'Nro. Documento' },
-    { campo: 'persona', nombre: 'Persona' },
-    { campo: 'usuario', nombre: 'Usuario' },
+    { campo: 'nroDocumento', nombre: 'Nro. Documento', ordenar: true },
+    { campo: 'nombres', nombre: 'Nombres', ordenar: true },
+    { campo: 'usuario', nombre: 'Usuario', ordenar: true },
     { campo: 'tipo', nombre: 'Tipo' },
-    { campo: 'rol', nombre: 'Roles' },
-    { campo: 'estado', nombre: 'Estado' },
+    { campo: 'rol', nombre: 'Roles', ordenar: true },
+    { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
-  ]
+  ])
 
   /// Contenido del data table
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
@@ -617,7 +608,8 @@ const Usuarios: NextPage = () => {
           error={!!errorData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           contenidoTabla={contenidoTabla}
           filtros={
             mostrarFiltroUsuarios && (
