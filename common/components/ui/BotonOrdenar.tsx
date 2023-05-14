@@ -84,9 +84,8 @@ export const BotonOrdenar = ({
         onClose={cerrarMenu}
         autoFocus={false}
       >
-        {criterios
-          .filter((value) => value.ordenar)
-          .map((accion, index) => (
+        {criterios.map((accion, index) => {
+          return accion.ordenar ? (
             <MenuItem
               sx={{ p: 2 }}
               id={`${index}-id-orden`}
@@ -115,7 +114,8 @@ export const BotonOrdenar = ({
               <Box width={'20px'} />
               <Typography variant={'body2'}>{accion.nombre}</Typography>
             </MenuItem>
-          ))}
+          ) : undefined
+        })}
       </Menu>
     </>
   )
