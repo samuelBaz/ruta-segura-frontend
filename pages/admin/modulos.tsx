@@ -251,9 +251,9 @@ const Modulos: NextPage = () => {
     />,
     (xs || sm) && (
       <BotonOrdenar
-        id={'ordenarUsuarios'}
-        key={`ordenarUsuarios`}
-        label={'Ordenar usuarios'}
+        id={'ordenarModulos'}
+        key={`ordenarModulos`}
+        label={'Ordenar Módulos'}
         criterios={ordenCriterios}
         cambioCriterios={setOrdenCriterios}
       />

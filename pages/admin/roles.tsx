@@ -169,9 +169,9 @@ const Roles: NextPage = () => {
     />,
     (xs || sm) && (
       <BotonOrdenar
-        id={'ordenarUsuarios'}
-        key={`ordenarUsuarios`}
-        label={'Ordenar usuarios'}
+        id={'ordenarRoles'}
+        key={`ordenarRoles`}
+        label={'Ordenar roles'}
         criterios={ordenCriterios}
         cambioCriterios={setOrdenCriterios}
       />

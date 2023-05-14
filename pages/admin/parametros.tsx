@@ -220,9 +220,9 @@ const Parametros: NextPage = () => {
     />,
     (xs || sm) && (
       <BotonOrdenar
-        id={'ordenarUsuarios'}
-        key={`ordenarUsuarios`}
-        label={'Ordenar usuarios'}
+        id={'ordenarParametros'}
+        key={`ordenarParametros`}
+        label={'Ordenar Parámetros'}
         criterios={ordenCriterios}
         cambioCriterios={setOrdenCriterios}
       />

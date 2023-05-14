@@ -1,9 +1,15 @@
 import type { NextPage } from 'next'
-import { Button, Grid, Typography } from '@mui/material'
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import { CasbinTypes } from '../../common/types'
 import {
   AlertDialog,
   CustomDataTable,
@@ -22,6 +28,9 @@ import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTyp
 import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { ordenFiltrado } from '../../common/utils/orden'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -63,13 +72,20 @@ const Politicas: NextPage = () => {
   // router para conocer la ruta actual
   const router = useRouter()
 
-  const columnas: Array<ColumnaType> = [
-    { campo: 'sujeto', nombre: 'Sujeto' },
-    { campo: 'objeto', nombre: 'Objeto' },
-    { campo: 'accion', nombre: 'Acción' },
-    { campo: 'app', nombre: 'App' },
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
+  const sm = useMediaQuery(theme.breakpoints.only('sm'))
+
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'sujeto', nombre: 'Sujeto', ordenar: true },
+    { campo: 'objeto', nombre: 'Objeto', ordenar: true },
+    { campo: 'accion', nombre: 'Acción', ordenar: true },
+    { campo: 'app', nombre: 'App', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
-  ]
+  ])
 
   const contenidoTabla: Array<Array<ReactNode>> = politicasData.map(
     (politicaData, indexPolitica) => [
@@ -128,6 +144,15 @@ const Politicas: NextPage = () => {
       mostrar={mostrarFiltroPolitica}
       cambiar={setMostrarFiltroPolitica}
     />,
+    (xs || sm) && (
+      <BotonOrdenar
+        id={'ordenarUsuarios'}
+        key={`ordenarUsuarios`}
+        label={'Ordenar usuarios'}
+        criterios={ordenCriterios}
+        cambioCriterios={setOrdenCriterios}
+      />
+    ),
     permisos.create && (
       <IconoTooltip
         id={'agregarPolitica'}
@@ -163,6 +188,11 @@ const Politicas: NextPage = () => {
           limite: limite,
           ...(filtroPolitica.length == 0 ? {} : { filtro: filtroPolitica }),
           ...(filtroApp.length == 0 ? {} : { aplicacion: filtroApp }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setPoliticasData(respuesta.datos?.filas)
@@ -249,7 +279,15 @@ const Politicas: NextPage = () => {
         obtenerPoliticasPeticion().finally(() => {})
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroApp, filtroPolitica])
+  }, [
+    estaAutenticado,
+    pagina,
+    limite,
+    filtroApp,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
+    filtroPolitica,
+  ])
   useEffect(() => {
     if (!mostrarFiltroPolitica) {
       setFiltroPolitica('')
@@ -305,7 +343,8 @@ const Politicas: NextPage = () => {
           error={!!errorData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           contenidoTabla={contenidoTabla}
           paginacion={
             <Paginacion
