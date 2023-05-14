@@ -230,6 +230,11 @@ export const CustomDataTable = ({
                               {columna.ordenar ? (
                                 <Button
                                   disabled={cargando}
+                                  style={{
+                                    justifyContent: 'flex-start',
+                                    minWidth: '0',
+                                    padding: '0 1',
+                                  }}
                                   onClick={() => {
                                     const nuevosCriterios = [...columnas] // crea una copia del array original
 
@@ -261,9 +266,10 @@ export const CustomDataTable = ({
                                   >
                                     {columna.nombre}
                                   </Typography>
+                                  {columna.orden && <Box width={'10px'} />}
                                   {columna.orden && (
                                     <Icono
-                                      fontSize={'small'}
+                                      fontSize={'inherit'}
                                       color={'secondary'}
                                     >
                                       {columna.orden == 'asc'
