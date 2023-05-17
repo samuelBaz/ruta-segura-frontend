@@ -82,7 +82,6 @@ const Modulos: NextPage = () => {
 
   const theme = useTheme()
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
 
   /// Criterios de orden
   const [ordenCriterios, setOrdenCriterios] = useState<
@@ -249,7 +248,7 @@ const Modulos: NextPage = () => {
       mostrar={mostrarFiltroModulo}
       cambiar={setMostrarFiltroModulo}
     />,
-    (xs || sm) && (
+    xs && (
       <BotonOrdenar
         id={'ordenarModulos'}
         key={`ordenarModulos`}

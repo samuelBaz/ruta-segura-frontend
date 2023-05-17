@@ -72,7 +72,6 @@ const Roles: NextPage = () => {
 
   const theme = useTheme()
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
 
   const [mostrarAlertaEstadoRol, setMostrarAlertaEstadoRol] = useState(false)
 
@@ -167,7 +166,7 @@ const Roles: NextPage = () => {
       mostrar={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
-    (xs || sm) && (
+    xs && (
       <BotonOrdenar
         id={'ordenarRoles'}
         key={`ordenarRoles`}

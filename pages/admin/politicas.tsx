@@ -74,7 +74,6 @@ const Politicas: NextPage = () => {
 
   const theme = useTheme()
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
 
   /// Criterios de orden
   const [ordenCriterios, setOrdenCriterios] = useState<
@@ -144,7 +143,7 @@ const Politicas: NextPage = () => {
       mostrar={mostrarFiltroPolitica}
       cambiar={setMostrarFiltroPolitica}
     />,
-    (xs || sm) && (
+    xs && (
       <BotonOrdenar
         id={'ordenarUsuarios'}
         key={`ordenarUsuarios`}

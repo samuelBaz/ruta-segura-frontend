@@ -106,7 +106,6 @@ const Usuarios: NextPage = () => {
 
   const theme = useTheme()
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
 
   // router para conocer la ruta actual
   const router = useRouter()
@@ -255,7 +254,7 @@ const Usuarios: NextPage = () => {
       mostrar={mostrarFiltroUsuarios}
       cambiar={setMostrarFiltroUsuarios}
     />,
-    (xs || sm) && (
+    xs && (
       <BotonOrdenar
         id={'ordenarUsuarios'}
         key={`ordenarUsuarios`}

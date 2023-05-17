@@ -75,7 +75,6 @@ const Parametros: NextPage = () => {
 
   const theme = useTheme()
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
-  const sm = useMediaQuery(theme.breakpoints.only('sm'))
 
   /// Método que muestra alerta de cambio de estado
 
@@ -218,7 +217,7 @@ const Parametros: NextPage = () => {
       mostrar={mostrarFiltroParametros}
       cambiar={setMostrarFiltroParametros}
     />,
-    (xs || sm) && (
+    xs && (
       <BotonOrdenar
         id={'ordenarParametros'}
         key={`ordenarParametros`}
