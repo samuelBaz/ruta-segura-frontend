@@ -293,10 +293,7 @@ const Roles: NextPage = () => {
       limite={limite}
       total={total}
       cambioPagina={setPagina}
-      cambioLimite={(nuevoLimite) => {
-        setPagina(1)
-        setLimite(nuevoLimite)
-      }}
+      cambioLimite={setLimite}
     />
   )
 
