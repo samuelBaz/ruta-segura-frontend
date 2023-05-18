@@ -1,4 +1,11 @@
-import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import { Icono } from './Icono'
 import React, { MouseEventHandler, ReactNode, useState } from 'react'
 
@@ -50,62 +57,85 @@ export const BotonAcciones = ({
   label,
   id,
 }: BotonAccionesParams) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [botonAccionesAnchorEl, setBotonAccionesAnchorEl] =
+    useState<null | HTMLElement>(null)
 
   const desplegarMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
+    setBotonAccionesAnchorEl(event.currentTarget)
   }
 
   const cerrarMenu = () => {
-    setAnchorEl(null)
+    setBotonAccionesAnchorEl(null)
+  }
+
+  const [openTooltip, setOpenTooltip] = useState(false)
+
+  const handleTooltipClose = () => {
+    setOpenTooltip(false)
+  }
+
+  const handleTooltipOpen = () => {
+    setOpenTooltip(true)
   }
 
   return (
-    <>
-      <IconButton
-        id={id}
-        aria-label={label}
-        size="small"
-        onClick={desplegarMenu}
-        color="primary"
-        style={{ textTransform: 'none' }}
-      >
-        <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
-      </IconButton>
-      <Menu
-        id="menu-acciones"
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        open={Boolean(anchorEl)}
-        onClose={cerrarMenu}
-        autoFocus={false}
-      >
-        {acciones
-          .filter((value) => value.mostrar)
-          .map((accion, index) => (
-            <MenuItem
-              sx={{ p: 2 }}
-              id={accion.id}
-              key={`${index}-accion`}
-              onClick={(event) => {
-                cerrarMenu()
-                if (accion.accion) return accion.accion(event)
-              }}
-              disabled={accion.desactivado}
-            >
-              <Icono color={accion.color}>{accion.icono}</Icono>
-              <Box width={'20px'} />
-              <Typography variant={'body2'}>{accion.titulo}</Typography>
-            </MenuItem>
-          ))}
-      </Menu>
-    </>
+    <Tooltip
+      title={label}
+      onClose={handleTooltipClose}
+      open={openTooltip}
+      onMouseOver={() => {
+        if (!botonAccionesAnchorEl) handleTooltipOpen()
+      }}
+    >
+      <span>
+        <IconButton
+          id={id}
+          aria-label={label}
+          size="small"
+          onClick={(event) => {
+            handleTooltipClose()
+            desplegarMenu(event)
+          }}
+          color="primary"
+          style={{ textTransform: 'none' }}
+        >
+          <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
+        </IconButton>
+        <Menu
+          id="menu-acciones"
+          anchorEl={botonAccionesAnchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={Boolean(botonAccionesAnchorEl)}
+          onClose={cerrarMenu}
+          autoFocus={false}
+        >
+          {acciones
+            .filter((value) => value.mostrar)
+            .map((accion, index) => (
+              <MenuItem
+                sx={{ p: 2 }}
+                id={accion.id}
+                key={`${index}-accion`}
+                onClick={(event) => {
+                  cerrarMenu()
+                  if (accion.accion) return accion.accion(event)
+                }}
+                disabled={accion.desactivado}
+              >
+                <Icono color={accion.color}>{accion.icono}</Icono>
+                <Box width={'20px'} />
+                <Typography variant={'body2'}>{accion.titulo}</Typography>
+              </MenuItem>
+            ))}
+        </Menu>
+      </span>
+    </Tooltip>
   )
 }
