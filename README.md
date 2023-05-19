@@ -114,6 +114,13 @@ Para ver la ejecución de los test, modificar el
 archivo [test/e2e/playwright/env.sample](test/e2e/playwright/config/.env.sample) y definir
 variables `headless : false` y `slowMo : 400`
 
+Para ejecutar un solo test
+
+```
+npx playwright test test/e2e/playwright/usuarios.spec.ts 
+```
+
+
 ## Documentación
 
 La documentación de los componentes fue elaborada

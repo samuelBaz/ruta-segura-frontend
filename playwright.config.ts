@@ -27,6 +27,7 @@ const config: PlaywrightTestConfig = {
       headless: process.env.HEADLESS == 'true',
       slowMo: Number(process.env.SLOWMO ?? '0'),
     },
+    screenshot: 'only-on-failure',
   },
   projects: [
     {
@@ -51,18 +52,18 @@ const config: PlaywrightTestConfig = {
     },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: {
-    //     ...devices['Pixel 5'],
-    //   },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: {
-    //     ...devices['iPhone 12'],
-    //   },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: {
+        ...devices['Pixel 5'],
+      },
+    },
+    {
+      name: 'Mobile Safari',
+      use: {
+        ...devices['iPhone 12'],
+      },
+    },
 
     /* Test against branded browsers. */
     // {
