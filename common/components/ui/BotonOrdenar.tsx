@@ -135,8 +135,8 @@ export const BotonOrdenar = ({
                     {accion.orden == 'asc' ? 'north' : 'south'}
                   </Icono>
                 )}
-                {!accion.orden && <Box width={'25px'} />}
-                <Box width={'20px'} />
+                {!accion.orden && <Box width={'20px'} />}
+                <Box width={'15px'} />
                 <Typography variant={'body2'}>{accion.nombre}</Typography>
               </MenuItem>
             ) : undefined
