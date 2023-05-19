@@ -2,14 +2,22 @@ import { Icono } from './Icono'
 import { ToggleButton } from '@mui/material'
 
 interface BotonFiltroParams {
+  id: string
+  key: string
   mostrar: boolean
   cambiar: (mostrar: boolean) => void
 }
 
-export const BotonBuscar = ({ mostrar, cambiar }: BotonFiltroParams) => {
+export const BotonBuscar = ({
+  id,
+  key,
+  mostrar,
+  cambiar,
+}: BotonFiltroParams) => {
   return (
     <ToggleButton
-      key={'accionFiltrarUsuarioToggle'}
+      id={id}
+      key={key}
       value="check"
       sx={{
         '&.MuiToggleButton-root': {
