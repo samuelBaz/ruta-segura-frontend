@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -24,7 +25,6 @@ interface TipoAccion {
   icono: ReactNode
   accion: MouseEventHandler<any> | undefined
   desactivado?: boolean
-
   mostrar?: boolean
   name: string
   id: string
@@ -42,7 +42,8 @@ interface BotonAccionesParams {
     | 'info'
     | 'success'
     | 'warning'
-
+  tipo?: 'icono' | 'boton'
+  texto?: string
   acciones: Array<TipoAccion>
   icono?: ReactNode
   label: string
@@ -54,6 +55,8 @@ export const BotonAcciones = ({
   color = 'primary',
   acciones = [],
   icono = 'more_horiz',
+  tipo = 'icono',
+  texto = 'acciones',
   label,
   id,
 }: BotonAccionesParams) => {
@@ -88,19 +91,38 @@ export const BotonAcciones = ({
       }}
     >
       <span>
-        <IconButton
-          id={id}
-          aria-label={label}
-          size="small"
-          onClick={(event) => {
-            handleTooltipClose()
-            desplegarMenu(event)
-          }}
-          color="primary"
-          style={{ textTransform: 'none' }}
-        >
-          <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
-        </IconButton>
+        {tipo == 'boton' && (
+          <Button
+            id={id}
+            aria-label={label}
+            variant={'contained'}
+            sx={{ ml: 1, mr: 1, textTransform: 'none' }}
+            size={'small'}
+            onClick={(event) => {
+              handleTooltipClose()
+              desplegarMenu(event)
+            }}
+            color="primary"
+            style={{ textTransform: 'none' }}
+          >
+            {texto}
+          </Button>
+        )}
+        {tipo == 'icono' && (
+          <IconButton
+            id={id}
+            aria-label={label}
+            size="small"
+            onClick={(event) => {
+              handleTooltipClose()
+              desplegarMenu(event)
+            }}
+            color="primary"
+            style={{ textTransform: 'none' }}
+          >
+            <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
+          </IconButton>
+        )}
         <Menu
           id="menu-acciones"
           anchorEl={botonAccionesAnchorEl}
