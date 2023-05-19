@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
-import { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { CasbinTypes } from '../../common/types'
 import {
   AlertDialog,
@@ -36,6 +36,7 @@ import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -162,6 +163,7 @@ const Roles: NextPage = () => {
 
   const acciones: Array<ReactNode> = [
     <BotonBuscar
+      id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
       mostrar={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
@@ -175,18 +177,6 @@ const Roles: NextPage = () => {
         cambioCriterios={setOrdenCriterios}
       />
     ),
-    permisos.create && (
-      <IconoTooltip
-        id={'agregarRol'}
-        titulo={'Agregar rol'}
-        key={`accionAgregarRol`}
-        accion={() => {
-          agregarRolModal()
-        }}
-        icono={'add_circle_outline'}
-        name={'Agregar rol'}
-      />
-    ),
     <IconoTooltip
       id={'actualizarRol'}
       titulo={'Actualizar'}
@@ -197,6 +187,17 @@ const Roles: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de roles'}
     />,
+    permisos.create && (
+      <BotonAgregar
+        id={'agregarRol'}
+        key={'agregarRol'}
+        texto={'Agregar'}
+        descripcion={'Agregar rol'}
+        accion={() => {
+          agregarRolModal()
+        }}
+      />
+    ),
   ]
 
   const cambiarEstadoRolPeticion = async (rol: RolCRUDType) => {

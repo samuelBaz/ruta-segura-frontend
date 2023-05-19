@@ -36,6 +36,7 @@ import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -213,6 +214,7 @@ const Parametros: NextPage = () => {
 
   const acciones: Array<ReactNode> = [
     <BotonBuscar
+      id={'accionFiltrarParametrosToggle'}
       key={'accionFiltrarParametrosToggle'}
       mostrar={mostrarFiltroParametros}
       cambiar={setMostrarFiltroParametros}
@@ -221,21 +223,9 @@ const Parametros: NextPage = () => {
       <BotonOrdenar
         id={'ordenarParametros'}
         key={`ordenarParametros`}
-        label={'Ordenar Parámetros'}
+        label={'Ordenar parámetros'}
         criterios={ordenCriterios}
         cambioCriterios={setOrdenCriterios}
-      />
-    ),
-    permisos.create && (
-      <IconoTooltip
-        id={'agregarParametro'}
-        titulo={'Agregar parámetro'}
-        key={`accionAgregarParametro`}
-        accion={() => {
-          agregarParametroModal()
-        }}
-        icono={'add_circle_outline'}
-        name={'Agregar parámetro'}
       />
     ),
     <IconoTooltip
@@ -248,6 +238,17 @@ const Parametros: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de parámetros'}
     />,
+    permisos.create && (
+      <BotonAgregar
+        id={'agregarParametro'}
+        key={'agregarParametro'}
+        texto={'Agregar'}
+        descripcion={'Agregar parámetro'}
+        accion={() => {
+          agregarParametroModal()
+        }}
+      />
+    ),
   ]
 
   const obtenerParametrosPeticion = async () => {

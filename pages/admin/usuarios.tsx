@@ -42,6 +42,7 @@ import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -250,6 +251,7 @@ const Usuarios: NextPage = () => {
   /// Acciones para data table
   const acciones: Array<ReactNode> = [
     <BotonBuscar
+      id={'accionFiltrarUsuarioToggle'}
       key={'accionFiltrarUsuarioToggle'}
       mostrar={mostrarFiltroUsuarios}
       cambiar={setMostrarFiltroUsuarios}
@@ -273,31 +275,16 @@ const Usuarios: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de usuario'}
     />,
-
-    permisos.create && xs && (
-      <IconoTooltip
+    permisos.create && (
+      <BotonAgregar
         id={'agregarUsuario'}
-        titulo={'Agregar usuario'}
-        key={`agregarUsuario`}
+        key={'agregarUsuario'}
+        texto={'Agregar'}
+        descripcion={'Agregar usuario'}
         accion={() => {
           agregarUsuarioModal()
         }}
-        icono={'add_circle_outline'}
-        name={'Agregar usuario'}
       />
-    ),
-    permisos.create && !xs && (
-      <Button
-        key={`accionAgregarUsuarioBoton`}
-        variant={'contained'}
-        sx={{ ml: 1, mr: 1, textTransform: 'none' }}
-        size={'small'}
-        onClick={() => {
-          agregarUsuarioModal()
-        }}
-      >
-        Agregar
-      </Button>
     ),
   ]
 

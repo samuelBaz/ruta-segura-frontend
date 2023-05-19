@@ -31,6 +31,7 @@ import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -139,6 +140,7 @@ const Politicas: NextPage = () => {
 
   const acciones: Array<ReactNode> = [
     <BotonBuscar
+      id={'accionFiltrarPoliticasToggle'}
       key={'accionFiltrarPoliticasToggle'}
       mostrar={mostrarFiltroPolitica}
       cambiar={setMostrarFiltroPolitica}
@@ -147,21 +149,9 @@ const Politicas: NextPage = () => {
       <BotonOrdenar
         id={'ordenarUsuarios'}
         key={`ordenarUsuarios`}
-        label={'Ordenar usuarios'}
+        label={'Ordenar políticas'}
         criterios={ordenCriterios}
         cambioCriterios={setOrdenCriterios}
-      />
-    ),
-    permisos.create && (
-      <IconoTooltip
-        id={'agregarPolitica'}
-        titulo={'Agregar política'}
-        key={`accionAgregarPolitica`}
-        accion={() => {
-          agregarPoliticaModal()
-        }}
-        icono={'add_circle_outline'}
-        name={'Agregar política'}
       />
     ),
     <IconoTooltip
@@ -174,6 +164,17 @@ const Politicas: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de políticas'}
     />,
+    permisos.create && (
+      <BotonAgregar
+        id={'agregarPolitica'}
+        key={'agregarPolitica'}
+        texto={'Agregar'}
+        descripcion={'Agregar política'}
+        accion={() => {
+          agregarPoliticaModal()
+        }}
+      />
+    ),
   ]
 
   const obtenerPoliticasPeticion = async () => {

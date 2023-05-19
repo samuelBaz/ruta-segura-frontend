@@ -241,6 +241,7 @@ const Modulos: NextPage = () => {
 
   const acciones: Array<ReactNode> = [
     <BotonBuscar
+      id={'accionFiltrarModuloToggle'}
       key={'accionFiltrarModuloToggle'}
       mostrar={mostrarFiltroModulo}
       cambiar={setMostrarFiltroModulo}
@@ -249,16 +250,28 @@ const Modulos: NextPage = () => {
       <BotonOrdenar
         id={'ordenarModulos'}
         key={`ordenarModulos`}
-        label={'Ordenar Módulos'}
+        label={'Ordenar módulos'}
         criterios={ordenCriterios}
         cambioCriterios={setOrdenCriterios}
       />
     ),
+    <IconoTooltip
+      id={`ActualizarModulo`}
+      titulo={'Actualizar'}
+      key={`ActualizarModulo`}
+      accion={async () => {
+        await obtenerModulosPeticion()
+      }}
+      icono={'refresh'}
+      name={'Actualizar lista de parámetros'}
+    />,
     permisos.create && (
       <BotonAcciones
         id={'agregarModuloSeccion'}
         key={'agregarModuloSeccion'}
         icono={'add_circle_outline'}
+        texto={'Agregar'}
+        tipo={xs ? 'icono' : 'boton'}
         label={'Agregar nueva sección o módulo'}
         acciones={[
           {
@@ -286,16 +299,6 @@ const Modulos: NextPage = () => {
         ]}
       />
     ),
-    <IconoTooltip
-      id={`ActualizarModulo`}
-      titulo={'Actualizar'}
-      key={`ActualizarModulo`}
-      accion={async () => {
-        await obtenerModulosPeticion()
-      }}
-      icono={'refresh'}
-      name={'Actualizar lista de parámetros'}
-    />,
   ]
 
   const contenidoTabla: Array<Array<ReactNode>> = modulosData.map(
