@@ -30,6 +30,7 @@ type FormDatePickerProps<T extends FieldValues> = {
   rules?: RegisterOptions
   bgcolor?: string
   labelVariant?: Variant
+  desktopModeMediaQuery?: string
 }
 
 export const FormInputDate = <T extends FieldValues>({
@@ -43,6 +44,7 @@ export const FormInputDate = <T extends FieldValues>({
   rules,
   bgcolor,
   labelVariant = 'subtitle2',
+  desktopModeMediaQuery = '',
 }: FormDatePickerProps<T>) => {
   return (
     <div>
@@ -66,6 +68,7 @@ export const FormInputDate = <T extends FieldValues>({
               mask={'__/__/____'}
               inputFormat={format}
               disabled={disabled}
+              desktopModeMediaQuery={desktopModeMediaQuery}
               renderInput={(params) => (
                 <>
                   <TextField
