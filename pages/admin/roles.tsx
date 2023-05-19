@@ -350,7 +350,7 @@ const Roles: NextPage = () => {
                   setFiltroRol(filtros.rol)
                 }}
                 accionCerrar={() => {}}
-              ></FiltroRol>
+              />
             )
           }
         />
