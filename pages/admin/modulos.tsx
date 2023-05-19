@@ -118,6 +118,12 @@ const Modulos: NextPage = () => {
     filtroBuscar,
   ])
 
+  useEffect(() => {
+    if (!mostrarFiltroModulo) {
+      setFiltroBuscar('')
+    }
+  }, [mostrarFiltroModulo])
+
   const [moduloEdicion, setModuloEdicion] = useState<
     ModuloCRUDType | undefined | null
   >()

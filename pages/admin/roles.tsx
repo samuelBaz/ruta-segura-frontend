@@ -288,6 +288,12 @@ const Roles: NextPage = () => {
     filtroRol,
   ])
 
+  useEffect(() => {
+    if (!mostrarFiltroRol) {
+      setFiltroRol('')
+    }
+  }, [mostrarFiltroRol])
+
   const paginacion = (
     <Paginacion
       pagina={pagina}
