@@ -50,16 +50,13 @@ export const FormInputDropdownMultiple = <T extends FieldValues>({
   options,
   labelVariant = 'subtitle2',
 }: FormInputDropdownMultipleProps<T>) => {
-  const generateSelectOptions = (value: string[]) => {
-    return options.map((option) => {
-      return (
-        <MenuItem key={option.key} value={option.value}>
-          <Checkbox checked={value.indexOf(option.value) >= 0} />
-          {option.label}
-        </MenuItem>
-      )
-    })
-  }
+  const generateSelectOptions = (value: string[]) =>
+    options.map((option) => (
+      <MenuItem key={option.key} value={option.value}>
+        <Checkbox checked={value.indexOf(option.value) >= 0} />
+        {option.label}
+      </MenuItem>
+    ))
 
   return (
     <div>
