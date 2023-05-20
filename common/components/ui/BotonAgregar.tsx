@@ -3,7 +3,6 @@ import { IconoTooltip } from './IconoTooltip'
 
 interface BotonAgregarParams {
   id: string
-  key: string
   texto: string
   descripcion: string
   accion: () => void
@@ -11,7 +10,6 @@ interface BotonAgregarParams {
 
 export const BotonAgregar = ({
   id,
-  key,
   texto,
   descripcion,
   accion,
@@ -22,7 +20,6 @@ export const BotonAgregar = ({
     <IconoTooltip
       id={id}
       titulo={descripcion}
-      key={key}
       accion={() => {
         accion()
       }}
@@ -32,7 +29,6 @@ export const BotonAgregar = ({
   ) : (
     <Button
       id={id}
-      key={key}
       variant={'contained'}
       sx={{ ml: 1, mr: 1, textTransform: 'none' }}
       size={'small'}
