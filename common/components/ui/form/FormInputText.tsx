@@ -34,7 +34,7 @@ type FormInputTextProps<T extends FieldValues> = {
   onChange?: StandardInputProps['onChange']
   inputProps?: InputBaseProps['inputProps']
   onEnter?: () => void
-  onClear?: () => void
+  clearable?: boolean
   variant?: 'standard' | 'outlined' | 'filled'
   rows?: number
   multiline?: boolean
@@ -54,7 +54,7 @@ export const FormInputText = <T extends FieldValues>({
   onChange,
   inputProps,
   onEnter,
-  onClear,
+  clearable,
   variant,
   rows = 1,
   multiline = false,
@@ -110,14 +110,12 @@ export const FormInputText = <T extends FieldValues>({
               inputProps={inputProps}
               InputProps={{
                 endAdornment:
-                  field.value && onClear ? (
+                  field.value && clearable ? (
                     <IconButton
                       size="small"
                       color={'primary'}
                       onClick={() => {
-                        if (onClear) {
-                          onClear()
-                        }
+                        field.onChange('')
                       }}
                     >
                       <ClearOutlined />
