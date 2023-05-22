@@ -1,4 +1,10 @@
-import { Button, Grid, ToggleButton, Typography } from '@mui/material'
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { NextPage } from 'next'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { LayoutUser } from '../../common/components/layouts'
@@ -10,7 +16,7 @@ import {
   IconoTooltip,
 } from '../../common/components/ui'
 import { Paginacion } from '../../common/components/ui/Paginacion'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import { CasbinTypes } from '../../common/types'
 import { imprimir } from '../../common/utils/imprimir'
 import {
   delay,
@@ -27,6 +33,10 @@ import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { BotonAcciones } from '../../common/components/ui/BotonAcciones'
 import { useAlerts, useSession } from '../../common/hooks'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { ordenFiltrado } from '../../common/utils/orden'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -70,6 +80,23 @@ const Modulos: NextPage = () => {
     delete: false,
   })
 
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'icono', nombre: 'Icono' },
+    { campo: 'orden', nombre: 'Orden' },
+    { campo: 'nombre', nombre: 'Nombre', ordenar: true },
+    { campo: 'label', nombre: 'Label', ordenar: true },
+    { campo: 'descripcion', nombre: 'Descripción' },
+    { campo: 'url', nombre: 'URL', ordenar: true },
+    { campo: 'estado', nombre: 'Estado', ordenar: true },
+    { campo: 'acciones', nombre: 'Acciones' },
+  ])
+
   const agregarModuloModal = ({ esSeccion }: { esSeccion: boolean }) => {
     setModuloEdicion({ esSeccion: esSeccion } as ModuloCRUDType)
     setModalModulo(true)
@@ -82,72 +109,20 @@ const Modulos: NextPage = () => {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroBuscar])
+  }, [
+    estaAutenticado,
+    pagina,
+    limite,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
+    filtroBuscar,
+  ])
 
-  const acciones: Array<ReactNode> = [
-    <ToggleButton
-      key={'accionFiltrarModuloToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroModulo}
-      onChange={() => {
-        setMostrarFiltroModulo(!mostrarFiltroModulo)
-      }}
-      // name="filtroModulo"
-      id={'btnFiltro'}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
-    permisos.create && (
-      <BotonAcciones
-        id={'agregarModuloSeccion'}
-        key={'agregarModuloSeccion'}
-        icono={'add_circle_outline'}
-        label={'Agregar nueva sección o módulo'}
-        acciones={[
-          {
-            id: 'agregarModulo',
-            mostrar: true,
-            titulo: 'Nuevo módulo',
-            accion: async () => {
-              agregarModuloModal({ esSeccion: false })
-            },
-            desactivado: false,
-            icono: 'menu',
-            name: 'Nuevo módulo',
-          },
-          {
-            id: '1',
-            mostrar: true,
-            titulo: 'Nueva sección',
-            accion: async () => {
-              agregarModuloModal({ esSeccion: true })
-            },
-            desactivado: false,
-            icono: 'list',
-            name: 'Nueva sección',
-          },
-        ]}
-      />
-    ),
-    <IconoTooltip
-      id={`ActualizarModulo`}
-      titulo={'Actualizar'}
-      key={`ActualizarModulo`}
-      accion={async () => {
-        await obtenerModulosPeticion()
-      }}
-      icono={'refresh'}
-      name={'Actualizar lista de parámetros'}
-    />,
-  ]
+  useEffect(() => {
+    if (!mostrarFiltroModulo) {
+      setFiltroBuscar('')
+    }
+  }, [mostrarFiltroModulo])
 
   const [moduloEdicion, setModuloEdicion] = useState<
     ModuloCRUDType | undefined | null
@@ -183,6 +158,11 @@ const Modulos: NextPage = () => {
           pagina: pagina,
           limite: limite,
           ...(filtroBuscar.length == 0 ? {} : { filtro: filtroBuscar }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setModulosData(respuesta.datos?.filas)
@@ -232,7 +212,7 @@ const Modulos: NextPage = () => {
     setModuloEdicion(null)
   }
 
-  /// Método que oculta la alerta de cambio de estado y procede al cambio
+  /// Método que oculta la alerta de y procede con el cambio de estado
   const aceptarAlertaEstadoModulo = async () => {
     setMostrarAlertaEstadoModulo(false)
     if (moduloEdicion) {
@@ -265,15 +245,66 @@ const Modulos: NextPage = () => {
     }
   }
 
-  const columnas: Array<ColumnaType> = [
-    { campo: 'icono', nombre: 'Icono' },
-    { campo: 'orden', nombre: 'Orden' },
-    { campo: 'nombre', nombre: 'Nombre' },
-    { campo: 'label', nombre: 'Label' },
-    { campo: 'descripcion', nombre: 'Descripción' },
-    { campo: 'url', nombre: 'URL' },
-    { campo: 'estado', nombre: 'Estado' },
-    { campo: 'acciones', nombre: 'Acciones' },
+  const acciones: Array<ReactNode> = [
+    <BotonBuscar
+      id={'accionFiltrarModuloToggle'}
+      key={'accionFiltrarModuloToggle'}
+      mostrar={mostrarFiltroModulo}
+      cambiar={setMostrarFiltroModulo}
+    />,
+    xs && (
+      <BotonOrdenar
+        id={'ordenarModulos'}
+        key={`ordenarModulos`}
+        label={'Ordenar módulos'}
+        criterios={ordenCriterios}
+        cambioCriterios={setOrdenCriterios}
+      />
+    ),
+    <IconoTooltip
+      id={`ActualizarModulo`}
+      titulo={'Actualizar'}
+      key={`ActualizarModulo`}
+      accion={async () => {
+        await obtenerModulosPeticion()
+      }}
+      icono={'refresh'}
+      name={'Actualizar lista de parámetros'}
+    />,
+    permisos.create && (
+      <BotonAcciones
+        id={'agregarModuloSeccion'}
+        key={'agregarModuloSeccion'}
+        icono={'add_circle_outline'}
+        texto={'Agregar'}
+        tipo={xs ? 'icono' : 'boton'}
+        label={'Agregar nueva sección o módulo'}
+        acciones={[
+          {
+            id: 'agregarModulo',
+            mostrar: true,
+            titulo: 'Nuevo módulo',
+            accion: async () => {
+              agregarModuloModal({ esSeccion: false })
+            },
+            desactivado: false,
+            icono: 'menu',
+            name: 'Nuevo módulo',
+          },
+          {
+            id: '1',
+            mostrar: true,
+            titulo: 'Nueva sección',
+            accion: async () => {
+              agregarModuloModal({ esSeccion: true })
+            },
+            desactivado: false,
+            icono: 'list',
+            name: 'Nueva sección',
+          },
+        ]}
+      />
+    ),
   ]
 
   const contenidoTabla: Array<Array<ReactNode>> = modulosData.map(
@@ -414,7 +445,8 @@ const Modulos: NextPage = () => {
           error={!!errorModulosData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
           filtros={

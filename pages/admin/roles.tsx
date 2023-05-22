@@ -1,14 +1,19 @@
 import type { NextPage } from 'next'
-import { Button, Grid, ToggleButton, Typography } from '@mui/material'
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
-import { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import React, { ReactNode, useEffect, useState } from 'react'
+import { CasbinTypes } from '../../common/types'
 import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import {
@@ -27,6 +32,11 @@ import { RolCRUDType } from '../../modules/admin/roles/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/roles/ui/ModalRol'
 import { FiltroRol } from '../../modules/admin/roles/ui/FiltroRol'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -61,6 +71,9 @@ const Roles: NextPage = () => {
     delete: false,
   })
 
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
   const [mostrarAlertaEstadoRol, setMostrarAlertaEstadoRol] = useState(false)
 
   const editarEstadoRolModal = async (rol: RolCRUDType) => {
@@ -85,12 +98,15 @@ const Roles: NextPage = () => {
   // router para conocer la ruta actual
   const router = useRouter()
 
-  const columnas: Array<ColumnaType> = [
-    { campo: 'rol', nombre: 'Rol' },
-    { campo: 'nombre', nombre: 'Nombre' },
-    { campo: 'estado', nombre: 'Estado' },
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'rol', nombre: 'Rol', ordenar: true },
+    { campo: 'nombre', nombre: 'Nombre', ordenar: true },
+    { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
-  ]
+  ])
 
   const contenidoTabla: Array<Array<ReactNode>> = rolesData.map(
     (rolData, indexRol) => [
@@ -146,34 +162,19 @@ const Roles: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <ToggleButton
+    <BotonBuscar
+      id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroRol}
-      onChange={() => {
-        setMostrarFiltroRol(!mostrarFiltroRol)
-      }}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
-    permisos.create && (
-      <IconoTooltip
-        id={'agregarRol'}
-        titulo={'Agregar rol'}
-        key={`accionAgregarRol`}
-        accion={() => {
-          agregarRolModal()
-        }}
-        icono={'add_circle_outline'}
-        name={'Agregar rol'}
+      mostrar={mostrarFiltroRol}
+      cambiar={setMostrarFiltroRol}
+    />,
+    xs && (
+      <BotonOrdenar
+        id={'ordenarRoles'}
+        key={`ordenarRoles`}
+        label={'Ordenar roles'}
+        criterios={ordenCriterios}
+        cambioCriterios={setOrdenCriterios}
       />
     ),
     <IconoTooltip
@@ -186,6 +187,17 @@ const Roles: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de roles'}
     />,
+    permisos.create && (
+      <BotonAgregar
+        id={'agregarRol'}
+        key={'agregarRol'}
+        texto={'Agregar'}
+        descripcion={'Agregar rol'}
+        accion={() => {
+          agregarRolModal()
+        }}
+      />
+    ),
   ]
 
   const cambiarEstadoRolPeticion = async (rol: RolCRUDType) => {
@@ -221,6 +233,11 @@ const Roles: NextPage = () => {
           pagina: pagina,
           limite: limite,
           ...(filtroRol.length == 0 ? {} : { filtro: filtroRol }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setRolesData(respuesta.datos?.filas)
@@ -262,7 +279,20 @@ const Roles: NextPage = () => {
   useEffect(() => {
     if (estaAutenticado) obtenerRolesPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroRol])
+  }, [
+    estaAutenticado,
+    pagina,
+    limite,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
+    filtroRol,
+  ])
+
+  useEffect(() => {
+    if (!mostrarFiltroRol) {
+      setFiltroRol('')
+    }
+  }, [mostrarFiltroRol])
 
   const paginacion = (
     <Paginacion
@@ -306,7 +336,8 @@ const Roles: NextPage = () => {
           error={!!errorRolData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
           filtros={
@@ -319,7 +350,7 @@ const Roles: NextPage = () => {
                   setFiltroRol(filtros.rol)
                 }}
                 accionCerrar={() => {}}
-              ></FiltroRol>
+              />
             )
           }
         />

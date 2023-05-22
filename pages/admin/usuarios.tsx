@@ -4,7 +4,6 @@ import {
   Button,
   Chip,
   Grid,
-  ToggleButton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -14,11 +13,10 @@ import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import { CasbinTypes } from '../../common/types'
 import { Constantes } from '../../config'
 import {
   delay,
@@ -40,6 +38,11 @@ import {
   RolType,
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -77,13 +80,13 @@ const Usuarios: NextPage = () => {
   // Roles de usuario
   const [rolesData, setRolesData] = useState<RolType[]>([])
 
-  // Variables de páginado
+  // Variables de paginado
   const [limite, setLimite] = useState<number>(10)
   const [pagina, setPagina] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
+  // Filtros
   const [filtroUsuario, setFiltroUsuario] = useState<string>('')
-
   const [filtroRoles, setFiltroRoles] = useState<string[]>([])
 
   /// Indicador para mostrar el filtro de usuarios
@@ -108,16 +111,18 @@ const Usuarios: NextPage = () => {
   // router para conocer la ruta actual
   const router = useRouter()
 
-  /// Columnas para data table
-  const columnas: Array<ColumnaType> = [
-    { campo: 'nro_documento', nombre: 'Nro. Documento' },
-    { campo: 'persona', nombre: 'Persona' },
-    { campo: 'usuario', nombre: 'Usuario' },
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'nroDocumento', nombre: 'Nro. Documento', ordenar: true },
+    { campo: 'nombres', nombre: 'Nombres', ordenar: true },
+    { campo: 'usuario', nombre: 'Usuario', ordenar: true },
     { campo: 'tipo', nombre: 'Tipo' },
-    { campo: 'rol', nombre: 'Roles' },
-    { campo: 'estado', nombre: 'Estado' },
+    { campo: 'rol', nombre: 'Roles', ordenar: true },
+    { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
-  ]
+  ])
 
   /// Contenido del data table
   const contenidoTabla: Array<Array<ReactNode>> = usuariosData.map(
@@ -245,24 +250,21 @@ const Usuarios: NextPage = () => {
 
   /// Acciones para data table
   const acciones: Array<ReactNode> = [
-    <ToggleButton
+    <BotonBuscar
+      id={'accionFiltrarUsuarioToggle'}
       key={'accionFiltrarUsuarioToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroUsuarios}
-      onChange={() => {
-        setMostrarFiltroUsuarios(!mostrarFiltroUsuarios)
-      }}
-      aria-label="search"
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
+      mostrar={mostrarFiltroUsuarios}
+      cambiar={setMostrarFiltroUsuarios}
+    />,
+    xs && (
+      <BotonOrdenar
+        id={'ordenarUsuarios'}
+        key={`ordenarUsuarios`}
+        label={'Ordenar usuarios'}
+        criterios={ordenCriterios}
+        cambioCriterios={setOrdenCriterios}
+      />
+    ),
     <IconoTooltip
       id={'actualizarUsuario'}
       titulo={'Actualizar'}
@@ -273,30 +275,16 @@ const Usuarios: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de usuario'}
     />,
-    permisos.create && xs && (
-      <IconoTooltip
+    permisos.create && (
+      <BotonAgregar
         id={'agregarUsuario'}
-        titulo={'Agregar usuario'}
-        key={`agregarUsuario`}
+        key={'agregarUsuario'}
+        texto={'Agregar'}
+        descripcion={'Agregar usuario'}
         accion={() => {
           agregarUsuarioModal()
         }}
-        icono={'add_circle_outline'}
-        name={'Agregar usuario'}
       />
-    ),
-    permisos.create && !xs && (
-      <Button
-        key={`accionAgregarUsuarioBoton`}
-        variant={'contained'}
-        sx={{ ml: 1, mr: 1, textTransform: 'none' }}
-        size={'small'}
-        onClick={() => {
-          agregarUsuarioModal()
-        }}
-      >
-        Agregar
-      </Button>
     ),
   ]
 
@@ -312,6 +300,11 @@ const Usuarios: NextPage = () => {
           limite: limite,
           ...(filtroUsuario.length == 0 ? {} : { filtro: filtroUsuario }),
           ...(filtroRoles.length == 0 ? {} : { rol: filtroRoles.join(',') }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setUsuariosData(respuesta.datos?.filas)
@@ -535,6 +528,8 @@ const Usuarios: NextPage = () => {
     limite,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     JSON.stringify(filtroRoles),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
     filtroUsuario,
   ])
 
@@ -597,7 +592,8 @@ const Usuarios: NextPage = () => {
           error={!!errorData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           contenidoTabla={contenidoTabla}
           filtros={
             mostrarFiltroUsuarios && (

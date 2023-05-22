@@ -18,7 +18,7 @@ export const FiltroParametros = ({
   filtroParametro,
   accionCorrecta,
 }: FiltroParametrosType) => {
-  const { control, setValue, watch } = useForm<FiltroType>({
+  const { control, watch } = useForm<FiltroType>({
     defaultValues: {
       parametro: filtroParametro,
     },
@@ -51,9 +51,7 @@ export const FiltroParametros = ({
             control={control}
             label={'Buscar parámetro'}
             bgcolor={'background.paper'}
-            onClear={() => {
-              setValue('parametro', '')
-            }}
+            clearable
           />
         </Grid>
       </Grid>

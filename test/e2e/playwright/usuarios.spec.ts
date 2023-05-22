@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('Usuarios - crear/editar usuario', async ({ page }) => {
+test('Usuarios - crear/editar usuario', async ({ page, isMobile }) => {
   const fs = require('fs')
 
   const rawCiudadanos = fs.readFileSync(process.env.PATH_CIUDADANOS)
@@ -25,8 +25,10 @@ test('Usuarios - crear/editar usuario', async ({ page }) => {
   await page.locator('#usuario').fill('ADMINISTRADOR-TECNICO')
   await page.locator('#contrasena').fill('123')
   await page.getByRole('button', { name: 'Iniciar sesión' }).click()
+  // en caso de ser móvil
+  if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
   await page.getByRole('button', { name: 'Usuarios', exact: true }).click()
-  await page.getByRole('button', { name: 'Agregar' }).click()
+  await page.locator('#agregarUsuario').click()
   await page.locator('#nroDocumento').click()
   await page.locator('#nroDocumento').fill(algunCiudadano.NumeroDocumento)
   await page.locator('#nombre').fill(algunCiudadano.Nombres)
@@ -36,7 +38,7 @@ test('Usuarios - crear/editar usuario', async ({ page }) => {
   await page
     .locator('#segundoApellido')
     .fill(algunCiudadano.SegundoApellido ?? '')
-  await page.getByPlaceholder('dd/mm/yyyy').fill(algunCiudadano.FechaNacimiento)
+  await page.locator('#fechaNacimiento').fill(algunCiudadano.FechaNacimiento)
   await page.locator('#roles').first().click()
   await page.getByRole('option', { name: 'Usuario' }).click()
   await page.getByRole('option', { name: 'Usuario' }).press('Escape')
@@ -44,7 +46,10 @@ test('Usuarios - crear/editar usuario', async ({ page }) => {
     .locator('#correoElectronico')
     .fill(`agepic-${algunCiudadano.NumeroDocumento}@yopmail.com`)
   await page.getByRole('button', { name: 'Guardar' }).click()
-  await page.getByRole('button').filter({ hasText: 'search' }).click()
+
+  await page.waitForResponse((response) => response.url().includes('/usuarios'))
+
+  await page.locator('#accionFiltrarUsuarioToggle').click()
   await page.locator('#nombre').fill(algunCiudadano.NumeroDocumento)
   expect(
     page.getByRole('cell', { name: algunCiudadano.NumeroDocumento })

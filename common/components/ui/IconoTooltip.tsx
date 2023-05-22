@@ -1,4 +1,10 @@
-import { FC, MouseEventHandler, PropsWithChildren, ReactNode } from 'react'
+import {
+  FC,
+  MouseEventHandler,
+  PropsWithChildren,
+  ReactNode,
+  useState,
+} from 'react'
 import { IconButton, Tooltip } from '@mui/material'
 import { Icono } from './Icono'
 
@@ -30,8 +36,23 @@ export const IconoTooltip: FC<PropsWithChildren<Props>> = ({
   name,
   id,
 }) => {
+  const [openTooltip, setOpenTooltip] = useState(false)
+
+  const handleTooltipClose = () => {
+    setOpenTooltip(false)
+  }
+
+  const handleTooltipOpen = () => {
+    setOpenTooltip(true)
+  }
+
   return (
-    <Tooltip title={titulo}>
+    <Tooltip
+      title={titulo}
+      onClose={handleTooltipClose}
+      open={openTooltip}
+      onMouseOver={handleTooltipOpen}
+    >
       <span>
         <IconButton
           id={id}
@@ -42,7 +63,12 @@ export const IconoTooltip: FC<PropsWithChildren<Props>> = ({
             disabled: 'icon-button-disabled',
           }}
           aria-label={titulo}
-          onClick={accion}
+          onClick={(event) => {
+            handleTooltipClose()
+            if (accion) {
+              accion(event)
+            }
+          }}
         >
           <Icono color={desactivado ? 'disabled' : color}> {icono}</Icono>
         </IconButton>

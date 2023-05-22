@@ -28,7 +28,7 @@ export const FiltroUsuarios = ({
   filtroUsuario,
   accionCorrecta,
 }: FiltroModalUsuarioType) => {
-  const { control, watch, setValue } = useForm<FiltroType>({
+  const { control, watch } = useForm<FiltroType>({
     defaultValues: {
       usuario: filtroUsuario,
       roles: filtroRoles,
@@ -69,9 +69,7 @@ export const FiltroUsuarios = ({
             control={control}
             label={'Nombre'}
             bgcolor={'background.paper'}
-            onClear={() => {
-              setValue('usuario', '')
-            }}
+            clearable
           />
         </Grid>
         <Grid item xs={12} sm={12} md={4}>

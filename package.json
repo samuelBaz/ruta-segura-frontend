@@ -16,7 +16,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test:e2e": "playwright test",
-    "test:codegen": "npx playwright codegen -b chromium"
+    "test:codegen": "npx playwright codegen -b chromium",
+    "test:codegen:mobile": "npx playwright codegen -b chromium --device='iPhone 13'"
   },
   "dependencies": {
     "@emotion/cache": "11.11.0",

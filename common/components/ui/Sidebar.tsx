@@ -15,7 +15,7 @@ import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../../context/auth'
 import { imprimir } from '../../utils/imprimir'
 import { Icono } from './Icono'
-import { ModuloType, RoleType } from '../../../modules/login/types/loginTypes'
+import { ModuloType } from '../../../modules/login/types/loginTypes'
 import { versionNumber } from '../../utils'
 
 const drawerWidth = 240
@@ -38,23 +38,18 @@ export const Sidebar = () => {
 
   const interpretarModulos = () => {
     imprimir(`Cambio en módulos`)
-    let roles: RoleType[]
-    let rolSeleccionado: RoleType | undefined
-    roles = usuario?.roles ?? []
-    if (roles && roles.length > 0) {
-      rolSeleccionado = roles.find(
-        (itemRol) => itemRol.idRol == rolUsuario?.idRol
-      )
-      if (rolSeleccionado) {
-        setModulos(rolSeleccionado.modulos)
-        imprimir(`rolSeleccionado`, rolSeleccionado)
-      }
-    }
+
+    const rolSeleccionado = usuario?.roles.find(
+      (itemRol) => itemRol.idRol == rolUsuario?.idRol
+    )
+
+    imprimir(`rolSeleccionado`, rolSeleccionado)
+
+    setModulos(rolSeleccionado?.modulos ?? [])
   }
 
-  const rutaActiva = (routeName: string, currentRoute: string) => {
-    return routeName === currentRoute
-  }
+  const rutaActiva = (routeName: string, currentRoute: string) =>
+    currentRoute.includes(routeName, 0)
 
   const navigateTo = async (url: string) => {
     if (sm || xs || md) {
@@ -89,7 +84,9 @@ export const Sidebar = () => {
         !progresoLogin &&
         !estadoFullScreen &&
         modulos.some((moduloGrupo) =>
-          moduloGrupo.subModulo.some((modulo) => modulo.url == router.pathname)
+          moduloGrupo.subModulo.some((modulo) =>
+            router.pathname.includes(modulo.url, 0)
+          )
         )
       }
       onClose={closeSideMenu}

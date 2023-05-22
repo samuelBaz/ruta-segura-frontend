@@ -18,7 +18,7 @@ export const FiltroModulos = ({
   filtroModulo,
   accionCorrecta,
 }: FiltroModalModuloType) => {
-  const { control, setValue, watch } = useForm<FiltroType>({
+  const { control, watch } = useForm<FiltroType>({
     defaultValues: {
       buscar: filtroModulo,
     },
@@ -54,9 +54,7 @@ export const FiltroModulos = ({
             control={control}
             label={'Filtro'}
             bgcolor={'background.paper'}
-            onClear={() => {
-              setValue('buscar', '')
-            }}
+            clearable
           />
         </Grid>
       </Grid>
