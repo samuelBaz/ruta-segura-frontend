@@ -9,9 +9,9 @@ import {
   Subtitle,
   Title,
 } from '@storybook/addon-docs'
-import { Meta, StoryFn } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 import { Path, useForm } from 'react-hook-form'
-import { FormInputRadio } from '../../../../common/components/ui/form'
+import { FormInputMultiCheckbox } from '../../../../common/components/ui/form'
 
 export interface PersonaType {
   id: number
@@ -23,8 +23,8 @@ export interface PersonaType {
   idsPeliculasFavoritas: number[]
 }
 export default {
-  title: 'Form/FormInputRadio',
-  component: FormInputRadio,
+  title: 'Moleculas/Form/FormInputMultiCheckbox',
+  component: FormInputMultiCheckbox,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
     // control: { type: 'function', description: 'Control<any>' },
@@ -34,8 +34,8 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputRadio_' +
-          '\n#### Información sobre  - FormInputRadio. ' +
+          // 'Form - _FormInputMultiCheckbox_' +
+          '\n#### Información sobre  - _FormInputMultiCheckbox_. ' +
           '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
@@ -70,8 +70,8 @@ export default {
   // },
 } as Meta
 
-const Template: StoryFn<typeof FormInputRadio> = (args) => {
-  const { control } = useForm<PersonaType>({
+const Template: StoryFn<typeof FormInputMultiCheckbox> = (args) => {
+  const { control, setValue } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
       nombre: 'Pedro',
@@ -83,9 +83,10 @@ const Template: StoryFn<typeof FormInputRadio> = (args) => {
   })
 
   return (
-    <FormInputRadio
+    <FormInputMultiCheckbox
       {...args}
       control={control}
+      setValue={setValue}
       name={args.name as Path<PersonaType>}
     />
   )
@@ -105,7 +106,7 @@ export const SB_Vacio = Template.bind({})
 SB_Vacio.storyName = 'Seleccionados'
 SB_Vacio.args = {
   id: '1232131',
-  label: 'Peliculas favoritas',
+  label: 'Películas favoritas',
   name: 'idsPeliculasFavoritas',
   options: peliculas.map((item) => ({
     key: item.id + '',

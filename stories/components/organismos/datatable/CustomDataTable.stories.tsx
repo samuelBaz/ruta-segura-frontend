@@ -1,14 +1,14 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { CustomDataTable, IconoTooltip } from '../../../common/components/ui'
+import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
 import { Grid, Typography } from '@mui/material'
-import { ColumnaType } from '../../../common/types'
+import { ColumnaType } from '../../../../common/types'
 import { ReactNode } from 'react'
-import { Paginacion } from '../../../common/components/ui/Paginacion'
+import { Paginacion } from '../../../../common/components/ui/Paginacion'
 
 export default {
-  title: 'Componentes/CustomDataTable',
+  title: 'Organismos/Datatable/CustomDataTable',
   component: CustomDataTable,
   //   argTypes: {
   //     // children: {

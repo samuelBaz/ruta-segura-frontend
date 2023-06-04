@@ -1,5 +1,11 @@
 // import React from 'react'
 
+import { StoryFn, Meta } from '@storybook/react'
+
+import { action } from '@storybook/addon-actions'
+import { Path, useForm } from 'react-hook-form'
+import { FormInputDropdown } from '../../../../common/components/ui/form'
+
 import {
   ArgsTable,
   Description,
@@ -9,9 +15,6 @@ import {
   Subtitle,
   Title,
 } from '@storybook/addon-docs'
-import { StoryFn, Meta } from '@storybook/react'
-import { Path, useForm } from 'react-hook-form'
-import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
 
 export interface PersonaType {
   id: number
@@ -20,11 +23,11 @@ export interface PersonaType {
   carnet: string
   fechaNacimiento: string
   edad: number
-  idsPeliculasFavoritas: number[]
+  idPeliculaFavorita: number
 }
 export default {
-  title: 'Form/FormInputDropdownMultiple',
-  component: FormInputDropdownMultiple,
+  title: 'Moleculas/Form/FormInputDropdown',
+  component: FormInputDropdown,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
     // control: { type: 'function', description: 'Control<any>' },
@@ -34,8 +37,8 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDropdownMultiple_' +
-          '\n#### Información sobre  - _FormInputDropdownMultiple_. ' +
+          // 'Form - _FormInputDropdown_' +
+          '\n#### Información sobre  - _FormInputDropdown_. ' +
           '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
@@ -45,7 +48,7 @@ export default {
           "\n     apellido: 'Picapiedra'," +
           '\n     edad: 32,' +
           '\n     fechaNacimiento: 05-21-1984,' +
-          '\n     idsPeliculasFavoritas: [1,2],' +
+          '\n     idPeliculaFavorita: 2,' +
           '\n})' +
           '\n```' +
           '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
@@ -70,7 +73,19 @@ export default {
   // },
 } as Meta
 
-const Template: StoryFn<typeof FormInputDropdownMultiple> = (args) => {
+// const eventsFromNames = actions('accion')
+
+// click en componenete
+// storiesOf('FormInputDropdown', module).add('Click', () => (
+//   <FormInputDropdown
+//     name="HOla"
+//     titulo="ACCION ICONO"
+//     icono="face"
+//     accion={action('HOLA MUNDO ')}
+//   ></FormInputDropdown>
+// ))
+// replica del componente
+const Template: StoryFn<typeof FormInputDropdown> = (args) => {
   const { control } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
@@ -78,12 +93,12 @@ const Template: StoryFn<typeof FormInputDropdownMultiple> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       fechaNacimiento: '05-21-1984',
-      idsPeliculasFavoritas: [1, 2],
+      idPeliculaFavorita: 2,
     },
   })
 
   return (
-    <FormInputDropdownMultiple
+    <FormInputDropdown
       {...args}
       control={control}
       name={args.name as Path<PersonaType>}
@@ -117,14 +132,15 @@ const peliculas = [
 // }
 
 export const SB_Vacio = Template.bind({})
-SB_Vacio.storyName = 'Seleccionados'
+SB_Vacio.storyName = 'Vacío'
 SB_Vacio.args = {
   id: '1232131',
-  label: 'Peliculas favoritas',
-  name: 'idsPeliculasFavoritas',
+  label: 'Película favorita',
+  name: 'idPeliculaFavorita',
   options: peliculas.map((item) => ({
     key: item.id + '',
     value: item.id + '',
     label: item.nombre,
   })),
+  onChange: action('Cambio del valor'),
 }
