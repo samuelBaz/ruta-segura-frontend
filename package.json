@@ -25,6 +25,7 @@
     "@emotion/server": "11.11.0",
     "@emotion/styled": "11.11.0",
     "@mui/icons-material": "5.11.16",
+    "@mui/lab": "5.0.0-alpha.133",
     "@mui/material": "5.13.3",
     "@mui/x-date-pickers": "5.0.20",
     "@socialgouv/matomo-next": "1.6.1",
