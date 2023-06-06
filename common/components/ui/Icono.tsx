@@ -2,10 +2,13 @@ import Icon from '@mui/material/Icon'
 
 import { FC, PropsWithChildren } from 'react'
 import { OverridableStringUnion } from '@mui/types'
-import { IconPropsSizeOverrides } from '@mui/material/Icon/Icon'
+import {
+  IconPropsColorOverrides,
+  IconPropsSizeOverrides,
+} from '@mui/material/Icon/Icon'
 
 interface Props {
-  color?:
+  color?: OverridableStringUnion<
     | 'inherit'
     | 'action'
     | 'disabled'
@@ -14,7 +17,9 @@ interface Props {
     | 'error'
     | 'info'
     | 'success'
-    | 'warning'
+    | 'warning',
+    IconPropsColorOverrides
+  >
   fontSize?: OverridableStringUnion<
     'inherit' | 'large' | 'medium' | 'small',
     IconPropsSizeOverrides

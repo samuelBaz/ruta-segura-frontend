@@ -1,23 +1,23 @@
-// import React from 'react'
-
 import { Meta, StoryFn } from '@storybook/react'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
+
 export default {
   title: 'Atomos/Elementos/Progreso Lineal',
   component: ProgresoLineal,
-} as Meta<typeof ProgresoLineal>
+  parameters: {
+    docs: {
+      description: {
+        component: 'Un componente de progreso lineal.',
+      },
+    },
+  },
+} as Meta
 
 const Template: StoryFn<typeof ProgresoLineal> = (args) => (
   <ProgresoLineal {...args} />
 )
 
-export const Activo = Template.bind({})
-Activo.storyName = 'Progreso lineal activo'
-Activo.args = {
+export const Default = Template.bind({})
+Default.args = {
   mostrar: true,
-}
-export const Inactivo = Template.bind({})
-Inactivo.storyName = 'Progreso lineal Inactivo'
-Inactivo.args = {
-  mostrar: false,
 }

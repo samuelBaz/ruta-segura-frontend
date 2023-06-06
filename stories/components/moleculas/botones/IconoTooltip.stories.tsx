@@ -9,27 +9,21 @@ export default {
   title: 'Moleculas/botones/IconoTooltip',
   component: IconoTooltip,
   argTypes: {
-    accion: { type: 'function', control: () => {} },
+    accion: {
+      type: 'function',
+      control: () => {},
+    },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Este componente muestra un icono con un tooltip que se muestra al pasar el cursor sobre el icono.',
+      },
+    },
+  },
 } as Meta<typeof IconoTooltip>
 
-// const eventsFromNames = actions('accion')
-
-// click en componenete
-// storiesOf('IconoTooltip', module).add('Click', () => (
-//   <IconoTooltip
-//     name="HOla"
-//     titulo="ACCION ICONO"
-//     icono="face"
-//     accion={action('HOLA MUNDO ')}
-//   ></IconoTooltip>
-// ))
-// replica del componente
 const Template: StoryFn<typeof IconoTooltip> = (args) => (
   <IconoTooltip {...args} />
 )
