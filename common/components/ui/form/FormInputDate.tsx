@@ -29,6 +29,8 @@ type FormDatePickerProps<T extends FieldValues> = {
   disabled?: boolean
   rules?: RegisterOptions
   bgcolor?: string
+  minDate?: string | any
+  maxDate?: string | any
   labelVariant?: Variant
   desktopModeMediaQuery?: string
 }
@@ -43,6 +45,8 @@ export const FormInputDate = <T extends FieldValues>({
   disabled,
   rules,
   bgcolor,
+  minDate,
+  maxDate,
   labelVariant = 'subtitle2',
   desktopModeMediaQuery = '',
 }: FormDatePickerProps<T>) => {
@@ -67,6 +71,8 @@ export const FormInputDate = <T extends FieldValues>({
               ref={field.ref}
               mask={'__/__/____'}
               inputFormat={format}
+              minDate={minDate}
+              maxDate={maxDate}
               disabled={disabled}
               desktopModeMediaQuery={desktopModeMediaQuery}
               renderInput={(params) => (

@@ -35,7 +35,7 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDate_' +
+          // 'Form - _FormInputDate_' +.00
           '\n#### Información sobre  - _FormInputDate_. ' +
           '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
@@ -50,7 +50,9 @@ export default {
           '\n})' +
           '\n```' +
           '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          '\n> y ***`name`*** hace referencia al valor.'+
+          '\n\n> Para la validación de `minDate` y `maxDate` se puede enviar en el formato string de la siguiente manera: ***`YYYY-MM-DD`*** ó a través del objeto de ***`dayjs`***, que cuenta con más funciones para [suma](https://day.js.org/docs/en/manipulate/add) o [resta](https://day.js.org/docs/en/manipulate/subtract) de fechas.'+
+          '\n> ',
       },
       page: () => (
         <>
