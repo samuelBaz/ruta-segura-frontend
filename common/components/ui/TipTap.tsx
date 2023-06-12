@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  IconButton,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -9,6 +10,7 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   useTheme,
 } from '@mui/material'
 
@@ -20,29 +22,25 @@ import TableRow from '@tiptap/extension-table-row'
 import TextAlign from '@tiptap/extension-text-align'
 import { Editor, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { MouseEvent, useCallback, useState } from 'react'
+import { MouseEvent, useCallback, useRef, useState } from 'react'
 import { Icono } from './Icono'
-
+import xss from 'xss'
 interface MenuBarProps {
   editor: Editor
 }
 interface TipTapProps {
   editable: boolean
   contenido: string
-  placeholder: string
+  placeholder?: string
   onChange: (contenido: string) => void
+}
+interface TableType {
+  filas: number
+  columnas: number
 }
 
 const MenuBar = ({ editor }: MenuBarProps) => {
-  const [elementoMenuLista, setElementoMenuLista] =
-    useState<null | HTMLElement>(null)
-
-  const abrirMenuLista = (event: MouseEvent<HTMLElement>) => {
-    setElementoMenuLista(event.currentTarget)
-  }
-  const cerrarMenulista = () => {
-    setElementoMenuLista(null)
-  }
+  // Menu tabla
 
   const [elementosMenuTabla, setElementosMenuTabla] =
     useState<null | HTMLElement>(null)
@@ -54,14 +52,27 @@ const MenuBar = ({ editor }: MenuBarProps) => {
     setElementosMenuTabla(null)
   }
 
+  const tablaCreacion = useRef<TableType>({ filas: 3, columnas: 3 })
+
+  // Menu parrafo
+
+  const [elementosMenuParrafo, setElementosMenuParrafo] =
+    useState<null | HTMLElement>(null)
+
+  const abrirMenuParrafo = (event: MouseEvent<HTMLElement>) => {
+    setElementosMenuParrafo(event.currentTarget)
+  }
+  const cerrarMenuParrafo = () => {
+    setElementosMenuParrafo(null)
+  }
+
   const [buttonLinkReferencia, setButtonLinkReferencia] =
     useState<null | HTMLElement>(null)
   const [linkPrevio, setLinkPrevio] = useState('')
 
   const setLink = useCallback(
+    // TODO: Mejorar funcionalidad de link
     (auxLink: string) => {
-      // const previousUrl = editor.getAttributes('link').href
-      // const url = window.prompt('Url', previousUrl)
       const url = auxLink
       // cancelled
       if (url === null) {
@@ -84,19 +95,6 @@ const MenuBar = ({ editor }: MenuBarProps) => {
     },
     [editor]
   )
-  // useEffect(() => {
-  //   if (editor.view && editor.view.domAtPos) {
-  //     const cursor = editor.state.selection
-  //     console.log('OSO entra en useEffect', cursor)
-  //     if (cursor && cursor.$head) {
-  //       const element = editor.view.domAtPos(cursor.$head.pos)
-  //       setCursorReferencia(element.node.parentElement)
-  //     }
-  //     if (editor.isActive('link')) {
-  //       setLink(editor.getAttributes('link').href)
-  //     }
-  //   }
-  // }, [JSON.stringify(editor.state.selection)])
 
   const abrirPopperLink = (event: MouseEvent<HTMLElement>) => {
     setButtonLinkReferencia(buttonLinkReferencia ? null : event.currentTarget)
@@ -107,37 +105,9 @@ const MenuBar = ({ editor }: MenuBarProps) => {
 
   return (
     <>
-      {/* Menu de listas */}
-      <Menu
-        id="menu-lista"
-        anchorEl={elementoMenuLista}
-        open={Boolean(elementoMenuLista)}
-        onClose={cerrarMenulista}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          selected={editor.isActive('orderedList')}
-        >
-          <ListItemIcon>
-            <Icono fontSize="small">format_list_numbered</Icono>
-          </ListItemIcon>
-          <ListItemText>Ordenar lista</ListItemText>
-        </MenuItem>
-        <MenuItem
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          selected={editor.isActive('bulletList')}
-        >
-          <ListItemIcon>
-            <Icono fontSize="small">format_list_bulleted</Icono>
-          </ListItemIcon>
-          <ListItemText>Circulos llenos</ListItemText>
-        </MenuItem>
-      </Menu>
       {/* Menu de tabla */}
       <Menu
+        sx={{ mt: 0.5 }}
         id="menu-tabla"
         anchorEl={elementosMenuTabla}
         open={Boolean(elementosMenuTabla)}
@@ -146,20 +116,61 @@ const MenuBar = ({ editor }: MenuBarProps) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem
-          onClick={() =>
-            editor
-              .chain()
-              .focus()
-              .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
-              .run()
-          }
-        >
-          <ListItemIcon>
-            <Icono fontSize="small">add_box</Icono>
-          </ListItemIcon>
-          <ListItemText>Nueva tabla</ListItemText>
-        </MenuItem>
+        {/* Insertar tabla */}
+        <Box>
+          {tablaCreacion && (
+            <Stack
+              sx={{ ml: 2, mr: 2 }}
+              direction={'row'}
+              alignItems={'center'}
+              // justifyContent={'flex-start'}
+            >
+              <ListItemText>Tabla Nueva</ListItemText>
+              <TextField
+                sx={{ width: 60, transform: 'scale(0.75)' }}
+                defaultValue={tablaCreacion.current.columnas}
+                label="Columna"
+                type="number"
+                inputProps={{ min: 1 }}
+                onChange={(e) => {
+                  tablaCreacion.current.columnas = parseInt(e.target.value)
+                }}
+              ></TextField>
+              <TextField
+                type="number"
+                label="Fila"
+                inputProps={{ min: 1 }}
+                sx={{ width: 60, transform: 'scale(0.75)' }}
+                defaultValue={tablaCreacion.current.filas}
+                onChange={(e) => {
+                  tablaCreacion.current.filas = parseInt(e.target.value)
+                }}
+              ></TextField>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{ mt: 0.6 }}
+                onClick={() => {
+                  editor
+                    .chain()
+                    .focus()
+                    .insertTable({
+                      rows: tablaCreacion.current.filas,
+                      cols: tablaCreacion.current.columnas,
+                      withHeaderRow: true,
+                    })
+                    .run()
+                }}
+              >
+                Adicionar
+                <Icono sx={{ ml: 1 }} color="inherit" fontSize="small">
+                  add_circle
+                </Icono>
+              </Button>
+            </Stack>
+          )}
+        </Box>
+        {/* Adicionar columna antes */}
         <MenuItem
           onClick={() => editor.chain().focus().addColumnBefore().run()}
           disabled={!editor.can().addColumnBefore()}
@@ -169,6 +180,7 @@ const MenuBar = ({ editor }: MenuBarProps) => {
           </ListItemIcon>
           <ListItemText>Adicionar columna antes</ListItemText>
         </MenuItem>
+        {/* Adicionar fila después */}
         <MenuItem
           onClick={() => editor.chain().focus().addColumnAfter().run()}
           disabled={!editor.can().addColumnAfter()}
@@ -178,6 +190,7 @@ const MenuBar = ({ editor }: MenuBarProps) => {
           </ListItemIcon>
           <ListItemText>Adicionar columna después</ListItemText>
         </MenuItem>
+        {/* Eliminar columna */}
         <MenuItem
           onClick={() => editor.chain().focus().deleteColumn().run()}
           disabled={!editor.can().deleteColumn()}
@@ -248,7 +261,9 @@ const MenuBar = ({ editor }: MenuBarProps) => {
           <ListItemText>Separar celdas</ListItemText>
         </MenuItem>
       </Menu>
+      {/* Menu Link */}
       <Menu
+        sx={{ mt: 0.5 }}
         id={'id-link'}
         open={Boolean(buttonLinkReferencia)}
         anchorEl={buttonLinkReferencia}
@@ -261,189 +276,227 @@ const MenuBar = ({ editor }: MenuBarProps) => {
               setLinkPrevio(e.currentTarget.value)
             }}
             placeholder="https://mipagina.io"
+            InputProps={{
+              endAdornment: <Icono color="disabled">open_in_new</Icono>,
+            }}
           ></TextField>
-          <Stack direction={'row'} spacing={1}>
-            <Button
+          <Stack
+            direction={'row'}
+            spacing={1}
+            alignItems={'flex-end'}
+            justifyContent={'flex-end'}
+          >
+            <IconButton
               onClick={() => {
                 setLink('')
                 cerrarPopperLink()
               }}
               size="small"
-              variant="outlined"
             >
-              <Icono fontSize="small">link_off</Icono>
-            </Button>
+              <Icono> link_off</Icono>
+            </IconButton>
             <Button
               onClick={() => {
                 setLink(linkPrevio)
                 cerrarPopperLink()
               }}
               size="small"
-              variant="contained"
+              variant="outlined"
             >
               Guardar
             </Button>
           </Stack>
         </Stack>
       </Menu>
+      {/* Menu Parrafo */}
+      <Menu
+        sx={{ mt: 0.5 }}
+        id={'id-menu-parrafo'}
+        anchorEl={elementosMenuParrafo}
+        open={Boolean(elementosMenuParrafo)}
+        onClose={cerrarMenuParrafo}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        {/* Left Paragraph */}
+        <MenuItem
+          onClick={() => editor.chain().focus().setTextAlign('left').run()}
+          selected={editor.isActive('left')}
+        >
+          <ListItemIcon>
+            <Icono fontSize="small">format_align_left</Icono>
+          </ListItemIcon>
+          <ListItemText>Alinear Izquierda</ListItemText>
+        </MenuItem>
+        {/* Center Paragraph */}
+        <MenuItem
+          onClick={() => editor.chain().focus().setTextAlign('center').run()}
+          selected={editor.isActive('center')}
+        >
+          <ListItemIcon>
+            <Icono fontSize="small">format_align_center</Icono>
+          </ListItemIcon>
+          <ListItemText>Centrar</ListItemText>
+        </MenuItem>
+        {/* Right Paragraph */}
+        <MenuItem
+          onClick={() => editor.chain().focus().setTextAlign('right').run()}
+          selected={editor.isActive('right')}
+        >
+          <ListItemIcon>
+            <Icono fontSize="small">format_align_right</Icono>
+          </ListItemIcon>
+          <ListItemText>Alinear Derecha</ListItemText>
+        </MenuItem>
+        {/* Justify Paragraph */}
+        <MenuItem
+          onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+          selected={editor.isActive({ textAlign: 'justify' })}
+        >
+          <ListItemIcon>
+            <Icono fontSize="small">format_align_justify</Icono>
+          </ListItemIcon>
+          <ListItemText>Justificado</ListItemText>
+        </MenuItem>
+      </Menu>
       <Stack direction={'row'} spacing={2}>
         <ToggleButtonGroup aria-label="text formatting">
-          <ToggleButton
-            size="small"
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            disabled={!editor.can().chain().focus().toggleBold().run()}
-            value={'bold'}
-            selected={editor.isActive('bold')}
-          >
-            <Icono fontSize="small">format_bold</Icono>
-          </ToggleButton>
+          {/* Bold */}
+          <Tooltip title="Bold" placement="bottom-start">
+            <ToggleButton
+              LinkComponent={'span'}
+              size="small"
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              disabled={!editor.can().chain().focus().toggleBold().run()}
+              value={'bold'}
+              selected={editor.isActive('bold')}
+            >
+              <Icono fontSize="small">format_bold</Icono>
+            </ToggleButton>
+          </Tooltip>
+          {/* Italic */}
+          <Tooltip title="Italic" placement="bottom-start">
+            <ToggleButton
+              LinkComponent={'span'}
+              size="small"
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              disabled={!editor.can().chain().focus().toggleItalic().run()}
+              value={'italic'}
+              selected={editor.isActive('italic')}
+            >
+              <Icono fontSize="small">format_italic</Icono>
+            </ToggleButton>
+          </Tooltip>
+          {/* Lista Númerica */}
+          <Tooltip title="Lista ordenada" placement="bottom-start">
+            <ToggleButton
+              LinkComponent={'span'}
+              size="small"
+              onClick={() => editor.chain().focus().toggleOrderedList().run()}
+              value={'orderedList'}
+              selected={editor.isActive('orderedList')}
+            >
+              <Icono fontSize="small">format_list_numbered</Icono>
+            </ToggleButton>
+          </Tooltip>
+          {/* Lista Bolitas */}
+          <Tooltip title="Lista de puntos" placement="bottom-start">
+            <ToggleButton
+              LinkComponent={'span'}
+              size="small"
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
+              value={'bulletList'}
+              selected={editor.isActive('bulletList')}
+            >
+              <Icono fontSize="small">format_list_bulleted</Icono>
+            </ToggleButton>
+          </Tooltip>
 
-          <ToggleButton
-            size="small"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            disabled={!editor.can().chain().focus().toggleItalic().run()}
-            value={'italic'}
-            selected={editor.isActive('italic')}
-          >
-            <Icono fontSize="small">format_italic</Icono>
-          </ToggleButton>
-          <ToggleButton
-            size="small"
-            value={'listas'}
-            onClick={(e) => {
-              abrirMenuLista(e)
-            }}
-          >
-            <Icono fontSize="small">list</Icono>
-            <Icono fontSize="small">arrow_drop_down</Icono>
-          </ToggleButton>
-        </ToggleButtonGroup>
-        <ToggleButtonGroup>
-          {/* Left Paragraph */}
-          <ToggleButton
-            size="small"
-            value={'left'}
-            selected={editor.isActive('left')}
-            onClick={() => editor.chain().focus().setTextAlign('left').run()}
-          >
-            <Icono fontSize="small">format_align_left</Icono>
-          </ToggleButton>
-          {/* Center Paragraph */}
-          <ToggleButton
-            size="small"
-            value={'center'}
-            selected={editor.isActive('center')}
-            onClick={() => editor.chain().focus().setTextAlign('center').run()}
-          >
-            <Icono fontSize="small">format_align_center</Icono>
-          </ToggleButton>
-          {/* Right Paragraph */}
-          <ToggleButton
-            size="small"
-            value={'right'}
-            selected={editor.isActive('right')}
-            onClick={() => editor.chain().focus().setTextAlign('right').run()}
-          >
-            <Icono fontSize="small">format_align_right</Icono>
-          </ToggleButton>
-          {/* Justify */}
-          <ToggleButton
-            size="small"
-            value={'justify'}
-            selected={editor.isActive({ textAlign: 'justify' })}
-            onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-          >
-            <Icono fontSize="small">format_align_justify</Icono>
-          </ToggleButton>
-
+          <Tooltip title="Alinear" placement="bottom-start">
+            <ToggleButton
+              LinkComponent={'span'}
+              size="small"
+              value={'parrafosicpo'}
+              onClick={abrirMenuParrafo}
+            >
+              <Icono fontSize="small">view_headline</Icono>
+              <Icono fontSize="small">arrow_drop_down</Icono>
+            </ToggleButton>
+          </Tooltip>
           {/* Link */}
-
-          <ToggleButton
-            size="small"
-            value={'link'}
-            selected={editor.isActive('link')}
-            onClick={abrirPopperLink}
-          >
-            <Icono fontSize="small">link</Icono>
-          </ToggleButton>
-
-          {/* Un Link */}
+          <Tooltip title="Insertar url" placement="bottom-start">
+            <ToggleButton
+              LinkComponent={'span'}
+              size="small"
+              value={'link'}
+              selected={editor.isActive('link')}
+              onClick={abrirPopperLink}
+            >
+              <Icono fontSize="small">link</Icono>
+            </ToggleButton>
+          </Tooltip>
+          {/* Tablas  */}
+          <Tooltip title="Opciones Tabla" placement="bottom-start">
+            <ToggleButton
+              LinkComponent={'span'}
+              size="small"
+              value={'tablas'}
+              onClick={abrirMenuTabla}
+            >
+              <Icono fontSize="small">table_chart</Icono>
+              <Icono fontSize="small">arrow_drop_down</Icono>
+            </ToggleButton>
+          </Tooltip>
         </ToggleButtonGroup>
-        {/* Tablas  */}
-        <ToggleButtonGroup>
-          <ToggleButton
-            size="small"
-            value={'tablas'}
-            onClick={(e) => {
-              abrirMenuTabla(e)
-            }}
-          >
-            <Icono fontSize="small">table_chart</Icono>
-            <Icono fontSize="small">arrow_drop_down</Icono>
-          </ToggleButton>
-        </ToggleButtonGroup>
+
         {/* Extras */}
-        <ToggleButtonGroup>
-          <ToggleButton
-            size="small"
-            value={'clear'}
-            onClick={() => editor.chain().focus().unsetAllMarks().run()}
-          >
-            <Icono fontSize="small">clear_all</Icono>
-          </ToggleButton>
-          <ToggleButton
-            size="small"
-            value={'undo'}
-            onClick={() => editor.chain().focus().undo().run()}
-            disabled={!editor.can().chain().focus().undo().run()}
-          >
-            <Icono fontSize="small">undo</Icono>
-          </ToggleButton>
-        </ToggleButtonGroup>
+
+        <Tooltip title="Volver a atras" placement="bottom-start">
+          <ToggleButtonGroup>
+            <ToggleButton
+              size="small"
+              value={'undo'}
+              onClick={() => editor.chain().focus().undo().run()}
+              disabled={!editor.can().chain().focus().undo().run()}
+            >
+              <Icono fontSize="small">undo</Icono>
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Tooltip>
       </Stack>
     </>
   )
 }
 
-const Tiptap = ({ contenido = '', onChange, editable = true }: TipTapProps) => {
+const Tiptap = ({ contenido, onChange, editable = true }: TipTapProps) => {
   const { palette } = useTheme()
 
-  const verificarJson = (dato: string): boolean => {
-    try {
-      JSON.parse(dato)
-
-      return true
-    } catch (error) {
-      return false
-    }
-  }
-  const editor: Editor | null = useEditor({
+  let editor: Editor | null = null
+  editor = useEditor({
     editable: editable,
 
     onUpdate: () => {
-      onChange(JSON.stringify(editor?.getHTML()))
+      onChange(editor?.getHTML() ?? '')
     },
     onCreate: () => {
-      onChange(JSON.stringify(editor?.getHTML()))
+      if (editable) {
+        onChange(editor?.getHTML() ?? '')
+      }
     },
 
     extensions: [
-      //   Color.configure({ types: [TextStyle.name, ListItem.name] }),
-      // Document,
-      // Paragraph,
-      // Text,
-
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
       StarterKit.configure({
         bulletList: {
           // keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          keepAttributes: false,
         },
         orderedList: {
           // keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          keepAttributes: false,
         },
       }),
       Table.configure({
@@ -459,11 +512,7 @@ const Tiptap = ({ contenido = '', onChange, editable = true }: TipTapProps) => {
         linkOnPaste: false,
       }),
     ],
-    content: contenido
-      ? verificarJson(contenido)
-        ? JSON.parse(contenido)
-        : contenido
-      : '',
+    content: contenido,
   })
 
   return (
@@ -472,6 +521,15 @@ const Tiptap = ({ contenido = '', onChange, editable = true }: TipTapProps) => {
         <Stack sx={{ pb: 1 }} direction={'row'} justifyContent={'flex-start'}>
           {editor && <MenuBar editor={editor} />}
         </Stack>
+      )}
+      {editable ? (
+        <EditorContent editor={editor} />
+      ) : (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: xss(contenido ?? ''),
+          }}
+        ></div>
       )}
       {editable && (
         <style jsx global>{`
@@ -503,10 +561,6 @@ const Tiptap = ({ contenido = '', onChange, editable = true }: TipTapProps) => {
             vertical-align: top;
             box-sizing: border-box;
             position: relative;
-
-            > * {
-              margin-bottom: 0;
-            }
           }
           th {
             text-align: left;
@@ -545,7 +599,6 @@ const Tiptap = ({ contenido = '', onChange, editable = true }: TipTapProps) => {
           }
         `}</style>
       )}
-      <EditorContent editor={editor} />
     </Box>
   )
 }
