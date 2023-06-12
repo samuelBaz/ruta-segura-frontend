@@ -33,7 +33,6 @@ export const FormInputWysiwyg = <T extends FieldValues>({
   control,
   label,
   rules,
-  textoAyuda = '',
   labelVariant = 'subtitle2',
   placeholder = '',
   disabled = false,
@@ -41,32 +40,11 @@ export const FormInputWysiwyg = <T extends FieldValues>({
 }: FormInputWysiwygProps<T>) => {
   return (
     <div>
-      {textoAyuda.length > 0 ? (
-        <Grid
-          container
-          direction={'row'}
-          spacing={1}
-          alignItems={'stretch'}
-          justifyContent={'flex-start'}
-        >
-          <Grid item>
-            <InputLabel htmlFor={id}>
-              <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
-                {label}
-              </Typography>
-            </InputLabel>
-          </Grid>
-          <Grid item>
-            <InfoTooltip texto={textoAyuda}></InfoTooltip>
-          </Grid>
-        </Grid>
-      ) : (
-        <InputLabel htmlFor={id}>
-          <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
-            {label}
-          </Typography>
-        </InputLabel>
-      )}
+      <InputLabel htmlFor={id}>
+        <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
+          {label}
+        </Typography>
+      </InputLabel>
 
       <Controller
         name={name}
