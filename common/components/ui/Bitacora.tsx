@@ -8,8 +8,12 @@ import {
   timelineItemClasses,
   TimelineConnector
 } from "@mui/lab"
-import { IBitacoraProps, colorIconoType } from "../../types/bitacoraTypes"
+import { ColorIconoType, IBitacoraItems} from "../../types"
 
+export interface IBitacoraProps {
+  titulo: string
+  items: Array<IBitacoraItems>
+}
 
 export const Bitacora = ({
   titulo = '',
@@ -40,7 +44,7 @@ export const Bitacora = ({
             {items.map((item, index) => (
               <TimelineItem key={`accion-${index}`} sx={{ py: 0 }}>
                 <TimelineSeparator>
-                  <TimelineDot color={item.color_icono as colorIconoType} sx={{ mt: 1 }} />
+                  <TimelineDot color={item.color_icono as ColorIconoType} sx={{ mt: 1 }} />
                   {(index < (items.length - 1)) && <TimelineConnector />}
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: 0 }}>

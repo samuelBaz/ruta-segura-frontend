@@ -1,19 +1,20 @@
 import { Grid, Card, CardHeader, Typography } from "@mui/material"
-import { Bitacora } from "./Bitacora"
-import { IBitacoraProps } from "../../types/bitacoraTypes"
+import { Bitacora, IBitacoraProps } from "./Bitacora"
 
 interface IContenedorBitacoraProps {
   titulo: string
   items: IBitacoraProps[]
   scroll?: boolean
   alturaMaxima?: number
+  alturaMinima?: number
 }
 
 export const ContenedorBitacora = ({
   titulo,
   items = [],
   scroll = false,
-  alturaMaxima
+  alturaMaxima,
+  alturaMinima
 }: IContenedorBitacoraProps) => {
   return (
     <>
@@ -26,7 +27,8 @@ export const ContenedorBitacora = ({
               py: 0,
               px: 0,
               ...(alturaMaxima ? { maxHeight: alturaMaxima} : {}),
-              overflowY: scroll ? 'scroll' : ''
+              ...(alturaMinima ? { minHeight: alturaMinima} : {}),
+              overflowY: scroll ? 'auto' : ''
             }}>
             <CardHeader
               subheader={titulo}

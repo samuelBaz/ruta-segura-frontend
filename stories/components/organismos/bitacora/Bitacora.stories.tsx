@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { IBitacoraItems } from '../../../../common/types/bitacoraTypes'
 import { Bitacora } from '../../../../common/components/ui/Bitacora'
+import { IBitacoraItems } from '../../../../common/types'
 
 export default {
   title: 'Organismos/Bitacora/Bitacora',
