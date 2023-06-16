@@ -2,12 +2,12 @@ import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
 
-import { AlertDialog } from '../../../../common/components/ui'
+import { AlertDialog } from '../../../common/components/ui'
 import { action } from '@storybook/addon-actions'
 import Button from '@mui/material/Button'
 
 export default {
-  title: 'Organismos/Dialogos/AlertDialog',
+  title: 'Componentes/AlertDialog',
   component: AlertDialog,
   argTypes: {
     children: {

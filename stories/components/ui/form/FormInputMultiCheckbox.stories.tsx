@@ -1,9 +1,5 @@
 // import React from 'react'
 
-import { Meta, StoryFn } from '@storybook/react'
-import { FormInputSlider } from '../../../../common/components/ui/form'
-import { Path, useForm } from 'react-hook-form'
-
 import {
   ArgsTable,
   Description,
@@ -13,7 +9,9 @@ import {
   Subtitle,
   Title,
 } from '@storybook/addon-docs'
-import { Typography } from '@mui/material'
+import { StoryFn, Meta } from '@storybook/react'
+import { Path, useForm } from 'react-hook-form'
+import { FormInputMultiCheckbox } from '../../../../common/components/ui/form'
 
 export interface PersonaType {
   id: number
@@ -22,10 +20,11 @@ export interface PersonaType {
   carnet: string
   fechaNacimiento: string
   edad: number
+  idsPeliculasFavoritas: number[]
 }
 export default {
-  title: 'Moleculas/Form/FormInputSlider',
-  component: FormInputSlider,
+  title: 'Form/FormInputMultiCheckbox',
+  component: FormInputMultiCheckbox,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
     // control: { type: 'function', description: 'Control<any>' },
@@ -35,8 +34,8 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputSlider_' +
-          '\n#### Información sobre  - _FormInputSlider_. ' +
+          // 'Form - _FormInputMultiCheckbox_' +
+          '\n#### Información sobre  - _FormInputMultiCheckbox_. ' +
           '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
@@ -46,7 +45,7 @@ export default {
           "\n     apellido: 'Picapiedra'," +
           '\n     edad: 32,' +
           '\n     fechaNacimiento: 05-21-1984,' +
-          "\n     carnet: '9999999'," +
+          '\n     idsPeliculasFavoritas: [1,2],' +
           '\n})' +
           '\n```' +
           '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
@@ -71,43 +70,47 @@ export default {
   // },
 } as Meta
 
-const Template: StoryFn<typeof FormInputSlider> = (args) => {
-  const { control, setValue, watch } = useForm<PersonaType>({
+const Template: StoryFn<typeof FormInputMultiCheckbox> = (args) => {
+  const { control, setValue } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
       nombre: 'Pedro',
       apellido: 'Picapiedra',
       edad: 32,
       fechaNacimiento: '05-21-1984',
-      carnet: '9999999',
+      idsPeliculasFavoritas: [1, 2],
     },
   })
 
   return (
-    <>
-      <FormInputSlider
-        {...args}
-        control={control}
-        setValue={setValue}
-        name={args.name as Path<PersonaType>}
-      />
-      <Typography>{watch(args.name as Path<PersonaType>)}</Typography>
-    </>
+    <FormInputMultiCheckbox
+      {...args}
+      control={control}
+      setValue={setValue}
+      name={args.name as Path<PersonaType>}
+    />
   )
 }
 
-export const SB_Slider = Template.bind({})
-SB_Slider.storyName = 'Slider'
-SB_Slider.parameters = {
-  docs: {
-    description: {
-      story:
-        'Antes de enviar el FormInputSlider UseForm nos pedirá llenar el campo vació',
-    },
-  },
-}
-SB_Slider.args = {
-  name: 'edad',
-  label: 'Edad',
-  id: 'input-slider-form-',
+const peliculas = [
+  { id: 1, nombre: 'Toy Story' },
+  { id: 2, nombre: 'Bichos: Una aventura en miniatura' },
+  { id: 3, nombre: 'Toy Story 2' },
+  { id: 4, nombre: 'Monsters, Inc.' },
+  { id: 5, nombre: 'Buscando a Nemo' },
+  { id: 6, nombre: 'Los Increibles' },
+  { id: 7, nombre: 'Cars' },
+]
+
+export const SB_Vacio = Template.bind({})
+SB_Vacio.storyName = 'Seleccionados'
+SB_Vacio.args = {
+  id: '1232131',
+  label: 'Películas favoritas',
+  name: 'idsPeliculasFavoritas',
+  options: peliculas.map((item) => ({
+    key: item.id + '',
+    value: item.id + '',
+    label: item.nombre,
+  })),
 }

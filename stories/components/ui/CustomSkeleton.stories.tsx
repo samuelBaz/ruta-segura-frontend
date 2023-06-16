@@ -1,10 +1,10 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { TableSkeleton } from '../../../../common/components/ui'
+import { TableSkeleton } from '../../../common/components/ui'
 
 export default {
-  title: 'Organismos/Datatable/TableSkeleton',
+  title: 'Componentes/TableSkeleton',
   component: TableSkeleton,
   argTypes: {
     accion: { type: 'function', control: () => {} },

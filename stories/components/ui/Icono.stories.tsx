@@ -5,7 +5,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { Icono } from '../../../common/components/ui'
 
 export default {
-  title: 'Atomos/Elementos/Icono',
+  title: 'Componentes/Icono',
   component: Icono,
 } as Meta<typeof Icono>
 
