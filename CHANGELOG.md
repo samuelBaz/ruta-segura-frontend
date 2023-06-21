@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.7.0...v1.9.0) (2023-05-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* se elimino `onClear` para FormInputText y FormInputDropdown
+
+### Features
+
+* agregado boton 'agregar' que cambia entre icono o boton de acuerdo a la interfaz ([73105b3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/73105b3bf4b1e377302794ae6bcd943a98b918af))
+* añadida ordenación de columnas para datatable en modo escritorio 🎉 ([de53fbd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/de53fbd6dce763119f2dff4126b18807e263bc4f))
+* añadida ordenación para módulo de módulos ([cb5f3d3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/cb5f3d308bb49428da37a54a6450d7404dc3b22d))
+* añadida ordenación para módulo de parámetros ([f7bb1d6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f7bb1d67e81a49986c4cfe2c7ada0508fe8c499a))
+* añadida ordenación para módulo de políticas ([e693dd5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e693dd5e4daf95c046b020fa060f9a8c5a10f372))
+* añadida ordenación para módulo de roles ([9a6c595](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9a6c595364678641787efd06ff5f12bd312fc4f4))
+* añadidas acciones de cambio de estado para módulo de parámetros ([13c9fbc](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/13c9fbcdadd4ae15a56a9676ef0d2d6007e74dd1))
+* añadido boton de ordenación con soporte para diferentes criterios ([bc31845](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/bc31845e39f8d3f26f35730d8d7c1fbf72ddcb5d))
+* añadido indicador de ordenación activa en boton ordenar ([0880f0c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/0880f0c7c52984cbda698612f5effb0988791072))
+* añadido valor desktopModeMediaQuery en FormInputDate para mostrar modo escritorio o móvil ([af68ba3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/af68ba31f87ee7125e69d164ec9b0c90fae2fd24))
+* estandarización de vistas de acciones para página de módulos, parámetros, usuarios y roles ([5d080db](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/5d080dba89fddca942968626ed770504796e0273))
+* implementación de boton de ordenación en módulo de usuarios ([eefcbe9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/eefcbe994cad05e04280c50e464c23ade6d0f948))
+* mejoras en estilo de componente de estado y componente alternativo ⚪️ ([e1394af](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e1394af1ff524356aef18552a08b367af013f30b))
+* se agrego variable `clearable` en FormInputText y FormInputDropdown para reiniciar sus valores ([7a29a34](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7a29a34a5e8e901d7d3045382460cbbb9d8c9905))
+* se mejora la lógica de redirecciones moviendo las reglas a archivo middleware ([99b9d89](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/99b9d8913fd689735f313cc3e0e8e4d41790e7c8))
+
+
+### Bug Fixes
+
+* añadida validación antes de renovar el token en caso de valor no definido ([03731c5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/03731c5d0f96ac883cad8fdd5192f00aa590667d))
+* corregido error de paginado al cambiar el valor del límite y nuevo boton Toggle de busqueda ([1594998](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1594998fee283535a33eb95d88652ee0298cb906))
+* corregido error de paginado ocasionado por no reiniciar la página en el cambio de límite ([77b7aa3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/77b7aa37fa402f19d60d4b3fdb262374b495afd2))
+* corregido error en cierre de filtros debido a riterios de búsqueda no restaurados ([3e03ad7](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/3e03ad7594424cf16b90a8bfe7db4f9bc60528b2))
+* corregido error en función de impresión ocasionado por no encontrar valor en regex ([0fe07e8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/0fe07e804d14e752478c74f43e9757ab11da4aaf))
+* corregido error en redirección de oauth de usuarios no autorizados ([ab52659](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ab52659743ee61cf7442fa73cdc38230960ddbf7))
+* corregido error en SideBar que ocasionaba que no se mostrara en páginas como /usuarios/:uuid ([185d1e8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/185d1e897ba7e4dc1a1756cc547ecdec69ce619f))
+* corregido evento de hover de botones personalizados que evitaba que desaparezcan los mensajes ([73ba6f4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/73ba6f459600d2de4dc26df77dcbc5fadfaae5b6))
+* modificado boton de acciones para funcionar como icono o boton ([d54f4fe](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d54f4fead2747f3943b31d2f0a1e0ffa8932ed85))
+* modificados test e2e con función 'waitForResponse' para esperar eventos de peticiones web ([8630d99](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/8630d99584d35ec58c13094903f726ee10509bf8))
+* se corrigió un error en redirección a página de inicio en páginas de desbloqueo ([e2aa6c5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e2aa6c5b0ad8d24740dbc8e69c42f28db4857dd9))
+
 ## [1.8.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.7.0...v1.8.0) (2023-04-02)
 
 

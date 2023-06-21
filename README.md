@@ -79,10 +79,13 @@ Los iconos de los menús son de [material icons](https://fonts.google.com/icons)
 Para cambiar los colores del sistema, se debe editar los archivos `theme/light-theme.ts` o `theme/dark-theme.ts` según
 corresponda
 
-Se recomienda seguir la regla `60 - 30 - 10` para el uso de colores
+Para generar paletas de color, se sugiere usar [Material Theme Builder](https://m3.material.io/theme-builder#/custom)
 
-Para más información, se recomienda leer el
-articulo [How the 60-30-10 rule saved the day](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
+En general se recomienda seguir la regla `60 - 30 - 10` para el uso de colores
+
+Para más información, se recomienda leer él
+artículo [How the 60-30-10 rule saved the day](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
+
 
 ## Instalación
 
