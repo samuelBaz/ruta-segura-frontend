@@ -39,7 +39,7 @@ export default {
         component:
           // 'Form - _FormInputDropdown_' +
           '\n#### Información sobre  - _FormInputDropdown_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
+          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
           '\n   defaultValues: {' +

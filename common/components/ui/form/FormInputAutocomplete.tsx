@@ -18,7 +18,6 @@ import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import React from 'react'
 import { Variant } from '@mui/material/styles/createTypography'
 import { AutocompleteInputChangeReason } from '@mui/base/useAutocomplete/useAutocomplete'
-import { imprimir } from '../../../utils/imprimir'
 
 export interface optionType {
   key: string
@@ -67,7 +66,6 @@ export const FormInputAutocomplete = <T extends FieldValues>({
   bgcolor,
   labelVariant = 'subtitle2',
 }: FormInputDropdownAutocompleteProps<T>) => {
-  imprimir('render 🚨')
   return (
     <>
       <InputLabel htmlFor={id}>
