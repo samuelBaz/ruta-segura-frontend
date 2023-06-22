@@ -1,6 +1,4 @@
 import { expect, test } from '@playwright/test'
-
-import randomWords from 'random-words'
 import { palabraAleatoria } from './utils/generador'
 
 test('Parámetros - crear/editar parámetro', async ({ page, isMobile }) => {
@@ -30,7 +28,7 @@ test('Parámetros - crear/editar parámetro', async ({ page, isMobile }) => {
   )
 
   await page.getByRole('button', { name: 'Editar' }).first().click()
-  const parametroAleatorio2 = randomWords({ exactly: 1, min: 3 }).pop() ?? ''
+  const parametroAleatorio2 = palabraAleatoria()
   await page.locator('#codigo').fill(parametroAleatorio2)
   await page.locator('#nombre').fill(parametroAleatorio2)
   await page.locator('#grupo').fill(parametroAleatorio2)
