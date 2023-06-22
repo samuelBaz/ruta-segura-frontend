@@ -2,11 +2,11 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 
-import { IconoTooltip } from '../../../../common/components/ui'
+import { IconoTooltip } from '../../../common/components/ui'
 import { action } from '@storybook/addon-actions'
 
 export default {
-  title: 'Moleculas/botones/IconoTooltip',
+  title: 'Componentes/IconoTooltip',
   component: IconoTooltip,
   argTypes: {
     accion: {
