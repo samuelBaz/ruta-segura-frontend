@@ -7,4 +7,5 @@ export const Constantes = {
       : '/' + process.env.NEXT_PUBLIC_PATH,
   appEnv: process.env.NEXT_PUBLIC_APP_ENV,
   ciudadaniaUrl: process.env.NEXT_PUBLIC_CIUDADANIA_URL,
+  firmadorUrl: process.env.NEXT_PUBLIC_FIRMADOR_URL,
 }
