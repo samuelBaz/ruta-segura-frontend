@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
 
 export default {
-  title: 'Componentes/ProgresoLineal',
+  title: 'Atomos/Elementos/Progreso Lineal',
   component: ProgresoLineal,
   parameters: {
     docs: {

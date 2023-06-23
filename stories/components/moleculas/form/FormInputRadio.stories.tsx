@@ -23,7 +23,7 @@ export interface PersonaType {
   idsPeliculasFavoritas: number[]
 }
 export default {
-  title: 'Form/FormInputRadio',
+  title: 'Moleculas/Form/FormInputRadio',
   component: FormInputRadio,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },

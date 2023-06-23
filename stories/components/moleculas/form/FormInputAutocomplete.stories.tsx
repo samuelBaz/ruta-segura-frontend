@@ -56,7 +56,7 @@ interface RespuestaBusqueda {
 }
 
 export default {
-  title: 'Form/FormInputAutocomplete',
+  title: 'Moleculas/Form/FormInputAutocomplete',
   component: FormInputDropdownMultiple,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },

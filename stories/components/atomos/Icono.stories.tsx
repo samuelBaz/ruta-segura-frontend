@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { Icono } from '../../../common/components/ui'
 
 export default {
-  title: 'Componentes/Icono',
+  title: 'Atomos/Elementos/Icono',
   component: Icono,
   parameters: {
     docs: {

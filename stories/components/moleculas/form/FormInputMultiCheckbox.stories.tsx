@@ -11,7 +11,7 @@ import {
 } from '@storybook/addon-docs'
 import { StoryFn, Meta } from '@storybook/react'
 import { Path, useForm } from 'react-hook-form'
-import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
+import { FormInputMultiCheckbox } from '../../../../common/components/ui/form'
 
 export interface PersonaType {
   id: number
@@ -23,8 +23,8 @@ export interface PersonaType {
   idsPeliculasFavoritas: number[]
 }
 export default {
-  title: 'Form/FormInputDropdownMultiple',
-  component: FormInputDropdownMultiple,
+  title: 'Moleculas/Form/FormInputMultiCheckbox',
+  component: FormInputMultiCheckbox,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
     // control: { type: 'function', description: 'Control<any>' },
@@ -34,8 +34,8 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDropdownMultiple_' +
-          '\n#### Información sobre  - _FormInputDropdownMultiple_. ' +
+          // 'Form - _FormInputMultiCheckbox_' +
+          '\n#### Información sobre  - _FormInputMultiCheckbox_. ' +
           '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
@@ -70,8 +70,8 @@ export default {
   // },
 } as Meta
 
-const Template: StoryFn<typeof FormInputDropdownMultiple> = (args) => {
-  const { control } = useForm<PersonaType>({
+const Template: StoryFn<typeof FormInputMultiCheckbox> = (args) => {
+  const { control, setValue } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
       nombre: 'Pedro',
@@ -83,9 +83,10 @@ const Template: StoryFn<typeof FormInputDropdownMultiple> = (args) => {
   })
 
   return (
-    <FormInputDropdownMultiple
+    <FormInputMultiCheckbox
       {...args}
       control={control}
+      setValue={setValue}
       name={args.name as Path<PersonaType>}
     />
   )
@@ -100,27 +101,12 @@ const peliculas = [
   { id: 6, nombre: 'Los Increibles' },
   { id: 7, nombre: 'Cars' },
 ]
-// export const SB_Requerido = Template.bind({})
-// SB_Requerido.storyName = 'Campo Requerido'
-// SB_Requerido.parameters = {
-//   docs: {
-//     description: {
-//       story:
-//         'Antes de enviar el FormInputDate UseForm nos pedirá llenar el campo vacio',
-//     },
-//   },
-// }
-// SB_Requerido.args = {
-//   name: 'fechaNacimiento',
-//   label: 'Fecha de Nacimiento',
-//   id: 'textfield-form-1',
-// }
 
 export const SB_Vacio = Template.bind({})
 SB_Vacio.storyName = 'Seleccionados'
 SB_Vacio.args = {
   id: '1232131',
-  label: 'Peliculas favoritas',
+  label: 'Películas favoritas',
   name: 'idsPeliculasFavoritas',
   options: peliculas.map((item) => ({
     key: item.id + '',

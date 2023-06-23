@@ -1,7 +1,7 @@
 // import React from 'react'
 
-import { StoryFn, Meta } from '@storybook/react'
-import { FormInputDate } from '../../../../common/components/ui/form'
+import { Meta, StoryFn } from '@storybook/react'
+import { FormInputSlider } from '../../../../common/components/ui/form'
 import { Path, useForm } from 'react-hook-form'
 
 import {
@@ -13,6 +13,7 @@ import {
   Subtitle,
   Title,
 } from '@storybook/addon-docs'
+import { Typography } from '@mui/material'
 
 export interface PersonaType {
   id: number
@@ -22,10 +23,9 @@ export interface PersonaType {
   fechaNacimiento: string
   edad: number
 }
-
 export default {
-  title: 'Form/FormInputDate',
-  component: FormInputDate,
+  title: 'Moleculas/Form/FormInputSlider',
+  component: FormInputSlider,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
     // control: { type: 'function', description: 'Control<any>' },
@@ -35,8 +35,8 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDate_' +
-          '\n#### Información sobre  - _FormInputDate_. ' +
+          // 'Form - _FormInputSlider_' +
+          '\n#### Información sobre  - _FormInputSlider_. ' +
           '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
@@ -71,20 +71,8 @@ export default {
   // },
 } as Meta
 
-// const eventsFromNames = actions('accion')
-
-// click en componenete
-// storiesOf('FormInputDate', module).add('Click', () => (
-//   <FormInputDate
-//     name="HOla"
-//     titulo="ACCION ICONO"
-//     icono="face"
-//     accion={action('HOLA MUNDO ')}
-//   ></FormInputDate>
-// ))
-// replica del componente
-const Template: StoryFn<typeof FormInputDate> = (args) => {
-  const { control } = useForm<PersonaType>({
+const Template: StoryFn<typeof FormInputSlider> = (args) => {
+  const { control, setValue, watch } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
       nombre: 'Pedro',
@@ -96,33 +84,30 @@ const Template: StoryFn<typeof FormInputDate> = (args) => {
   })
 
   return (
-    <FormInputDate
-      {...args}
-      control={control}
-      name={args.name as Path<PersonaType>}
-    />
+    <>
+      <FormInputSlider
+        {...args}
+        control={control}
+        setValue={setValue}
+        name={args.name as Path<PersonaType>}
+      />
+      <Typography>{watch(args.name as Path<PersonaType>)}</Typography>
+    </>
   )
 }
 
-export const SB_Requerido = Template.bind({})
-SB_Requerido.storyName = 'Campo Requerido'
-SB_Requerido.parameters = {
+export const SB_Slider = Template.bind({})
+SB_Slider.storyName = 'Slider'
+SB_Slider.parameters = {
   docs: {
     description: {
       story:
-        'Antes de enviar el FormInputDate UseForm nos pedirá llenar el campo vacío',
+        'Antes de enviar el FormInputSlider UseForm nos pedirá llenar el campo vació',
     },
   },
 }
-SB_Requerido.args = {
-  name: 'fechaNacimiento',
-  label: 'Fecha de Nacimiento',
-  id: 'textfield-form-1',
-}
-
-export const SB_Deshabilitado = Template.bind({})
-SB_Deshabilitado.storyName = 'Deshabilitado'
-SB_Deshabilitado.args = {
-  ...SB_Requerido.args,
-  disabled: true,
+SB_Slider.args = {
+  name: 'edad',
+  label: 'Edad',
+  id: 'input-slider-form-',
 }
