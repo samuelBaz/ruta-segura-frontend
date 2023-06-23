@@ -165,8 +165,6 @@ export const VistaModalUsuario = ({
                 control={control}
                 name="persona.fechaNacimiento"
                 label="Fecha de nacimiento"
-                minDate={dayjs().subtract(16, 'year')} // Edad mínima de 16 años
-                maxDate={dayjs().add(120, 'year')} // Edad máxima de 120 años
                 disabled={loadingModal}
                 rules={{ required: 'Este campo es requerido' }}
               />

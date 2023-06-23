@@ -18,6 +18,7 @@ import { RegisterOptions } from 'react-hook-form/dist/types/validator'
 import esMX from 'dayjs/locale/es-mx'
 import { validarFechaFormato } from '../../../utils/fechas'
 import { Variant } from '@mui/material/styles/createTypography'
+import { Dayjs } from 'dayjs'
 
 type FormDatePickerProps<T extends FieldValues> = {
   id: string
@@ -29,8 +30,8 @@ type FormDatePickerProps<T extends FieldValues> = {
   disabled?: boolean
   rules?: RegisterOptions
   bgcolor?: string
-  minDate?: string | any
-  maxDate?: string | any
+  minDate?: Dayjs
+  maxDate?: Dayjs
   labelVariant?: Variant
   desktopModeMediaQuery?: string
 }
