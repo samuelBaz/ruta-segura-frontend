@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import { StoryFn, Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { FormInputDate } from '../../../../common/components/ui/form'
 import { Path, useForm } from 'react-hook-form'
 
@@ -13,6 +13,7 @@ import {
   Subtitle,
   Title,
 } from '@storybook/addon-docs'
+import dayjs from 'dayjs'
 
 export interface PersonaType {
   id: number
@@ -35,7 +36,7 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDate_' +
+          // 'Form - _FormInputDate_' +.00
           '\n#### Información sobre  - _FormInputDate_. ' +
           '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
@@ -50,7 +51,9 @@ export default {
           '\n})' +
           '\n```' +
           '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          '\n> y ***`name`*** hace referencia al valor.' +
+          '\n\n> Para la validación de `minDate` y `maxDate` se puede enviar en el formato del objeto de ***`dayjs`***, que cuenta con más funciones para [suma](https://day.js.org/docs/en/manipulate/add) o [resta](https://day.js.org/docs/en/manipulate/subtract) de fechas.' +
+          '\n> ',
       },
       page: () => (
         <>
@@ -125,4 +128,18 @@ SB_Deshabilitado.storyName = 'Deshabilitado'
 SB_Deshabilitado.args = {
   ...SB_Requerido.args,
   disabled: true,
+}
+
+export const SB_MinDate = Template.bind({})
+SB_MinDate.storyName = 'Fecha mínima (5 días atras)'
+SB_MinDate.args = {
+  ...SB_Requerido.args,
+  minDate: dayjs().subtract(5, 'day'),
+}
+
+export const SB_MaxDate = Template.bind({})
+SB_MaxDate.storyName = 'Fecha máxima (1 semana despues)'
+SB_MaxDate.args = {
+  ...SB_Requerido.args,
+  maxDate: dayjs().add(1, 'week'),
 }

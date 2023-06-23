@@ -26,6 +26,7 @@ import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
 import { useAlerts, useSession } from '../../../../common/hooks'
 import { formatoFecha } from '../../../../common/utils/fechas'
 import { imprimir } from '../../../../common/utils/imprimir'
+import dayjs from 'dayjs'
 
 export interface ModalUsuarioType {
   usuario?: UsuarioCRUDType | undefined | null
