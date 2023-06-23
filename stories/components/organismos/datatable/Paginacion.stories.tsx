@@ -3,10 +3,10 @@
 import { Meta, StoryFn } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
-import { Paginacion } from '../../../common/components/ui/Paginacion'
+import { Paginacion } from '../../../../common/components/ui/Paginacion'
 
 export default {
-  title: 'Componentes/Paginación',
+  title: 'Organismos/Datatable/Paginación',
   component: Paginacion,
   argTypes: {
     accion: { type: 'function', control: () => {} },

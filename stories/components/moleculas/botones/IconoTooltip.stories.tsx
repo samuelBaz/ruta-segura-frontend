@@ -2,34 +2,28 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 
-import { IconoTooltip } from '../../../common/components/ui'
+import { IconoTooltip } from '../../../../common/components/ui'
 import { action } from '@storybook/addon-actions'
 
 export default {
-  title: 'Componentes/IconoTooltip',
+  title: 'Moleculas/Botones/IconoTooltip',
   component: IconoTooltip,
   argTypes: {
-    accion: { type: 'function', control: () => {} },
+    accion: {
+      type: 'function',
+      control: () => {},
+    },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Este componente muestra un icono con un tooltip que se muestra al pasar el cursor sobre el icono.',
+      },
+    },
+  },
 } as Meta<typeof IconoTooltip>
 
-// const eventsFromNames = actions('accion')
-
-// click en componenete
-// storiesOf('IconoTooltip', module).add('Click', () => (
-//   <IconoTooltip
-//     name="HOla"
-//     titulo="ACCION ICONO"
-//     icono="face"
-//     accion={action('HOLA MUNDO ')}
-//   ></IconoTooltip>
-// ))
-// replica del componente
 const Template: StoryFn<typeof IconoTooltip> = (args) => (
   <IconoTooltip {...args} />
 )
