@@ -1,4 +1,4 @@
-import { FormHelperText, Grid, InputLabel } from '@mui/material'
+import { FormHelperText, InputLabel } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Variant } from '@mui/material/styles/createTypography'
 import {
@@ -9,9 +9,7 @@ import {
   PathValue,
 } from 'react-hook-form'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-import { InfoTooltip } from '../InfoTooltip'
 import Tiptap from '../TipTap'
-// import { InfoTooltip } from '../InfoTooltip'
 
 type FormInputWysiwygProps<T extends FieldValues> = {
   id: string

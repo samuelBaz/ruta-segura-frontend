@@ -24,7 +24,7 @@ export interface PersonaType {
   edad: number
 }
 export default {
-  title: 'Moleculas/Form/FormInputSlider',
+  title: 'Moleculas/Formulario/FormInputSlider',
   component: FormInputSlider,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },

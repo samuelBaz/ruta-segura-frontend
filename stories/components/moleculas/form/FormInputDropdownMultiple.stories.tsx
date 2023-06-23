@@ -23,7 +23,7 @@ export interface PersonaType {
   idsPeliculasFavoritas: number[]
 }
 export default {
-  title: 'Moleculas/Form/FormInputDropdownMultiple',
+  title: 'Moleculas/Formulario/FormInputDropdownMultiple',
   component: FormInputDropdownMultiple,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
