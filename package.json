@@ -29,6 +29,15 @@
     "@mui/material": "5.13.5",
     "@mui/x-date-pickers": "5.0.20",
     "@socialgouv/matomo-next": "1.6.1",
+    "@tiptap/extension-link": "2.0.3",
+    "@tiptap/extension-table": "2.0.3",
+    "@tiptap/extension-table-cell": "2.0.3",
+    "@tiptap/extension-table-header": "2.0.3",
+    "@tiptap/extension-table-row": "2.0.3",
+    "@tiptap/extension-text-align": "2.0.3",
+    "@tiptap/pm": "2.0.3",
+    "@tiptap/react": "2.0.3",
+    "@tiptap/starter-kit": "2.0.3",
     "axios": "1.4.0",
     "casbin": "5.26.1",
     "dayjs": "1.11.8",
@@ -43,6 +52,7 @@
     "sharp": "0.32.1",
     "swr": "2.1.5",
     "use-debounce": "9.0.4",
+    "xss": "1.0.14",
     "zxcvbn-typescript": "5.0.1"
   },
   "devDependencies": {
