@@ -1,22 +1,34 @@
 import dynamic from 'next/dynamic'
 import { useEffect, useMemo, useState } from 'react'
+import { Box, Grid } from '@mui/material'
 import {
   calcularZoom,
   getCentro,
-} from '../../../common/components/ui/mapas/GeoUtils'
-import { Grid } from '@mui/material'
-import { FormInputAutocompleteSearch } from '../../../common/components/ui/form/FormAutocompleteSearch'
-import { useMap } from 'react-leaflet'
+} from '../../../../common/components/ui/mapas/GeoUtils'
+import {
+  ArgsTable,
+  Description,
+  PRIMARY_STORY,
+  Primary,
+  Stories,
+  Subtitle,
+  Title,
+} from '@storybook/blocks'
+import { Meta, StoryFn } from '@storybook/react'
+import Mapa from '../../../../common/components/ui/mapas/Mapa'
+import {
+  FormInputAutocomplete,
+  optionType,
+} from '../../../../common/components/ui/form/FormInputAutocomplete'
 import { useForm } from 'react-hook-form'
-import { optionType } from '../../../common/components/ui/form'
+import { useAlerts } from '../../../../common/hooks'
 import { useDebouncedCallback } from 'use-debounce'
-import { imprimir } from '../../../common/utils/imprimir'
-import { InterpreteMensajes } from '../../../common/utils'
-import { Servicios } from '../../../common/services'
-import { Constantes } from '../../../config'
-import { useAlerts } from '../../../common/hooks'
+import { Servicios } from '../../../../common/services'
+import { Constantes } from '../../../../config'
+import { imprimir } from '../../../../common/utils/imprimir'
+import { InterpreteMensajes } from '../../../../common/utils'
 
-export interface AddressLeaflet {
+interface AddressLeaflet {
   city: string
   county: string
   state: string
@@ -30,7 +42,7 @@ export interface AddressLeaflet {
   postcode: string
 }
 
-export interface LeafletUbicacionType {
+interface LeafletUbicacionType {
   place_id: string
   licence?: string
   osm_type?: string
@@ -46,11 +58,31 @@ export interface LeafletUbicacionType {
   address?: AddressLeaflet
 }
 
-interface MapaProps {
-  coordinates: Array<string[]>
+interface SearchType {
+  zona: Array<any>
 }
 
-const Mapa = ({ coordinates }: MapaProps) => {
+export default {
+  title: 'Organismos/Mapas/Geocoding',
+  component: Mapa,
+  argTypes: {},
+  parameters: {
+    docs: {
+      page: () => (
+        <>
+          <Description />
+          <Title />
+          <Subtitle />
+          <Primary />
+          <ArgsTable story={PRIMARY_STORY} />
+          <Stories />
+        </>
+      ),
+    },
+  },
+} as Meta
+
+const Template: StoryFn<typeof Mapa> = (args) => {
   const [zoom, setZoom] = useState<number | undefined>()
   const [centro, setCentro] = useState<number[] | undefined>()
   const [puntos, setPuntos] = useState<Array<string[]>>([])
@@ -61,18 +93,10 @@ const Mapa = ({ coordinates }: MapaProps) => {
     setPuntos([...puntosActuales])
   }
 
-  const Map = useMemo(
-    () =>
-      dynamic(() => import('../../../common/components/ui/mapas/BuildMap'), {
-        ssr: false,
-      }),
-    []
-  )
-
   useEffect(() => {
-    if (coordinates) {
-      setPuntos([...coordinates])
-      const zoom: number = calcularZoom([...coordinates])
+    if (args.puntos) {
+      setPuntos([...args.puntos])
+      const zoom: number = calcularZoom([...args.puntos])
       setZoom(zoom)
     }
   }, [])
@@ -85,9 +109,9 @@ const Mapa = ({ coordinates }: MapaProps) => {
   -------------------- buscador de MAPA ------------------
   */
 
-  const { control, watch } = useForm({
+  const { control, watch } = useForm<SearchType>({
     defaultValues: {
-      zona: '',
+      zona: [],
     },
   })
 
@@ -142,6 +166,34 @@ const Mapa = ({ coordinates }: MapaProps) => {
     }
   }
 
+  const actualizarUbicacion = (select: any) => {
+    try {
+      const ubicacion: LeafletUbicacionType = JSON.parse(
+        select.value != undefined ? select.value + '' : ''
+      )
+      const current = puntosMapaLeaflet.find((map) =>
+        `${select.key}`.includes(map.place_id.toString())
+      )
+      if (current) {
+        setDefaultCategoriaOption({
+          key: `${current.place_id.toString()}`,
+          value: JSON.stringify(current),
+          label: `${current.display_name}`,
+        })
+      }
+      setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
+      setZoom(15)
+    } catch (e) {
+      console.log('DUD>>>> error ', e)
+    }
+  }
+
+  useEffect(() => {
+    if (watchZona) {
+      actualizarUbicacion(watchZona)
+    }
+  }, [watchZona])
+
   /*
   -------------------- buscador de MAPA ------------------
   */
@@ -150,62 +202,43 @@ const Mapa = ({ coordinates }: MapaProps) => {
     <>
       <Grid container direction={'column'}>
         <Grid item>
-          <FormInputAutocompleteSearch
+          <FormInputAutocomplete
             id={'zona'}
-            defaultValue={defaultCategoriaOption}
-            loading={loadingAutoComplete}
             control={control}
-            name="zona"
+            name={'zona'}
             label="Buscar zona de referencia"
-            placeholder={'Ej: Calacoto'}
+            disabled={false}
             options={puntosMapaLeaflet.map((punto) => ({
               key: `${punto.place_id.toString()}`,
               value: JSON.stringify(punto),
               label: `${punto.display_name}`,
             }))}
-            onClear={() => {
-              setDefaultCategoriaOption(defaultOption)
-            }}
-            onSelect={(select) => {
-              const ubicacion: LeafletUbicacionType = JSON.parse(
-                select.value != undefined ? select.value + '' : ''
-              )
-              const current = puntosMapaLeaflet.find((map) =>
-                `${select.key}`.includes(map.place_id.toString())
-              )
-              if (current) {
-                setDefaultCategoriaOption({
-                  key: `${current.place_id.toString()}`,
-                  value: JSON.stringify(current),
-                  label: `${current.display_name}`,
-                })
-              }
-              setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
-              setZoom(15)
-            }}
-            onChange={(event) => {
-              const valor = event.currentTarget.value
-              if (valor) {
-                actualizacionDireccion(valor)
-              }
+            onInputChange={(event, value) => {
+              actualizacionDireccion(value)
             }}
           />
         </Grid>
+        <Box height={10} />
         <Grid item>
-          <Map
-            id="mapa"
-            key={'mapa'}
+          <Mapa
+            id={'geocoding-mapa'}
+            key={'geocoding-mapa'}
             zoom={zoom}
             puntos={puntos}
             centro={centro}
             draggable
-            onlyread
             onClick={agregarPunto}
             onDrag={agregarPunto}
-          ></Map>
+          ></Mapa>
         </Grid>
       </Grid>
     </>
   )
 }
-export default Mapa
+
+export const PorDefecto = Template.bind({})
+PorDefecto.storyName = 'Por defecto'
+PorDefecto.args = {
+  puntos: [],
+  onlyread: false,
+}

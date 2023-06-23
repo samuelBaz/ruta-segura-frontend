@@ -11,7 +11,7 @@ import {
 
 import { Box, Typography } from '@mui/material'
 import { DragEndEvent, DragEndEventHandlerFn, icon, Map } from 'leaflet'
-import { createRef, ReactNode, useEffect, useRef, useState } from 'react'
+import { createRef, ReactNode, useEffect, useRef } from 'react'
 import { delay } from '../../../utils'
 import 'leaflet/dist/leaflet.css'
 
@@ -25,7 +25,7 @@ const ICON = icon({
   iconAnchor: [12.5, 41],
 })
 
-export interface BuildMapProps {
+export interface MapaProps {
   centro?: number[]
   puntos?: Array<string[]>
   key: string
@@ -42,7 +42,7 @@ export interface BuildMapProps {
   cardMap?: ReactNode
 }
 
-const BuildMap = ({
+const Mapa = ({
   centro = [-17.405356227442883, -66.15823659326952],
   puntos = [],
   key,
@@ -55,7 +55,7 @@ const BuildMap = ({
   draggable = false,
   id,
   zoom = 6,
-}: BuildMapProps) => {
+}: MapaProps) => {
   const markerRefs = useRef<any>([])
   const mapRef = createRef<Map>()
 
@@ -68,11 +68,6 @@ const BuildMap = ({
           onClick([e.latlng.lat, e.latlng.lng], mapEvents.getZoom())
         }
       },
-      // zoomend: () => {
-      //   if (onZoomed && zoom !== mapEvents.getZoom()) {
-      //     onZoomed(mapEvents.getZoom(), [position[0], position[1]])
-      //   }
-      // },
     })
     return null
   }
@@ -162,6 +157,7 @@ const BuildMap = ({
     if (mapRef.current) {
       mapRef.current.setZoom(zoom)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zoom])
 
   return (
@@ -192,9 +188,8 @@ const BuildMap = ({
           )}
         </MapContainer>
         <Typography>{`${[Number(centro[0]), Number(centro[1])]}`}</Typography>
-        <Typography>{`${zoom}`}</Typography>
       </div>
     </>
   )
 }
-export default BuildMap
+export default Mapa

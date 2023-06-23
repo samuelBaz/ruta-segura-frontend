@@ -42,5 +42,6 @@ const config: StorybookConfig = {
   docs: {
     autodocs: true,
   },
+  staticDirs: ['../public'],
 }
 module.exports = config

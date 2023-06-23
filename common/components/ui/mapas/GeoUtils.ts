@@ -46,8 +46,6 @@ const getCentro = (
     var lng = Math.atan2(avgY, avgX)
     var hyp = Math.sqrt(avgX * avgX + avgY * avgY)
     var lat = Math.atan2(avgZ, hyp)
-
-    console.log('DUD calculo centro', [rad2degr(lat), rad2degr(lng)])
     return [rad2degr(lat), rad2degr(lng)]
   } catch (e) {
     return [-17.405356227442883, -66.15823659326952]
@@ -83,7 +81,6 @@ function calculateDistance(
 }
 
 const calcularZoom = (puntos: Array<string[]> | Array<number[]>): number => {
-  console.log('DUD>>>> puntos', puntos.length)
   let zoom = 14
   if (puntos.length === 0) {
     return 6
@@ -124,8 +121,6 @@ const calcularZoom = (puntos: Array<string[]> | Array<number[]>): number => {
   } else if (maxDistance > 10) {
     zoom = 12
   }
-
-  console.log('DUD>>>>>', zoom)
 
   return zoom
 }
