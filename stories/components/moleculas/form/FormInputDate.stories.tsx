@@ -25,7 +25,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Form/FormInputDate',
+  title: 'Moleculas/Formulario/FormInputDate',
   component: FormInputDate,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },

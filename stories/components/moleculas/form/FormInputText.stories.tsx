@@ -25,7 +25,7 @@ export interface PersonaType {
   historialCriminal: string
 }
 export default {
-  title: 'Moleculas/Form/FormInputText',
+  title: 'Moleculas/Formulario/FormInputText',
   component: FormInputText,
   argTypes: {
     onChange: { type: 'function', control: () => {} },

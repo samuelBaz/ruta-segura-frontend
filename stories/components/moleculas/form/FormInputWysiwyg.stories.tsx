@@ -23,7 +23,7 @@ export interface PersonaType {
   historialCriminal: string
 }
 export default {
-  title: 'Moleculas/Form/FormInputWysiswyg',
+  title: 'Moleculas/Formulario/FormInputWysiswyg',
   component: FormInputWysiwyg,
   argTypes: {
     onChange: { type: 'function', control: () => {} },

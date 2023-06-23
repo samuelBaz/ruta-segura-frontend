@@ -26,7 +26,7 @@ export interface PersonaType {
   idPeliculaFavorita: number
 }
 export default {
-  title: 'Moleculas/Form/FormInputDropdown',
+  title: 'Moleculas/Formulario/FormInputDropdown',
   component: FormInputDropdown,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },

@@ -6,6 +6,7 @@ import { addons } from '@storybook/addons'
 import { createElement, useEffect, useState } from 'react'
 import { DARK_MODE_EVENT_NAME, useDarkMode } from 'storybook-dark-mode'
 import { DocsContainer } from '@storybook/blocks'
+import 'material-icons/iconfont/outlined.css'
 
 // get channel to listen to event emitter
 const channel = addons.getChannel()
@@ -37,10 +38,6 @@ const ThemeWrapper = (props) => {
 export const decorators: Array<Decorator> = [
   (Story) => (
     <>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
-      />
       <Story />
     </>
   ),
