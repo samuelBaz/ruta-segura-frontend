@@ -3,10 +3,10 @@
 import { Meta, StoryFn } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
-import { CustomDialog } from '../../../common/components/ui'
+import { CustomDialog } from '../../../../common/components/ui'
 
 export default {
-  title: 'Componentes/CustomDialog',
+  title: 'Organismos/Dialogos/CustomDialog',
   component: CustomDialog,
   argTypes: {
     children: {

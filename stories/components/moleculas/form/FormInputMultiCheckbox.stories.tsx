@@ -23,7 +23,7 @@ export interface PersonaType {
   idsPeliculasFavoritas: number[]
 }
 export default {
-  title: 'Form/FormInputMultiCheckbox',
+  title: 'Moleculas/Form/FormInputMultiCheckbox',
   component: FormInputMultiCheckbox,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
@@ -36,7 +36,7 @@ export default {
         component:
           // 'Form - _FormInputMultiCheckbox_' +
           '\n#### Información sobre  - _FormInputMultiCheckbox_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
+          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
           '\n   defaultValues: {' +

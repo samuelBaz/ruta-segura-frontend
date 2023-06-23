@@ -1,10 +1,8 @@
 // import React from 'react'
 
 import { StoryFn, Meta } from '@storybook/react'
-
-import { action } from '@storybook/addon-actions'
+import { FormInputDate } from '../../../../common/components/ui/form'
 import { Path, useForm } from 'react-hook-form'
-import { FormInputDropdown } from '../../../../common/components/ui/form'
 
 import {
   ArgsTable,
@@ -23,11 +21,11 @@ export interface PersonaType {
   carnet: string
   fechaNacimiento: string
   edad: number
-  idPeliculaFavorita: number
 }
+
 export default {
-  title: 'Form/FormInputDropdown',
-  component: FormInputDropdown,
+  title: 'Moleculas/Form/FormInputDate',
+  component: FormInputDate,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
     // control: { type: 'function', description: 'Control<any>' },
@@ -37,9 +35,9 @@ export default {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDropdown_' +
-          '\n#### Información sobre  - _FormInputDropdown_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
+          // 'Form - _FormInputDate_' +
+          '\n#### Información sobre  - _FormInputDate_. ' +
+          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
           '\n```ts' +
           '\nconst {control, handleSubmit} useForm<PersonaType>({' +
           '\n   defaultValues: {' +
@@ -48,7 +46,7 @@ export default {
           "\n     apellido: 'Picapiedra'," +
           '\n     edad: 32,' +
           '\n     fechaNacimiento: 05-21-1984,' +
-          '\n     idPeliculaFavorita: 2,' +
+          "\n     carnet: '9999999'," +
           '\n})' +
           '\n```' +
           '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
@@ -76,16 +74,16 @@ export default {
 // const eventsFromNames = actions('accion')
 
 // click en componenete
-// storiesOf('FormInputDropdown', module).add('Click', () => (
-//   <FormInputDropdown
+// storiesOf('FormInputDate', module).add('Click', () => (
+//   <FormInputDate
 //     name="HOla"
 //     titulo="ACCION ICONO"
 //     icono="face"
 //     accion={action('HOLA MUNDO ')}
-//   ></FormInputDropdown>
+//   ></FormInputDate>
 // ))
 // replica del componente
-const Template: StoryFn<typeof FormInputDropdown> = (args) => {
+const Template: StoryFn<typeof FormInputDate> = (args) => {
   const { control } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
@@ -93,12 +91,12 @@ const Template: StoryFn<typeof FormInputDropdown> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       fechaNacimiento: '05-21-1984',
-      idPeliculaFavorita: 2,
+      carnet: '9999999',
     },
   })
 
   return (
-    <FormInputDropdown
+    <FormInputDate
       {...args}
       control={control}
       name={args.name as Path<PersonaType>}
@@ -106,41 +104,25 @@ const Template: StoryFn<typeof FormInputDropdown> = (args) => {
   )
 }
 
-const peliculas = [
-  { id: 1, nombre: 'Toy Story' },
-  { id: 2, nombre: 'Bichos: Una aventura en miniatura' },
-  { id: 3, nombre: 'Toy Story 2' },
-  { id: 4, nombre: 'Monsters, Inc.' },
-  { id: 5, nombre: 'Buscando a Nemo' },
-  { id: 6, nombre: 'Los Increibles' },
-  { id: 7, nombre: 'Cars' },
-]
-// export const SB_Requerido = Template.bind({})
-// SB_Requerido.storyName = 'Campo Requerido'
-// SB_Requerido.parameters = {
-//   docs: {
-//     description: {
-//       story:
-//         'Antes de enviar el FormInputDate UseForm nos pedirá llenar el campo vacio',
-//     },
-//   },
-// }
-// SB_Requerido.args = {
-//   name: 'fechaNacimiento',
-//   label: 'Fecha de Nacimiento',
-//   id: 'textfield-form-1',
-// }
+export const SB_Requerido = Template.bind({})
+SB_Requerido.storyName = 'Campo Requerido'
+SB_Requerido.parameters = {
+  docs: {
+    description: {
+      story:
+        'Antes de enviar el FormInputDate UseForm nos pedirá llenar el campo vacío',
+    },
+  },
+}
+SB_Requerido.args = {
+  name: 'fechaNacimiento',
+  label: 'Fecha de Nacimiento',
+  id: 'textfield-form-1',
+}
 
-export const SB_Vacio = Template.bind({})
-SB_Vacio.storyName = 'Vacío'
-SB_Vacio.args = {
-  id: '1232131',
-  label: 'Película favorita',
-  name: 'idPeliculaFavorita',
-  options: peliculas.map((item) => ({
-    key: item.id + '',
-    value: item.id + '',
-    label: item.nombre,
-  })),
-  onChange: action('Cambio del valor'),
+export const SB_Deshabilitado = Template.bind({})
+SB_Deshabilitado.storyName = 'Deshabilitado'
+SB_Deshabilitado.args = {
+  ...SB_Requerido.args,
+  disabled: true,
 }
