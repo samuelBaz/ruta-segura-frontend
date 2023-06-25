@@ -14,20 +14,14 @@ import {
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
   component: CustomDataTable,
-  //   argTypes: {
-  //     // children: {
-  //     //   description: 'ReactNode',
-  //     //   control: 'text',
-  //     // },
-  //     columnas: {
-  //       description: 'Array<ColumnaType>',
-  //     },
-  //   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'El componente `CustomDataTable` es tabla de datos personalizada que acepta varias propiedades (props), como la definición de las columnas, el contenido de la tabla, la paginación, los filtros y las acciones, entre otras',
+      },
+    },
+  },
 } as Meta<typeof CustomDataTable>
 
 // const eventsFromNames = actions('accion')
@@ -36,30 +30,44 @@ export default {
 const Template: StoryFn<typeof CustomDataTable> = (args) => (
   <CustomDataTable {...args} />
 )
-export const TablaVacia = Template.bind({})
-TablaVacia.storyName = 'Tabla vacía'
-TablaVacia.args = {
-  titulo: 'Tabla mundiales de Bolivia',
-  error: false,
-  acciones: [],
-  contenidoTabla: [],
-}
 
 /// Columnas para data table
 const columnas: Array<ColumnaType> = [
   { campo: 'nombre', nombre: 'Nombre' },
   { campo: 'resumen', nombre: 'Resumen' },
   { campo: 'fechaPublicacion', nombre: 'Fecha Publicación' },
-  { campo: 'observacion', nombre: 'Observaciones' },
   { campo: 'acciones', nombre: 'Eventos' },
 ]
 const solicitudesData: any[] = [
   {
-    nombre: 'En busca del tiempo perdido',
+    nombre: 'Cien años de soledad',
     resumen:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.   into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-    fechaPublicacion: '02/11/1904',
-    observacion: 'Escritor Frances',
+      'Una novela de realismo mágico que cuenta la historia de la familia Buendía a lo largo de varias generaciones en el ficticio pueblo de Macondo.',
+    fechaPublicacion: '1967-05-30',
+  },
+  {
+    nombre: '1984',
+    resumen:
+      'Una novela distópica que presenta una sociedad totalitaria y vigilante en la que el gobierno controla cada aspecto de la vida de sus ciudadanos.',
+    fechaPublicacion: '1949-06-08',
+  },
+  {
+    nombre: 'El señor de los anillos',
+    resumen:
+      'Una épica trilogía de fantasía que sigue las aventuras de hobbits, elfos, magos y guerreros en su búsqueda para destruir el anillo del poder y derrotar al malvado Sauron.',
+    fechaPublicacion: '1954-07-29',
+  },
+  {
+    nombre: 'Matar a un ruiseñor',
+    resumen:
+      'Una novela clásica de la literatura estadounidense que aborda temas de racismo y justicia a través de la historia de un abogado que defiende a un hombre negro injustamente acusado de un delito.',
+    fechaPublicacion: '1960-07-11',
+  },
+  {
+    nombre: 'Harry Potter y la piedra filosofal',
+    resumen:
+      'El primer libro de la serie de fantasía juvenil que sigue las aventuras de un joven mago llamado Harry Potter mientras asiste a la escuela de magia y hechicería de Hogwarts.',
+    fechaPublicacion: '1997-06-26',
   },
 ]
 
@@ -78,13 +86,6 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
       variant={'body2'}
     >
       {solicitudData.fechaPublicacion}
-    </Typography>,
-
-    <Typography
-      key={`${solicitudData.id}-${index}-obervacion`}
-      variant={'body2'}
-    >
-      {solicitudData.observacion ?? ''}
     </Typography>,
 
     <Grid key={`${solicitudData.id}-${index}-acciones`}>
@@ -187,53 +188,37 @@ Cargando.args = {
   cargando: true,
 }
 
-// // click en componenete
-// storiesOf('CustomDialog', module).add('Cerrado', () => (
-//   <CustomDialog
-//     title="Modal cerrado"
-//     isOpen={false}
-//     handleClose={() => {}}
-//   ></CustomDialog>
-// ))
-// export const Titulo = Template.bind({})
-// Titulo.storyName = 'Icono tooltip'
-// Titulo.args = {
-//   titulo: 'Mensaje tooltip para iconos',
-//   icono: 'savings',
-//   accion: action('()=>{console.log("Click en IconoTooltip")}'),
-//   name: 'IconToolTip',
-// }
-//filtro head flechas
-
 const Template1: StoryFn<typeof CustomDataTable> = (args) => {
   const [datos, setDatos] = useState<any[]>([
     {
-      nombre: 'En busca del tiempo perdido',
+      nombre: 'Toy Story',
       resumen:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.   into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fechaPublicacion: '02/11/1904',
-      observacion: 'Escritor Frances',
+        'Un vaquero de juguete llamado Woody es el favorito de su dueño Andy, pero su posición se ve amenazada cuando llega un nuevo juguete, Buzz Lightyear.',
+      fechaPublicacion: '1995',
     },
     {
-      nombre: 'Siguiendo mis Pies',
+      nombre: 'Buscando a Nemo',
       resumen:
-        'oorem Ipsum is simply dummy text of the printing and typesetting industry.   into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fechaPublicacion: '02/10/1904',
-      observacion: 'Autor Frances',
+        'Un pez payaso joven llamado Nemo es capturado y llevado a un acuario en Sydney. Su padre Marlin y Dory, un pez cirujano con problemas de memoria, se embarcan en una aventura para rescatarlo.',
+      fechaPublicacion: '2003',
     },
     {
-      nombre: 'La Speranza Negra',
+      nombre: 'Los Increíbles',
       resumen:
-        'erem Ipsum is simply dummy text of the printing and typesetting industry.   into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fechaPublicacion: '03/11/1904',
-      observacion: 'reportero Frances',
+        'Una familia de superhéroes retirados se ve obligada a volver a la acción para salvar al mundo de un villano malvado.',
+      fechaPublicacion: '2004',
     },
     {
-      nombre: 'Mirando al Cielo',
+      nombre: 'Up',
       resumen:
-        'frem Ipsum is simply dummy text of the printing and typesetting industry.   into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      fechaPublicacion: '02/12/1904',
-      observacion: 'novelista Frances',
+        'Un viudo llamado Carl Fredricksen se embarca en una aventura en su casa voladora para cumplir el sueño de su difunta esposa de viajar a Sudamérica.',
+      fechaPublicacion: '2009',
+    },
+    {
+      nombre: 'Inside Out',
+      resumen:
+        'La película sigue alas emociones de una niña llamada Riley mientras atraviesa un momento difícil en su vida y debe lidiar con el cambio y la adaptación a una nueva ciudad.',
+      fechaPublicacion: '2015',
     },
   ])
 
@@ -245,11 +230,6 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
     {
       campo: 'fechaPublicacion',
       nombre: 'Fecha Publicación',
-      ordenar: true,
-    },
-    {
-      campo: 'observacion',
-      nombre: 'Observaciones',
       ordenar: true,
     },
     { campo: 'acciones', nombre: 'Eventos' },
@@ -272,13 +252,6 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
         variant={'body2'}
       >
         {solicitudData.fechaPublicacion}
-      </Typography>,
-
-      <Typography
-        key={`${solicitudData.id}-${index}-obervacion`}
-        variant={'body2'}
-      >
-        {solicitudData.observacion ?? ''}
       </Typography>,
 
       <Grid key={`${solicitudData.id}-${index}-acciones`}>
@@ -332,7 +305,7 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
 }
 
 export const HeadFiltro = Template1.bind({})
-HeadFiltro.storyName = 'Filtro por columna'
+HeadFiltro.storyName = 'Orden por columna'
 HeadFiltro.args = {
   titulo: 'Tabla Libros',
   error: false,

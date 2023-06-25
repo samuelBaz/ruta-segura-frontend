@@ -8,6 +8,8 @@ import {
 import {
   Autocomplete,
   AutocompleteValue,
+  Box,
+  CircularProgress,
   FilterOptionsState,
   FormHelperText,
   InputLabel,
@@ -15,9 +17,10 @@ import {
   Typography,
 } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Variant } from '@mui/material/styles/createTypography'
 import { AutocompleteInputChangeReason } from '@mui/base/useAutocomplete/useAutocomplete'
+import { Icono } from '../Icono'
 
 export interface optionType {
   key: string
@@ -46,6 +49,7 @@ type FormInputDropdownAutocompleteProps<T extends FieldValues> = {
   ) => void
   clearable?: boolean
   bgcolor?: string
+  loading?: boolean
   options: optionType[]
   labelVariant?: Variant
 }
@@ -64,6 +68,7 @@ export const FormInputAutocomplete = <T extends FieldValues>({
   onInputChange,
   options,
   bgcolor,
+  loading,
   labelVariant = 'subtitle2',
 }: FormInputDropdownAutocompleteProps<T>) => {
   return (
@@ -121,6 +126,24 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                   sx={{
                     width: '100%',
                     bgcolor: bgcolor,
+                  }}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <Fragment>
+                        {loading ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </Fragment>
+                    ),
+                    startAdornment: (
+                      <Box sx={{ pt: 1, pl: 1 }}>
+                        <Icono color="secondary" fontSize="small">
+                          search
+                        </Icono>
+                      </Box>
+                    ),
                   }}
                 />
               )}
