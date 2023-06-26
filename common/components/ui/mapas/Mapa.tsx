@@ -14,6 +14,8 @@ import { DragEndEvent, DragEndEventHandlerFn, icon, Map } from 'leaflet'
 import { createRef, ReactNode, useEffect, useRef } from 'react'
 import { delay } from '../../../utils'
 import 'leaflet/dist/leaflet.css'
+import { Icono } from '../Icono'
+import L from 'leaflet'
 
 const ICON = icon({
   iconRetinaUrl: '/leaflet/marker-icon.png',
@@ -37,6 +39,7 @@ export interface MapaProps {
   draggable?: boolean
   onlyread?: boolean
   zoom?: number
+  location?: boolean
   id: string
   children?: ReactNode
   cardMap?: ReactNode
@@ -53,11 +56,13 @@ const Mapa = ({
   cardMap,
   onlyread = false,
   draggable = false,
+  location = true,
   id,
   zoom = 6,
 }: MapaProps) => {
   const markerRefs = useRef<any>([])
   const mapRef = createRef<Map>()
+  const locationRef = createRef<any>()
 
   function ChangeMapView() {
     const map = useMap()
@@ -153,12 +158,32 @@ const Mapa = ({
     )
   }
 
+  const showPosition = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        var latitud = position.coords.latitude
+        var longitud = position.coords.longitude
+        if (mapRef.current) {
+          mapRef.current.flyTo([latitud, longitud], 15)
+        }
+      })
+    } else {
+      alert('La geolocalización no es compatible con este navegador.')
+    }
+  }
+
   useEffect(() => {
     if (mapRef.current) {
       mapRef.current.setZoom(zoom)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zoom])
+
+  useEffect(() => {
+    if (locationRef.current) {
+      L.DomEvent.disableClickPropagation(locationRef.current)
+    }
+  }, [locationRef])
 
   return (
     <>
@@ -180,6 +205,30 @@ const Mapa = ({
             zoomInTitle="Acercar"
             zoomOutTitle="Alejar"
           ></ZoomControl>
+          {location && (
+            <div
+              ref={locationRef}
+              onClick={showPosition}
+              style={{
+                zIndex: 9999,
+                position: 'absolute',
+                top: 80,
+                left: 12,
+                border: '2px solid rgba(0, 0, 0, .3)',
+                borderRadius: '4px',
+                padding: '4px',
+                background: 'white',
+                display: 'flex',
+                justifyContent: 'center',
+                pointerEvents: 'auto',
+                cursor: 'pointer',
+              }}
+            >
+              <Icono sx={{ color: '#000000' }} fontSize="small">
+                my_location
+              </Icono>
+            </div>
+          )}
 
           {puntos.length == 1 ? (
             <SingleMarker puntos={puntos} />
