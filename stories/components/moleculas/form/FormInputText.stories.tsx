@@ -22,7 +22,7 @@ export interface PersonaType {
   apellido: string
   carnet: string
   edad: number
-  historialCriminal: string
+  comentario: string
 }
 export default {
   title: 'Moleculas/Formulario/FormInputText',
@@ -47,10 +47,7 @@ export default {
           "\n     apellido: 'Picapiedra'," +
           "\n     carnet: '9999999'," +
           '\n     edad: 32,' +
-          "\n     historialCriminal: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-          "\n                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
-          '\n                         when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into' +
-          "\n                         electronic typesetting, remaining essentially unchanged.'," +
+          '\n     comentario: \'Pedro Picapiedra es el personaje principal de la serie animada Los Picapiedra. Es un hombre prehistórico trabajador en una cantera de piedra, esposo de Vilma y padre de Pebbles. Es conocido por su personalidad apasionada y sentido del humor, y por su famoso grito "¡Yabba-Dabba-Doo!".' +
           '\n   }' +
           '\n})' +
           '\n```' +
@@ -91,10 +88,7 @@ const Template: StoryFn<typeof FormInputText> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       carnet: '9999999',
-      historialCriminal: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-      when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-      electronic typesetting, remaining essentially unchanged.`,
+      comentario: `Pedro Picapiedra es el personaje principal de la serie animada Los Picapiedra. Es un hombre prehistórico trabajador en una cantera de piedra, esposo de Vilma y padre de Pebbles. Es conocido por su personalidad apasionada y sentido del humor, y por su famoso grito "¡Yabba-Dabba-Doo!".Pedro Picapiedra es el personaje principal de la serie animada Los Picapiedra. Es un hombre prehistórico trabajador en una cantera de piedra, esposo de Vilma y padre de Pebbles. Es conocido por su personalidad apasionada y sentido del humor, y por su famoso grito "¡Yabba-Dabba-Doo!".`,
     },
   })
 
@@ -108,7 +102,7 @@ const Template: StoryFn<typeof FormInputText> = (args) => {
 }
 
 export const SB_Apellido = Template.bind({})
-SB_Apellido.storyName = 'name:apellido'
+SB_Apellido.storyName = 'name - apellido'
 SB_Apellido.args = {
   label: 'Apellido Paterno',
   id: 'textfield-form-1',
@@ -116,7 +110,7 @@ SB_Apellido.args = {
 }
 
 export const SB_Nombre = Template.bind({})
-SB_Nombre.storyName = 'name:nombre'
+SB_Nombre.storyName = 'name - nombre'
 SB_Nombre.args = {
   label: 'Nombre Completo',
   id: 'textfield-form-1',
@@ -124,13 +118,13 @@ SB_Nombre.args = {
 }
 
 export const SB_multilinea = Template.bind({})
-SB_multilinea.storyName = 'Multilinea'
+SB_multilinea.storyName = 'Multilínea'
 SB_multilinea.args = {
-  label: 'Historial Criminal',
+  label: 'Comentario',
   id: 'textfield-form-1',
   multiline: true,
   rows: 6,
-  name: 'historialCriminal',
+  name: 'comentario',
 }
 
 export const SB_Disabled = Template.bind({})

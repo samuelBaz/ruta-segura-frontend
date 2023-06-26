@@ -18,7 +18,7 @@ type FormInputWysiwygProps<T extends FieldValues> = {
   label: string
   textoAyuda?: string
   rules?: RegisterOptions
-  disabled?: boolean
+  editable?: boolean
   onChange?: (contenido: string) => void
 
   labelVariant?: Variant
@@ -33,7 +33,7 @@ export const FormInputWysiwyg = <T extends FieldValues>({
   rules,
   labelVariant = 'subtitle2',
   placeholder = '',
-  disabled = false,
+  editable = true,
   onChange,
 }: FormInputWysiwygProps<T>) => {
   return (
@@ -50,7 +50,7 @@ export const FormInputWysiwyg = <T extends FieldValues>({
         render={({ field, fieldState: { error } }) => (
           <>
             <Tiptap
-              editable={!disabled}
+              editable={editable}
               contenido={field.value}
               placeholder={placeholder}
               onChange={(content: string) => {

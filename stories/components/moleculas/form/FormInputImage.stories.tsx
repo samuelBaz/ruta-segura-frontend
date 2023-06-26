@@ -21,14 +21,17 @@ export interface PersonaType {
   apellido: string
   carnet: string
   edad: number
-  historialCriminal: string
   imagenes: any
 }
+
 export default {
   title: 'Moleculas/Formulario/FormInputImage',
   component: FormInputImage,
   argTypes: {
-    onChange: { type: 'function', control: () => {} },
+    onChange: {
+      type: 'function',
+      control: () => {},
+    },
     // control: { type: 'function', description: 'Control<any>' },
   },
 
@@ -48,10 +51,6 @@ export default {
           "\n     carnet: '9999999'," +
           '\n     edad: 32,' +
           '\n     imagenes: ' +
-          "\n     historialCriminal: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-          "\n                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
-          '\n                         when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into' +
-          "\n                         electronic typesetting, remaining essentially unchanged.'," +
           '\n   }' +
           '\n})' +
           '\n```' +
@@ -94,10 +93,6 @@ const Template: StoryFn<typeof FormInputImage> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       carnet: '9999999',
-      historialCriminal: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-      when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-      electronic typesetting, remaining essentially unchanged.`,
     },
   })
 
