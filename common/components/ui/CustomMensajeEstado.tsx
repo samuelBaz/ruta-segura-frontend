@@ -21,21 +21,22 @@ export interface MensajeEstadoProps {
   opacidadFondo?: number
   customColor?: string
 }
+
 const CustomMensajeEstado = ({
   color = 'error',
   titulo = '',
   descripcion = '',
   fontSize = 12,
   letterSpacing = 0,
-  opacidadFondo = 0.5,
+  opacidadFondo = 1,
 }: MensajeEstadoProps) => {
   const coloresFondoClaro = {
     primary: '#cce1df',
     secondary: '#dbe0df',
     info: '#EBF5FF',
-    warning: '#fbe2cc',
-    error: '#FCF1F2',
-    success: '#F1FCF2',
+    warning: '#FEF7E6',
+    error: '#FDF4F6',
+    success: '#EAF8F4',
     inherit: '#f1d1d1',
   }
   const coloresFondoOscuro = {
@@ -52,9 +53,9 @@ const CustomMensajeEstado = ({
     primary: '#cce1df',
     secondary: '#555F71',
     info: '#0288d1',
-    warning: '#ed6c02',
-    error: '#BA1B1B',
-    success: '#2e7d32',
+    warning: '#FFAF01',
+    error: '#DE486C',
+    success: '#30B082',
     inherit: '#555F71',
   }
   const coloresTextoOscuro = {
@@ -78,24 +79,18 @@ const CustomMensajeEstado = ({
               ? alpha(coloresFondoOscuro[color], opacidadFondo)
               : alpha(coloresFondoClaro[color], opacidadFondo),
           textAlign: 'center',
-          borderRadius: 1,
+          borderRadius: 2,
           pt: 0.1,
           pr: 1,
           pl: 1,
           pb: 0.1,
-          border: 1,
+          border: 0,
           borderColor:
             themeMode === 'dark'
-              ? // ? '#' +
-                //   (
-                //     parseInt(coloresFondoOscuro[color].split('#')[1], 16) +
-                //     CAMBIO_TONO_COLOR * 6
-                //   ).toString(16)
-                coloresTextoOscuro[color]
+              ? coloresTextoOscuro[color]
               : coloresTextoClaro[color],
-          // opacity: 0.8,
-          // p: 0.3,
-          // m: 1,
+          maxWidth: '100px',
+          width: 'auto',
         }}
       >
         <Box
@@ -105,13 +100,9 @@ const CustomMensajeEstado = ({
               themeMode === 'dark'
                 ? coloresTextoOscuro[color]
                 : coloresTextoClaro[color],
-
-            // display: 'inline',
-            // textTransform: 'lowercase',
             overflow: 'hidden',
-            // fontWeight: 'bold',
+            fontWeight: '600',
             fontSize: fontSize,
-
             opacity: 1,
             letterSpacing: letterSpacing,
           }}

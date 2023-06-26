@@ -42,7 +42,6 @@ const Desbloqueo: NextPage = () => {
       setMensaje(InterpreteMensajes(respuesta))
       imprimir(InterpreteMensajes(respuesta))
     } catch (e) {
-      router.reload()
       await router.replace({
         pathname: '/login',
       })
@@ -54,10 +53,12 @@ const Desbloqueo: NextPage = () => {
   }
 
   const redireccionarInicio = async () => {
-    router.reload()
+    mostrarFullScreen()
+    await delay(1000)
     await router.replace({
       pathname: '/login',
     })
+    ocultarFullScreen()
   }
 
   return (

@@ -24,7 +24,7 @@ export const FiltroPolitica = ({
   filtroApp,
   accionCorrecta,
 }: FiltroModalPoliticasType) => {
-  const { control, watch, setValue } = useForm<FiltroType>({
+  const { control, watch } = useForm<FiltroType>({
     defaultValues: {
       buscar: filtroPolitica,
       app: filtroApp,
@@ -64,9 +64,6 @@ export const FiltroPolitica = ({
             control={control}
             label={'Filtro'}
             bgcolor={'background.paper'}
-            onClear={() => {
-              setValue('buscar', '')
-            }}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
@@ -81,9 +78,7 @@ export const FiltroPolitica = ({
               label: la,
             }))}
             bgcolor={'background.paper'}
-            onClear={() => {
-              setValue('app', '')
-            }}
+            clearable
           />
         </Grid>
       </Grid>

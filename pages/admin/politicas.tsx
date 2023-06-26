@@ -1,14 +1,19 @@
 import type { NextPage } from 'next'
-import { Button, Grid, ToggleButton, Typography } from '@mui/material'
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import { CasbinTypes } from '../../common/types'
 import {
   AlertDialog,
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
 import { delay, InterpreteMensajes, siteName } from '../../common/utils'
@@ -22,6 +27,11 @@ import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTyp
 
 import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -63,13 +73,19 @@ const Politicas: NextPage = () => {
   // router para conocer la ruta actual
   const router = useRouter()
 
-  const columnas: Array<ColumnaType> = [
-    { campo: 'sujeto', nombre: 'Sujeto' },
-    { campo: 'objeto', nombre: 'Objeto' },
-    { campo: 'accion', nombre: 'Acción' },
-    { campo: 'app', nombre: 'App' },
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'sujeto', nombre: 'Sujeto', ordenar: true },
+    { campo: 'objeto', nombre: 'Objeto', ordenar: true },
+    { campo: 'accion', nombre: 'Acción', ordenar: true },
+    { campo: 'app', nombre: 'App', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
-  ]
+  ])
 
   const contenidoTabla: Array<Array<ReactNode>> = politicasData.map(
     (politicaData, indexPolitica) => [
@@ -93,7 +109,7 @@ const Politicas: NextPage = () => {
       <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
         {permisos.update && (
           <IconoTooltip
-            id={'editarPolitica'}
+            id={`editarPolitica-${indexPolitica}`}
             titulo={'Editar'}
             color={'primary'}
             accion={() => {
@@ -107,7 +123,7 @@ const Politicas: NextPage = () => {
 
         {permisos.delete && (
           <IconoTooltip
-            id={'eliminarPolitica'}
+            id={`eliminarPolitica-${indexPolitica}`}
             titulo={'Eliminar'}
             color={'error'}
             accion={() => {
@@ -123,33 +139,19 @@ const Politicas: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <ToggleButton
-      key={'accionFiltrarUsuarioToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroPolitica}
-      onChange={() => {
-        setMostrarFiltroPolitica(!mostrarFiltroPolitica)
-      }}
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
-    permisos.create && (
-      <IconoTooltip
-        id={'agregarPolitica'}
-        titulo={'Agregar política'}
-        key={`accionAgregarPolitica`}
-        accion={() => {
-          agregarPoliticaModal()
-        }}
-        icono={'add_circle_outline'}
-        name={'Agregar política'}
+    <BotonBuscar
+      id={'accionFiltrarPoliticasToggle'}
+      key={'accionFiltrarPoliticasToggle'}
+      mostrar={mostrarFiltroPolitica}
+      cambiar={setMostrarFiltroPolitica}
+    />,
+    xs && (
+      <BotonOrdenar
+        id={'ordenarUsuarios'}
+        key={`ordenarUsuarios`}
+        label={'Ordenar políticas'}
+        criterios={ordenCriterios}
+        cambioCriterios={setOrdenCriterios}
       />
     ),
     <IconoTooltip
@@ -162,6 +164,17 @@ const Politicas: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de políticas'}
     />,
+    permisos.create && (
+      <BotonAgregar
+        id={'agregarPolitica'}
+        key={'agregarPolitica'}
+        texto={'Agregar'}
+        descripcion={'Agregar política'}
+        accion={() => {
+          agregarPoliticaModal()
+        }}
+      />
+    ),
   ]
 
   const obtenerPoliticasPeticion = async () => {
@@ -175,6 +188,11 @@ const Politicas: NextPage = () => {
           limite: limite,
           ...(filtroPolitica.length == 0 ? {} : { filtro: filtroPolitica }),
           ...(filtroApp.length == 0 ? {} : { aplicacion: filtroApp }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setPoliticasData(respuesta.datos?.filas)
@@ -261,7 +279,15 @@ const Politicas: NextPage = () => {
         obtenerPoliticasPeticion().finally(() => {})
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroApp, filtroPolitica])
+  }, [
+    estaAutenticado,
+    pagina,
+    limite,
+    filtroApp,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
+    filtroPolitica,
+  ])
   useEffect(() => {
     if (!mostrarFiltroPolitica) {
       setFiltroPolitica('')
@@ -317,7 +343,8 @@ const Politicas: NextPage = () => {
           error={!!errorData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           contenidoTabla={contenidoTabla}
           paginacion={
             <Paginacion

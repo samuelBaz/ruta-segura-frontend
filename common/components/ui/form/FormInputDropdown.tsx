@@ -34,7 +34,7 @@ type FormInputDropdownProps<T extends FieldValues> = {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: (event: SelectChangeEvent) => void
-  onClear?: () => void
+  clearable?: boolean
   bgcolor?: string
   options: optionType[]
   labelVariant?: Variant
@@ -50,19 +50,16 @@ export const FormInputDropdown = <T extends FieldValues>({
   disabled,
   onChange,
   options,
-  onClear,
+  clearable,
   bgcolor,
   labelVariant = 'subtitle2',
 }: FormInputDropdownProps<T>) => {
-  const generateSelectOptions = () => {
-    return options.map((option) => {
-      return (
-        <MenuItem key={option.key} value={option.value}>
-          {option.label}
-        </MenuItem>
-      )
-    })
-  }
+  const generateSelectOptions = () =>
+    options.map((option) => (
+      <MenuItem key={option.key} value={option.value}>
+        {option.label}
+      </MenuItem>
+    ))
 
   return (
     <div>
@@ -86,7 +83,7 @@ export const FormInputDropdown = <T extends FieldValues>({
                 width: '100%',
                 bgcolor: bgcolor,
                 '& .MuiSelect-iconOutlined': {
-                  display: field.value && onClear ? 'none' : '',
+                  display: field.value && clearable ? 'none' : '',
                 },
                 '&.Mui-focused .MuiIconButton-root': { color: 'primary.main' },
               }}
@@ -102,13 +99,11 @@ export const FormInputDropdown = <T extends FieldValues>({
               inputRef={field.ref}
               value={field.value}
               endAdornment={
-                field.value && onClear ? (
+                field.value && clearable ? (
                   <IconButton
                     sx={{ display: field.value ? '' : 'none' }}
                     onClick={() => {
-                      if (onClear) {
-                        onClear()
-                      }
+                      field.onChange('')
                     }}
                     color={'primary'}
                   >

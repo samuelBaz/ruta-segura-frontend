@@ -1,16 +1,27 @@
 import type { NextPage } from 'next'
-import { Grid, ToggleButton, Typography } from '@mui/material'
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
-import { ReactNode, useEffect, useState } from 'react'
-import { CasbinTypes, ColumnaType } from '../../common/types'
+import React, { ReactNode, useEffect, useState } from 'react'
+import { CasbinTypes } from '../../common/types'
 import {
+  AlertDialog,
   CustomDataTable,
   CustomDialog,
-  Icono,
   IconoTooltip,
 } from '../../common/components/ui'
-import { delay, InterpreteMensajes, siteName } from '../../common/utils'
+import {
+  delay,
+  InterpreteMensajes,
+  siteName,
+  titleCase,
+} from '../../common/utils'
 import { Constantes } from '../../config'
 
 import { Paginacion } from '../../common/components/ui/Paginacion'
@@ -20,6 +31,12 @@ import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametrosCRUDTypes'
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
+import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
+import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { ordenFiltrado } from '../../common/utils/orden'
+import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -31,8 +48,12 @@ const Parametros: NextPage = () => {
 
   const [modalParametro, setModalParametro] = useState(false)
 
+  /// Indicador para mostrar una vista de alerta de cambio de estado
+  const [mostrarAlertaEstadoParametro, setMostrarAlertaEstadoParametro] =
+    useState(false)
+
   const [parametroEdicion, setParametroEdicion] = useState<
-    ParametroCRUDType | undefined
+    ParametroCRUDType | undefined | null
   >()
 
   // Variables de páginado
@@ -53,16 +74,71 @@ const Parametros: NextPage = () => {
     delete: false,
   })
 
+  const theme = useTheme()
+  const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  /// Método que muestra alerta de cambio de estado
+
+  const editarEstadoParametroModal = async (parametro: ParametroCRUDType) => {
+    setParametroEdicion(parametro) // para mostrar datos de modal en la alerta
+    setMostrarAlertaEstadoParametro(true) // para mostrar alerta de parametro
+  }
+
+  const cancelarAlertaEstadoParametro = async () => {
+    setMostrarAlertaEstadoParametro(false)
+    await delay(500) // para no mostrar undefined mientras el modal se cierra
+    setParametroEdicion(null)
+  }
+
+  /// Método que oculta la alerta de cambio de estado y procede
+  const aceptarAlertaEstadoParametro = async () => {
+    setMostrarAlertaEstadoParametro(false)
+    if (parametroEdicion) {
+      await cambiarEstadoParametroPeticion(parametroEdicion)
+    }
+    setParametroEdicion(null)
+  }
+
+  /// Petición que cambia el estado de un parámetro
+  const cambiarEstadoParametroPeticion = async (
+    parametro: ParametroCRUDType
+  ) => {
+    try {
+      setLoading(true)
+      const respuesta = await sesionPeticion({
+        url: `${Constantes.baseUrl}/parametros/${parametro.id}/${
+          parametro.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
+        }`,
+        tipo: 'patch',
+      })
+      imprimir(`respuesta estado parametro: ${respuesta}`)
+      Alerta({
+        mensaje: InterpreteMensajes(respuesta),
+        variant: 'success',
+      })
+      await obtenerParametrosPeticion()
+    } catch (e) {
+      imprimir(`Error estado parametro`, e)
+      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   // router para conocer la ruta actual
   const router = useRouter()
 
-  const columnas: Array<ColumnaType> = [
-    { campo: 'codigo', nombre: 'Código' },
-    { campo: 'nombre', nombre: 'Nombre' },
-    { campo: 'descripcion', nombre: 'Descripción' },
-    { campo: 'grupo', nombre: 'Grupo' },
+  /// Criterios de orden
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'codigo', nombre: 'Código', ordenar: true },
+    { campo: 'nombre', nombre: 'Nombre', ordenar: true },
+    { campo: 'descripcion', nombre: 'Descripción', ordenar: true },
+    { campo: 'grupo', nombre: 'Grupo', ordenar: true },
+    { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
-  ]
+  ])
 
   const contenidoTabla: Array<Array<ReactNode>> = parametrosData.map(
     (parametroData, indexParametro) => [
@@ -84,10 +160,44 @@ const Parametros: NextPage = () => {
         key={`${parametroData.id}-${indexParametro}-grupo`}
         variant={'body2'}
       >{`${parametroData.grupo}`}</Typography>,
-      <Grid key={`${parametroData.id}-${indexParametro}-accion`}>
+
+      <CustomMensajeEstado
+        key={`${parametroData.id}-${indexParametro}-estado`}
+        titulo={parametroData.estado}
+        descripcion={parametroData.estado}
+        color={
+          parametroData.estado == 'ACTIVO'
+            ? 'success'
+            : parametroData.estado == 'INACTIVO'
+            ? 'error'
+            : 'info'
+        }
+      />,
+
+      <Grid key={`${parametroData.id}-${indexParametro}-acciones`}>
         {permisos.update && (
           <IconoTooltip
-            id={'editarParametros'}
+            id={`cambiarEstadoParametro-${parametroData.id}`}
+            titulo={parametroData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
+            accion={async () => {
+              await editarEstadoParametroModal(parametroData)
+            }}
+            desactivado={parametroData.estado == 'PENDIENTE'}
+            icono={
+              parametroData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
+            }
+            name={
+              parametroData.estado == 'ACTIVO'
+                ? 'Inactivar Parámetro'
+                : 'Activar Parámetro'
+            }
+          />
+        )}
+
+        {permisos.update && (
+          <IconoTooltip
+            id={`editarParametros-${parametroData.id}`}
             name={'Parámetros'}
             titulo={'Editar'}
             color={'primary'}
@@ -103,33 +213,19 @@ const Parametros: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <ToggleButton
-      key={'accionFiltrarUsuarioToggle'}
-      value="check"
-      sx={{
-        '&.MuiToggleButton-root': {
-          borderRadius: '4px !important',
-          border: '0px solid lightgrey !important',
-        },
-      }}
-      size={'small'}
-      selected={mostrarFiltroParametros}
-      onChange={() => {
-        setMostrarFiltroParametros(!mostrarFiltroParametros)
-      }}
-    >
-      <Icono>search</Icono>
-    </ToggleButton>,
-    permisos.create && (
-      <IconoTooltip
-        id={'agregarParametro'}
-        titulo={'Agregar parámetro'}
-        key={`accionAgregarParametro`}
-        accion={() => {
-          agregarParametroModal()
-        }}
-        icono={'add_circle_outline'}
-        name={'Agregar parámetro'}
+    <BotonBuscar
+      id={'accionFiltrarParametrosToggle'}
+      key={'accionFiltrarParametrosToggle'}
+      mostrar={mostrarFiltroParametros}
+      cambiar={setMostrarFiltroParametros}
+    />,
+    xs && (
+      <BotonOrdenar
+        id={'ordenarParametros'}
+        key={`ordenarParametros`}
+        label={'Ordenar parámetros'}
+        criterios={ordenCriterios}
+        cambioCriterios={setOrdenCriterios}
       />
     ),
     <IconoTooltip
@@ -142,6 +238,17 @@ const Parametros: NextPage = () => {
       icono={'refresh'}
       name={'Actualizar lista de parámetros'}
     />,
+    permisos.create && (
+      <BotonAgregar
+        id={'agregarParametro'}
+        key={'agregarParametro'}
+        texto={'Agregar'}
+        descripcion={'Agregar parámetro'}
+        accion={() => {
+          agregarParametroModal()
+        }}
+      />
+    ),
   ]
 
   const obtenerParametrosPeticion = async () => {
@@ -154,6 +261,11 @@ const Parametros: NextPage = () => {
           pagina: pagina,
           limite: limite,
           ...(filtroParametro.length == 0 ? {} : { filtro: filtroParametro }),
+          ...(ordenFiltrado(ordenCriterios).length == 0
+            ? {}
+            : {
+                orden: ordenFiltrado(ordenCriterios).join(','),
+              }),
         },
       })
       setParametrosData(respuesta.datos?.filas)
@@ -195,7 +307,14 @@ const Parametros: NextPage = () => {
   useEffect(() => {
     if (estaAutenticado) obtenerParametrosPeticion().finally(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estaAutenticado, pagina, limite, filtroParametro])
+  }, [
+    estaAutenticado,
+    pagina,
+    limite,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(ordenCriterios),
+    filtroParametro,
+  ])
 
   useEffect(() => {
     if (!mostrarFiltroParametros) {
@@ -215,6 +334,16 @@ const Parametros: NextPage = () => {
 
   return (
     <>
+      <AlertDialog
+        isOpen={mostrarAlertaEstadoParametro}
+        titulo={'Alerta'}
+        texto={`¿Está seguro de ${
+          parametroEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
+        } el parámetro: ${titleCase(parametroEdicion?.nombre ?? '')} ?`}
+      >
+        <Button onClick={cancelarAlertaEstadoParametro}>Cancelar</Button>
+        <Button onClick={aceptarAlertaEstadoParametro}>Aceptar</Button>
+      </AlertDialog>
       <CustomDialog
         isOpen={modalParametro}
         handleClose={cerrarModalParametro}
@@ -235,7 +364,8 @@ const Parametros: NextPage = () => {
           error={!!errorParametrosData}
           cargando={loading}
           acciones={acciones}
-          columnas={columnas}
+          columnas={ordenCriterios}
+          cambioOrdenCriterios={setOrdenCriterios}
           paginacion={paginacion}
           contenidoTabla={contenidoTabla}
           filtros={

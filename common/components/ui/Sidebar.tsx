@@ -3,7 +3,6 @@ import {
   Box,
   Drawer,
   List,
-  ListItem,
   ListItemButton,
   Typography,
   useMediaQuery,
@@ -16,7 +15,7 @@ import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../../context/auth'
 import { imprimir } from '../../utils/imprimir'
 import { Icono } from './Icono'
-import { ModuloType, RoleType } from '../../../modules/login/types/loginTypes'
+import { ModuloType } from '../../../modules/login/types/loginTypes'
 import { versionNumber } from '../../utils'
 
 const drawerWidth = 240
@@ -39,23 +38,18 @@ export const Sidebar = () => {
 
   const interpretarModulos = () => {
     imprimir(`Cambio en módulos`)
-    let roles: RoleType[]
-    let rolSeleccionado: RoleType | undefined
-    roles = usuario?.roles ?? []
-    if (roles && roles.length > 0) {
-      rolSeleccionado = roles.find(
-        (itemRol) => itemRol.idRol == rolUsuario?.idRol
-      )
-      if (rolSeleccionado) {
-        setModulos(rolSeleccionado.modulos)
-        imprimir(`rolSeleccionado`, rolSeleccionado)
-      }
-    }
+
+    const rolSeleccionado = usuario?.roles.find(
+      (itemRol) => itemRol.idRol == rolUsuario?.idRol
+    )
+
+    imprimir(`rolSeleccionado`, rolSeleccionado)
+
+    setModulos(rolSeleccionado?.modulos ?? [])
   }
 
-  const rutaActiva = (routeName: string, currentRoute: string) => {
-    return routeName === currentRoute
-  }
+  const rutaActiva = (routeName: string, currentRoute: string) =>
+    currentRoute.includes(routeName, 0)
 
   const navigateTo = async (url: string) => {
     if (sm || xs || md) {
@@ -90,7 +84,9 @@ export const Sidebar = () => {
         !progresoLogin &&
         !estadoFullScreen &&
         modulos.some((moduloGrupo) =>
-          moduloGrupo.subModulo.some((modulo) => modulo.url == router.pathname)
+          moduloGrupo.subModulo.some((modulo) =>
+            router.pathname.includes(modulo.url, 0)
+          )
         )
       }
       onClose={closeSideMenu}
@@ -111,58 +107,69 @@ export const Sidebar = () => {
     >
       <Toolbar />
       <Box sx={{ overflow: 'auto' }}>
-        <List key={`lista`}>
-          {modulos.map((modulo, index) => (
-            <div key={`div-${index}`}>
-              <ListItem key={`modulo-${index}`}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    m: 0,
-                    borderRadius: 1,
-                    alignItems: 'center',
-                  }}
-                >
-                  <Box width={'10px'} />
-                  <Typography
-                    variant={'body2'}
-                    color={'text.secondary'}
-                  >{`${modulo.label}`}</Typography>
-                </Box>
-              </ListItem>
-              <List key={`submodulos-${index}`}>
-                {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
-                  <ListItemButton
-                    id={`submodulo-${index}-${indexSubModulo}`}
-                    key={`submodulo-${index}-${indexSubModulo}`}
-                    selected={rutaActiva(subModuloItem.url, router.pathname)}
-                    onClick={() => navigateTo(subModuloItem.url)}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        p: '1 2 3 4',
-                        m: 0,
-                        borderRadius: 1,
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Box width={'20px'} />
-                      <Icono>{subModuloItem.propiedades.icono}</Icono>
+        {modulos.map((modulo, index) => (
+          <div key={`div-${index}`}>
+            <Box
+              sx={{
+                display: 'flex',
+                m: 0,
+                alignItems: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  m: 0,
+                  borderRadius: 1,
+                  alignItems: 'center',
+                  margin: '16px 6px',
+                }}
+              >
+                <Box width={'20px'} />
+                <Typography
+                  variant={'body2'}
+                  color={'text.secondary'}
+                >{`${modulo.label}`}</Typography>
+              </Box>
+            </Box>
 
-                      <Box width={'20px'} />
-                      <Typography
-                        variant={'body2'}
-                      >{`${subModuloItem.label}`}</Typography>
-                    </Box>
-                  </ListItemButton>
-                ))}
-              </List>
-            </div>
-          ))}
-        </List>
+            <List
+              key={`submodulos-${index}`}
+              component="ul"
+              style={{ cursor: 'pointer' }}
+              sx={{ pt: 0, pb: 0 }}
+            >
+              {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
+                <ListItemButton
+                  id={`submodulo-${index}-${indexSubModulo}`}
+                  key={`submodulo-${index}-${indexSubModulo}`}
+                  component="li"
+                  selected={rutaActiva(subModuloItem.url, router.pathname)}
+                  onClick={() => navigateTo(subModuloItem.url)}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      m: 0,
+                      borderRadius: 1,
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Box width={'20px'} />
+                    <Icono>{subModuloItem.propiedades.icono}</Icono>
+
+                    <Box width={'20px'} />
+                    <Typography
+                      variant={'body2'}
+                    >{`${subModuloItem.label}`}</Typography>
+                  </Box>
+                </ListItemButton>
+              ))}
+            </List>
+          </div>
+        ))}
       </Box>
       <Box sx={{ pb: 2 }} display="flex" flex="1" justifyContent="space-around">
         <Box sx={{ alignSelf: 'flex-end' }}>

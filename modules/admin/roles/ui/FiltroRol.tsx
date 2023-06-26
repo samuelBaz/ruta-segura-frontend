@@ -15,7 +15,7 @@ export interface FiltroRolType {
 }
 
 export const FiltroRol = ({ filtroRol, accionCorrecta }: FiltroRolType) => {
-  const { control, setValue, watch } = useForm<FiltroType>({
+  const { control, watch } = useForm<FiltroType>({
     defaultValues: {
       rol: filtroRol,
     },
@@ -48,9 +48,7 @@ export const FiltroRol = ({ filtroRol, accionCorrecta }: FiltroRolType) => {
             control={control}
             label={'Buscar rol'}
             bgcolor={'background.paper'}
-            onClear={() => {
-              setValue('rol', '')
-            }}
+            clearable
           />
         </Grid>
       </Grid>

@@ -1,6 +1,8 @@
 import Icon from '@mui/material/Icon'
 
 import { FC, PropsWithChildren } from 'react'
+import { OverridableStringUnion } from '@mui/types'
+import { IconPropsSizeOverrides } from '@mui/material/Icon/Icon'
 
 interface Props {
   color?:
@@ -13,7 +15,10 @@ interface Props {
     | 'info'
     | 'success'
     | 'warning'
-  fontSize?: 'inherit' | 'large' | 'medium' | 'small'
+  fontSize?: OverridableStringUnion<
+    'inherit' | 'large' | 'medium' | 'small',
+    IconPropsSizeOverrides
+  >
 }
 
 export const Icono: FC<PropsWithChildren<Props>> = ({

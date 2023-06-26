@@ -60,6 +60,7 @@ export const Paginacion: FC<Props> = ({
 }) => {
   const handleChange = (event: SelectChangeEvent) => {
     imprimir(`cambio limite: ${event.target.value}`)
+    cambioPagina(1)
     cambioLimite(Number(event.target.value))
   }
 
