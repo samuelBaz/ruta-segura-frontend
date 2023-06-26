@@ -311,3 +311,182 @@ HeadFiltro.args = {
   error: false,
   cargando: false,
 }
+
+const Template2: StoryFn<typeof CustomDataTable> = (args) => {
+  const [datos, setDatos] = useState<any[]>([
+    {
+      nombre: 'Toy Story',
+      resumen:
+        'Un vaquero de juguete llamado Woody es el favorito de su dueño Andy, pero su posición se ve amenazada cuando llega un nuevo juguete, Buzz Lightyear.',
+      fechaPublicacion: '1995',
+    },
+    {
+      nombre: 'Buscando a Nemo',
+      resumen:
+        'Un pez payaso joven llamado Nemo es capturado y llevado a un acuario en Sydney. Su padre Marlin y Dory, un pez cirujano con problemas de memoria, se embarcan en una aventura para rescatarlo.',
+      fechaPublicacion: '2003',
+    },
+    {
+      nombre: 'Los Increíbles',
+      resumen:
+        'Una familia de superhéroes retirados se ve obligada a volver a la acción para salvar al mundo de un villano malvado.',
+      fechaPublicacion: '2004',
+    },
+    {
+      nombre: 'Up',
+      resumen:
+        'Un viudo llamado Carl Fredricksen se embarca en una aventura en su casa voladora para cumplir el sueño de su difunta esposa de viajar a Sudamérica.',
+      fechaPublicacion: '2009',
+    },
+    {
+      nombre: 'Inside Out',
+      resumen:
+        'La película sigue alas emociones de una niña llamada Riley mientras atraviesa un momento difícil en su vida y debe lidiar con el cambio y la adaptación a una nueva ciudad.',
+      fechaPublicacion: '2015',
+    },
+  ])
+
+  const [datosSeleccionado, setDatosSeleccionado] = useState<any>([])
+
+  const acciones: Array<ReactNode> = [
+    <IconoTooltip
+      id={'buscarProyecto'}
+      titulo={'Buscar proyecto'}
+      key={`BuscarProyecto`}
+      accion={() => {}}
+      icono={'search'}
+      name={'buscarProyecto'}
+    />,
+    <IconoTooltip
+      id={'actualizarProyecto'}
+      titulo={'Actualizar proyecto'}
+      key={`accionActualizarProyecto`}
+      accion={() => {}}
+      icono={'refresh'}
+      name={'actualizarProyecto'}
+    />,
+    <IconoTooltip
+      id={'agregarProyecto'}
+      titulo={'Agregar proyecto'}
+      key={`accionAgregarProyecto`}
+      accion={() => {}}
+      icono={'add_circle_outline'}
+      name={'agregarProyecto'}
+    />,
+  ]
+
+  const accionesMultiples: Array<ReactNode> = [
+    <IconoTooltip
+      id={'imprimir'}
+      titulo={'Obtener reporte'}
+      key={`imprimir`}
+      accion={() => {}}
+      icono={'print'}
+      name={'imprimir'}
+    />,
+    <IconoTooltip
+      id={'actualizarProyecto'}
+      titulo={'Actualizar'}
+      key={`accionActualizarProyecto`}
+      accion={() => {}}
+      icono={'refresh'}
+      name={'actualizarProyecto'}
+    />,
+  ]
+
+  const [ordenCriterios, setOrdenCriterios] = useState<
+    Array<CriterioOrdenType>
+  >([
+    { campo: 'nombre', nombre: 'Nombre', ordenar: true, orden: OrdenEnum.DESC },
+    { campo: 'resumen', nombre: 'Resumen', ordenar: true },
+    {
+      campo: 'fechaPublicacion',
+      nombre: 'Fecha Publicación',
+      ordenar: true,
+    },
+    { campo: 'acciones', nombre: 'Eventos' },
+  ])
+  const contenidoTabla: Array<Array<ReactNode>> = datos.map(
+    (solicitudData, index) => [
+      <Typography key={`${solicitudData.id}-${index}-nombre`} variant={'body2'}>
+        {`${solicitudData.nombre}`}
+      </Typography>,
+
+      <Typography
+        key={`${solicitudData.id}-${index}-resumen`}
+        variant={'body2'}
+      >
+        {`${solicitudData.resumen}`}
+      </Typography>,
+
+      <Typography
+        key={`${solicitudData.id}-${index}-fechaEntrega`}
+        variant={'body2'}
+      >
+        {solicitudData.fechaPublicacion}
+      </Typography>,
+
+      <Grid key={`${solicitudData.id}-${index}-acciones`}>
+        <>
+          <IconoTooltip
+            id={'editarLibro'}
+            titulo={'Editar libro'}
+            color={'success'}
+            accion={() => {}}
+            icono={'edit'}
+            name={'Editar libro'}
+          />
+          <IconoTooltip
+            id={'verLibro'}
+            titulo={'Ver libro'}
+            color={'info'}
+            accion={() => {}}
+            icono={'visibility'}
+            name={'Ver libro'}
+          />
+          <IconoTooltip
+            id={'eliminarLibro'}
+            titulo={'Eliminar libro'}
+            color={'warning'}
+            accion={() => {}}
+            icono={'delete'}
+            name={'Eliminar libro'}
+          />
+        </>
+      </Grid>,
+    ]
+  )
+  args.acciones = datosSeleccionado.length == 0 ? acciones : accionesMultiples
+  args.columnas = ordenCriterios
+  args.seleccionable = true
+  args.seleccionados = (indices) => {
+    setDatosSeleccionado(
+      datos.filter((value, index) => indices.includes(index))
+    )
+  }
+  args.contenidoTabla = contenidoTabla
+  args.cambioOrdenCriterios = setOrdenCriterios
+  useEffect(() => {
+    const result = ordenCriterios.filter((order) => order.orden !== undefined)
+    //console.log(result)
+    if (result != undefined && result.length > 0) {
+      const campo = result[0].campo
+      const f = datos.sort((x, y) => {
+        const r = x[campo].localeCompare(y[campo])
+        return result[0].orden === OrdenEnum.DESC ? -r : r
+      })
+      setDatos(f)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ordenCriterios])
+  return <CustomDataTable {...args} />
+}
+
+export const MultiSelector = Template2.bind({})
+MultiSelector.storyName = 'Selector de filas'
+MultiSelector.args = {
+  titulo: 'Tabla Libros',
+  error: false,
+  cargando: false,
+}

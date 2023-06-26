@@ -1,9 +1,10 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import {
   Box,
   Button,
   Card,
   CardContent,
+  Checkbox,
   Fade,
   Grid,
   Table,
@@ -20,6 +21,7 @@ import { ListSkeleton, TableSkeletonBody } from './CustomSkeleton'
 import { Icono } from './Icono'
 import { CriterioOrdenType } from '../../types/ordenTypes'
 import { ToggleOrden } from '../../utils/orden'
+import { imprimir } from '../../utils/imprimir'
 
 export interface CustomDataTableType {
   titulo?: string
@@ -31,6 +33,8 @@ export interface CustomDataTableType {
   filtros?: ReactNode
   contenidoTabla: Array<Array<ReactNode>>
   paginacion?: ReactNode
+  seleccionable?: boolean
+  seleccionados?: (indices: Array<number>) => void
 }
 
 export const CustomDataTable = ({
@@ -43,10 +47,79 @@ export const CustomDataTable = ({
   filtros,
   contenidoTabla,
   paginacion,
+  seleccionable,
+  seleccionados,
 }: CustomDataTableType) => {
   const theme = useTheme()
-  // const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
+
+  const [todoSeleccionado, setTodoSeleccionado] = useState(false)
+
+  const cambiarTodoSeleccionado = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTodoSeleccionado(event.target.checked)
+  }
+
+  const [indicesSeleccionados, setIndicesSeleccionados] = useState<
+    Array<boolean>
+  >([])
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const index = Number(event.target.name)
+    setIndicesSeleccionados((prev) => {
+      const newState = [...prev]
+      newState[index] = event.target.checked
+      return newState
+    })
+  }
+
+  useEffect(
+    () => {
+      imprimir(`indicesSeleccionados`, indicesSeleccionados)
+      if (seleccionados) {
+        seleccionados(
+          indicesSeleccionados.reduce(
+            (resulltado: Array<number>, value, index) => {
+              if (value) {
+                resulltado.push(index)
+              }
+              return resulltado
+            },
+            []
+          )
+        )
+      }
+
+      if (
+        indicesSeleccionados.filter((value) => value).length ==
+        indicesSeleccionados.length
+      )
+        setTodoSeleccionado(true)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(indicesSeleccionados)]
+  )
+
+  useEffect(
+    () => {
+      imprimir(`todoSeleccionado: `, todoSeleccionado)
+      setIndicesSeleccionados(
+        new Array(contenidoTabla.length).fill(todoSeleccionado)
+      )
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [todoSeleccionado]
+  )
+
+  useEffect(
+    () => {
+      if (!cargando) {
+        setIndicesSeleccionados(new Array(contenidoTabla.length).fill(false))
+        setTodoSeleccionado(false)
+      }
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [cargando, contenidoTabla.length]
+  )
 
   return (
     <Box sx={{ pb: 2 }}>
@@ -71,6 +144,16 @@ export const CustomDataTable = ({
             justifyContent="space-between"
             alignItems="center"
           >
+            {seleccionable &&
+              indicesSeleccionados.filter((value) => value).length > 0 && (
+                <Box sx={{ mx: 1 }}>
+                  <Typography key={'contador'} variant={'subtitle2'}>
+                    {`${
+                      indicesSeleccionados.filter((value) => value).length
+                    } seleccionados`}
+                  </Typography>
+                </Box>
+              )}
             {acciones.map((accion, index) => (
               <div key={`accion-id-${index}`}>{accion}</div>
             ))}
@@ -193,6 +276,30 @@ export const CustomDataTable = ({
                             }}
                           >
                             <CardContent sx={{ '&:last-child': { pb: 1 } }}>
+                              {seleccionable && (
+                                <Grid
+                                  key={`Grid-id-${index}-seleccionar`}
+                                  container
+                                  direction="row"
+                                  paddingBottom={'0px'}
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                >
+                                  <Typography
+                                    color="text.secondary"
+                                    variant={'subtitle2'}
+                                  >
+                                    {'Seleccionar'}
+                                  </Typography>
+                                  {indicesSeleccionados.length > index && (
+                                    <Checkbox
+                                      checked={indicesSeleccionados[index]}
+                                      onChange={handleChange}
+                                      name={`${index}`}
+                                    />
+                                  )}
+                                </Grid>
+                              )}
                               {contenidoFila.map(
                                 (contenido, indexContenido) => (
                                   <Grid
@@ -225,6 +332,21 @@ export const CustomDataTable = ({
                     <Table>
                       <TableHead>
                         <TableRow>
+                          {seleccionable && (
+                            <TableCell key={`cabecera-id-seleccionar`}>
+                              <Checkbox
+                                checked={todoSeleccionado}
+                                disabled={cargando}
+                                onChange={cambiarTodoSeleccionado}
+                                indeterminate={
+                                  indicesSeleccionados.filter((value) => value)
+                                    .length != indicesSeleccionados.length &&
+                                  indicesSeleccionados.filter((value) => value)
+                                    .length > 0
+                                }
+                              />
+                            </TableCell>
+                          )}
                           {columnas.map((columna, index) => (
                             <TableCell key={`cabecera-id-${index}`}>
                               {columna.ordenar ? (
@@ -240,8 +362,8 @@ export const CustomDataTable = ({
 
                                     if (cambioOrdenCriterios) {
                                       cambioOrdenCriterios(
-                                        nuevosCriterios.map((value, indice) => {
-                                          return {
+                                        nuevosCriterios.map(
+                                          (value, indice) => ({
                                             ...value,
                                             ...{
                                               orden:
@@ -249,8 +371,8 @@ export const CustomDataTable = ({
                                                   ? ToggleOrden(value.orden)
                                                   : undefined,
                                             },
-                                          }
-                                        })
+                                          })
+                                        )
                                       )
                                     }
                                   }}
@@ -298,7 +420,7 @@ export const CustomDataTable = ({
                       {cargando ? (
                         <TableSkeletonBody
                           filas={10}
-                          columnas={columnas.length}
+                          columnas={columnas.length + (seleccionable ? 1 : 0)}
                         />
                       ) : (
                         <TableBody>
@@ -308,6 +430,28 @@ export const CustomDataTable = ({
                                 key={`row-id-${indexContenidoTabla}`}
                                 hover={true}
                               >
+                                {seleccionable && (
+                                  <TableCell
+                                    key={`row-id-seleccionar-${indexContenidoTabla}`}
+                                  >
+                                    <Fade in={!cargando} timeout={1000}>
+                                      <Box>
+                                        {indicesSeleccionados.length >
+                                          indexContenidoTabla && (
+                                          <Checkbox
+                                            checked={
+                                              indicesSeleccionados[
+                                                indexContenidoTabla
+                                              ]
+                                            }
+                                            onChange={handleChange}
+                                            name={`${indexContenidoTabla}`}
+                                          />
+                                        )}
+                                      </Box>
+                                    </Fade>
+                                  </TableCell>
+                                )}
                                 {contenidoFila.map(
                                   (contenido, indexContenidoFila) => (
                                     <TableCell
