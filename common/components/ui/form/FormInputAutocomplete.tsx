@@ -138,11 +138,14 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                       </Fragment>
                     ),
                     startAdornment: (
-                      <Box sx={{ pt: 1, pl: 1 }}>
-                        <Icono color="secondary" fontSize="small">
-                          search
-                        </Icono>
-                      </Box>
+                      <Fragment>
+                        <Box sx={{ pt: 1, pl: 1 }}>
+                          <Icono color="secondary" fontSize="small">
+                            search
+                          </Icono>
+                        </Box>
+                        {params.InputProps.startAdornment}
+                      </Fragment>
                     ),
                   }}
                 />

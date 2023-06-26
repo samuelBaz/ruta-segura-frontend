@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { Path, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {
   FormInputAutocomplete,
   optionType,
@@ -113,7 +113,7 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       fechaNacimiento: '05-21-1984',
-      productos: [1, 2],
+      productos: [],
     },
   })
 
@@ -135,18 +135,18 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
     )
   }
 
-  const idiomas = watch('productos')
+  const productos = watch('productos')
 
   useEffect(() => {
-    imprimir(idiomas)
+    imprimir(`productos: `, productos)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(idiomas)])
+  }, [JSON.stringify(productos)])
 
   return (
     <FormInputAutocomplete
       {...args}
       id={'rolesMultiple'}
-      name={args.name as Path<PersonaType>}
+      name={'productos'}
       control={control}
       label="Productos"
       disabled={false}
@@ -171,7 +171,7 @@ export const SB_Multiple = Template.bind({})
 SB_Multiple.storyName = 'Multiple'
 SB_Multiple.args = {
   id: '1232131',
-  label: 'Idiomas',
-  name: 'id-idiomas',
+  label: 'Productos',
+  name: 'productos',
   multiple: true,
 }
