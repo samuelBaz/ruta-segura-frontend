@@ -4,13 +4,14 @@ import { Meta, StoryFn } from '@storybook/react'
 import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
 import { Box, Grid, InputLabel, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
-import { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { Paginacion } from '../../../../common/components/ui/Paginacion'
 import {
   CriterioOrdenType,
   OrdenEnum,
 } from '../../../../common/types/ordenTypes'
 import { BotonBuscar } from '../../../../common/components/ui/BotonBuscar'
+import { BotonAcciones } from '../../../../common/components/ui/BotonAcciones'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
@@ -164,7 +165,6 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
       mostrar={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
-
     <IconoTooltip
       id={'actualizarProyecto'}
       titulo={'Actualizar proyecto'}
@@ -180,6 +180,34 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
       accion={() => {}}
       icono={'add_circle_outline'}
       name={'agregarProyecto'}
+    />,
+    <BotonAcciones
+      id={'agregarModuloSeccion'}
+      key={'agregarModuloSeccion'}
+      icono={'more_vert'}
+      texto={'Agregar'}
+      tipo={'icono'}
+      label={'Agregar libros'}
+      acciones={[
+        {
+          id: 'agregarLibros',
+          mostrar: true,
+          titulo: 'Importar libro',
+          accion: async () => {},
+          desactivado: false,
+          icono: 'import_contacts',
+          name: 'Importar libro',
+        },
+        {
+          id: '1',
+          mostrar: true,
+          titulo: 'Denunciar',
+          accion: async () => {},
+          desactivado: false,
+          icono: 'flag',
+          name: 'denunciar',
+        },
+      ]}
     />,
   ]
   const Filtro = () => {
