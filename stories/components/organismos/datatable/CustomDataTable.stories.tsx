@@ -2,7 +2,7 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
-import { Grid, Typography } from '@mui/material'
+import { Box, Grid, InputLabel, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
 import { ReactNode, useEffect, useState } from 'react'
 import { Paginacion } from '../../../../common/components/ui/Paginacion'
@@ -10,6 +10,7 @@ import {
   CriterioOrdenType,
   OrdenEnum,
 } from '../../../../common/types/ordenTypes'
+import { BotonBuscar } from '../../../../common/components/ui/BotonBuscar'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
@@ -128,7 +129,7 @@ Columnas.args = {
   contenidoTabla: contenidoTabla,
 }
 
-const acciones: Array<ReactNode> = [
+/* const acciones: Array<ReactNode> = [
   <IconoTooltip
     id={'buscarProyecto'}
     titulo={'Buscar proyecto'}
@@ -153,13 +154,53 @@ const acciones: Array<ReactNode> = [
     icono={'add_circle_outline'}
     name={'agregarProyecto'}
   />,
-]
+] */
+const Template3: StoryFn<typeof CustomDataTable> = (args) => {
+  const [mostrarFiltroRol, setMostrarFiltroRol] = useState(false)
+  const acciones: Array<ReactNode> = [
+    <BotonBuscar
+      id={'accionFiltrarRolToggle'}
+      key={'accionFiltrarRolToggle'}
+      mostrar={mostrarFiltroRol}
+      cambiar={setMostrarFiltroRol}
+    />,
 
-export const Acciones = Template.bind({})
+    <IconoTooltip
+      id={'actualizarProyecto'}
+      titulo={'Actualizar proyecto'}
+      key={`accionActualizarProyecto`}
+      accion={() => {}}
+      icono={'refresh'}
+      name={'actualizarProyecto'}
+    />,
+    <IconoTooltip
+      id={'agregarProyecto'}
+      titulo={'Agregar proyecto'}
+      key={`accionAgregarProyecto`}
+      accion={() => {}}
+      icono={'add_circle_outline'}
+      name={'agregarProyecto'}
+    />,
+  ]
+  const Filtro = () => {
+    return (
+      <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
+        <InputLabel>
+          <Typography sx={{ color: 'text.primary' }}>{`Buscar`}</Typography>
+          <TextField sx={{ bgcolor: 'background.paper' }}></TextField>
+        </InputLabel>
+      </Box>
+    )
+  }
+  args.acciones = acciones
+  args.filtros = mostrarFiltroRol && <Filtro />
+
+  return <CustomDataTable {...args} />
+}
+export const Acciones = Template3.bind({})
 
 Acciones.args = {
   ...Columnas.args,
-  acciones: acciones,
 }
 /// Variable con parámetros de paginación
 const paginacion = (
@@ -172,19 +213,17 @@ const paginacion = (
   />
 )
 
-export const SB_PAGINACION = Template.bind({})
+export const SB_PAGINACION = Template3.bind({})
 SB_PAGINACION.storyName = 'Paginación'
 SB_PAGINACION.args = {
   ...Columnas.args,
-  acciones: acciones,
   paginacion: paginacion,
 }
 
-export const Cargando = Template.bind({})
+export const Cargando = Template3.bind({})
 Cargando.storyName = 'Tabla cargando'
 Cargando.args = {
   ...Columnas.args,
-  acciones: acciones,
   cargando: true,
 }
 
@@ -489,4 +528,52 @@ MultiSelector.args = {
   titulo: 'Tabla Libros',
   error: false,
   cargando: false,
+}
+///Filtros
+const Template4: StoryFn<typeof CustomDataTable> = (args) => {
+  const [mostrarFiltroRol, setMostrarFiltroRol] = useState(true)
+  const acciones: Array<ReactNode> = [
+    <BotonBuscar
+      id={'accionFiltrarRolToggle'}
+      key={'accionFiltrarRolToggle'}
+      mostrar={mostrarFiltroRol}
+      cambiar={setMostrarFiltroRol}
+    />,
+
+    <IconoTooltip
+      id={'actualizarProyecto'}
+      titulo={'Actualizar proyecto'}
+      key={`accionActualizarProyecto`}
+      accion={() => {}}
+      icono={'refresh'}
+      name={'actualizarProyecto'}
+    />,
+    <IconoTooltip
+      id={'agregarProyecto'}
+      titulo={'Agregar proyecto'}
+      key={`accionAgregarProyecto`}
+      accion={() => {}}
+      icono={'add_circle_outline'}
+      name={'agregarProyecto'}
+    />,
+  ]
+  const Filtro = () => {
+    return (
+      <Box sx={{ pl: 1, pr: 1, pt: 1 }}>
+        <InputLabel>
+          <Typography sx={{ color: 'text.primary' }}>{`Buscar`}</Typography>
+          <TextField sx={{ bgcolor: 'background.paper' }}></TextField>
+        </InputLabel>
+      </Box>
+    )
+  }
+  args.acciones = acciones
+  args.filtros = mostrarFiltroRol && <Filtro />
+
+  return <CustomDataTable {...args} />
+}
+export const Filtros = Template4.bind({})
+
+Filtros.args = {
+  ...Columnas.args,
 }
