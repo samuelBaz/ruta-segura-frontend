@@ -48,6 +48,7 @@ interface BotonAccionesParams {
   icono?: ReactNode
   label: string
   id: string
+  onOver?: boolean
 }
 
 export const BotonAcciones = ({
@@ -59,6 +60,7 @@ export const BotonAcciones = ({
   texto = 'acciones',
   label,
   id,
+  onOver = false,
 }: BotonAccionesParams) => {
   const [botonAccionesAnchorEl, setBotonAccionesAnchorEl] =
     useState<null | HTMLElement>(null)
@@ -98,10 +100,22 @@ export const BotonAcciones = ({
             variant={'contained'}
             sx={{ ml: 1, mr: 1, textTransform: 'none' }}
             size={'small'}
-            onClick={(event) => {
-              handleTooltipClose()
-              desplegarMenu(event)
-            }}
+            onMouseOver={
+              onOver
+                ? (event) => {
+                    handleTooltipClose()
+                    desplegarMenu(event)
+                  }
+                : undefined
+            }
+            onClick={
+              onOver
+                ? undefined
+                : (event) => {
+                    handleTooltipClose()
+                    desplegarMenu(event)
+                  }
+            }
             color="primary"
             style={{ textTransform: 'none' }}
           >
@@ -113,10 +127,22 @@ export const BotonAcciones = ({
             id={id}
             aria-label={label}
             size="small"
-            onClick={(event) => {
-              handleTooltipClose()
-              desplegarMenu(event)
-            }}
+            onMouseOver={
+              onOver
+                ? (event) => {
+                    handleTooltipClose()
+                    desplegarMenu(event)
+                  }
+                : undefined
+            }
+            onClick={
+              onOver
+                ? undefined
+                : (event) => {
+                    handleTooltipClose()
+                    desplegarMenu(event)
+                  }
+            }
             color="primary"
             style={{ textTransform: 'none' }}
           >
