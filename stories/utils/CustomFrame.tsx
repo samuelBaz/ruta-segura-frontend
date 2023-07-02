@@ -8,30 +8,42 @@ interface iFrameProps {
   border?: string
 }
 
-export const IframeOptimizado = ({
+export const CustomFrame = ({
   height,
   color = '#C5C1BC',
   padding = '10px',
   border = 'none',
   children,
 }: iFrameProps) => {
-  const iframeRef = useRef(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const insertar = () => {
-    const iframe: any = iframeRef.current
-    if (iframe != null) {
-      const iframeDocument = iframe.contentDocument
-      const stylesheets = Array.from(document.styleSheets)
-      stylesheets.forEach((stylesheet) => {
-        const newStylesheet = iframeDocument.createElement('style')
+    const iframe = iframeRef.current
+
+    const iframeDocument = iframe?.contentDocument
+
+    if (!iframeDocument) {
+      return
+    }
+
+    const stylesheets = Array.from(document.styleSheets)
+
+    for (const stylesheet of stylesheets) {
+      const newStylesheet = iframeDocument.createElement('style')
+      if (newStylesheet) {
         newStylesheet.innerHTML = Array.from(stylesheet.cssRules)
           .map((rule) => rule.cssText)
           .join('\n')
         iframeDocument.head.appendChild(newStylesheet)
-      })
-      const compo = document.getElementById('componente')
-      iframeDocument.body.innetHTML = '<div></div>'
-      iframeDocument.body.appendChild(compo)
+      }
+    }
+
+    const componente = document.getElementById('componente')
+
+    iframeDocument.body.innerHTML = '<div></div>'
+
+    if (componente) {
+      iframeDocument.body.appendChild(componente)
     }
   }
   useEffect(() => {

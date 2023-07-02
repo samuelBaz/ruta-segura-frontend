@@ -61,7 +61,7 @@ export const FormInputWysiwyg = <T extends FieldValues>({
                   field.onChange(content)
                 }
               }}
-            ></Tiptap>
+            />
 
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
           </>

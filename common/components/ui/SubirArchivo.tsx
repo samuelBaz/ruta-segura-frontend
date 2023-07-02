@@ -2,18 +2,19 @@ import { Box, Typography } from '@mui/material'
 import React, { ChangeEvent, useRef, useState } from 'react'
 import { useThemeContext } from '../../../context/ui/ThemeContext'
 import { Icono } from './Icono'
+import { imprimir } from '../../utils/imprimir'
 
 type SubirArchivoProps = {
   name?: string
   multiple?: boolean
-  tiposPermitidos?: string
+  tiposPermitidos?: Array<string>
   handleChange: (event: FileList) => void
 }
 
 export const SubirArchivo = ({
   name,
   multiple,
-  tiposPermitidos = '.png,.jpg,.jpeg,.doc,.pdf,.cvs,.xlsx,.ods,.epub',
+  tiposPermitidos = [],
   handleChange,
 }: SubirArchivoProps) => {
   const { themeMode } = useThemeContext()
@@ -31,23 +32,25 @@ export const SubirArchivo = ({
   }
 
   const handleDrop = (event: React.DragEvent<HTMLElement>) => {
+    imprimir(event.dataTransfer.files)
+
     setArrastrar(false)
     // Filtrar archivos por extención en nombre
     const dt = new DataTransfer()
-    if (!event.dataTransfer.files) {
-      return
-    }
-    for (let index = 0; index < event.dataTransfer.files['length']; index++) {
-      const auxTipoArchivo = event.dataTransfer.files[index].name.split('.')
-      if (
-        tiposPermitidos
-          .split(',')
-          .includes(`.${auxTipoArchivo[auxTipoArchivo.length - 1]}`)
-      ) {
-        dt.items.add(event.dataTransfer.files[index])
-        if (!multiple) {
-          break
-        }
+
+    const permitidos = Array.from(event.dataTransfer.files ?? []).filter(
+      (file) =>
+        tiposPermitidos?.length > 0
+          ? tiposPermitidos.includes(file.name.split('.')?.pop() ?? '')
+          : true
+    )
+
+    imprimir(`permitidos: `, permitidos)
+
+    for (const file of permitidos) {
+      dt.items.add(file)
+      if (!multiple) {
+        break
       }
     }
 
@@ -132,7 +135,11 @@ export const SubirArchivo = ({
           ref={inputFileRef}
           type="file"
           hidden
-          accept={tiposPermitidos}
+          accept={
+            tiposPermitidos?.length > 0
+              ? tiposPermitidos?.map((value) => `.${value}`).join(',')
+              : undefined
+          }
           name={name}
           // onChange={(e) => handleFileSelected(e.target.files)}
           multiple={!!multiple}
