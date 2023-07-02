@@ -253,7 +253,7 @@ const Usuarios: NextPage = () => {
     <BotonBuscar
       id={'accionFiltrarUsuarioToggle'}
       key={'accionFiltrarUsuarioToggle'}
-      mostrar={mostrarFiltroUsuarios}
+      seleccionado={mostrarFiltroUsuarios}
       cambiar={setMostrarFiltroUsuarios}
     />,
     xs && (
@@ -280,6 +280,7 @@ const Usuarios: NextPage = () => {
         id={'agregarUsuario'}
         key={'agregarUsuario'}
         texto={'Agregar'}
+        variante={xs ? 'icono' : 'boton'}
         descripcion={'Agregar usuario'}
         accion={() => {
           agregarUsuarioModal()

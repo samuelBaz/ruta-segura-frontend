@@ -142,7 +142,7 @@ const Politicas: NextPage = () => {
     <BotonBuscar
       id={'accionFiltrarPoliticasToggle'}
       key={'accionFiltrarPoliticasToggle'}
-      mostrar={mostrarFiltroPolitica}
+      seleccionado={mostrarFiltroPolitica}
       cambiar={setMostrarFiltroPolitica}
     />,
     xs && (
@@ -169,6 +169,7 @@ const Politicas: NextPage = () => {
         id={'agregarPolitica'}
         key={'agregarPolitica'}
         texto={'Agregar'}
+        variante={xs ? 'icono' : 'boton'}
         descripcion={'Agregar política'}
         accion={() => {
           agregarPoliticaModal()

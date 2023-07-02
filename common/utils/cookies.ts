@@ -3,7 +3,7 @@ import { imprimir } from './imprimir'
 
 export const guardarCookie = (
   key: string,
-  value: any,
+  value: string,
   options?: CookieAttributes
 ) => {
   Cookies.set(key, value, options)
