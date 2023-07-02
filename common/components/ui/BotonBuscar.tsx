@@ -3,11 +3,15 @@ import { ToggleButton } from '@mui/material'
 
 interface BotonFiltroParams {
   id: string
-  mostrar: boolean
+  seleccionado: boolean
   cambiar: (mostrar: boolean) => void
 }
 
-export const BotonBuscar = ({ id, mostrar, cambiar }: BotonFiltroParams) => {
+export const BotonBuscar = ({
+  id,
+  seleccionado,
+  cambiar,
+}: BotonFiltroParams) => {
   return (
     <ToggleButton
       id={id}
@@ -19,9 +23,9 @@ export const BotonBuscar = ({ id, mostrar, cambiar }: BotonFiltroParams) => {
         },
       }}
       size={'small'}
-      selected={mostrar}
+      selected={seleccionado}
       onChange={() => {
-        cambiar(!mostrar)
+        cambiar(!seleccionado)
       }}
       aria-label="search"
     >
