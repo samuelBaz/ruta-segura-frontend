@@ -14,41 +14,41 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Este componente se utiliza para agrupar varias acciones representadas en forma de botones dentro de una lista desplegable.`,
+        component: `Componente que permite al usuario ejecutar varias acciones diferentes. El botón puede tener un icono o un texto, y al hacer clic en él, se despliega un menú que muestra una lista de acciones disponibles. Cada acción puede tener un título, un icono y una función de acción asociada. El menú también puede ser cerrado haciendo clic fuera de él. Además, el componente incluye una funcionalidad de tooltip que muestra información sobre el botón cuando el usuario pasa el cursor sobre él.`,
       },
     },
   },
 } as Meta<typeof BotonAcciones>
 
-const Template1: StoryFn<typeof BotonAcciones> = (args) => {
+const Template: StoryFn<typeof BotonAcciones> = (args) => {
   args.acciones = [
     {
       color: 'primary',
-      icono: 'savings',
-      titulo: 'save',
+      icono: 'ios_share',
+      titulo: 'Compartir',
       desactivado: false,
       mostrar: true,
-      name: 'Nprueba',
+      name: 'compartir',
       id: 'id',
       accion: () => {},
     },
     {
       color: 'primary',
-      icono: 'edit',
-      titulo: 'edit',
+      icono: 'content_copy',
+      titulo: 'Copiar',
       desactivado: false,
       mostrar: true,
-      name: 'Nprueba',
+      name: 'copiar',
       id: 'id',
       accion: () => {},
     },
     {
       color: 'primary',
-      icono: 'refresh',
-      titulo: 'refresh',
+      icono: 'file_download',
+      titulo: 'Descargar',
       desactivado: false,
       mostrar: true,
-      name: 'Nprueba',
+      name: 'descargar',
       id: 'id',
       accion: () => {},
     },
@@ -56,11 +56,21 @@ const Template1: StoryFn<typeof BotonAcciones> = (args) => {
   return <BotonAcciones {...args} />
 }
 
-export const Default = Template1.bind({})
-Default.storyName = 'Boton acciones'
+export const Default = Template.bind({})
+Default.storyName = 'Icono con acciones'
 Default.args = {
-  id: 'idbtn',
-  texto: 'Btn Agregar',
   ...Default.args,
-  tipo: 'icono',
+  id: 'idbtn',
+  label: 'Más opciones',
+  texto: 'Más opciones',
+  variante: 'icono',
+}
+
+export const DefaultBoton = Template.bind({})
+DefaultBoton.storyName = 'Botón con acciones'
+DefaultBoton.args = {
+  ...DefaultBoton.args,
+  id: 'idbtn',
+  texto: 'Más opciones',
+  variante: 'boton',
 }

@@ -1,16 +1,6 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 import { Path, useForm } from 'react-hook-form'
 import { FormInputWysiwyg } from '../../../../common/components/ui/form/FormInputWysiwyg'
 
@@ -22,46 +12,23 @@ export interface PersonaType {
   edad: number
   comentario: string
 }
+
 export default {
-  title: 'Moleculas/Formulario/FormInputWysiswyg',
+  title: 'Moleculas/Formulario/FormInputWysiwyg',
   component: FormInputWysiwyg,
   argTypes: {
-    onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
+    onChange: {
+      type: 'function',
+      control: () => {},
+    },
   },
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputtext_' +
-          '\n#### Información sobre  - _FormInputtext_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          "\n     carnet: '9999999'," +
-          '\n     edad: 32,' +
-          '\n     comentario: \'Pedro Picapiedra es el personaje principal de la serie animada Los Picapiedra. Es un hombre prehistórico trabajador en una cantera de piedra, esposo de Vilma y padre de Pebbles. Es conocido por su personalidad apasionada y sentido del humor, y por su famoso grito "¡Yabba-Dabba-Doo!".' +
-          '\n   }' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Componente que utiliza la librería MUI para renderizar un input de tipo "What You See Is What You Get" (WYSIWYG) en un formulario. El componente utiliza React Hook Form para gestionar el estado del input y Tiptap como el editor WYSIWYG. El componente acepta varias props, incluyendo el id, name, label, rules, placeholder, editable y onChange, que determinan el comportamiento y la apariencia del input. Al final, el componente devuelve un div con un InputLabel de Material-UI y un Controller de React Hook Form que contiene el editor Tiptap y un mensaje de error si es necesario.',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
 } as Meta

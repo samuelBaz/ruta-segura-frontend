@@ -1,11 +1,12 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { IframeOptimizado } from '../../../utils/IFrameOptimisado'
+import { CustomFrame } from '../../../utils/CustomFrame'
 import DebugBanner from '../../../../common/components/DebugBanner'
 import { Constantes } from '../../../../config'
+
 export default {
-  title: 'Atomos/util/DebugBaner/DebugBaner',
+  title: 'Atomos/Utils/DebugBanner',
   component: DebugBanner,
   argTypes: {
     accion: {
@@ -16,9 +17,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Este componente muestra una etiqueta que indica el entorno en el que se encuentra el sistema, ya sea Desarrollo o Test demo.
-
-        Nota: Esta etiqueta se genera automáticamente en función de las variables de entorno del sistema.`,
+        component: `Este componente muestra una etiqueta que indica el entorno en el que se encuentra el sistema, ya sea Desarrollo o Test demo en función de las variables de entorno del sistema.`,
       },
     },
   },
@@ -27,19 +26,19 @@ export default {
 const Template2: StoryFn<typeof DebugBanner> = (args: any) => {
   Constantes.appEnv = args.texto
   return (
-    <IframeOptimizado height="100px" padding="none" border="10px">
+    <CustomFrame height="100px" padding="none" border="10px">
       <DebugBanner />
-    </IframeOptimizado>
+    </CustomFrame>
   )
 }
 export const DebugBanerDevelop = Template2.bind({})
-DebugBanerDevelop.storyName = 'Baner develop'
+DebugBanerDevelop.storyName = 'Banner develop'
 DebugBanerDevelop.args = {
   texto: 'development',
 }
 
 export const DebugBanerTest = Template2.bind({})
-DebugBanerTest.storyName = 'Baner test'
+DebugBanerTest.storyName = 'Banner test'
 DebugBanerTest.args = {
   texto: 'test',
 }

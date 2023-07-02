@@ -1,5 +1,3 @@
-// import React from 'react'
-
 import { Meta, StoryFn } from '@storybook/react'
 import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
 import { Box, Grid, InputLabel, TextField, Typography } from '@mui/material'
@@ -40,32 +38,37 @@ const columnas: Array<ColumnaType> = [
   { campo: 'fechaPublicacion', nombre: 'Fecha Publicación' },
   { campo: 'acciones', nombre: 'Eventos' },
 ]
-const solicitudesData: any[] = [
+const solicitudesData = [
   {
+    id: '1',
     nombre: 'Cien años de soledad',
     resumen:
       'Una novela de realismo mágico que cuenta la historia de la familia Buendía a lo largo de varias generaciones en el ficticio pueblo de Macondo.',
     fechaPublicacion: '1967-05-30',
   },
   {
+    id: '2',
     nombre: '1984',
     resumen:
       'Una novela distópica que presenta una sociedad totalitaria y vigilante en la que el gobierno controla cada aspecto de la vida de sus ciudadanos.',
     fechaPublicacion: '1949-06-08',
   },
   {
+    id: '3',
     nombre: 'El señor de los anillos',
     resumen:
       'Una épica trilogía de fantasía que sigue las aventuras de hobbits, elfos, magos y guerreros en su búsqueda para destruir el anillo del poder y derrotar al malvado Sauron.',
     fechaPublicacion: '1954-07-29',
   },
   {
+    id: '4',
     nombre: 'Matar a un ruiseñor',
     resumen:
       'Una novela clásica de la literatura estadounidense que aborda temas de racismo y justicia a través de la historia de un abogado que defiende a un hombre negro injustamente acusado de un delito.',
     fechaPublicacion: '1960-07-11',
   },
   {
+    id: '5',
     nombre: 'Harry Potter y la piedra filosofal',
     resumen:
       'El primer libro de la serie de fantasía juvenil que sigue las aventuras de un joven mago llamado Harry Potter mientras asiste a la escuela de magia y hechicería de Hogwarts.',
@@ -162,7 +165,7 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
     <BotonBuscar
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
-      mostrar={mostrarFiltroRol}
+      seleccionado={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
     <IconoTooltip
@@ -186,7 +189,7 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
       key={'agregarModuloSeccion'}
       icono={'more_vert'}
       texto={'Agregar'}
-      tipo={'icono'}
+      variante={'icono'}
       label={'Agregar libros'}
       acciones={[
         {
@@ -564,7 +567,7 @@ const Template4: StoryFn<typeof CustomDataTable> = (args) => {
     <BotonBuscar
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
-      mostrar={mostrarFiltroRol}
+      seleccionado={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
 

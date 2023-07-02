@@ -2,16 +2,6 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { Path, useForm } from 'react-hook-form'
-
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 import FormInputFile from '../../../../common/components/ui/form/FormInputFile'
 
 export interface PersonaType {
@@ -20,7 +10,7 @@ export interface PersonaType {
   apellido: string
   carnet: string
   edad: number
-  imagenes: any
+  imagenes: FileList
 }
 
 export default {
@@ -31,43 +21,14 @@ export default {
       type: 'function',
       control: () => {},
     },
-    // control: { type: 'function', description: 'Control<any>' },
   },
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputFile_' +
-          '\n#### Información sobre  - _FormInputFile_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          "\n     carnet: '9999999'," +
-          '\n     edad: 32,' +
-          '\n     imagenes: ' +
-          '\n   }' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.' +
-          '\n' +
-          '\n> El atributo  ***`imagenes`*** hace refencia a al tipo de archivo de javascript FileList.',
+          'Componente que tiene la capacidad de agregar, eliminar y mostrar archivos cargados. También tiene funciones para convertir el objeto Files(e.target.files) a un array y para unir dos objetos Files. El componente acepta varias propiedades, como el límite de archivos permitidos y los tipos de archivo permitidos',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
   // parameters: {
@@ -113,7 +74,7 @@ SB_CargaDocumentos.args = {
   multiple: true,
 }
 export const SB_CargarNDocumentos = Template.bind({})
-SB_CargarNDocumentos.storyName = 'Cargar n(5) cantidad de documentos'
+SB_CargarNDocumentos.storyName = 'Cargar varios archivos (máximo 5)'
 SB_CargarNDocumentos.args = {
   label: 'Documento',
   id: 'textfield-form-3',
@@ -128,4 +89,13 @@ SB_CargaDocumento.args = {
   label: 'Documento',
   id: 'textfield-form-2',
   name: 'imagenes',
+}
+
+export const SB_CargaDocumentoPDF = Template.bind({})
+SB_CargaDocumentoPDF.storyName = 'Cargar un documento (solo PDF)'
+SB_CargaDocumentoPDF.args = {
+  label: 'Documento',
+  id: 'textfield-form-2',
+  name: 'imagenes',
+  tiposPermitidos: ['pdf'],
 }

@@ -9,16 +9,6 @@ import {
 import { useEffect, useState } from 'react'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { Servicios } from '../../../../common/services'
-import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 
 export interface PersonaType {
   id: number
@@ -57,51 +47,17 @@ interface RespuestaBusqueda {
 
 export default {
   title: 'Moleculas/Formulario/FormInputAutocomplete',
-  component: FormInputDropdownMultiple,
-  argTypes: {
-    // onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
-  },
-
+  component: FormInputAutocomplete,
+  argTypes: {},
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDropdownMultiple_' +
-          '\n#### Información sobre  - _FormInputAutocomplete_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          '\n     edad: 32,' +
-          '\n     fechaNacimiento: 05-21-1984,' +
-          '\n     productos: [1,2],' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Es un componente que utiliza la librería `react-hook-form` y la librería MUI para crear un campo de entrada de texto con autocompletado, para más información: [Using Material UI with React Hook Form](https://blog.logrocket.com/using-material-ui-with-react-hook-form/)',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
-} as Meta
+} as Meta<typeof FormInputAutocomplete>
 
 const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
   const [opciones, setOpciones] = useState<Array<optionType>>([])

@@ -2,7 +2,8 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { NavbarLogin } from '../../../../common/components/ui/NavbarLogin'
-import { IframeOptimizado } from '../../../utils/IFrameOptimisado'
+import { CustomFrame } from '../../../utils/CustomFrame'
+
 export default {
   title: 'Organismos/Navegación/NavBarLogin',
   component: NavbarLogin,
@@ -15,7 +16,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Este componente muestra el botón de ayuda y el botón de cambio de tema.`,
+        component: `Ejemplo barra de navegación con dos botones y un diálogo modal de ayuda. Los botones permiten cambiar el tema de la aplicación y abrir el diálogo modal con información sobre la aplicación. El código utiliza el framework MUI y varios componentes y hooks de React.`,
       },
     },
   },
@@ -23,9 +24,9 @@ export default {
 
 const Template1: StoryFn<typeof NavbarLogin> = () => {
   return (
-    <IframeOptimizado height="70px">
+    <CustomFrame height="70px">
       <NavbarLogin />
-    </IframeOptimizado>
+    </CustomFrame>
   )
 }
 

@@ -18,7 +18,7 @@ export default {
     docs: {
       description: {
         component:
-          'Este componente muestra un icono con un tooltip que se muestra al pasar el cursor sobre el icono.',
+          'Componente que renderiza un botón con un icono y un tooltip que muestra información adicional al pasar el mouse sobre el botón. El componente acepta varias props, incluyendo el color del botón, el título del tooltip, el icono a mostrar y una función de acción que se ejecuta cuando se hace clic en el botón. El tooltip se activa al pasar el mouse sobre el botón y se desactiva al retirarlo. ',
       },
     },
   },

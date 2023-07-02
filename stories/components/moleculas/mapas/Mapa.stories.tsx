@@ -3,15 +3,6 @@ import {
   calcularZoom,
   getCentro,
 } from '../../../../common/components/ui/mapas/GeoUtils'
-import {
-  ArgsTable,
-  Description,
-  PRIMARY_STORY,
-  Primary,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/blocks'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
 
@@ -34,16 +25,10 @@ export default {
   argTypes: {},
   parameters: {
     docs: {
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
+      description: {
+        component:
+          'Componente que utiliza la biblioteca Leaflet para mostrar un mapa interactivo en una aplicación web. El componente acepta una serie de propiedades, como la ubicación central del mapa, los marcadores y la función de devolución de llamada para manejar los eventos del mapa. También se pueden utilizar las propiedades para personalizar la apariencia y el comportamiento del mapa. El componente utiliza diferentes componentes de Leaflet, como MapContainer, Marker, Popup, TileLayer, Tooltip y ZoomControl para construir el mapa y los marcadores.',
+      },
     },
   },
 } as Meta
@@ -65,6 +50,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
       const zoom: number = calcularZoom([...args.puntos])
       setZoom(zoom)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -82,7 +68,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         draggable
         onClick={agregarPunto}
         onDrag={agregarPunto}
-      ></Mapa>
+      />
     </>
   )
 }
@@ -91,12 +77,12 @@ export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
   puntos: [],
-  onlyread: false,
+  readonly: false,
 }
 
 export const SoloLectura = Template.bind({})
 SoloLectura.storyName = 'Solo lectura'
 SoloLectura.args = {
   puntos: puntosExample,
-  onlyread: true,
+  readonly: true,
 }

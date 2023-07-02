@@ -2,7 +2,8 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { NavbarUser } from '../../../../common/components/ui'
-import { IframeOptimizado } from '../../../utils/IFrameOptimisado'
+import { CustomFrame } from '../../../utils/CustomFrame'
+
 export default {
   title: 'Organismos/Navegación/NavBarUser',
   component: NavbarUser,
@@ -15,8 +16,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `
-        Este componente muestra el botón de menú, el botón de ayuda, el botón de cambio de tema y el botón de usuario.`,
+        component: `Este código crea una barra de navegación en React con varios botones y menús desplegables para el usuario, utilizando MUI y React hooks y componentes. Permite cambiar el tema de la aplicación, acceder a la información del perfil del usuario y mostrar un diálogo de ayuda. También utiliza diferentes contextos para el estado de la aplicación.`,
       },
     },
   },
@@ -24,9 +24,9 @@ export default {
 
 const Template1: StoryFn<typeof NavbarUser> = () => {
   return (
-    <IframeOptimizado height="70px">
+    <CustomFrame height="70px">
       <NavbarUser />
-    </IframeOptimizado>
+    </CustomFrame>
   )
 }
 

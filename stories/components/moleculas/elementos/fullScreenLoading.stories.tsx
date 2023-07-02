@@ -2,14 +2,15 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { FullScreenLoading } from '../../../../common/components/ui/FullScreenLoading'
-import { IframeOptimizado } from '../../../utils/IFrameOptimisado'
+import { CustomFrame } from '../../../utils/CustomFrame'
+
 export default {
   title: 'Moleculas/Elementos/FullScreenLoading',
   component: FullScreenLoading,
   parameters: {
     docs: {
       description: {
-        component: `Este componente proporciona una ventana de carga. Se recomienda utilizarlo junto con su proveedor y envolver los componentes children con dicho proveedor.`,
+        component: `Componente que muestra una animación de spinner y un mensaje opcional de carga. El spinner está compuesto por doce barras que giran alrededor del centro. El componente utiliza los componentes Box y Typography de Material UI para posicionar y mostrar el mensaje de carga, y utiliza CSS para animar el spinner.`,
       },
     },
   },
@@ -17,9 +18,9 @@ export default {
 
 const Template1: StoryFn<typeof FullScreenLoading> = (args) => {
   return (
-    <IframeOptimizado height="400px" color="white">
+    <CustomFrame height="400px" color="white">
       <FullScreenLoading {...args} />
-    </IframeOptimizado>
+    </CustomFrame>
   )
 }
 

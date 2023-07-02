@@ -7,27 +7,21 @@ export default {
   title: 'Organismos/Datatable/TableSkeleton',
   component: TableSkeleton,
   argTypes: {
-    accion: { type: 'function', control: () => {} },
+    accion: {
+      type: 'function',
+      control: () => {},
+    },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Componente que crea una tabla de esqueletos con un número específico de filas y columnas. Utiliza los componentes de MUI TableContainer, Table, TableBody, TableCell y TableRow para crear la estructura de la tabla. El número de filas y columnas se proporcionan como entradas al componente',
+      },
+    },
+  },
 } as Meta<typeof TableSkeleton>
 
-// const eventsFromNames = actions('accion')
-
-// click en componenete
-// storiesOf('TableSkeleton', module).add('Click', () => (
-//   <TableSkeleton
-//     name="HOla"
-//     titulo="ACCION ICONO"
-//     icono="face"
-//     accion={action('HOLA MUNDO ')}
-//   ></TableSkeleton>
-// ))
-// replica del componente
 const Template: StoryFn<typeof TableSkeleton> = (args) => (
   <TableSkeleton {...args} />
 )

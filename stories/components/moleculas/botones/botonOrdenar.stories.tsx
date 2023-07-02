@@ -7,6 +7,7 @@ import {
   OrdenEnum,
 } from '../../../../common/types/ordenTypes'
 import { useState } from 'react'
+
 export default {
   title: 'Moleculas/Botones/BotonOrdenar',
   component: BotonOrdenar,
@@ -19,7 +20,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Este componente se utiliza para agrupar varias acciones representadas en forma de botones dentro de una lista desplegable`,
+        component: `Componente que muestra un botón que al ser presionado despliega un menú con opciones para ordenar una lista de elementos. El botón muestra un icono y un badge que indica la cantidad de criterios de ordenamiento que se han aplicado. El componente recibe como propiedades un conjunto de criterios de ordenamiento, una función para cambiar los criterios, un identificador y un texto para mostrar en el botón.`,
       },
     },
   },
@@ -62,17 +63,17 @@ const Template2: StoryFn<typeof BotonOrdenar> = (args) => {
 export const Default = Template1.bind({})
 Default.storyName = 'Boton ordenar'
 Default.args = {
+  ...Default.args,
   id: 'idbtn',
   desactivado: false,
-  ...Default.args,
-  label: 'btnOrdenar',
+  label: 'Orden',
 }
 export const BtnOrdenarVacio = Template2.bind({})
-BtnOrdenarVacio.storyName = 'Boton ordenar sin funcion activa'
+BtnOrdenarVacio.storyName = 'Boton ordenar sin criterios'
 BtnOrdenarVacio.args = {
+  ...Default.args,
   id: 'idbtn',
   desactivado: false,
-  ...Default.args,
-  label: 'btnOrdenar',
+  label: 'Orden',
   criterios: [],
 }

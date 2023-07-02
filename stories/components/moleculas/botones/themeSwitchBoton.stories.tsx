@@ -3,6 +3,7 @@
 import { Meta, StoryFn } from '@storybook/react'
 import ThemeSwitcherButton from '../../../../common/components/ui/ThemeSwitcherButton'
 import { ThemeProvider } from '../../../../context/ui/ThemeContext'
+
 export default {
   title: 'Moleculas/Botones/ThemeSwitchButton',
   component: ThemeSwitcherButton,
@@ -15,7 +16,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Este componente se usa para cambiar el thema claro o oscuro.`,
+        component: `Componente de botón de cambio de tema en React que utiliza íconos de luz y oscuridad de Material UI. El botón cambia entre los modos de tema claro y oscuro y muestra un mensaje emergente que indica el modo actual y el modo al que cambiará si se hace clic en el botón. El componente utiliza el contexto del tema proporcionado por el componente ThemeContext para cambiar el tema.`,
       },
     },
   },
@@ -30,4 +31,4 @@ const Template1: StoryFn<typeof ThemeSwitcherButton> = () => {
 }
 
 export const Default = Template1.bind({})
-Default.storyName = 'Switch boton thema'
+Default.storyName = 'Switch boton tema'

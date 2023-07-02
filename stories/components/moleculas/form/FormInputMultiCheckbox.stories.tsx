@@ -1,17 +1,10 @@
 // import React from 'react'
 
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
-import { StoryFn, Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Path, useForm } from 'react-hook-form'
 import { FormInputMultiCheckbox } from '../../../../common/components/ui/form'
+import { useEffect } from 'react'
+import { imprimir } from '../../../../common/utils/imprimir'
 
 export interface PersonaType {
   id: number
@@ -20,67 +13,43 @@ export interface PersonaType {
   carnet: string
   fechaNacimiento: string
   edad: number
-  idsPeliculasFavoritas: number[]
+  idsPeliculasFavoritas: string[]
 }
+
 export default {
   title: 'Moleculas/Formulario/FormInputMultiCheckbox',
   component: FormInputMultiCheckbox,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
   },
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputMultiCheckbox_' +
-          '\n#### Información sobre  - _FormInputMultiCheckbox_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          '\n     edad: 32,' +
-          '\n     fechaNacimiento: 05-21-1984,' +
-          '\n     idsPeliculasFavoritas: [1,2],' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Componente que se utiliza para crear una lista de opciones de casillas de verificación. El componente acepta varias propiedades, incluyendo el nombre del campo, la etiqueta del campo, las opciones de casilla de verificación disponibles y una función para establecer el valor del campo. El componente utiliza el estado local para controlar las opciones seleccionadas y usa FormControlLabel para renderizar cada opción como una casilla de verificación. Este componente es útil para crear formularios que requieren la selección de múltiples opciones.',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
 } as Meta
 
 const Template: StoryFn<typeof FormInputMultiCheckbox> = (args) => {
-  const { control, setValue } = useForm<PersonaType>({
+  const { control, setValue, watch } = useForm<PersonaType>({
     defaultValues: {
       id: 12,
       nombre: 'Pedro',
       apellido: 'Picapiedra',
       edad: 32,
       fechaNacimiento: '05-21-1984',
-      idsPeliculasFavoritas: [1, 2],
+      idsPeliculasFavoritas: ['1', '2'],
     },
   })
+
+  const p = watch('idsPeliculasFavoritas')
+
+  useEffect(() => {
+    imprimir(p)
+  }, [p])
 
   return (
     <FormInputMultiCheckbox

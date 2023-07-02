@@ -3,17 +3,9 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { FormInputSlider } from '../../../../common/components/ui/form'
 import { Path, useForm } from 'react-hook-form'
-
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 import { Typography } from '@mui/material'
+import { useEffect } from 'react'
+import { imprimir } from '../../../../common/utils/imprimir'
 
 export interface PersonaType {
   id: number
@@ -23,52 +15,20 @@ export interface PersonaType {
   fechaNacimiento: string
   edad: number
 }
+
 export default {
   title: 'Moleculas/Formulario/FormInputSlider',
   component: FormInputSlider,
-  argTypes: {
-    // onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
-  },
+  argTypes: {},
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputSlider_' +
-          '\n#### Información sobre  - _FormInputSlider_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          '\n     edad: 32,' +
-          '\n     fechaNacimiento: 05-21-1984,' +
-          "\n     carnet: '9999999'," +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Componente que se utiliza para crear un control deslizante para seleccionar un valor numérico. El componente utiliza Slider de MUI para renderizar el control deslizante y utiliza el hook useController de React Hook Form para obtener el control del campo. Cuando se mueve el control deslizante, se llama a la función handleChange para actualizar el valor del campo.',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
 } as Meta
 
 const Template: StoryFn<typeof FormInputSlider> = (args) => {
@@ -82,6 +42,12 @@ const Template: StoryFn<typeof FormInputSlider> = (args) => {
       carnet: '9999999',
     },
   })
+
+  const p = watch('edad')
+
+  useEffect(() => {
+    imprimir(p)
+  }, [p])
 
   return (
     <>
@@ -98,14 +64,6 @@ const Template: StoryFn<typeof FormInputSlider> = (args) => {
 
 export const SB_Slider = Template.bind({})
 SB_Slider.storyName = 'Slider'
-SB_Slider.parameters = {
-  docs: {
-    description: {
-      story:
-        'Antes de enviar el FormInputSlider UseForm nos pedirá llenar el campo vació',
-    },
-  },
-}
 SB_Slider.args = {
   name: 'edad',
   label: 'Edad',

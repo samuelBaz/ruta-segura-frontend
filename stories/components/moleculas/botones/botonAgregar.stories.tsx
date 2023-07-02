@@ -16,8 +16,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Este componente  se usa para agregar o procesar inserción cuando el tamaño del contenerdor o pantalla el componente
-          pone por defecto el icono de add.`,
+        component: `Componente que devuelve un botón o un icono con un tooltip dependiendo del valor de la variable "variante". La función toma como argumentos un id, un texto, una descripción, una acción y una variante que es opcional y puede ser "boton" o "icono". Si la variante es "boton", la función devuelve un botón con el texto proporcionado y la acción correspondiente. Si la variante es "icono", la función devuelve un icono con un tooltip que muestra la descripción proporcionada y la acción correspondiente.`,
       },
     },
   },
@@ -26,29 +25,22 @@ export default {
 const Template: StoryFn<typeof BotonAgregar> = (args) => (
   <BotonAgregar {...args} />
 )
-const Template1: StoryFn<typeof BotonAgregar> = (args) => {
-  return <BotonAgregar {...args} />
-  // return <BotonAgregar {...args} />
-}
 
 export const Default = Template.bind({})
 Default.storyName = 'Boton agregar'
 Default.args = {
   id: 'idbtn',
-  texto: 'Btn Agregar',
+  texto: 'Agregar',
   descripcion: '',
   accion: action('()=>{console.log("Click en IconoTooltip")}'),
 }
-export const BtnAgregarIconco = Template1.bind({})
-BtnAgregarIconco.storyName = 'Icono boton agregar'
-BtnAgregarIconco.args = {
+
+export const BtnAgregarIcono = Template.bind({})
+BtnAgregarIcono.storyName = 'Icono agregar'
+BtnAgregarIcono.args = {
   id: 'idbtn',
   texto: 'icono',
   descripcion: '',
+  variante: 'icono',
   accion: action('()=>{console.log("Click en IconoTooltip")}'),
-}
-BtnAgregarIconco.parameters = {
-  viewport: {
-    defaultViewport: 'iphone6',
-  },
 }

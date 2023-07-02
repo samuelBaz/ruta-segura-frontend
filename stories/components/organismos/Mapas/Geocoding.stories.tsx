@@ -49,7 +49,7 @@ interface LeafletUbicacionType {
 }
 
 interface SearchType {
-  zona: Array<any>
+  zona: optionType
 }
 
 export default {
@@ -60,7 +60,7 @@ export default {
     docs: {
       description: {
         component:
-          'Ejemplo de mapa basado en Leaflet con buscador usando la API de OpenStreetMaps',
+          'Ejemplo de componente Mapa que utiliza la API de OpenStreetMaps para buscar y mostrar una ubicación de referencia en un mapa Leaflet. El componente incluye un campo de búsqueda de ubicación, permite agregar puntos de referencia haciendo clic en el mapa y utiliza varios paquetes y servicios de terceros para su implementación. También proporciona una opción para imprimir mensajes de alerta en caso de errores.',
       },
     },
   },
@@ -98,9 +98,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   */
 
   const { control, watch } = useForm<SearchType>({
-    defaultValues: {
-      zona: [],
-    },
+    defaultValues: {},
   })
 
   const watchZona = watch('zona')
@@ -154,13 +152,13 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     }
   }
 
-  const actualizarUbicacion = (select: any) => {
+  const actualizarUbicacion = (select: optionType) => {
     try {
       const ubicacion: LeafletUbicacionType = JSON.parse(
         select.value != undefined ? select.value + '' : ''
       )
-      const current = puntosMapaLeaflet.find((map) =>
-        `${select.key}`.includes(map.place_id.toString())
+      const current = puntosMapaLeaflet.find((punto) =>
+        `${select.key}`.includes(punto.place_id.toString())
       )
       if (current) {
         setDefaultCategoriaOption({
@@ -172,12 +170,13 @@ const Template: StoryFn<typeof Mapa> = (args) => {
       setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
       setZoom(15)
     } catch (e) {
-      imprimir('DUD>>>> error ', e)
+      imprimir('Error al actualizar ubicación', e)
     }
   }
 
   useEffect(
     () => {
+      imprimir(typeof watchZona, watchZona)
       if (watchZona) {
         actualizarUbicacion(watchZona)
       }
@@ -222,7 +221,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
             draggable
             onClick={agregarPunto}
             onDrag={agregarPunto}
-          ></Mapa>
+          />
         </Grid>
         <Typography>{defaultCategoriaOption.value}</Typography>
       </Grid>
@@ -234,5 +233,5 @@ export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
   puntos: [],
-  onlyread: false,
+  readonly: false,
 }

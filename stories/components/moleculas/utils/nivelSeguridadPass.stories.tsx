@@ -2,6 +2,7 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { NivelSeguridadPass } from '../../../../common/components/ui/NivelSeguridadPass'
+
 export default {
   title: 'Moleculas/Utils/NivelSeguridadPass',
   component: NivelSeguridadPass,
@@ -14,18 +15,36 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Este componente indica el nivel de seguridad del password registrado.`,
+        component: `Componente que muestra el nivel de seguridad de una contraseña. El componente NivelSeguridadPass recibe una contraseña como prop y utiliza la función seguridadPass para calcular un puntaje de seguridad utilizando la librería zxcvbn-typescript. Luego, este componente utiliza un componente LinearColor para mostrar un indicador visual del nivel de seguridad de la contraseña. El color del indicador depende del puntaje de seguridad, donde un puntaje más alto se muestra en verde y un puntaje más bajo se muestra en rojo.`,
       },
     },
   },
 } as Meta<typeof NivelSeguridadPass>
 
-const Template1: StoryFn<typeof NivelSeguridadPass> = (args) => {
+const Template: StoryFn<typeof NivelSeguridadPass> = (args) => {
   return <NivelSeguridadPass {...args} />
 }
 
-export const Default = Template1.bind({})
+export const Default = Template.bind({})
 Default.storyName = 'Nivel seguridad Password'
 Default.args = {
   ...Default.args,
+}
+
+export const PassInsegura = Template.bind({})
+PassInsegura.storyName = 'Contraseña insegura: "123456"'
+PassInsegura.args = {
+  pass: '123456',
+}
+
+export const PassMedia = Template.bind({})
+PassMedia.storyName = 'Contraseña insegura: "PassMedia123"'
+PassMedia.args = {
+  pass: 'PassMedia123',
+}
+
+export const PassSegura = Template.bind({})
+PassSegura.storyName = 'Contraseña insegura: "ContraseñaSegura123!"'
+PassSegura.args = {
+  pass: 'ContraseñaSegura123!',
 }
