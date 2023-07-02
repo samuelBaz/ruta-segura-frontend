@@ -36,6 +36,7 @@ import { imprimir } from '../../utils/imprimir'
 import { RoleType } from '../../../modules/login/types/loginTypes'
 import { useThemeContext } from '../../../context/ui/ThemeContext'
 import { useSession } from '../../hooks'
+import { alpha } from '@mui/material/styles'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -156,8 +157,10 @@ export const NavbarUser = () => {
       </CustomDialog>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        style={{ borderBottom: 'thin solid rgba(0, 0, 0, 0.05)', padding: '0' }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: alpha(theme.palette.background.paper, 0.96),
+        }}
       >
         <Toolbar>
           <IconButton
