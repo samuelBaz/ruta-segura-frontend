@@ -1,8 +1,9 @@
-import { Button, useMediaQuery, useTheme } from '@mui/material'
+import { Button } from '@mui/material'
 import { IconoTooltip } from './IconoTooltip'
 
 interface BotonAgregarParams {
   id: string
+  variante?: 'icono' | 'boton'
   texto: string
   descripcion: string
   accion: () => void
@@ -11,22 +12,11 @@ interface BotonAgregarParams {
 export const BotonAgregar = ({
   id,
   texto,
+  variante = 'boton',
   descripcion,
   accion,
 }: BotonAgregarParams) => {
-  const theme = useTheme()
-  const xs = useMediaQuery(theme.breakpoints.only('xs'))
-  return xs ? (
-    <IconoTooltip
-      id={id}
-      titulo={descripcion}
-      accion={() => {
-        accion()
-      }}
-      icono={'add_circle_outline'}
-      name={texto}
-    />
-  ) : (
+  return variante == 'boton' ? (
     <Button
       id={id}
       variant={'contained'}
@@ -38,5 +28,15 @@ export const BotonAgregar = ({
     >
       {texto}
     </Button>
+  ) : (
+    <IconoTooltip
+      id={id}
+      titulo={descripcion}
+      accion={() => {
+        accion()
+      }}
+      icono={'add_circle_outline'}
+      name={texto}
+    />
   )
 }

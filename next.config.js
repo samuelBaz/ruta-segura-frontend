@@ -32,7 +32,7 @@ const nextConfig = {
   },
   output: 'standalone',
   eslint: {
-    dirs: ['common', 'context', 'modules', 'pages', 'themes'],
+    dirs: ['common', 'context', 'modules', 'pages', 'themes', 'stories'],
   },
 }
 
