@@ -10,9 +10,9 @@ export const InterpreteMensajes = (mensaje: any): string => {
       errorMessage.mensaje ??
       errorMessage.message ??
       errorMessage.error ??
-      'Solicitud erronea 🚨'
+      'Solicitud errónea 🚨'
     )
   } catch (e) {
-    return isHTML(mensaje) ? 'Solicitud erronea 🚨' : `${mensaje}`
+    return isHTML(mensaje) ? 'Solicitud errónea 🚨' : `${mensaje}`
   }
 }

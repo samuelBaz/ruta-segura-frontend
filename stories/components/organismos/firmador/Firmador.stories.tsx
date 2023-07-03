@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import useFirmador from '../../../../common/hooks/useFirmador'
 import { Button, Typography } from '@mui/material'
 import { useState } from 'react'
@@ -13,13 +13,14 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Ejemplo de firmador de un documento tipo json y pdf',
+        component:
+          'Ejemplo de implementación de Firmatic para formatos de tipo JSON y PDF',
       },
     },
   },
 } as Meta
 
-const TemplateJson = () => {
+const TemplateJson: StoryFn = () => {
   const [cargando, setCargando] = useState<boolean>(false)
   const { obtenerEstado, firmarDocumento } = useFirmador()
 
@@ -38,13 +39,16 @@ const TemplateJson = () => {
   const firmarProcesar = async () => {
     const estadoFirmatic = await obtenerEstado()
     imprimir('estadoFirmatic:', estadoFirmatic)
+
     if (estadoFirmatic !== 200) {
       imprimir('El Firmatic no se encuentra iniciado')
       handleClick('Error -> El Firmatic no se encuentra iniciado')
       return
     }
+
     setCargando(true)
-    delay(500)
+    await delay(500)
+
     try {
       const documentoFirmado = await firmarDocumento(
         datosFirmar.archivo,
@@ -97,7 +101,7 @@ const TemplateJson = () => {
   )
 }
 
-const TemplatePdf = () => {
+const TemplatePdf: StoryFn = () => {
   const [cargando, setCargando] = useState<boolean>(false)
   const { obtenerEstado, firmarDocumento } = useFirmador()
 
@@ -118,7 +122,7 @@ const TemplatePdf = () => {
       return
     }
     setCargando(true)
-    delay(500)
+    await delay(500)
     try {
       const documentoFirmado = await firmarDocumento(
         datosFirmar.archivo,
@@ -172,5 +176,7 @@ const TemplatePdf = () => {
 }
 
 export const FirmarJson = TemplateJson.bind({})
+FirmarJson.storyName = 'Ejemplo de firma de JSON'
 
 export const FirmarDocumento = TemplatePdf.bind({})
+FirmarDocumento.storyName = 'Ejemplo de firma de PDF'
