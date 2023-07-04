@@ -18,6 +18,7 @@ export interface PersonaType {
   fechaNacimiento: string
   edad: number
   productos: number[]
+  idiomas: string[]
 }
 
 interface BusquedaParams {
@@ -115,12 +116,45 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
   )
 }
 
+const TemplateAbierto: StoryFn<typeof FormInputAutocomplete> = (args) => {
+  const { control, watch } = useForm<PersonaType>({
+    defaultValues: {
+      idiomas: ['inglés', 'español', 'francés', 'alemán', 'japonés'],
+    },
+  })
+
+  const idiomas = watch('idiomas')
+
+  useEffect(() => {
+    imprimir(`idiomas: `, idiomas)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(idiomas)])
+
+  return (
+    <FormInputAutocomplete
+      {...args}
+      id={'rolesMultiple'}
+      name={'idiomas'}
+      control={control}
+      label="Idiomas"
+      disabled={false}
+      options={[]}
+      onInputChange={async (event, value) => {
+        imprimir(value)
+      }}
+      rules={{ required: 'Este campo es requerido' }}
+    />
+  )
+}
+
 export const SB_Simple = Template.bind({})
 SB_Simple.storyName = 'Simple'
 SB_Simple.args = {
   id: '1232131',
   label: 'Idiomas',
   name: 'id-idiomas',
+  searchIcon: true,
+  forcePopupIcon: true,
 }
 
 export const SB_Multiple = Template.bind({})
@@ -129,5 +163,20 @@ SB_Multiple.args = {
   id: '1232131',
   label: 'Productos',
   name: 'productos',
+  freeSolo: true,
   multiple: true,
+  searchIcon: true,
+  forcePopupIcon: true,
+}
+
+export const SB_MultipleAbierto = TemplateAbierto.bind({})
+SB_MultipleAbierto.storyName = 'Campo abierto para cualquier texto'
+SB_MultipleAbierto.args = {
+  id: '1232131',
+  label: 'Productos',
+  name: 'productos',
+  freeSolo: true,
+  multiple: true,
+  forcePopupIcon: false,
+  isOptionEqualToValue: () => false,
 }

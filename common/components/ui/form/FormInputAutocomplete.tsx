@@ -34,6 +34,9 @@ type FormInputDropdownAutocompleteProps<T extends FieldValues> = {
   control: Control<T, object>
   label: string
   multiple?: boolean
+  freeSolo?: boolean
+  forcePopupIcon?: boolean
+  searchIcon?: boolean
   size?: 'small' | 'medium'
   rules?: RegisterOptions
   disabled?: boolean
@@ -47,6 +50,7 @@ type FormInputDropdownAutocompleteProps<T extends FieldValues> = {
     value: string,
     reason: AutocompleteInputChangeReason
   ) => void
+  isOptionEqualToValue?: (option: optionType, value: optionType) => boolean
   clearable?: boolean
   bgcolor?: string
   loading?: boolean
@@ -60,12 +64,16 @@ export const FormInputAutocomplete = <T extends FieldValues>({
   control,
   label,
   multiple,
+  freeSolo,
+  forcePopupIcon,
+  searchIcon,
   size = 'small',
   rules,
   disabled,
   onChange,
   filterOptions,
   onInputChange,
+  isOptionEqualToValue = (option, value) => option.value == value.value,
   options,
   bgcolor,
   loading,
@@ -89,8 +97,8 @@ export const FormInputAutocomplete = <T extends FieldValues>({
             <Autocomplete
               id={id}
               multiple={multiple}
-              freeSolo
-              forcePopupIcon={true}
+              freeSolo={freeSolo}
+              forcePopupIcon={forcePopupIcon}
               size={size}
               disabled={disabled}
               value={field.value}
@@ -98,9 +106,7 @@ export const FormInputAutocomplete = <T extends FieldValues>({
               filterSelectedOptions={true}
               filterOptions={filterOptions}
               onInputChange={onInputChange}
-              isOptionEqualToValue={(option, value) => {
-                return option.value === value.value
-              }}
+              isOptionEqualToValue={isOptionEqualToValue}
               onChange={(event, newValue) => {
                 if (onChange) {
                   onChange(newValue)
@@ -139,11 +145,13 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                     ),
                     startAdornment: (
                       <Fragment>
-                        <Box sx={{ pt: 1, pl: 1 }}>
-                          <Icono color="secondary" fontSize="small">
-                            search
-                          </Icono>
-                        </Box>
+                        {searchIcon && (
+                          <Box sx={{ pt: 1, pl: 1 }}>
+                            <Icono color="secondary" fontSize="small">
+                              search
+                            </Icono>
+                          </Box>
+                        )}
                         {params.InputProps.startAdornment}
                       </Fragment>
                     ),
