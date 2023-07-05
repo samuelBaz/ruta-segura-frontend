@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react'
+import { IBitacoraAcciones } from '../../../../common/types'
 import { Bitacora } from '../../../../common/components/ui/Bitacora'
-import { IBitacoraItems } from '../../../../common/types'
+import { Grid, Typography } from '@mui/material'
 
 export default {
   title: 'Organismos/Bitacora/Bitacora',
@@ -17,64 +18,242 @@ export default {
 
 const Template: StoryFn<typeof Bitacora> = (args) => <Bitacora {...args} />
 
-const accionesRealizadasHoy: IBitacoraItems[] = [
+const listaAcciones: IBitacoraAcciones[] = [
   {
-    accion: 'Registro de la transacción en el sistema de la entidad',
-    tiempo: '4 de Julio de 2023, 11:15am',
-    color_icono: 'success',
+    titulo: 'Procesamiento de la orden',
+    items: [
+      {
+        accion: 'Elaboró',
+        descripcion: 'Recibida orden de envío',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'check',
+      },
+      {
+        accion: 'Inició',
+        descripcion: 'Procesamiento de la orden por el almacén',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'check',
+      },
+      {
+        accion: 'Realizó',
+        descripcion: 'Empaquetado de los artículos',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'check',
+      },
+      {
+        accion: 'Realizó',
+        descripcion: 'Etiquetado del paquete',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'more_horiz',
+      },
+    ],
   },
   {
-    accion:
-      'Entrega del documento al ciudadano junto con explicación de la razón del rechazo en caso de rechazo',
-    tiempo: '4 de Julio de 2023, 11:00am',
-    color_icono: 'warning',
+    titulo: 'Envío del paquete',
+    items: [
+      {
+        accion: 'Registró',
+        descripcion: 'Carga del paquete en el camión de envío',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'more_horiz',
+      },
+      {
+        accion: 'Autorizó',
+        descripcion: 'Salida del camión de envío del almacén',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'success',
+        icono: 'check',
+      },
+      {
+        accion: 'Registró',
+        descripcion: 'Llegada del camión de envío al centro de distribución',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'people',
+      },
+      {
+        accion: 'Realizó',
+        descripcion: 'Clasificación del paquete en el centro de distribución',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'people',
+      },
+      {
+        accion: 'Registró',
+        descripcion: 'Carga del paquete en el avión de envío',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'check',
+      },
+      {
+        accion: 'Autorizó',
+        descripcion: 'Salida del avión de envío del centro de distribución',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'success',
+        icono: 'people',
+      },
+      {
+        accion: 'Registró',
+        descripcion: 'Llegada del avión de envío al aeropuerto de destino',
+        fecha: '2023-07-21T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'people',
+      },
+      {
+        accion: 'Autorizó',
+        descripcion: 'Desembarque del paquete del avión de envío',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'success',
+        icono: 'check',
+      },
+    ],
   },
   {
-    accion:
-      'Procesamiento y entrega del documento al ciudadano en caso de aprobación',
-    tiempo: '4 de Julio de 2023, 11:00am',
-    color_icono: 'success',
-  },
-  {
-    accion: 'Aprobación o rechazo del documento por parte del departamento',
-    tiempo: '3 de Julio de 2023, 10:30am',
-    color_icono: 'info',
-  },
-  {
-    accion:
-      'Revisión del documento por parte del departamento y toma de decisión',
-    tiempo: '3 de Julio de 2023, 9:00am',
-    color_icono: 'info',
-  },
-  {
-    accion:
-      'Registro del documento en el sistema de la entidad y envío al departamento correspondiente',
-    tiempo: '2 de Julio de 2023, 11:15am',
-    color_icono: 'info',
-  },
-  {
-    accion:
-      'Recepción y verificación del documento por parte del empleado de la entidad pública',
-    tiempo: '2 de Julio de 2023, 11:00am',
-    color_icono: 'info',
-  },
-  {
-    accion: 'Ciudadano presenta solicitud de permiso de construcción',
-    tiempo: '2 de Julio de 2023, 10:30am',
-    color_icono: 'info',
+    titulo: 'Entrega del paquete',
+    items: [
+      {
+        accion: 'Realizó',
+        descripcion: 'Entrega del paquete a la empresa de mensajería local',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'success',
+        icono: 'check',
+      },
+      {
+        accion: 'Registró',
+        descripcion:
+          'Llegada del paquete a la oficina de la empresa de mensajería local',
+        fecha: '2023-07-03T12:37:48.058Z',
+        color_icono: 'success',
+        icono: 'people',
+      },
+      {
+        accion: 'Realizó',
+        descripcion: 'Entrega programada del paquete al destinatario',
+        fecha: '2023-06-03T12:37:48.058Z',
+        color_icono: 'info',
+        icono: 'check',
+      },
+      {
+        accion: 'Verificó',
+        descripcion: 'Entrega exitosa del paquete al destinatario',
+        fecha: '2023-07-02T12:37:48.058Z',
+        color_icono: 'success',
+        icono: 'check',
+      },
+    ],
   },
 ]
 
 export const Default = Template.bind({})
 Default.storyName = 'Ejemplo Bitacora'
 Default.args = {
-  titulo: 'Hoy',
-  items: accionesRealizadasHoy,
+  titulo: 'Últimas acciones',
+  acciones: listaAcciones.map((acciones) => {
+    return {
+      titulo: acciones.titulo,
+      items: acciones.items.map((item) => {
+        return {
+          descripcion: item.descripcion,
+          fecha: item.fecha,
+          color_icono: item.color_icono
+        }
+      })
+    }
+  })
+}
+
+export const BitacoraConAcciones = Template.bind({})
+BitacoraConAcciones.storyName = 'Bitácora con acciones'
+BitacoraConAcciones.args = {
+  titulo: 'Últimas acciones',
+  acciones: listaAcciones.map((acciones) => {
+    return {
+      titulo: acciones.titulo,
+      items: acciones.items.map((item) => {
+        return {
+          accion: item.accion,
+          descripcion: item.descripcion,
+          fecha: item.fecha,
+          color_icono: item.color_icono
+        }
+      })
+    }
+  })
+}
+
+export const BitacoraConAgrupacion = Template.bind({})
+BitacoraConAgrupacion.storyName = 'Ejemplo Bitacora con agrupación por fecha de acción'
+BitacoraConAgrupacion.args = {
+  titulo: 'Últimas acciones',
+  acciones: listaAcciones.map((acciones) => {
+    return {
+      titulo: acciones.titulo,
+      items: acciones.items.map((item) => {
+        return {
+          descripcion: item.descripcion,
+          fecha: item.fecha,
+          color_icono: item.color_icono
+        }
+      })
+    }
+  }),
+  agruparFecha: true
+}
+
+export const BitacoraConIconos = Template.bind({})
+BitacoraConIconos.storyName = 'Ejemplo Bitacora con íconos en timeline'
+BitacoraConIconos.args = {
+  titulo: 'Últimas acciones',
+  acciones: listaAcciones.map((acciones) => {
+    return {
+      titulo: acciones.titulo,
+      items: acciones.items.map((item) => {
+        return {
+          descripcion: item.descripcion,
+          fecha: item.fecha,
+          color_icono: item.color_icono,
+          icono: item.icono
+        }
+      })
+    }
+  }),
+  agruparFecha: true
+}
+
+
+const componente = (
+  <Grid>
+    <Typography>Contenido de componente personalizable</Typography>
+  </Grid>
+)
+export const BitacoraConComponentePersonalizable = Template.bind({})
+BitacoraConComponentePersonalizable.storyName = 'Ejemplo Bitacora con componente personalizable'
+BitacoraConComponentePersonalizable.args = {
+  titulo: 'Últimas acciones',
+  acciones: listaAcciones.map((acciones) => {
+    return {
+      titulo: acciones.titulo,
+      items: acciones.items.map((item) => {
+        return {
+          descripcion: item.descripcion,
+          fecha: item.fecha,
+          color_icono: item.color_icono
+        }
+      })
+    }
+  }),
+  agruparFecha: true,
+  children: componente
 }
 
 export const BitacoraVacia = Template.bind({})
 BitacoraVacia.storyName = 'Bitacora vacía'
 BitacoraVacia.args = {
   titulo: 'Últimas acciones',
-  items: [],
+  acciones: [],
 }
