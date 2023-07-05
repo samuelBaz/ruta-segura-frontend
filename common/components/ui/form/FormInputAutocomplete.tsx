@@ -51,6 +51,7 @@ type FormInputDropdownAutocompleteProps<T extends FieldValues> = {
     reason: AutocompleteInputChangeReason
   ) => void
   isOptionEqualToValue?: (option: optionType, value: optionType) => boolean
+  newValues?: boolean
   clearable?: boolean
   bgcolor?: string
   loading?: boolean
@@ -74,11 +75,14 @@ export const FormInputAutocomplete = <T extends FieldValues>({
   filterOptions,
   onInputChange,
   isOptionEqualToValue = (option, value) => option.value == value.value,
+  newValues,
   options,
   bgcolor,
   loading,
   labelVariant = 'subtitle2',
 }: FormInputDropdownAutocompleteProps<T>) => {
+  const [value, setValue] = React.useState<string>('')
+
   return (
     <>
       <InputLabel htmlFor={id}>
@@ -105,7 +109,13 @@ export const FormInputAutocomplete = <T extends FieldValues>({
               options={options}
               filterSelectedOptions={true}
               filterOptions={filterOptions}
-              onInputChange={onInputChange}
+              inputValue={value}
+              onInputChange={(event, newInputValue, reason) => {
+                if (onInputChange) {
+                  onInputChange(event, newInputValue, reason)
+                }
+                setValue(newInputValue)
+              }}
               isOptionEqualToValue={isOptionEqualToValue}
               onChange={(event, newValue) => {
                 if (onChange) {
@@ -124,40 +134,79 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                   </li>
                 )
               }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  error={!!error}
-                  inputRef={field.ref}
-                  sx={{
-                    width: '100%',
-                    bgcolor: bgcolor,
-                  }}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <Fragment>
-                        {loading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </Fragment>
-                    ),
-                    startAdornment: (
-                      <Fragment>
-                        {searchIcon && (
-                          <Box sx={{ pt: 1, pl: 1 }}>
-                            <Icono color="secondary" fontSize="small">
-                              search
-                            </Icono>
-                          </Box>
-                        )}
-                        {params.InputProps.startAdornment}
-                      </Fragment>
-                    ),
-                  }}
-                />
-              )}
+              renderInput={(params) => {
+                params.inputProps.onKeyDown = (
+                  event: React.KeyboardEvent<HTMLInputElement>
+                ) => {
+                  if (!newValues) {
+                    event.stopPropagation()
+                    return
+                  }
+                  switch (event.key) {
+                    case 'Enter':
+                    case ',': {
+                      event.stopPropagation()
+                      event.preventDefault()
+                      const inputValue = event.currentTarget.value
+
+                      const newOption: optionType = {
+                        key: inputValue.trim(),
+                        label: inputValue.trim(),
+                        value: inputValue.trim(),
+                      }
+
+                      const opcionesTemp = field.value as Array<optionType>
+
+                      const registrado = opcionesTemp.some(
+                        (value1) => value1.value == newOption.value
+                      )
+
+                      if (!registrado && ![''].includes(newOption.value)) {
+                        // Se agregara sí es que no fue agregado antes
+                        field.onChange([...field.value, newOption])
+                      }
+                      setValue('')
+
+                      break
+                    }
+                    default:
+                  }
+                }
+                return (
+                  <TextField
+                    {...params}
+                    error={!!error}
+                    inputRef={field.ref}
+                    sx={{
+                      width: '100%',
+                      bgcolor: bgcolor,
+                    }}
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <Fragment>
+                          {loading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </Fragment>
+                      ),
+                      startAdornment: (
+                        <Fragment>
+                          {searchIcon && (
+                            <Box sx={{ pt: 1, pl: 1 }}>
+                              <Icono color="secondary" fontSize="small">
+                                search
+                              </Icono>
+                            </Box>
+                          )}
+                          {params.InputProps.startAdornment}
+                        </Fragment>
+                      ),
+                    }}
+                  />
+                )
+              }}
             />
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
           </>
