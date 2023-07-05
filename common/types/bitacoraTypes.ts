@@ -1,12 +1,14 @@
+export interface IBitacoraAcciones {
+  titulo: string
+  items: Array<IBitacoraItems>
+}
+
 export interface IBitacoraItems {
   color_icono: ColorIconoType
-  tiempo: string
-  accion: string
+  descripcion: string
+  accion?: string
+  fecha: string
+  icono?: string
 }
 
 export type ColorIconoType = 'success' | 'error' | 'info' | 'warning'
-
-export interface IAccionesBitacoraItems {
-  secciones: Array<string>
-  acciones: Array<IBitacoraItems>
-}
