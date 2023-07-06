@@ -9,7 +9,7 @@ export interface UsuarioRolCRUDType {
   fechaCreacion: Date
   usuarioCreacion: string
   fechaActualizacion: Date
-  usuarioActualizacion?: any
+  usuarioActualizacion?: string
   id: string
   estado: string
   rol: RolCRUDType
@@ -46,7 +46,7 @@ export interface CrearPersonaType {
 
 export interface CrearEditarUsuarioType {
   id?: string
-  usuario?: any
+  usuario?: string
   persona: CrearPersonaType
   ciudadaniaDigital: boolean
   roles: string[]

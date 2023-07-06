@@ -42,7 +42,7 @@ interface BotonAccionesParams {
     | 'info'
     | 'success'
     | 'warning'
-  tipo?: 'icono' | 'boton'
+  variante?: 'icono' | 'boton'
   texto?: string
   acciones: Array<TipoAccion>
   icono?: ReactNode
@@ -55,7 +55,7 @@ export const BotonAcciones = ({
   color = 'primary',
   acciones = [],
   icono = 'more_horiz',
-  tipo = 'icono',
+  variante = 'icono',
   texto = 'acciones',
   label,
   id,
@@ -91,7 +91,7 @@ export const BotonAcciones = ({
       }}
     >
       <span>
-        {tipo == 'boton' && (
+        {variante == 'boton' && (
           <Button
             id={id}
             aria-label={label}
@@ -108,7 +108,7 @@ export const BotonAcciones = ({
             {texto}
           </Button>
         )}
-        {tipo == 'icono' && (
+        {variante == 'icono' && (
           <IconButton
             id={id}
             aria-label={label}
@@ -142,7 +142,7 @@ export const BotonAcciones = ({
             .filter((value) => value.mostrar)
             .map((accion, index) => (
               <MenuItem
-                sx={{ p: 2 }}
+                sx={{ px: 2, py: 1.5, m: 0 }}
                 id={accion.id}
                 key={`${index}-accion`}
                 onClick={(event) => {
@@ -152,7 +152,7 @@ export const BotonAcciones = ({
                 disabled={accion.desactivado}
               >
                 <Icono color={accion.color}>{accion.icono}</Icono>
-                <Box width={'20px'} />
+                <Box width={'11px'} />
                 <Typography variant={'body2'}>{accion.titulo}</Typography>
               </MenuItem>
             ))}

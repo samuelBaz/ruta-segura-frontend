@@ -1,20 +1,10 @@
 // import React from 'react'
 
-import { StoryFn, Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
 import { FormInputText } from '../../../../common/components/ui/form'
 import { Path, useForm } from 'react-hook-form'
-
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 
 export interface PersonaType {
   id: number
@@ -22,51 +12,25 @@ export interface PersonaType {
   apellido: string
   carnet: string
   edad: number
-  historialCriminal: string
+  comentario: string
 }
+
 export default {
   title: 'Moleculas/Formulario/FormInputText',
   component: FormInputText,
   argTypes: {
-    onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
+    onChange: {
+      type: 'function',
+      control: () => {},
+    },
   },
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputtext_' +
-          '\n#### Información sobre  - _FormInputtext_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          "\n     carnet: '9999999'," +
-          '\n     edad: 32,' +
-          "\n     historialCriminal: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-          "\n                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
-          '\n                         when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into' +
-          "\n                         electronic typesetting, remaining essentially unchanged.'," +
-          '\n   }' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Componente que utiliza MUI para renderizar un campo de entrada de texto en un formulario. El componente utiliza la biblioteca "react-hook-form" para manejar la validación y el control del estado del formulario. Además, el componente tiene varias opciones de configuración, como el tipo de campo, la variante, el número de filas, si es una entrada multi-línea, etc. También se puede limpiar el campo y se puede mostrar u ocultar la contraseña si se utiliza el campo de tipo contraseña.',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
   // parameters: {
@@ -91,10 +55,7 @@ const Template: StoryFn<typeof FormInputText> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       carnet: '9999999',
-      historialCriminal: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-      when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-      electronic typesetting, remaining essentially unchanged.`,
+      comentario: `Pedro Picapiedra es el personaje principal de la serie animada Los Picapiedra. Es un hombre prehistórico trabajador en una cantera de piedra, esposo de Vilma y padre de Pebbles. Es conocido por su personalidad apasionada y sentido del humor, y por su famoso grito "¡Yabba-Dabba-Doo!".Pedro Picapiedra es el personaje principal de la serie animada Los Picapiedra. Es un hombre prehistórico trabajador en una cantera de piedra, esposo de Vilma y padre de Pebbles. Es conocido por su personalidad apasionada y sentido del humor, y por su famoso grito "¡Yabba-Dabba-Doo!".`,
     },
   })
 
@@ -108,7 +69,7 @@ const Template: StoryFn<typeof FormInputText> = (args) => {
 }
 
 export const SB_Apellido = Template.bind({})
-SB_Apellido.storyName = 'name:apellido'
+SB_Apellido.storyName = 'name - apellido'
 SB_Apellido.args = {
   label: 'Apellido Paterno',
   id: 'textfield-form-1',
@@ -116,7 +77,7 @@ SB_Apellido.args = {
 }
 
 export const SB_Nombre = Template.bind({})
-SB_Nombre.storyName = 'name:nombre'
+SB_Nombre.storyName = 'name - nombre'
 SB_Nombre.args = {
   label: 'Nombre Completo',
   id: 'textfield-form-1',
@@ -124,13 +85,13 @@ SB_Nombre.args = {
 }
 
 export const SB_multilinea = Template.bind({})
-SB_multilinea.storyName = 'Multilinea'
+SB_multilinea.storyName = 'Multilínea'
 SB_multilinea.args = {
-  label: 'Historial Criminal',
+  label: 'Comentario',
   id: 'textfield-form-1',
   multiline: true,
   rows: 6,
-  name: 'historialCriminal',
+  name: 'comentario',
 }
 
 export const SB_Disabled = Template.bind({})

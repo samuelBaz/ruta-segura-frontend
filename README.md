@@ -10,6 +10,7 @@ rama [Develop](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-
 - [NextJS](https://nextjs.org), framework sobre ReactJS.
 - [ReactJS](https://es.reactjs.org) como librería para desarrollo frontend.
 - [MUI (Material UI)](https://mui.com), librería de componentes UI para ReactJS.
+- [React Hook Forms](https://react-hook-form.com), librería con Hooks para la gestión de formularios
 - [Axios](https://axios-http.com), para el manejo de peticiones HTTP.
 - [ESLint](https://eslint.org), para examinar el código en busca de problemas.
 
@@ -86,7 +87,6 @@ En general se recomienda seguir la regla `60 - 30 - 10` para el uso de colores
 Para más información, se recomienda leer él
 artículo [How the 60-30-10 rule saved the day](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
 
-
 ## Instalación
 
 Para instalar la aplicación se recomienda revisar el siguiente documento:
@@ -120,9 +120,8 @@ variables `headless : false` y `slowMo : 400`
 Para ejecutar un solo test
 
 ```
-npx playwright test test/e2e/playwright/usuarios.spec.ts 
+npx playwright test test/e2e/playwright/usuarios.spec.ts
 ```
-
 
 ## Documentación
 

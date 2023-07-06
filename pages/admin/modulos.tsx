@@ -249,7 +249,7 @@ const Modulos: NextPage = () => {
     <BotonBuscar
       id={'accionFiltrarModuloToggle'}
       key={'accionFiltrarModuloToggle'}
-      mostrar={mostrarFiltroModulo}
+      seleccionado={mostrarFiltroModulo}
       cambiar={setMostrarFiltroModulo}
     />,
     xs && (
@@ -277,7 +277,7 @@ const Modulos: NextPage = () => {
         key={'agregarModuloSeccion'}
         icono={'add_circle_outline'}
         texto={'Agregar'}
-        tipo={xs ? 'icono' : 'boton'}
+        variante={xs ? 'icono' : 'boton'}
         label={'Agregar nueva sección o módulo'}
         acciones={[
           {

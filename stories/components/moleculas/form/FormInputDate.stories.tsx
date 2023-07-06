@@ -3,16 +3,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { FormInputDate } from '../../../../common/components/ui/form'
 import { Path, useForm } from 'react-hook-form'
-
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 import dayjs from 'dayjs'
 
 export interface PersonaType {
@@ -27,44 +17,13 @@ export interface PersonaType {
 export default {
   title: 'Moleculas/Formulario/FormInputDate',
   component: FormInputDate,
-  argTypes: {
-    // onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
-  },
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDate_' +.00
-          '\n#### Información sobre  - _FormInputDate_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          '\n     edad: 32,' +
-          '\n     fechaNacimiento: 05-21-1984,' +
-          "\n     carnet: '9999999'," +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.' +
-          '\n\n> Para la validación de `minDate` y `maxDate` se puede enviar en el formato del objeto de ***`dayjs`***, que cuenta con más funciones para [suma](https://day.js.org/docs/en/manipulate/add) o [resta](https://day.js.org/docs/en/manipulate/subtract) de fechas.' +
-          '\n> ',
+          'Componente de formulario de entrada de fecha que utiliza tecnologías de React, MUI y Day.js. El componente se integra con react-hook-form para manejar la validación y el estado del formulario y está diseñado para ser reutilizable en cualquier proyecto que utilice estas tecnologías, para más información: [Using Material UI with React Hook Form](https://blog.logrocket.com/using-material-ui-with-react-hook-form/)',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
   // parameters: {

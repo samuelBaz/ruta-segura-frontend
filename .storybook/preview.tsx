@@ -7,7 +7,7 @@ import { createElement, useEffect, useState } from 'react'
 import { DARK_MODE_EVENT_NAME, useDarkMode } from 'storybook-dark-mode'
 import { DocsContainer } from '@storybook/blocks'
 import 'material-icons/iconfont/outlined.css'
-
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 // get channel to listen to event emitter
 const channel = addons.getChannel()
 
@@ -72,6 +72,11 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+    },
+    viewport: {
+      //👇 The viewports you want to use
+      viewports: INITIAL_VIEWPORTS,
+      //👇 Your own default viewport
     },
     docs: {
       container: (props) => {

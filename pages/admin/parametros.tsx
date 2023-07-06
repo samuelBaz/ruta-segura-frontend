@@ -216,7 +216,7 @@ const Parametros: NextPage = () => {
     <BotonBuscar
       id={'accionFiltrarParametrosToggle'}
       key={'accionFiltrarParametrosToggle'}
-      mostrar={mostrarFiltroParametros}
+      seleccionado={mostrarFiltroParametros}
       cambiar={setMostrarFiltroParametros}
     />,
     xs && (
@@ -243,6 +243,7 @@ const Parametros: NextPage = () => {
         id={'agregarParametro'}
         key={'agregarParametro'}
         texto={'Agregar'}
+        variante={xs ? 'icono' : 'boton'}
         descripcion={'Agregar parámetro'}
         accion={() => {
           agregarParametroModal()

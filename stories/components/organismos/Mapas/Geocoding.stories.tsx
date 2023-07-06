@@ -1,19 +1,9 @@
-import dynamic from 'next/dynamic'
-import { useEffect, useMemo, useState } from 'react'
-import { Box, Grid } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Box, Grid, Typography } from '@mui/material'
 import {
   calcularZoom,
   getCentro,
 } from '../../../../common/components/ui/mapas/GeoUtils'
-import {
-  ArgsTable,
-  Description,
-  PRIMARY_STORY,
-  Primary,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/blocks'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
 import {
@@ -59,25 +49,19 @@ interface LeafletUbicacionType {
 }
 
 interface SearchType {
-  zona: Array<any>
+  zona: optionType
 }
 
 export default {
-  title: 'Organismos/Mapas/Geocoding',
+  title: 'Organismos/Mapas/Mapa con API de OSM',
   component: Mapa,
   argTypes: {},
   parameters: {
     docs: {
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
+      description: {
+        component:
+          'Ejemplo de componente Mapa que utiliza la API de OpenStreetMaps para buscar y mostrar una ubicación de referencia en un mapa Leaflet. El componente incluye un campo de búsqueda de ubicación, permite agregar puntos de referencia haciendo clic en el mapa y utiliza varios paquetes y servicios de terceros para su implementación. También proporciona una opción para imprimir mensajes de alerta en caso de errores.',
+      },
     },
   },
 } as Meta
@@ -93,13 +77,17 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     setPuntos([...puntosActuales])
   }
 
-  useEffect(() => {
-    if (args.puntos) {
-      setPuntos([...args.puntos])
-      const zoom: number = calcularZoom([...args.puntos])
-      setZoom(zoom)
-    }
-  }, [])
+  useEffect(
+    () => {
+      if (args.puntos) {
+        setPuntos([...args.puntos])
+        const zoom: number = calcularZoom([...args.puntos])
+        setZoom(zoom)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   useEffect(() => {
     setCentro(getCentro(puntos))
@@ -110,9 +98,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   */
 
   const { control, watch } = useForm<SearchType>({
-    defaultValues: {
-      zona: [],
-    },
+    defaultValues: {},
   })
 
   const watchZona = watch('zona')
@@ -166,33 +152,38 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     }
   }
 
-  const actualizarUbicacion = (select: any) => {
+  const actualizarUbicacion = (select: optionType) => {
     try {
       const ubicacion: LeafletUbicacionType = JSON.parse(
         select.value != undefined ? select.value + '' : ''
       )
-      const current = puntosMapaLeaflet.find((map) =>
-        `${select.key}`.includes(map.place_id.toString())
+      const current = puntosMapaLeaflet.find((punto) =>
+        `${select.key}`.includes(punto.place_id.toString())
       )
       if (current) {
         setDefaultCategoriaOption({
           key: `${current.place_id.toString()}`,
-          value: JSON.stringify(current),
+          value: current.display_name,
           label: `${current.display_name}`,
         })
       }
       setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
       setZoom(15)
     } catch (e) {
-      console.log('DUD>>>> error ', e)
+      imprimir('Error al actualizar ubicación', e)
     }
   }
 
-  useEffect(() => {
-    if (watchZona) {
-      actualizarUbicacion(watchZona)
-    }
-  }, [watchZona])
+  useEffect(
+    () => {
+      imprimir(typeof watchZona, watchZona)
+      if (watchZona) {
+        actualizarUbicacion(watchZona)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [watchZona]
+  )
 
   /*
   -------------------- buscador de MAPA ------------------
@@ -208,6 +199,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
             name={'zona'}
             label="Buscar zona de referencia"
             disabled={false}
+            loading={loadingAutoComplete}
             options={puntosMapaLeaflet.map((punto) => ({
               key: `${punto.place_id.toString()}`,
               value: JSON.stringify(punto),
@@ -229,8 +221,9 @@ const Template: StoryFn<typeof Mapa> = (args) => {
             draggable
             onClick={agregarPunto}
             onDrag={agregarPunto}
-          ></Mapa>
+          />
         </Grid>
+        <Typography>{defaultCategoriaOption.value}</Typography>
       </Grid>
     </>
   )
@@ -240,5 +233,5 @@ export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
   puntos: [],
-  onlyread: false,
+  readonly: false,
 }

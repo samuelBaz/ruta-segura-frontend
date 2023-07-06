@@ -37,7 +37,7 @@ export interface MapaProps {
   onClickMarker?: (index: number) => void
   height?: number
   draggable?: boolean
-  onlyread?: boolean
+  readonly?: boolean
   zoom?: number
   location?: boolean
   id: string
@@ -54,22 +54,22 @@ const Mapa = ({
   onClick,
   onClickMarker,
   cardMap,
-  onlyread = false,
+  readonly = false,
   draggable = false,
   location = true,
   id,
   zoom = 6,
 }: MapaProps) => {
-  const markerRefs = useRef<any>([])
+  const markerRefs = useRef([])
   const mapRef = createRef<Map>()
   const locationRef = createRef<any>()
 
-  function ChangeMapView() {
+  const ChangeMapView = () => {
     const map = useMap()
     map.setView([centro[0], centro[1]])
     const mapEvents = useMapEvents({
       click: (e) => {
-        if (onClick && !onlyread) {
+        if (onClick && !readonly) {
           onClick([e.latlng.lat, e.latlng.lng], mapEvents.getZoom())
         }
       },
@@ -78,7 +78,7 @@ const Mapa = ({
   }
 
   const dragEvent: DragEndEventHandlerFn = (e: DragEndEvent) => {
-    const marker: any = e.target
+    const marker = e.target
     if (marker != null) {
       const lat = marker.getLatLng().lat
       const lng = marker.getLatLng().lng
@@ -88,7 +88,7 @@ const Mapa = ({
     }
   }
 
-  function Markers({ puntos }: { puntos: any }) {
+  const Markers = ({ puntos }: { puntos: string[][] }) => {
     const map = useMap()
     return puntos.map((punto: string[], index: number) => {
       if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
@@ -124,37 +124,39 @@ const Mapa = ({
     })
   }
 
-  function SingleMarker({ puntos }: { puntos: any }) {
+  const SingleMarker = ({ puntos }: { puntos: string[][] }) => {
     if (puntos.length < 1) return null
+
     const punto = puntos[0]
-    if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1]))) {
-      return (
-        <Marker
-          icon={ICON}
-          draggable={draggable}
-          eventHandlers={{
-            dragend: (e) => dragEvent(e),
-          }}
-          position={[Number(punto[0]), Number(punto[1])]}
-          ref={markerRefs.current[0]}
-        >
-          <Box sx={{ p: 10 }}>
-            {cardMap ? (
-              <Popup offset={[0, -40]}>{cardMap}</Popup>
-            ) : (
-              punto[2] && <Tooltip direction="bottom">{punto[2]}</Tooltip>
-            )}
-          </Box>
-        </Marker>
-      )
-    } else {
+
+    if (!(!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))) {
       return null
     }
+
+    return (
+      <Marker
+        icon={ICON}
+        draggable={draggable}
+        eventHandlers={{
+          dragend: (e) => dragEvent(e),
+        }}
+        position={[Number(punto[0]), Number(punto[1])]}
+        ref={markerRefs.current[0]}
+      >
+        <Box sx={{ p: 10 }}>
+          {cardMap ? (
+            <Popup offset={[0, -40]}>{cardMap}</Popup>
+          ) : (
+            punto[2] && <Tooltip direction="bottom">{punto[2]}</Tooltip>
+          )}
+        </Box>
+      </Marker>
+    )
   }
 
   if (markerRefs.current.length !== puntos.length) {
     markerRefs.current = puntos.map(
-      (_, i) => markerRefs.current[i] || createRef<any>()
+      (_, i) => markerRefs.current[i] || createRef()
     )
   }
 
@@ -201,10 +203,7 @@ const Mapa = ({
         >
           <ChangeMapView />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <ZoomControl
-            zoomInTitle="Acercar"
-            zoomOutTitle="Alejar"
-          ></ZoomControl>
+          <ZoomControl zoomInTitle="Acercar" zoomOutTitle="Alejar" />
           {location && (
             <div
               ref={locationRef}

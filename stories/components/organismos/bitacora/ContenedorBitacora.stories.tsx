@@ -5,57 +5,114 @@ import { IBitacoraProps } from '../../../../common/components/ui/Bitacora'
 export default {
   title: 'Organismos/Bitacora/ContenedorBitacora',
   component: ContenedorBitacora,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Componente que muestra una tarjeta con un título y una lista de elementos de bitácora. El componente puede tener una altura máxima y mínima configurada y, si la lista está vacía, muestra un mensaje "Sin resultados".',
+      },
+    },
+  },
 } as Meta<typeof ContenedorBitacora>
 
 const Template: StoryFn<typeof ContenedorBitacora> = (args) => (
   <ContenedorBitacora {...args} />
 )
 
-export const BitacoraVacia = Template.bind({})
-BitacoraVacia.storyName = 'Bitacora vacía'
-BitacoraVacia.args = {
-  titulo: 'Últimas acciones',
-  items: [],
-}
-
 const accionesRealizadasHoy: IBitacoraProps[] = [
   {
-    titulo: 'Hoy',
+    titulo: 'Procesamiento de la orden',
     items: [
       {
-        accion: 'Aprobó iniciativa ',
-        color_icono: 'success',
-        tiempo: 'hace 1 minuto',
-      },
-      {
-        accion: 'Editó iniciativa Almacenamiento d...',
+        accion: 'Recibida orden de envío',
+        tiempo: '1 de Julio de 2023, 10:30am',
         color_icono: 'info',
-        tiempo: 'hace 35 minutos',
       },
       {
-        accion: 'Creó iniciativa Almacenamiento d...',
-        color_icono: 'success',
-        tiempo: 'hace 59 minutos',
-      },
-      {
-        accion: 'Editó iniciativa La planta de liq...',
+        accion: 'Procesamiento de la orden por el almacén',
+        tiempo: '1 de Julio de 2023, 11:00am',
         color_icono: 'info',
-        tiempo: 'hace 1 hora',
       },
       {
-        accion: 'Aprobó iniciativa ',
+        accion: 'Empaquetado de los artículos',
+        tiempo: '1 de Julio de 2023, 11:30am',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Etiquetado del paquete',
+        tiempo: '1 de Julio de 2023, 12:00pm',
+        color_icono: 'info',
+      },
+    ],
+  },
+  {
+    titulo: 'Envío del paquete',
+    items: [
+      {
+        accion: 'Carga del paquete en el camión de envío',
+        tiempo: '1 de Julio de 2023, 1:00pm',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Salida del camión de envío del almacén',
+        tiempo: '1 de Julio de 2023, 2:00pm',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Llegada del camión de envío al centro de distribución',
+        tiempo: '1 de Julio de 2023, 4:00pm',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Clasificación del paquete en el centro de distribución',
+        tiempo: '1 de Julio de 2023, 4:30pm',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Carga del paquete en el avión de envío',
+        tiempo: '1 de Julio de 2023, 6:00pm',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Salida del avión de envío del centro de distribución',
+        tiempo: '1 de Julio de 2023, 8:00pm',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Llegada del avión de envío al aeropuerto de destino',
+        tiempo: '1 de Julio de 2023, 10:00pm',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Desembarque del paquete del avión de envío',
+        tiempo: '1 de Julio de 2023, 11:00pm',
+        color_icono: 'info',
+      },
+    ],
+  },
+  {
+    titulo: 'Entrega del paquete',
+    items: [
+      {
+        accion: 'Entrega del paquete a la empresa de mensajería local',
+        tiempo: '2 de Julio de 2023, 9:00am',
+        color_icono: 'info',
+      },
+      {
+        accion:
+          'Llegada del paquete a la oficina de la empresa de mensajería local',
+        tiempo: '2 de Julio de 2023, 10:00am',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Entrega programada del paquete al destinatario',
+        tiempo: '3 de Julio de 2023, 10:00am',
+        color_icono: 'info',
+      },
+      {
+        accion: 'Entrega exitosa del paquete al destinatario',
+        tiempo: '3 de Julio de 2023, 11:00am',
         color_icono: 'success',
-        tiempo: 'hace 2 horas',
-      },
-      {
-        accion: 'Creó iniciativa Se entregaron di...',
-        color_icono: 'success',
-        tiempo: 'hace 3 horas',
-      },
-      {
-        accion: 'Eliminó iniciativa ',
-        color_icono: 'error',
-        tiempo: 'hace 5 horas',
       },
     ],
   },
@@ -69,137 +126,107 @@ AccionesRealizadasHoy.args = {
 
 const accionesRealizadasEnDiferentesTiempos: IBitacoraProps[] = [
   {
-    titulo: 'Hoy',
+    titulo: 'Solicitud de permiso de construcción',
     items: [
       {
-        accion: 'Aprobó iniciativa ',
-        color_icono: 'success',
-        tiempo: 'hace 1 minuto',
-      },
-      {
-        accion: 'Editó iniciativa Almacenamiento d...',
+        accion: 'Ciudadano presenta solicitud de permiso de construcción',
+        tiempo: '2 de Julio de 2023, 10:30am',
         color_icono: 'info',
-        tiempo: 'hace 35 minutos',
       },
       {
-        accion: 'Creó iniciativa Almacenamiento d...',
-        color_icono: 'success',
-        tiempo: 'hace 59 minutos',
-      },
-      {
-        accion: 'Editó iniciativa La planta de liq...',
+        accion:
+          'Recepción y verificación del documento por parte del empleado de la entidad pública',
+        tiempo: '2 de Julio de 2023, 11:00am',
         color_icono: 'info',
-        tiempo: 'hace 1 hora',
       },
       {
-        accion: 'Aprobó iniciativa ',
-        color_icono: 'success',
-        tiempo: 'hace 2 horas',
-      },
-      {
-        accion: 'Creó iniciativa Se entregaron di...',
-        color_icono: 'success',
-        tiempo: 'hace 3 horas',
-      },
-      {
-        accion: 'Eliminó iniciativa ',
-        color_icono: 'error',
-        tiempo: 'hace 5 horas',
+        accion:
+          'Registro del documento en el sistema de la entidad y envío al departamento correspondiente',
+        tiempo: '2 de Julio de 2023, 11:15am',
+        color_icono: 'info',
       },
     ],
   },
   {
-    titulo: 'Ayer',
+    titulo: 'Revisión y evaluación del documento',
     items: [
       {
-        accion: 'Aprobó iniciativa ',
-        color_icono: 'success',
-        tiempo: 'hace 19 horas',
+        accion:
+          'Revisión del documento por parte del departamento y toma de decisión',
+        tiempo: '3 de Julio de 2023, 9:00am',
+        color_icono: 'info',
       },
       {
-        accion: 'Editó iniciativa Almacenamiento d...',
+        accion: 'Aprobación o rechazo del documento por parte del departamento',
+        tiempo: '3 de Julio de 2023, 10:30am',
         color_icono: 'info',
-        tiempo: 'hace alrededor de 23 horas',
       },
     ],
   },
   {
-    titulo: 'Hace 5 días',
+    titulo: 'Procesamiento y entrega del documento',
     items: [
       {
-        accion: 'Aprobó iniciativa ',
+        accion:
+          'Procesamiento y entrega del documento al ciudadano en caso de aprobación',
+        tiempo: '4 de Julio de 2023, 11:00am',
         color_icono: 'success',
-        tiempo: '01/06/2023',
       },
       {
-        accion: 'Editó iniciativa Almacenamiento d...',
-        color_icono: 'info',
-        tiempo: '01/06/2023',
+        accion:
+          'Entrega del documento al ciudadano junto con explicación de la razón del rechazo en caso de rechazo',
+        tiempo: '4 de Julio de 2023, 11:00am',
+        color_icono: 'warning',
       },
       {
-        accion: 'Creó iniciativa Almacenamiento d...',
+        accion: 'Registro de la transacción en el sistema de la entidad',
+        tiempo: '4 de Julio de 2023, 11:15am',
         color_icono: 'success',
-        tiempo: '01/06/2023',
       },
       {
-        accion: 'Editó iniciativa La planta de liq...',
-        color_icono: 'info',
-        tiempo: '01/06/2023',
+        accion:
+          'Procesamiento y entrega del documento al ciudadano en caso de aprobación final',
+        tiempo: '7 de Julio de 2023, 11:00am',
+        color_icono: 'success',
       },
     ],
   },
   {
-    titulo: 'Hace alrededor de 1 mes',
+    titulo: 'Comunicación con el ciudadano',
     items: [
       {
-        accion: 'Aprobó iniciativa ',
-        color_icono: 'success',
-        tiempo: '01/05/2023',
+        accion:
+          'Comunicación con el ciudadano para solicitar información adicional',
+        tiempo: '5 de Julio de 2023, 9:00am',
+        color_icono: 'warning',
       },
       {
-        accion: 'Editó iniciativa Almacenamiento d...',
+        accion:
+          'Recepción de información adicional del ciudadano y registro en el sistema de la entidad',
+        tiempo: '5 de Julio de 2023, 10:00am',
         color_icono: 'info',
-        tiempo: '01/05/2023',
-      },
-      {
-        accion: 'Creó iniciativa Almacenamiento d...',
-        color_icono: 'success',
-        tiempo: '01/04/2023',
-      },
-      {
-        accion: 'Editó iniciativa La planta de liq...',
-        color_icono: 'info',
-        tiempo: '01/03/2023',
       },
     ],
   },
   {
-    titulo: 'Hace 2 meses',
+    titulo: 'Revisión y evaluación de la información adicional',
     items: [
       {
-        accion: 'Aprobó iniciativa ',
-        color_icono: 'success',
-        tiempo: '25/03/2023',
-      },
-      {
-        accion: 'Editó iniciativa Almacenamiento d...',
+        accion:
+          'Revisión y evaluación de la información adicional por parte del departamento',
+        tiempo: '6 de Julio de 2023, 9:00am',
         color_icono: 'info',
-        tiempo: '25/03/2023',
       },
+    ],
+  },
+  {
+    titulo: 'Aprobación o rechazo final del permiso',
+    items: [
       {
-        accion: 'Creó iniciativa Almacenamiento d...',
-        color_icono: 'success',
-        tiempo: '25/02/2023',
-      },
-      {
-        accion: 'Editó iniciativa La planta de liq...',
+        accion:
+          'Aprobación o rechazo final del permiso de construcción por parte del departamento',
+        tiempo: '7 de Julio de 2023, 10:30am',
         color_icono: 'info',
-        tiempo: '25/01/2023',
-      },
-      {
-        accion: 'Aprobó iniciativa ',
-        color_icono: 'success',
-        tiempo: '25/01/2023',
       },
     ],
   },
@@ -209,4 +236,11 @@ export const AccionesRealizadasEnDiferentesTiempos = Template.bind({})
 AccionesRealizadasEnDiferentesTiempos.args = {
   titulo: 'Últimas acciones',
   items: accionesRealizadasEnDiferentesTiempos,
+}
+
+export const BitacoraVacia = Template.bind({})
+BitacoraVacia.storyName = 'Bitacora vacía'
+BitacoraVacia.args = {
+  titulo: 'Últimas acciones',
+  items: [],
 }

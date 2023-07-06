@@ -1,16 +1,6 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-
-import {
-  ArgsTable,
-  Description,
-  PRIMARY_STORY,
-  Primary,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 import { Path, useForm } from 'react-hook-form'
 import { FormInputWysiwyg } from '../../../../common/components/ui/form/FormInputWysiwyg'
 
@@ -20,61 +10,32 @@ export interface PersonaType {
   apellido: string
   carnet: string
   edad: number
-  historialCriminal: string
+  comentario: string
 }
+
 export default {
-  title: 'Moleculas/Formulario/FormInputWysiswyg',
+  title: 'Moleculas/Formulario/FormInputWysiwyg',
   component: FormInputWysiwyg,
   argTypes: {
-    onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
+    onChange: {
+      type: 'function',
+      control: () => {},
+    },
   },
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputtext_' +
-          '\n#### Información sobre  - _FormInputtext_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***UseFormHook***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          "\n     carnet: '9999999'," +
-          '\n     edad: 32,' +
-          "\n     historialCriminal: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-          "\n                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
-          '\n                         when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into' +
-          "\n                         electronic typesetting, remaining essentially unchanged.'," +
-          '\n   }' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Componente que utiliza la librería MUI para renderizar un input de tipo "What You See Is What You Get" (WYSIWYG) en un formulario. El componente utiliza React Hook Form para gestionar el estado del input y Tiptap como el editor WYSIWYG. El componente acepta varias props, incluyendo el id, name, label, rules, placeholder, editable y onChange, que determinan el comportamiento y la apariencia del input. Al final, el componente devuelve un div con un InputLabel de Material-UI y un Controller de React Hook Form que contiene el editor Tiptap y un mensaje de error si es necesario.',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
 } as Meta
 
 // replica del componente
 const Template: StoryFn<typeof FormInputWysiwyg> = (args) => {
-  let auxHistorial = `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-  when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-  electronic typesetting, remaining essentially unchanged.`
+  let auxHistorial = `Pedro Picapiedra es el personaje principal de la serie animada Los Picapiedra. Es un hombre prehistórico trabajador en una cantera de piedra, esposo de Vilma y padre de Pebbles. Es conocido por su personalidad apasionada y sentido del humor, y por su famoso grito "¡Yabba-Dabba-Doo!".`
   if (args.label == 'Marcas') {
     auxHistorial = `<p><strong>Lorem ipsum dolor sit amet, consectetur </strong></p><p><em>adipiscing elit. Duis pretium maximus sem, in </em></p><p>volutpat dui sodales sit amet. Quisque et elit odio. <strong>Sed quam nunc</strong>, molestie at massa eget, posuere sagittis augue. <em>Ut augue lorem, mollis </em>dapibus massa vel, rutrum rhoncus nulla. </p>`
   } else if (args.label == 'Lista') {
@@ -93,7 +54,7 @@ const Template: StoryFn<typeof FormInputWysiwyg> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       carnet: '9999999',
-      historialCriminal: auxHistorial,
+      comentario: auxHistorial,
     },
   })
 
@@ -109,23 +70,23 @@ const Template: StoryFn<typeof FormInputWysiwyg> = (args) => {
 export const SB_Wysiwyg = Template.bind({})
 SB_Wysiwyg.storyName = 'Wysiwyg'
 SB_Wysiwyg.args = {
-  label: 'Historial Criminal',
+  label: 'Texto enriquecido',
   id: 'textfield-form-1',
-  name: 'historialCriminal',
+  name: 'comentario',
 }
 
 export const SB_Disabled = Template.bind({})
-SB_Disabled.storyName = 'Deshabilitado'
+SB_Disabled.storyName = 'Editable'
 SB_Disabled.args = {
-  name: 'historialCriminal',
-  label: 'Historial criminal',
+  name: 'comentario',
+  label: 'Texto enriquecido',
   id: 'textfield-form-2',
-  disabled: true,
+  editable: false,
 }
 export const SB_Marcas = Template.bind({})
 SB_Marcas.storyName = 'Marcas'
 SB_Marcas.args = {
-  name: 'historialCriminal',
+  name: 'comentario',
   label: 'Marcas',
   id: 'textfield-form-3',
 }
@@ -133,7 +94,7 @@ SB_Marcas.args = {
 export const SB_Listas = Template.bind({})
 SB_Listas.storyName = 'Lista'
 SB_Listas.args = {
-  name: 'historialCriminal',
+  name: 'comentario',
   label: 'Lista',
   id: 'textfield-form-4',
 }
@@ -141,7 +102,7 @@ SB_Listas.args = {
 export const SB_Parrafo = Template.bind({})
 SB_Parrafo.storyName = 'Parrafo'
 SB_Parrafo.args = {
-  name: 'historialCriminal',
+  name: 'comentario',
   label: 'Parrafo',
 
   id: 'textfield-form-5',
@@ -150,7 +111,7 @@ SB_Parrafo.args = {
 export const SB_Link = Template.bind({})
 SB_Link.storyName = 'Link'
 SB_Link.args = {
-  name: 'historialCriminal',
+  name: 'comentario',
   label: 'Link',
   id: 'textfield-form-6',
 }
@@ -158,7 +119,7 @@ SB_Link.args = {
 export const SB_Tabla = Template.bind({})
 SB_Tabla.storyName = 'Tabla'
 SB_Tabla.args = {
-  name: 'historialCriminal',
+  name: 'comentario',
   label: 'Tabla',
   id: 'textfield-form-7',
 }

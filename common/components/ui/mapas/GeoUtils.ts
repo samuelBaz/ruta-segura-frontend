@@ -5,6 +5,7 @@ function toRadians(degrees: number) {
 function rad2degr(rad: number) {
   return (rad * 180) / Math.PI
 }
+
 function degr2rad(degr: number) {
   return (degr * Math.PI) / 180
 }
@@ -27,25 +28,25 @@ const getCentro = (
     var sumY = 0
     var sumZ = 0
 
-    for (var i = 0; i < latLngInDegr.length; i++) {
-      let x: number = Number(latLngInDegr[i][LATIDX])
-      let y: number = Number(latLngInDegr[i][LNGIDX])
-      let lat = degr2rad(x)
-      let lng = degr2rad(y)
+    for (const item of latLngInDegr) {
+      const x: number = Number(item[LATIDX])
+      const y: number = Number(item[LNGIDX])
+      const lat = degr2rad(x)
+      const lng = degr2rad(y)
       // sum of cartesian coordinates
       sumX += Math.cos(lat) * Math.cos(lng)
       sumY += Math.cos(lat) * Math.sin(lng)
       sumZ += Math.sin(lat)
     }
 
-    var avgX = sumX / latLngInDegr.length
-    var avgY = sumY / latLngInDegr.length
-    var avgZ = sumZ / latLngInDegr.length
+    const avgX = sumX / latLngInDegr.length
+    const avgY = sumY / latLngInDegr.length
+    const avgZ = sumZ / latLngInDegr.length
 
     // convert average x, y, z coordinate to latitude and longtitude
-    var lng = Math.atan2(avgY, avgX)
-    var hyp = Math.sqrt(avgX * avgX + avgY * avgY)
-    var lat = Math.atan2(avgZ, hyp)
+    const lng = Math.atan2(avgY, avgX)
+    const hyp = Math.sqrt(avgX * avgX + avgY * avgY)
+    const lat = Math.atan2(avgZ, hyp)
     return [rad2degr(lat), rad2degr(lng)]
   } catch (e) {
     return [-17.405356227442883, -66.15823659326952]
@@ -75,9 +76,7 @@ function calculateDistance(
     Math.sin(latDiff / 2) ** 2 +
     Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) ** 2
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-  const distance = earthRadius * c
-
-  return distance
+  return earthRadius * c
 }
 
 const calcularZoom = (puntos: Array<string[]> | Array<number[]>): number => {
@@ -104,22 +103,31 @@ const calcularZoom = (puntos: Array<string[]> | Array<number[]>): number => {
     }
   }
 
-  if (maxDistance > 1000) {
-    zoom = 5
-  } else if (maxDistance > 700) {
-    zoom = 6
-  } else if (maxDistance > 500) {
-    zoom = 7
-  } else if (maxDistance > 300) {
-    zoom = 8
-  } else if (maxDistance > 100) {
-    zoom = 9
-  } else if (maxDistance > 70) {
-    zoom = 10
-  } else if (maxDistance > 50) {
-    zoom = 11
-  } else if (maxDistance > 10) {
-    zoom = 12
+  switch (maxDistance > 0) {
+    case maxDistance > 1000:
+      zoom = 5
+      break
+    case maxDistance > 700:
+      zoom = 6
+      break
+    case maxDistance > 500:
+      zoom = 7
+      break
+    case maxDistance > 300:
+      zoom = 8
+      break
+    case maxDistance > 100:
+      zoom = 9
+      break
+    case maxDistance > 70:
+      zoom = 10
+      break
+    case maxDistance > 50:
+      zoom = 11
+      break
+    default:
+      zoom = 12
+      break
   }
 
   return zoom

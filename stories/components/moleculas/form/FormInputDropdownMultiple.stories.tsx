@@ -1,15 +1,6 @@
 // import React from 'react'
 
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
-import { StoryFn, Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Path, useForm } from 'react-hook-form'
 import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
 
@@ -22,45 +13,20 @@ export interface PersonaType {
   edad: number
   idsPeliculasFavoritas: number[]
 }
+
 export default {
   title: 'Moleculas/Formulario/FormInputDropdownMultiple',
   component: FormInputDropdownMultiple,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
   },
 
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDropdownMultiple_' +
-          '\n#### Información sobre  - _FormInputDropdownMultiple_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          '\n     edad: 32,' +
-          '\n     fechaNacimiento: 05-21-1984,' +
-          '\n     idsPeliculasFavoritas: [1,2],' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Componente para crear un menú desplegable con opciones múltiples seleccionables y validación de formulario. Utiliza MUI y react-hook-form. Acepta varias propiedades como entrada, incluyendo las opciones y la etiqueta. Cuando se selecciona una opción, se actualiza el valor del formulario y se muestra una lista de opciones seleccionadas. Si hay un error de validación, se muestra un mensaje de ayuda.',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
   // parameters: {
@@ -100,21 +66,6 @@ const peliculas = [
   { id: 6, nombre: 'Los Increibles' },
   { id: 7, nombre: 'Cars' },
 ]
-// export const SB_Requerido = Template.bind({})
-// SB_Requerido.storyName = 'Campo Requerido'
-// SB_Requerido.parameters = {
-//   docs: {
-//     description: {
-//       story:
-//         'Antes de enviar el FormInputDate UseForm nos pedirá llenar el campo vacio',
-//     },
-//   },
-// }
-// SB_Requerido.args = {
-//   name: 'fechaNacimiento',
-//   label: 'Fecha de Nacimiento',
-//   id: 'textfield-form-1',
-// }
 
 export const SB_Vacio = Template.bind({})
 SB_Vacio.storyName = 'Seleccionados'

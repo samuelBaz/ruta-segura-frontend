@@ -13,9 +13,10 @@ import {
 import { Variant } from '@mui/material/styles/createTypography'
 import { useEffect, useState } from 'react'
 import { Control, FieldValues, Path, useController } from 'react-hook-form'
-import { IconoTooltip } from '../../../../common/components/ui'
+import { IconoTooltip } from '../IconoTooltip'
 import Imagen from '../Imagen'
 import { SubirArchivo } from '../SubirArchivo'
+import { filesToArray, mergeFilesList } from '../../../utils'
 
 export interface ArchivoType {
   nombre: string
@@ -29,7 +30,7 @@ export interface FormInputImageProps<T extends FieldValues> {
   index?: number
   name: Path<T>
   control: Control<T, object>
-  tiposPermitidos?: string
+  tiposPermitidos?: Array<string>
   limite?: number
   multiple?: boolean
   label: string
@@ -42,7 +43,7 @@ const FormInputImage = <T extends FieldValues>({
   control,
   limite = 1000,
   multiple = false,
-  tiposPermitidos = '.png,.jpg,.jpeg,.svg',
+  tiposPermitidos = ['png', 'jpg', 'jpeg', 'svg'],
   label,
   labelVariant = 'subtitle2',
 }: FormInputImageProps<T>) => {
@@ -54,51 +55,21 @@ const FormInputImage = <T extends FieldValues>({
   const agregarArchivos = (files: FileList) => {
     // setEnviarArchivos(listaArchivos)
 
-    const auxFiles = cantidadLimite(unirFiles(field.value, files))
+    const auxFiles = cantidadLimite(mergeFilesList(field.value, files))
 
     field.onChange(auxFiles)
     setArchivosCargados(filesToArray(auxFiles))
   }
 
   // convertir el objeto Files(e.target.files) a un array
-  const filesToArray = (files: FileList): ArchivoType[] => {
-    const auxListaArchivos: ArchivoType[] = []
-    for (let index = 0; index < files['length']; index++) {
-      const { size, type, name } = files[index]
-      auxListaArchivos.push({
-        nombre: name,
-        espacio: size,
-        tipo: type,
-        imgUrlLocal: URL.createObjectURL(files[index]),
-      })
-    }
-    return auxListaArchivos
-  }
+
   const cantidadLimite = (files: FileList) => {
     const cantidadLimite = multiple ? limite : 1
-    const dt = new DataTransfer()
-    for (let index = 0; index < files['length']; index++) {
-      if (index < cantidadLimite) {
-        dt.items.add(files[index])
-      } else {
-        break
-      }
-    }
 
-    return dt.files
-  }
-  // unir dos obejtos Files(e.target.files)
-  const unirFiles = (files: any, nuevosFiles: any) => {
     const dt = new DataTransfer()
 
-    if (!files) {
-      return nuevosFiles
-    }
-    for (let index = 0; index < files['length']; index++) {
-      dt.items.add(files[index])
-    }
-    for (let index = 0; index < nuevosFiles['length']; index++) {
-      dt.items.add(nuevosFiles[index])
+    for (const file of Array.from(files ?? []).slice(0, cantidadLimite)) {
+      dt.items.add(file)
     }
 
     return dt.files
@@ -209,7 +180,7 @@ const FormInputImage = <T extends FieldValues>({
           handleChange={(files: FileList) => {
             agregarArchivos(files)
           }}
-        ></SubirArchivo>
+        />
       )}
 
       {multiple && (

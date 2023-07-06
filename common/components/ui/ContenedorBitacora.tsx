@@ -19,33 +19,39 @@ export const ContenedorBitacora = ({
   return (
     <>
       {items?.length > 0 ? (
-        <Grid xs={12} sm={6} md={4}>
-          <Card
-            variant="elevation"
-            sx={{
-              borderRadius: 3,
-              py: 0,
-              px: 0,
-              ...(alturaMaxima ? { maxHeight: alturaMaxima } : {}),
-              ...(alturaMinima ? { minHeight: alturaMinima } : {}),
-              overflowY: scroll ? 'auto' : '',
-            }}
-          >
-            <CardHeader
-              subheader={titulo}
-              sx={{ pb: 0, textAlign: 'center' }}
-            />
-            {items?.map((accion, index) => (
-              <Bitacora
-                key={`dashboard-accion-${index}`}
-                titulo={accion.titulo}
-                items={accion.items}
+        <Grid container>
+          <Grid item xs={12} sm={12} md={12}>
+            <Card
+              variant="elevation"
+              sx={{
+                borderRadius: 3,
+                py: 0,
+                px: 0,
+                ...(alturaMaxima ? { maxHeight: alturaMaxima } : {}),
+                ...(alturaMinima ? { minHeight: alturaMinima } : {}),
+                overflowY: scroll ? 'auto' : '',
+              }}
+            >
+              <CardHeader
+                subheader={titulo}
+                sx={{ pb: 0, textAlign: 'center' }}
               />
-            ))}
-          </Card>
+              {items?.map((accion, index) => (
+                <Bitacora
+                  key={`dashboard-accion-${index}`}
+                  titulo={accion.titulo}
+                  items={accion.items}
+                />
+              ))}
+            </Card>
+          </Grid>
         </Grid>
       ) : (
-        <Typography textAlign={'center'} variant="subtitle1" color={'GrayText'}>
+        <Typography
+          textAlign={'center'}
+          variant="subtitle1"
+          color={'text.secondary'}
+        >
           Sin resultados
         </Typography>
       )}

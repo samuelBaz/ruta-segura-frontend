@@ -1,4 +1,4 @@
-import { Card, CardHeader, Typography } from '@mui/material'
+import { Card, CardContent, CardHeader, Typography } from '@mui/material'
 import {
   Timeline,
   TimelineItem,
@@ -15,12 +15,12 @@ export interface IBitacoraProps {
   items: Array<IBitacoraItems>
 }
 
-export const Bitacora = ({ titulo = '', items = [] }: IBitacoraProps) => {
-  return (
-    <>
-      {items && items.length > 0 ? (
-        <Card variant="elevation" sx={{ px: 1, py: 0, borderRadius: 3 }}>
-          <CardHeader subheader={titulo} sx={{ py: 0 }} />
+export const Bitacora = ({ titulo = '', items = [] }: IBitacoraProps) => (
+  <>
+    {items && items.length > 0 ? (
+      <Card variant="elevation" sx={{ px: 1, py: 0, borderRadius: 3 }}>
+        <CardHeader subheader={titulo} sx={{ py: 0 }} />
+        <CardContent sx={{ px: 0, my: 0 }}>
           <Timeline
             sx={{
               [`& .${timelineItemClasses.root}:before`]: {
@@ -45,19 +45,23 @@ export const Bitacora = ({ titulo = '', items = [] }: IBitacoraProps) => {
                   <Typography variant="subtitle2" fontWeight={'bold'}>
                     {item.accion}
                   </Typography>
-                  <Typography color="GrayText" variant="subtitle2">
+                  <Typography color="text.secondary" variant="subtitle2">
                     {item.tiempo}
                   </Typography>
                 </TimelineContent>
               </TimelineItem>
             ))}
           </Timeline>
-        </Card>
-      ) : (
-        <Typography textAlign={'center'} variant="subtitle1" color={'GrayText'}>
-          Sin resultados
-        </Typography>
-      )}
-    </>
-  )
-}
+        </CardContent>
+      </Card>
+    ) : (
+      <Typography
+        textAlign={'center'}
+        variant="subtitle1"
+        color={'text.secondary'}
+      >
+        Sin resultados
+      </Typography>
+    )}
+  </>
+)

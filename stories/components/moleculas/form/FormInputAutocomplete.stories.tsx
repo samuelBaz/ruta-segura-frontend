@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { Path, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {
   FormInputAutocomplete,
   optionType,
@@ -9,16 +9,6 @@ import {
 import { useEffect, useState } from 'react'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { Servicios } from '../../../../common/services'
-import { FormInputDropdownMultiple } from '../../../../common/components/ui/form'
-import {
-  ArgsTable,
-  Description,
-  Primary,
-  PRIMARY_STORY,
-  Stories,
-  Subtitle,
-  Title,
-} from '@storybook/addon-docs'
 
 export interface PersonaType {
   id: number
@@ -28,6 +18,7 @@ export interface PersonaType {
   fechaNacimiento: string
   edad: number
   productos: number[]
+  idiomas: optionType[]
 }
 
 interface BusquedaParams {
@@ -57,51 +48,17 @@ interface RespuestaBusqueda {
 
 export default {
   title: 'Moleculas/Formulario/FormInputAutocomplete',
-  component: FormInputDropdownMultiple,
-  argTypes: {
-    // onChange: { type: 'function', control: () => {} },
-    // control: { type: 'function', description: 'Control<any>' },
-  },
-
+  component: FormInputAutocomplete,
+  argTypes: {},
   parameters: {
     docs: {
       description: {
         component:
-          // 'Form - _FormInputDropdownMultiple_' +
-          '\n#### Información sobre  - _FormInputAutocomplete_. ' +
-          '\n> Para los componentes **_form_** se utiliza [***Controller***](https://react-hook-form.com/api/usecontroller/controller "Ir a la documentación") para su manipulación. \n' +
-          '\n```ts' +
-          '\nconst {control, handleSubmit} useForm<PersonaType>({' +
-          '\n   defaultValues: {' +
-          '\n     id: 12,' +
-          "\n     nombre: 'Pedro'," +
-          "\n     apellido: 'Picapiedra'," +
-          '\n     edad: 32,' +
-          '\n     fechaNacimiento: 05-21-1984,' +
-          '\n     productos: [1,2],' +
-          '\n})' +
-          '\n```' +
-          '\n> Donde ***`const control`*** lo enviaremos a todos nuestros componentes form.' +
-          '\n> y ***`name`*** hace referencia al valor.',
+          'Es un componente que utiliza la librería `react-hook-form` y la librería MUI para crear un campo de entrada de texto con autocompletado, para más información: [Using Material UI with React Hook Form](https://blog.logrocket.com/using-material-ui-with-react-hook-form/)',
       },
-      page: () => (
-        <>
-          <Description />
-          <Title />
-          <Subtitle />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-          <Stories />
-        </>
-      ),
     },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
-} as Meta
+} as Meta<typeof FormInputAutocomplete>
 
 const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
   const [opciones, setOpciones] = useState<Array<optionType>>([])
@@ -113,7 +70,7 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
       apellido: 'Picapiedra',
       edad: 32,
       fechaNacimiento: '05-21-1984',
-      productos: [1, 2],
+      productos: [],
     },
   })
 
@@ -135,18 +92,18 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
     )
   }
 
-  const idiomas = watch('productos')
+  const productos = watch('productos')
 
   useEffect(() => {
-    imprimir(idiomas)
+    imprimir(`productos: `, productos)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(idiomas)])
+  }, [JSON.stringify(productos)])
 
   return (
     <FormInputAutocomplete
       {...args}
       id={'rolesMultiple'}
-      name={args.name as Path<PersonaType>}
+      name={'productos'}
       control={control}
       label="Productos"
       disabled={false}
@@ -159,19 +116,84 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
   )
 }
 
+const TemplateAbierto: StoryFn<typeof FormInputAutocomplete> = (args) => {
+  const { control, watch } = useForm<PersonaType>({
+    defaultValues: {
+      idiomas: [
+        { key: '1', value: 'inglés', label: 'inglés' },
+        {
+          key: '2',
+          value: 'español',
+          label: 'español',
+        },
+        { key: '3', value: 'francés', label: 'francés' },
+        { key: '4', value: 'alemán', label: 'alemán' },
+        {
+          key: '5',
+          value: 'japonés',
+          label: 'japonés',
+        },
+      ],
+    },
+  })
+
+  const idiomas = watch('idiomas')
+
+  useEffect(() => {
+    imprimir(`idiomas: `, idiomas)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(idiomas)])
+
+  return (
+    <FormInputAutocomplete
+      {...args}
+      id={'rolesMultiple'}
+      name={'idiomas'}
+      control={control}
+      label="Idiomas"
+      disabled={false}
+      options={[]}
+      onInputChange={async (event, value) => {
+        imprimir(value)
+      }}
+      rules={{ required: 'Este campo es requerido' }}
+    />
+  )
+}
+
 export const SB_Simple = Template.bind({})
 SB_Simple.storyName = 'Simple'
 SB_Simple.args = {
   id: '1232131',
   label: 'Idiomas',
   name: 'id-idiomas',
+  searchIcon: true,
+  forcePopupIcon: true,
 }
 
 export const SB_Multiple = Template.bind({})
 SB_Multiple.storyName = 'Multiple'
 SB_Multiple.args = {
   id: '1232131',
-  label: 'Idiomas',
-  name: 'id-idiomas',
+  label: 'Productos',
+  name: 'productos',
+  freeSolo: true,
   multiple: true,
+  searchIcon: true,
+  forcePopupIcon: true,
+  newValues: false,
+  isOptionEqualToValue: (option, value) => option.value == value.value,
+}
+
+export const SB_MultipleAbierto = TemplateAbierto.bind({})
+SB_MultipleAbierto.storyName = 'Campo abierto para cualquier texto'
+SB_MultipleAbierto.args = {
+  id: '1232131',
+  label: 'Productos',
+  name: 'productos',
+  freeSolo: true,
+  multiple: true,
+  forcePopupIcon: false,
+  newValues: true,
+  isOptionEqualToValue: (option, value) => option.value == value.value,
 }

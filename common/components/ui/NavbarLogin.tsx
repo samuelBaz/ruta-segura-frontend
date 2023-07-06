@@ -1,12 +1,20 @@
-import { AppBar, DialogContent, Toolbar, Typography } from '@mui/material'
+import {
+  AppBar,
+  DialogContent,
+  Toolbar,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import Box from '@mui/material/Box'
 import { CustomDialog } from './CustomDialog'
 import React, { useState } from 'react'
 import ThemeSwitcherButton from './ThemeSwitcherButton'
 import { IconoTooltip } from './IconoTooltip'
+import { alpha } from '@mui/material/styles'
 
 export const NavbarLogin = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
+  const theme = useTheme()
   const abrirModalAyuda = () => {
     setModalAyuda(true)
   }
@@ -29,7 +37,10 @@ export const NavbarLogin = () => {
       </CustomDialog>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: alpha(theme.palette.background.paper, 0.96),
+        }}
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />
