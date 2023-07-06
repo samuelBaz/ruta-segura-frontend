@@ -3,6 +3,19 @@ import { Enforcer } from 'casbin'
 import { imprimir } from '../utils/imprimir'
 import { basicModel, basicPolicy } from '../utils/casbin'
 
+interface InterpretarPermisoParams {
+  routerName: string
+  enforcer?: Enforcer
+  rol?: string
+}
+
+interface PermisoSobreAccionParams {
+  enforcer?: Enforcer
+  rol: string
+  objeto: string
+  accion: string
+}
+
 export const useCasbinEnforcer = () => {
   interface VerificarAutorizacionType {
     enforcer?: Enforcer
@@ -34,25 +47,33 @@ export const useCasbinEnforcer = () => {
       )) ?? false
     )
   }
-  const interpretarPermiso = async (
-    routerName: string,
-    enforcer?: Enforcer,
-    rol?: string
-  ) => {
-    if (!rol) {
-      return {
-        read: false,
-        create: false,
-        update: false,
-        delete: false,
-      }
-    }
 
+  const permisoSobreAccion = ({
+    enforcer,
+    rol,
+    objeto,
+    accion,
+  }: PermisoSobreAccionParams) => {
+    return verificarAutorizacion({
+      enforcer,
+      politica: {
+        sujeto: rol,
+        objeto: objeto,
+        accion: accion,
+      },
+    })
+  }
+
+  const interpretarPermiso = async ({
+    routerName,
+    enforcer,
+    rol,
+  }: InterpretarPermisoParams) => {
     return {
       read: await verificarAutorizacion({
         enforcer: enforcer,
         politica: {
-          sujeto: rol,
+          sujeto: rol ?? '',
           objeto: routerName,
           accion: 'read',
         },
@@ -60,7 +81,7 @@ export const useCasbinEnforcer = () => {
       create: await verificarAutorizacion({
         enforcer: enforcer,
         politica: {
-          sujeto: rol,
+          sujeto: rol ?? '',
           objeto: routerName,
           accion: 'create',
         },
@@ -68,7 +89,7 @@ export const useCasbinEnforcer = () => {
       update: await verificarAutorizacion({
         enforcer: enforcer,
         politica: {
-          sujeto: rol,
+          sujeto: rol ?? '',
           objeto: routerName,
           accion: 'update',
         },
@@ -76,12 +97,12 @@ export const useCasbinEnforcer = () => {
       delete: await verificarAutorizacion({
         enforcer: enforcer,
         politica: {
-          sujeto: rol,
+          sujeto: rol ?? '',
           objeto: routerName,
           accion: 'delete',
         },
       }),
     }
   }
-  return { inicializarCasbin, interpretarPermiso }
+  return { inicializarCasbin, interpretarPermiso, permisoSobreAccion }
 }

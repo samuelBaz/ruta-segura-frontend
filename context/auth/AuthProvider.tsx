@@ -37,6 +37,7 @@ interface ContextProps {
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
   progresoLogin: boolean
   permisoUsuario: (routerName: string) => Promise<CasbinTypes>
+  permisoAccion: (objeto: string, accion: string) => Promise<boolean>
 }
 
 const AuthContext = createContext<ContextProps>({} as ContextProps)
@@ -57,7 +58,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const router = useRouter()
 
   const { sesionPeticion, borrarCookiesSesion } = useSession()
-  const { interpretarPermiso, inicializarCasbin } = useCasbinEnforcer()
+  const { inicializarCasbin, interpretarPermiso, permisoSobreAccion } =
+    useCasbinEnforcer()
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
   const inicializarUsuario = async () => {
@@ -220,7 +222,14 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         ingresar: login,
         progresoLogin: loading,
         permisoUsuario: (routerName: string) =>
-          interpretarPermiso(routerName, enforcer, rolUsuario()?.rol),
+          interpretarPermiso({ routerName, enforcer, rol: rolUsuario()?.rol }),
+        permisoAccion: (objeto: string, accion: string) =>
+          permisoSobreAccion({
+            objeto,
+            enforcer,
+            rol: rolUsuario()?.rol ?? '',
+            accion,
+          }),
       }}
     >
       {children}
