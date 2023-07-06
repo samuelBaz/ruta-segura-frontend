@@ -9,6 +9,7 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     'storybook-dark-mode',
     '@storybook/addon-mdx-gfm',
+    '@etchteam/storybook-addon-status',
   ],
   framework: {
     name: '@storybook/nextjs',

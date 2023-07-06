@@ -62,6 +62,7 @@
     "@babel/core": "7.22.5",
     "@commitlint/cli": "17.6.5",
     "@commitlint/config-conventional": "17.6.5",
+    "@etchteam/storybook-addon-status": "4.2.4",
     "@mdx-js/react": "2.3.0",
     "@next/bundle-analyzer": "13.4.7",
     "@playwright/test": "1.35.1",

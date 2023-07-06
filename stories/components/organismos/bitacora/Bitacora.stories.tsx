@@ -6,6 +6,9 @@ export default {
   title: 'Organismos/Bitacora/Bitacora',
   component: Bitacora,
   parameters: {
+    status: {
+      type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
+    },
     docs: {
       description: {
         component:

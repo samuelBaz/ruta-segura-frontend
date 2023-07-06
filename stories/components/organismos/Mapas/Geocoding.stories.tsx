@@ -57,6 +57,9 @@ export default {
   component: Mapa,
   argTypes: {},
   parameters: {
+    status: {
+      type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
+    },
     docs: {
       description: {
         component:
