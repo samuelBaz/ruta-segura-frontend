@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import {
   Button,
+  Chip,
   Grid,
   Typography,
   useMediaQuery,
@@ -97,10 +98,14 @@ const Politicas: NextPage = () => {
         key={`${politicaData.objeto}-${indexPolitica}-objeto`}
         variant={'body2'}
       >{`${politicaData.objeto}`}</Typography>,
-      <Typography
-        key={`${politicaData.accion}-${indexPolitica}-accion`}
-        variant={'body2'}
-      >{`${politicaData.accion}`}</Typography>,
+      <Grid key={`${politicaData.accion}-${indexPolitica}-accion`}>
+        {politicaData.accion.split('|').map((itemAccion, indexAccion) => (
+          <Chip
+            key={`accion-${indexPolitica}-${indexAccion}`}
+            label={itemAccion}
+          />
+        ))}
+      </Grid>,
       <Typography
         key={`${politicaData.accion}-${indexPolitica}-app`}
         variant={'body2'}
