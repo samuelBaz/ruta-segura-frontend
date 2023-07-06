@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.9.0...v1.9.1) (2023-07-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* 'tipo' a 'variante' en BotonAcciones, BotonAgregar y 'seleccionado' en BotonBuscar
+
+### Features
+
+*  storybook para componente FormInputWysiwyg ([7893cad](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7893cad1fe371dd59733b3c5ea8cfd8974675b61))
+* :sparkles: agregando edad minima y edad maxima en modalUsuarios TG-19 ([2e77ff3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2e77ff315b1c912c9d6a8da91afca6a0ac73841f))
+* :sparkles: agregando variable minDate, maxDate en componente FormInputDate TG-19 ([74fde6e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/74fde6e79a3316992616bbe923ad36805499dfc0))
+* agregado de componente de mapas en storybook ([9565e8c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9565e8c1767e73db8aaeb5f74c7773dfdf5b785d))
+* agregando tipos de datos en bitacora y su contenedor ([a54962a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a54962ad855c8f1ddef2027e9827f4b1c9305ccc))
+* añaadido componente autocomplete con opción de selección simple y multiple ([3ffc3e9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/3ffc3e92dc9796dfe271e4d4ad53fef8da74e68e))
+* añadida función de selección multiple de filas para datatable con su respectiva documentación ([d14b2cb](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d14b2cb1b5b3923d8b3cbb3de06510e146fbf872))
+* componente de mapas con buscador ([49b6c9d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/49b6c9d017019937779ae27d28e14cb44afbe9df))
+* componente wysiwyg versión beta ([4fbdcd8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/4fbdcd8e628f5fbbee77ac9728e2514d49b087ac))
+* creación de storybook para bitácora ([be7ca89](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/be7ca89e4fe42b2b426290f95a8a015b04b4a03f))
+* creaciónde componentes para visualización de bitácora ([a19f0ed](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a19f0ed0efb3afbc140e86be63f0f4534e28573d))
+* creando nueva historia al componente custom dataTable, historia filtros por columna ([731dbed](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/731dbed43d06eb40c7f897ace3a7567006257b13))
+* propiedad sx para componente Icono ([914352f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/914352f02ffcd758d7839c9a9d8b2709226f9e8c))
+* reorganización de archivos Storybook con casos de uso para cada componente personalizado ([f23310d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f23310df89a3b3a1f501c7e8a50f4f225e1e240e))
+* reorganización de documentación StoryBook compatible con modo oscuro ([d7d6d38](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d7d6d38590ac9b1169e9d154789a1899da430b3a))
+
+
+### Bug Fixes
+
+* agregando funcionalidad hover a componente botonAcciones,recive prop hover:bolean opcional ([5b1b9cb](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/5b1b9cba6ed4d8bc0a54e5cc2d5af7e7e5df090c))
+* corrección de label en FormInputWysiwyg ([e52916f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e52916f5249e56af4567e3c6e3b900296f286f99))
+* correcciones visuales y control xss para titap en editable ([ddaef78](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ddaef782ee3eaa7321595d4f79b403fb6deb43aa))
+* eliminada validación de token en petición de sesión ([e82ae28](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e82ae282b6e258256b1423029591d21d8803d664))
+* mejora en la denominación de parámetros para BotonAcciones, BotonAgregar, BotonBuscar ([3fd4400](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/3fd440054e0804e92c6b7804a41123a9fde4b6e5))
+* modificadas stories para componentes Icono, IconoTooltip y progreso lineal ([ddfa017](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ddfa01788ac4019e4cd9d98414713da2ee03f50e))
+
 ## [1.9.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.7.0...v1.9.0) (2023-05-22)
 
 

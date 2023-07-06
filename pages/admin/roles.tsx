@@ -165,7 +165,7 @@ const Roles: NextPage = () => {
     <BotonBuscar
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
-      mostrar={mostrarFiltroRol}
+      seleccionado={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
     xs && (
@@ -192,6 +192,7 @@ const Roles: NextPage = () => {
         id={'agregarRol'}
         key={'agregarRol'}
         texto={'Agregar'}
+        variante={xs ? 'icono' : 'boton'}
         descripcion={'Agregar rol'}
         accion={() => {
           agregarRolModal()
