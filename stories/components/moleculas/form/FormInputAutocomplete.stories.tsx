@@ -18,7 +18,7 @@ export interface PersonaType {
   fechaNacimiento: string
   edad: number
   productos: number[]
-  idiomas: string[]
+  idiomas: optionType[]
 }
 
 interface BusquedaParams {
@@ -51,6 +51,9 @@ export default {
   component: FormInputAutocomplete,
   argTypes: {},
   parameters: {
+    status: {
+      type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
+    },
     docs: {
       description: {
         component:
@@ -119,7 +122,21 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
 const TemplateAbierto: StoryFn<typeof FormInputAutocomplete> = (args) => {
   const { control, watch } = useForm<PersonaType>({
     defaultValues: {
-      idiomas: ['inglés', 'español', 'francés', 'alemán', 'japonés'],
+      idiomas: [
+        { key: '1', value: 'inglés', label: 'inglés' },
+        {
+          key: '2',
+          value: 'español',
+          label: 'español',
+        },
+        { key: '3', value: 'francés', label: 'francés' },
+        { key: '4', value: 'alemán', label: 'alemán' },
+        {
+          key: '5',
+          value: 'japonés',
+          label: 'japonés',
+        },
+      ],
     },
   })
 
@@ -167,6 +184,8 @@ SB_Multiple.args = {
   multiple: true,
   searchIcon: true,
   forcePopupIcon: true,
+  newValues: false,
+  isOptionEqualToValue: (option, value) => option.value == value.value,
 }
 
 export const SB_MultipleAbierto = TemplateAbierto.bind({})
@@ -178,5 +197,6 @@ SB_MultipleAbierto.args = {
   freeSolo: true,
   multiple: true,
   forcePopupIcon: false,
-  isOptionEqualToValue: () => false,
+  newValues: true,
+  isOptionEqualToValue: (option, value) => option.value == value.value,
 }
