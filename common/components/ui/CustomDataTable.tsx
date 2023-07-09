@@ -21,7 +21,6 @@ import { ListSkeleton, TableSkeletonBody } from './CustomSkeleton'
 import { Icono } from './Icono'
 import { CriterioOrdenType } from '../../types/ordenTypes'
 import { ToggleOrden } from '../../utils/orden'
-import { imprimir } from '../../utils/imprimir'
 
 export interface CustomDataTableType {
   titulo?: string
@@ -76,7 +75,6 @@ export const CustomDataTable = ({
 
   useEffect(
     () => {
-      imprimir(`indicesSeleccionados`, indicesSeleccionados)
       if (seleccionados) {
         seleccionados(
           indicesSeleccionados.reduce(
@@ -103,7 +101,6 @@ export const CustomDataTable = ({
 
   useEffect(
     () => {
-      imprimir(`todoSeleccionado: `, todoSeleccionado)
       setIndicesSeleccionados(
         new Array(contenidoTabla.length).fill(todoSeleccionado)
       )
