@@ -126,3 +126,14 @@ SB_Tabla.args = {
   label: 'Tabla',
   id: 'textfield-form-7',
 }
+
+export const SB_Menos_opciones = Template.bind({})
+SB_Menos_opciones.storyName = 'Menos opciones'
+SB_Menos_opciones.args = {
+  label: 'Texto enriquecido',
+  id: 'textfield-form-1',
+  name: 'comentario',
+  mostrarOpcionesTabla: false,
+  mostrarOpcionesHistorial: false,
+  mostrarOpcionesURL: false,
+}
