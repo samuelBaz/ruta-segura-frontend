@@ -4,6 +4,7 @@ import { Meta, StoryFn } from '@storybook/react'
 
 import { action } from '@storybook/addon-actions'
 import { CustomDialog } from '../../../../common/components/ui'
+import { CustomFrame } from '../../../utils/CustomFrame'
 
 export default {
   title: 'Organismos/Dialogos/CustomDialog',
@@ -14,18 +15,24 @@ export default {
       control: 'text',
     },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
+  parameters: {
+    docs: {
+      description: {
+        component: `El componente CustomDialog es una implementación flexible de un cuadro de diálogo basado en el sistema de diseño MUI. 
+        Proporciona opciones adicionales, como el cierre con clic fuera del cuadro, desactivar la pulsación de tecla Escape, desplazamiento de contenido y personalización del papel. 
+        Además, es capaz de adaptarse al tamaño de pantalla y ofrece un manejo conveniente de eventos de cierre y un diseño estilizado con un título, contenido y acciones.`,
+      },
+    },
+  },
 } as Meta<typeof CustomDialog>
 
 // const eventsFromNames = actions('accion')
 
 // replica del componente
 const Template: StoryFn<typeof CustomDialog> = (args) => (
-  <CustomDialog {...args} />
+  <CustomFrame height="500px">
+    <CustomDialog {...args} />
+  </CustomFrame>
 )
 export const Activo = Template.bind({})
 Activo.storyName = 'Modal activo'
@@ -35,12 +42,16 @@ Activo.args = {
   maxWidth: 'md',
   title: 'Titulo de modal',
   handleClose: action('handleClose: ()=>{console.log("Cerrar Modal")}'),
+  disablePortal: true,
+  disableScrollLock: true,
 }
 export const FullWidth = Template.bind({})
 FullWidth.storyName = 'Modal pantalla completa'
 FullWidth.args = {
   ...Activo.args,
   fullScreen: true,
+  disablePortal: true,
+  disableScrollLock: true,
 }
 
 export const ComponeneteHijo = Template.bind({})
@@ -54,6 +65,8 @@ ComponeneteHijo.args = {
       <h6> React node</h6>
     </div>
   ),
+  disablePortal: true,
+  disableScrollLock: true,
 }
 
 export const MaxWidth = Template.bind({})
@@ -67,6 +80,8 @@ MaxWidth.args = {
       <h6> React node</h6>
     </div>
   ),
+  disablePortal: true,
+  disableScrollLock: true,
 }
 
 // // click en componenete
