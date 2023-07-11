@@ -14,7 +14,7 @@ import { Variant } from '@mui/material/styles/createTypography'
 import { useEffect, useState } from 'react'
 import { Control, FieldValues, Path, useController } from 'react-hook-form'
 import { IconoTooltip } from '../IconoTooltip'
-import Imagen from '../Imagen'
+import ImagenPreview from '../ImagenPreview'
 import { SubirArchivo } from '../SubirArchivo'
 import { filesToArray, mergeFilesList } from '../../../utils'
 
@@ -22,6 +22,7 @@ export interface ArchivoType {
   nombre: string
   tipo: string
   espacio: number
+  file: File
   imgUrlLocal: string
 }
 
@@ -131,13 +132,17 @@ const FormInputImage = <T extends FieldValues>({
             >
               <Stack direction={'row'} spacing={2} alignItems={'flex-start'}>
                 <Box width={80} height={80}>
-                  <Imagen
+                  <ImagenPreview
                     width={'100'}
                     height={'100'}
                     alt={`${archivosCargados[0].nombre}`}
                     src={`${archivosCargados[0].imgUrlLocal}`}
-                    layout="responsive"
-                    objectFit="cover"
+                    sizes="100vw"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      objectFit: 'cover',
+                    }}
                   />
                 </Box>
                 <Stack direction={'column'} sx={{ display: 'grid' }}>
@@ -190,13 +195,17 @@ const FormInputImage = <T extends FieldValues>({
         >
           {archivosCargados.map((item, index) => (
             <ImageListItem key={item.imgUrlLocal}>
-              <Imagen
+              <ImagenPreview
                 width={'200'}
                 height={'200'}
                 alt={`${item.nombre}`}
                 src={`${item.imgUrlLocal}`}
-                layout="responsive"
-                objectFit="cover"
+                sizes="100vw"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'cover',
+                }}
               />
               <ImageListItemBar
                 sx={{
@@ -207,7 +216,7 @@ const FormInputImage = <T extends FieldValues>({
                 position="top"
                 title={item.nombre}
                 subtitle={`${(item.espacio / 1000000).toFixed(2)} Mb`}
-                actionPosition="left"
+                actionPosition="right"
                 actionIcon={
                   <Box component="span" sx={{ p: 1 }}>
                     <IconoTooltip
