@@ -22,7 +22,6 @@ export interface ArchivoType {
   nombre: string
   tipo: string
   espacio: number
-  file: File
   imgUrlLocal: string
 }
 
