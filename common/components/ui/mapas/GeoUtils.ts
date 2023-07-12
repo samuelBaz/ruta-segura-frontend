@@ -22,11 +22,11 @@ const getCentro = (
   }
   try {
     if (latLngInDegr.length < 1) throw 'error'
-    var LATIDX = 0
-    var LNGIDX = 1
-    var sumX = 0
-    var sumY = 0
-    var sumZ = 0
+    const LATIDX = 0
+    const LNGIDX = 1
+    let sumX = 0
+    let sumY = 0
+    let sumZ = 0
 
     for (const item of latLngInDegr) {
       const x: number = Number(item[LATIDX])
