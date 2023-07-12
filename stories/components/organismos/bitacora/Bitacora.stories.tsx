@@ -152,8 +152,122 @@ const listaAcciones: IBitacoraAcciones[] = [
   },
 ]
 
+const listaAccionesPorTiempo: IBitacoraAcciones[] = [
+  {
+    titulo: "Hoy",
+    items: [
+      {
+        descripcion: "Aprobó iniciativa 20-2023",
+        color_icono: "success",
+        fecha: "hace 5 segundos"
+      },
+      {
+        descripcion: "Publicó iniciativa 20-2023",
+        color_icono: "success",
+        fecha: "hace menos de un minuto"
+      },
+      {
+        descripcion: "Aprobó iniciativa 17-2023",
+        color_icono: "success",
+        fecha: "hace menos de un minuto"
+      },
+      {
+        descripcion: "Publicó iniciativa 17-2023",
+        color_icono: "success",
+        fecha: "hace menos de un minuto"
+      },
+      {
+        descripcion: "Publicó iniciativa 14-2023",
+        color_icono: "success",
+        fecha: "hace menos de un minuto"
+      },
+      {
+        descripcion: "Aprobó iniciativa 14-2023",
+        color_icono: "success",
+        fecha: "hace menos de un minuto"
+      },
+      {
+        descripcion: "Publicó iniciativa 11-2023",
+        color_icono: "success",
+        fecha: "hace 1 minuto"
+      },
+      {
+        descripcion: "Aprobó iniciativa 11-2023",
+        color_icono: "success",
+        fecha: "hace 1 minuto"
+      },
+      {
+        descripcion: "Creó la publicación 2-2023",
+        color_icono: "success",
+        fecha: "hace alrededor de 7 horas"
+      },
+      {
+        descripcion: "Publicó iniciativa 4-2023",
+        color_icono: "success",
+        fecha: "hace alrededor de 7 horas"
+      }
+    ]
+  },
+  {
+    titulo: "Ayer",
+    items: [
+      {
+        fecha: "2023-07-11T20:26:26.157Z",
+        descripcion: "Editó los permisos del rol PUBLICADOR",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T20:25:46.797Z",
+        descripcion: "Editó los permisos del rol PUBLICADOR",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:50.072Z",
+        descripcion: "Creó al usuario 9773963",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:49.828Z",
+        descripcion: "Creó al usuario 3705929",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:49.581Z",
+        descripcion: "Creó al usuario 6893987",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:49.336Z",
+        descripcion: "Creó al usuario 2615828",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:49.081Z",
+        descripcion: "Creó al usuario 5116811",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:48.842Z",
+        descripcion: "Creó al usuario 4826317",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:48.599Z",
+        descripcion: "Creó al usuario 5388402",
+        color_icono: "success",
+      },
+      {
+        fecha: "2023-07-11T15:21:48.360Z",
+        descripcion: "Creó al usuario 4185666",
+        color_icono: "success",
+      }
+    ]
+  }
+]
+
+
 export const Default = Template.bind({})
-Default.storyName = 'Ejemplo Bitacora'
+Default.storyName = 'Ejemplo de bitácora'
 Default.args = {
   titulo: 'Últimas acciones',
   acciones: listaAcciones.map((acciones) => {
@@ -190,7 +304,7 @@ BitacoraConAcciones.args = {
 }
 
 export const BitacoraConAgrupacion = Template.bind({})
-BitacoraConAgrupacion.storyName = 'Ejemplo Bitacora con agrupación por fecha de acción'
+BitacoraConAgrupacion.storyName = 'Ejemplo de bitácora con agrupación por fecha de acción'
 BitacoraConAgrupacion.args = {
   titulo: 'Últimas acciones',
   acciones: listaAcciones.map((acciones) => {
@@ -205,11 +319,10 @@ BitacoraConAgrupacion.args = {
       })
     }
   }),
-  agruparFecha: true
 }
 
 export const BitacoraConIconos = Template.bind({})
-BitacoraConIconos.storyName = 'Ejemplo Bitacora con íconos en timeline'
+BitacoraConIconos.storyName = 'Ejemplo de bitácora con íconos en timeline'
 BitacoraConIconos.args = {
   titulo: 'Últimas acciones',
   acciones: listaAcciones.map((acciones) => {
@@ -225,7 +338,6 @@ BitacoraConIconos.args = {
       })
     }
   }),
-  agruparFecha: true
 }
 
 
@@ -235,7 +347,7 @@ const componente = (
   </Grid>
 )
 export const BitacoraConComponentePersonalizable = Template.bind({})
-BitacoraConComponentePersonalizable.storyName = 'Ejemplo Bitacora con componente personalizable'
+BitacoraConComponentePersonalizable.storyName = 'Ejemplo de bitácora con componente personalizable'
 BitacoraConComponentePersonalizable.args = {
   titulo: 'Últimas acciones',
   acciones: listaAcciones.map((acciones) => {
@@ -250,8 +362,25 @@ BitacoraConComponentePersonalizable.args = {
       })
     }
   }),
-  agruparFecha: true,
   children: componente
+}
+
+export const BitacoraConAccionesPorTiempo = Template.bind({})
+BitacoraConAccionesPorTiempo.storyName = 'Ejemplo de bitácora de acciones agrupadas por tiempo'
+BitacoraConAccionesPorTiempo.args = {
+  titulo: 'Últimas acciones',
+  acciones: listaAccionesPorTiempo.map((acciones) => {
+    return {
+      titulo: acciones.titulo,
+      items: acciones.items.map((item) => {
+        return {
+          descripcion: item.descripcion,
+          fecha: item.fecha,
+          color_icono: item.color_icono
+        }
+      })
+    }
+  }),
 }
 
 export const BitacoraVacia = Template.bind({})
