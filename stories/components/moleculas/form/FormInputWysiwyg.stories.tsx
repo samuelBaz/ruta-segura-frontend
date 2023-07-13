@@ -14,7 +14,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputWysiwyg',
+  title: 'Moléculas/Formulario/FormInputWysiwyg',
   component: FormInputWysiwyg,
   argTypes: {
     onChange: {

@@ -17,7 +17,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputDropdown',
+  title: 'Moléculas/Formulario/FormInputDropdown',
   component: FormInputDropdown,
 
   parameters: {

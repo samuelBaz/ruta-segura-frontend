@@ -9,7 +9,7 @@ import {
 import { useState } from 'react'
 
 export default {
-  title: 'Moleculas/Botones/BotonOrdenar',
+  title: 'Moléculas/Botones/BotonOrdenar',
   component: BotonOrdenar,
   argTypes: {
     accion: {

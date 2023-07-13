@@ -5,7 +5,7 @@ import { FullScreenLoading } from '../../../../common/components/ui/FullScreenLo
 import { CustomFrame } from '../../../utils/CustomFrame'
 
 export default {
-  title: 'Moleculas/Elementos/FullScreenLoading',
+  title: 'Moléculas/Elementos/FullScreenLoading',
   component: FullScreenLoading,
   parameters: {
     docs: {

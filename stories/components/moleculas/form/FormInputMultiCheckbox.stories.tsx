@@ -17,7 +17,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputMultiCheckbox',
+  title: 'Moléculas/Formulario/FormInputMultiCheckbox',
   component: FormInputMultiCheckbox,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },
