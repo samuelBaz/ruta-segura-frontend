@@ -45,6 +45,10 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
         alt={altText}
         width="35"
         height="35"
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
       />
       {children}
     </ColorButton>

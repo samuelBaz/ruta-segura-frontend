@@ -4,7 +4,7 @@
 
 Para continuar con la instalación del proyecto se necesita contar con las siguientes instalaciones ya realizadas:
 
-1. [NodeJS](https://github.com/nodesource/distributions/blob/master/README.md): Versión 16
+1. [NodeJS](https://github.com/nodesource/distributions/blob/master/README.md): Versión 18
 2. [NVM](https://github.com/nvm-sh/nvm) Se recomienda NVM solo para ambientes de DESARROLLO.
 
 ## Configuración
