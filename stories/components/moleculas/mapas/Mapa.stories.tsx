@@ -20,7 +20,7 @@ const puntosExample: Array<Array<string>> = [
 ]
 
 export default {
-  title: 'Moleculas/Mapas/Mapa',
+  title: 'Moléculas/Mapas/Mapa',
   component: Mapa,
   argTypes: {},
   parameters: {

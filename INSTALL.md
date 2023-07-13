@@ -2,7 +2,7 @@
 
 ## Requisitos
 
-Para continuar con la instalación del proyecto se necesita contar con las siguientes instalaciones ya realizadas:
+Antes de continuar con la instalación del proyecto, es necesario que ya se hayan realizado las siguientes instalaciones:
 
 1. [NodeJS](https://github.com/nodesource/distributions/blob/master/README.md): Versión 18
 2. [NVM](https://github.com/nvm-sh/nvm) Se recomienda NVM solo para ambientes de DESARROLLO.

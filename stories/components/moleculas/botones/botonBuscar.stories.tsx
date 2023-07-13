@@ -4,7 +4,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { BotonBuscar } from '../../../../common/components/ui/BotonBuscar'
 export default {
-  title: 'Moleculas/Botones/BotonBuscar',
+  title: 'Moléculas/Botones/BotonBuscar',
   component: BotonBuscar,
   argTypes: {
     accion: {

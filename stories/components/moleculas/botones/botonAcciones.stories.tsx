@@ -3,7 +3,7 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { BotonAcciones } from '../../../../common/components/ui/BotonAcciones'
 export default {
-  title: 'Moleculas/Botones/BotonAcciones',
+  title: 'Moléculas/Botones/BotonAcciones',
   component: BotonAcciones,
   argTypes: {
     accion: {

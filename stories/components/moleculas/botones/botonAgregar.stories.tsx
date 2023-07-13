@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 import { BotonAgregar } from '../../../../common/components/ui/BotonAgregar'
 
 export default {
-  title: 'Moleculas/Botones/BotonAgregar',
+  title: 'Moléculas/Botones/BotonAgregar',
   component: BotonAgregar,
   argTypes: {
     accion: {

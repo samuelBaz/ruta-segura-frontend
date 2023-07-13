@@ -17,7 +17,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputSlider',
+  title: 'Moléculas/Formulario/FormInputSlider',
   component: FormInputSlider,
   argTypes: {},
 

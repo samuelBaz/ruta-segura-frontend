@@ -4,7 +4,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { NivelSeguridadPass } from '../../../../common/components/ui/NivelSeguridadPass'
 
 export default {
-  title: 'Moleculas/Utils/NivelSeguridadPass',
+  title: 'Moléculas/Utils/NivelSeguridadPass',
   component: NivelSeguridadPass,
   argTypes: {
     accion: {

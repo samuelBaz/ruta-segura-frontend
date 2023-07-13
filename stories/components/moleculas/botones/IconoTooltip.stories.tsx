@@ -6,7 +6,7 @@ import { IconoTooltip } from '../../../../common/components/ui'
 import { action } from '@storybook/addon-actions'
 
 export default {
-  title: 'Moleculas/Botones/IconoTooltip',
+  title: 'Moléculas/Botones/IconoTooltip',
   component: IconoTooltip,
   argTypes: {
     accion: {

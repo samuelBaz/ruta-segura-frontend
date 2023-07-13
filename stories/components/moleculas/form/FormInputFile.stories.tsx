@@ -14,7 +14,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputFile',
+  title: 'Moléculas/Formulario/FormInputFile',
   component: FormInputFile,
   argTypes: {
     onChange: {

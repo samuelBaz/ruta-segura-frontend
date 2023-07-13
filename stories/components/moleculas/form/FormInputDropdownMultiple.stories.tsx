@@ -15,7 +15,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputDropdownMultiple',
+  title: 'Moléculas/Formulario/FormInputDropdownMultiple',
   component: FormInputDropdownMultiple,
   argTypes: {
     // onChange: { type: 'function', control: () => {} },

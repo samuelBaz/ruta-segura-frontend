@@ -17,7 +17,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputRadio',
+  title: 'Moléculas/Formulario/FormInputRadio',
   component: FormInputRadio,
   argTypes: {},
 

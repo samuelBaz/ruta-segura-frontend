@@ -5,7 +5,7 @@ import ThemeSwitcherButton from '../../../../common/components/ui/ThemeSwitcherB
 import { ThemeProvider } from '../../../../context/ui/ThemeContext'
 
 export default {
-  title: 'Moleculas/Botones/ThemeSwitchButton',
+  title: 'Moléculas/Botones/ThemeSwitchButton',
   component: ThemeSwitcherButton,
   argTypes: {
     accion: {
