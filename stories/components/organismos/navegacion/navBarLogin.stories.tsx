@@ -24,7 +24,7 @@ export default {
 
 const Template1: StoryFn<typeof NavbarLogin> = () => {
   return (
-    <CustomFrame height="70px">
+    <CustomFrame height="70px" padding={'10px'}>
       <NavbarLogin />
     </CustomFrame>
   )
