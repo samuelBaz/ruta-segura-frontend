@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.9.1...v1.9.2) (2023-07-14)
+
+
+### Features
+
+* agregando componente personalizable y agrupamiento por fechas TG-40 ([bdf2e52](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/bdf2e521445781714d2b83c890817314a46f9cd7))
+* aliminando ordenación de componente bitácora TG-40 ([298230c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/298230c58da41c70803c6fc167915930559e34ec))
+* añadida función para mostrar fechas en español desde una fecha de tipo Date ([ae42e9b](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ae42e9b01b8b5255dec15958946d969d8e738851))
+* eliminando componente contenedor de bitácora TG-48 ([9e1814b](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9e1814b75fbe26556aec4fb6ffb6a8aff19e181c))
+* mejora en FormInputAutocomplete que permite agregar ítems fuera de la lista con su caso de uso ([f55af88](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f55af88018eb4b2ca68107da1c71da7f53479a74))
+* se añade componente para previa de PDF's ([6068a77](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6068a77d52f97da0c2d60241f371d441aa6d67f6))
+* storybook para componente bitacora TG-40 ([d0efcdd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d0efcddb2854a271a5a9c2dc7873b3fcee3669a8))
+
+
+### Bug Fixes
+
+* añadidas propiedades opcionales 'disablePortal' y 'disableScrollLock' para AlertDialog ([f62fa6a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/f62fa6a3663e6f6f7ee72709e703dd4a40e3d29f))
+* añadidas propiedades opcionales 'disablePortal' y 'disableScrollLock' para CustomDialog ([1d38bc3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1d38bc3d43d10e4f926ba5c4eb26f44009400e52))
+* cambio a versión nuevo de Next Image desde versión Legacy ([21999c1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/21999c19f8657c8af67bda6c70b7fe2bfc6cdfaa))
+* corrección en visualización de vistas,modales y alerts en storybook ([2d4c476](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2d4c47616a091eefc690d4828ae2f41b69d51f0a))
+* mejora en organización de opciones en componente TipTap ([1bff24d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1bff24db1188a63a4d327a359750c8225938b8a0))
+
 ### [1.9.1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.9.0...v1.9.1) (2023-07-03)
 
 
