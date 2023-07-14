@@ -32,7 +32,7 @@ import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
-import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
+import { IconoBoton } from '../../common/components/ui/IconoBoton'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -170,11 +170,12 @@ const Politicas: NextPage = () => {
       name={'Actualizar lista de políticas'}
     />,
     permisos.create && (
-      <BotonAgregar
+      <IconoBoton
         id={'agregarPolitica'}
         key={'agregarPolitica'}
         texto={'Agregar'}
         variante={xs ? 'icono' : 'boton'}
+        icono={'add_circle_outline'}
         descripcion={'Agregar política'}
         accion={() => {
           agregarPoliticaModal()

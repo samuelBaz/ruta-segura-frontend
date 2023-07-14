@@ -36,7 +36,7 @@ import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
-import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
+import { IconoBoton } from '../../common/components/ui/IconoBoton'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -188,11 +188,12 @@ const Roles: NextPage = () => {
       name={'Actualizar lista de roles'}
     />,
     permisos.create && (
-      <BotonAgregar
+      <IconoBoton
         id={'agregarRol'}
         key={'agregarRol'}
         texto={'Agregar'}
         variante={xs ? 'icono' : 'boton'}
+        icono={'add_circle_outline'}
         descripcion={'Agregar rol'}
         accion={() => {
           agregarRolModal()

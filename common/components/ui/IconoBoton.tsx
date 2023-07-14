@@ -1,21 +1,23 @@
 import { Button } from '@mui/material'
 import { IconoTooltip } from './IconoTooltip'
 
-interface BotonAgregarParams {
+interface IconoBotonParams {
   id: string
   variante?: 'icono' | 'boton'
   texto: string
+  icono: string
   descripcion: string
   accion: () => void
 }
 
-export const BotonAgregar = ({
+export const IconoBoton = ({
   id,
   texto,
+  icono,
   variante = 'boton',
   descripcion,
   accion,
-}: BotonAgregarParams) => {
+}: IconoBotonParams) => {
   return variante == 'boton' ? (
     <Button
       id={id}
@@ -35,7 +37,7 @@ export const BotonAgregar = ({
       accion={() => {
         accion()
       }}
-      icono={'add_circle_outline'}
+      icono={icono}
       name={texto}
     />
   )

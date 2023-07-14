@@ -36,7 +36,7 @@ import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
-import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
+import { IconoBoton } from '../../common/components/ui/IconoBoton'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -239,11 +239,12 @@ const Parametros: NextPage = () => {
       name={'Actualizar lista de parámetros'}
     />,
     permisos.create && (
-      <BotonAgregar
+      <IconoBoton
         id={'agregarParametro'}
         key={'agregarParametro'}
         texto={'Agregar'}
         variante={xs ? 'icono' : 'boton'}
+        icono={'add_circle_outline'}
         descripcion={'Agregar parámetro'}
         accion={() => {
           agregarParametroModal()

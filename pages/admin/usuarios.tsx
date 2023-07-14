@@ -42,7 +42,7 @@ import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
 import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
-import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
+import { IconoBoton } from '../../common/components/ui/IconoBoton'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -276,11 +276,12 @@ const Usuarios: NextPage = () => {
       name={'Actualizar lista de usuario'}
     />,
     permisos.create && (
-      <BotonAgregar
+      <IconoBoton
         id={'agregarUsuario'}
         key={'agregarUsuario'}
         texto={'Agregar'}
         variante={xs ? 'icono' : 'boton'}
+        icono={'add_circle_outline'}
         descripcion={'Agregar usuario'}
         accion={() => {
           agregarUsuarioModal()
