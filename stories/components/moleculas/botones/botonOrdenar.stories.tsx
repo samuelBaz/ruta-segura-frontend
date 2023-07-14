@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { BotonOrdenar } from '../../../../common/components/ui/BotonOrdenar'
+import { BotonOrdenar } from '../../../../common/components/ui/botones/BotonOrdenar'
 import {
   CriterioOrdenType,
   OrdenEnum,

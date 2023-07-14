@@ -1,4 +1,4 @@
-import { Icono } from './Icono'
+import { Icono } from '../Icono'
 import { ToggleButton } from '@mui/material'
 
 interface BotonFiltroParams {

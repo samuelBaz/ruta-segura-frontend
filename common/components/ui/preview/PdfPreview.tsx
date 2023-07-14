@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ArchivoType } from './form/FormInputFile'
+import { ArchivoType } from '../form/FormInputFile'
 
 interface PdfProp {
   archivo: ArchivoType | undefined | null

@@ -7,10 +7,10 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
-import { Icono } from './Icono'
+import { Icono } from '../Icono'
 import React, { ReactNode, useState } from 'react'
-import { CriterioOrdenType } from '../../types/ordenTypes'
-import { ToggleOrden } from '../../utils/orden'
+import { CriterioOrdenType } from '../../../types/ordenTypes'
+import { ToggleOrden } from '../../../utils/orden'
 
 interface BotonOrdenarParams {
   desactivado?: false

@@ -22,7 +22,7 @@ import {
   FormInputText,
 } from '../../../../common/components/ui/form'
 import { isValidEmail } from '../../../../common/utils/validations'
-import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../../../../common/components/ui/progreso/ProgresoLineal'
 import { useAlerts, useSession } from '../../../../common/hooks'
 import { formatoFecha } from '../../../../common/utils/fechas'
 import { imprimir } from '../../../../common/utils/imprimir'

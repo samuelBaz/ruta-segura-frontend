@@ -15,7 +15,7 @@ import {
   Icono,
   IconoTooltip,
 } from '../../common/components/ui'
-import { Paginacion } from '../../common/components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
 import { CasbinTypes } from '../../common/types'
 import { imprimir } from '../../common/utils/imprimir'
 import {
@@ -30,12 +30,12 @@ import { ModuloCRUDType } from '../../modules/admin/modulos/types/CrearEditarMod
 import { VistaModalModulo } from '../../modules/admin/modulos/ui/ModalModulo'
 import { useRouter } from 'next/router'
 import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
-import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
-import { BotonAcciones } from '../../common/components/ui/BotonAcciones'
+import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
+import { BotonAcciones } from '../../common/components/ui/botones/BotonAcciones'
 import { useAlerts, useSession } from '../../common/hooks'
-import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
-import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
 
 const Modulos: NextPage = () => {

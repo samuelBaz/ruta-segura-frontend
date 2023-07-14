@@ -2,7 +2,7 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { IconoBoton } from '../../../../common/components/ui/IconoBoton'
+import { IconoBoton } from '../../../../common/components/ui/botones/IconoBoton'
 
 export default {
   title: 'Moléculas/Botones/IconoBoton',

@@ -2,7 +2,7 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { BotonBuscar } from '../../../../common/components/ui/BotonBuscar'
+import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
 export default {
   title: 'Moléculas/Botones/BotonBuscar',
   component: BotonBuscar,

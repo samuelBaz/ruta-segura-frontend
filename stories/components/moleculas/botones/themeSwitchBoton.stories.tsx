@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import ThemeSwitcherButton from '../../../../common/components/ui/ThemeSwitcherButton'
+import ThemeSwitcherButton from '../../../../common/components/ui/botones/ThemeSwitcherButton'
 import { ThemeProvider } from '../../../../context/ui/ThemeContext'
 
 export default {

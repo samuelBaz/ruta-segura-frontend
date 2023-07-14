@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { NavbarLogin } from '../../../../common/components/ui/NavbarLogin'
+import { NavbarLogin } from '../../../../common/components/ui/navbars/NavbarLogin'
 import { CustomFrame } from '../../../utils/CustomFrame'
 
 export default {

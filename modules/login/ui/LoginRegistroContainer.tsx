@@ -1,7 +1,7 @@
 import { Box, Button, Card, Divider, Tab, Tabs } from '@mui/material'
 import { TabPanel } from './TabPanel'
 import { FormInputText } from '../../../common/components/ui/form'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
 import Typography from '@mui/material/Typography'
 import { BotonCiudadania } from './BotonCiudadania'
 import { Constantes } from '../../../config'

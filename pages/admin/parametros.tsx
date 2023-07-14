@@ -24,19 +24,19 @@ import {
 } from '../../common/utils'
 import { Constantes } from '../../config'
 
-import { Paginacion } from '../../common/components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
 import { useRouter } from 'next/router'
 import { VistaModalParametro } from '../../modules/admin/parametros/ui'
 import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametrosCRUDTypes'
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
-import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
-import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
+import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
+import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
-import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
-import { IconoBoton } from '../../common/components/ui/IconoBoton'
+import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
+import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])

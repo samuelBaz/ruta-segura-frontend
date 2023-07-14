@@ -7,7 +7,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
-import { Icono } from './Icono'
+import { Icono } from '../Icono'
 import React, { MouseEventHandler, ReactNode, useState } from 'react'
 
 interface TipoAccion {

@@ -2,8 +2,8 @@ import { AlertTitle, Box, Button, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import { FormInputText } from '../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
-import { NivelSeguridadPass } from '../../../common/components/ui/NivelSeguridadPass'
+import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
+import { NivelSeguridadPass } from '../../../common/components/ui/utils/NivelSeguridadPass'
 import {
   delay,
   encodeBase64,

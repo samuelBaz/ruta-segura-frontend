@@ -1,4 +1,4 @@
-import { Constantes } from '../../config'
+import { Constantes } from '../../../../config'
 
 export default function DebugBanner() {
   const entorno = Constantes.appEnv

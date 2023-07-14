@@ -10,13 +10,13 @@ import {
 } from '@mui/material'
 
 import { useRouter } from 'next/router'
-import { useFullScreenLoading, useSidebar } from '../../../context/ui'
+import { useFullScreenLoading, useSidebar } from '../../../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
-import { useAuth } from '../../../context/auth'
-import { imprimir } from '../../utils/imprimir'
-import { Icono } from './Icono'
-import { ModuloType } from '../../../modules/login/types/loginTypes'
-import { versionNumber } from '../../utils'
+import { useAuth } from '../../../../context/auth'
+import { imprimir } from '../../../utils/imprimir'
+import { Icono } from '../Icono'
+import { ModuloType } from '../../../../modules/login/types/loginTypes'
+import { versionNumber } from '../../../utils'
 
 const drawerWidth = 240
 

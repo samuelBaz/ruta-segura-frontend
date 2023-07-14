@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material'
 import React, { ChangeEvent, useRef, useState } from 'react'
-import { useThemeContext } from '../../../context/ui/ThemeContext'
-import { Icono } from './Icono'
-import { imprimir } from '../../utils/imprimir'
+import { useThemeContext } from '../../../../context/ui/ThemeContext'
+import { Icono } from '../Icono'
+import { imprimir } from '../../../utils/imprimir'
 
 type SubirArchivoProps = {
   name?: string

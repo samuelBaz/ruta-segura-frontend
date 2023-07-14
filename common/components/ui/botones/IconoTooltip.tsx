@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react'
 import { IconButton, Tooltip } from '@mui/material'
-import { Icono } from './Icono'
+import { Icono } from '../Icono'
 
 interface Props {
   color?:

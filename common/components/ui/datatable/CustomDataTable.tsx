@@ -18,9 +18,9 @@ import {
   useTheme,
 } from '@mui/material'
 import { ListSkeleton, TableSkeletonBody } from './CustomSkeleton'
-import { Icono } from './Icono'
-import { CriterioOrdenType } from '../../types/ordenTypes'
-import { ToggleOrden } from '../../utils/orden'
+import { Icono } from '../Icono'
+import { CriterioOrdenType } from '../../../types/ordenTypes'
+import { ToggleOrden } from '../../../utils/orden'
 
 export interface CustomDataTableType {
   titulo?: string

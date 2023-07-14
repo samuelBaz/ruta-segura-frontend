@@ -1,6 +1,6 @@
 import { Box, Button, Card, Divider } from '@mui/material'
 import { FormInputText } from '../../../common/components/ui/form'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
 import Typography from '@mui/material/Typography'
 import { BotonCiudadania } from './BotonCiudadania'
 import { Constantes } from '../../../config'

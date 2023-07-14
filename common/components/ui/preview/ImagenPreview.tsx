@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import Image, { ImageProps } from 'next/image'
 import React, { useState } from 'react'
-import { Icono } from './Icono'
-import { TransitionSlide, TransitionZoom } from './Animations'
+import { Icono } from '../Icono'
+import { TransitionSlide, TransitionZoom } from '../modales/Animations'
 
 interface ImagenProp extends ImageProps {
   // Props adicionales

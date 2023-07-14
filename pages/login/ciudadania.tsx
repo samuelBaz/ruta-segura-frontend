@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import React, { useEffect } from 'react'
 import { NextPage } from 'next'
-import { FullScreenLoading } from '../../common/components/ui/FullScreenLoading'
+import { FullScreenLoading } from '../../common/components/ui/progreso/FullScreenLoading'
 import { useRouter } from 'next/router'
 import { delay, guardarCookie, InterpreteMensajes } from '../../common/utils'
 import { Servicios } from '../../common/services'

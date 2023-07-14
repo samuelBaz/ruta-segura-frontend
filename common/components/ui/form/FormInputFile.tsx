@@ -15,9 +15,9 @@ import {
   Icono,
   IconoTooltip,
 } from '../../../../common/components/ui'
-import { SubirArchivo } from '../SubirArchivo'
+import { SubirArchivo } from '../archivos/SubirArchivo'
 import { filesToArray, mergeFilesList } from '../../../utils'
-import PdfPreview from '../PdfPreview'
+import PdfPreview from '../preview/PdfPreview'
 
 export interface ArchivoType {
   nombre: string

@@ -2,7 +2,7 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { CustomFrame } from '../../../utils/CustomFrame'
-import DebugBanner from '../../../../common/components/DebugBanner'
+import DebugBanner from '../../../../common/components/ui/utils/DebugBanner'
 import { Constantes } from '../../../../config'
 
 export default {

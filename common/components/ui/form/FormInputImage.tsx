@@ -13,9 +13,9 @@ import {
 import { Variant } from '@mui/material/styles/createTypography'
 import { useEffect, useState } from 'react'
 import { Control, FieldValues, Path, useController } from 'react-hook-form'
-import { IconoTooltip } from '../IconoTooltip'
-import ImagenPreview from '../ImagenPreview'
-import { SubirArchivo } from '../SubirArchivo'
+import { IconoTooltip } from '../botones/IconoTooltip'
+import ImagenPreview from '../preview/ImagenPreview'
+import { SubirArchivo } from '../archivos/SubirArchivo'
 import { filesToArray, mergeFilesList } from '../../../utils'
 
 export interface ArchivoType {
