@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { FC, PropsWithChildren } from 'react'
 
 import Toolbar from '@mui/material/Toolbar'
-import { NavbarLogin } from '../ui/NavbarLogin'
+import { NavbarLogin } from '../ui/navbars/NavbarLogin'
 import { siteName } from '../../utils'
 
 interface Props {

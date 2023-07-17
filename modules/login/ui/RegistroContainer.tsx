@@ -9,9 +9,9 @@ import { Box, Button, Fade, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { FormInputText } from '../../../common/components/ui/form'
 import { isValidEmail } from '../../../common/utils/validations'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
 import { Icono } from '../../../common/components/ui'
-import { NivelSeguridadPass } from '../../../common/components/ui/NivelSeguridadPass'
+import { NivelSeguridadPass } from '../../../common/components/ui/utils/NivelSeguridadPass'
 import { CrearCuentaType } from '../types/nuevaPassPeticionTypes'
 
 const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
@@ -79,9 +79,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
                 mostrarLogin()
               }}
             >
-              <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
-                Entendido
-              </Typography>
+              <Typography sx={{ fontWeight: 'medium' }}>Entendido</Typography>
             </Button>
           </Box>
         </Fade>
@@ -171,9 +169,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
             fullWidth
             disabled={indicadorCarga}
           >
-            <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
-              Crear cuenta
-            </Typography>
+            <Typography sx={{ fontWeight: 'medium' }}>Crear cuenta</Typography>
           </Button>
         </form>
       )}

@@ -13,6 +13,7 @@ import {
 import { BaseSyntheticEvent, FC, PropsWithChildren } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { TransitionSlide, TransitionZoom } from './Animations'
+import { PortalProps } from '@mui/base/Portal'
 
 interface Props {
   isOpen: boolean
@@ -25,6 +26,8 @@ interface Props {
   disableEscapeKeyDown?: boolean
   scroll?: 'body' | 'paper'
   noTitle?: boolean
+  disablePortal?: PortalProps['disablePortal']
+  disableScrollLock?: boolean
 }
 
 export const CustomDialog: FC<PropsWithChildren<Props>> = ({
@@ -39,6 +42,8 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
   disableEscapeKeyDown = false,
   scroll = 'body',
   noTitle = false,
+  disablePortal,
+  disableScrollLock,
 }) => {
   const theme = useTheme()
   let dsm = useMediaQuery(theme.breakpoints.down('sm'))
@@ -62,6 +67,8 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
       TransitionComponent={dsm ? TransitionSlide : TransitionZoom}
       onClose={cerrarDialog}
       scroll={scroll}
+      disablePortal={disablePortal}
+      disableScrollLock={disableScrollLock}
     >
       {noTitle ? (
         <Box />

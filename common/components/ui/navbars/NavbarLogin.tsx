@@ -6,10 +6,10 @@ import {
   useTheme,
 } from '@mui/material'
 import Box from '@mui/material/Box'
-import { CustomDialog } from './CustomDialog'
+import { CustomDialog } from '../modales/CustomDialog'
 import React, { useState } from 'react'
-import ThemeSwitcherButton from './ThemeSwitcherButton'
-import { IconoTooltip } from './IconoTooltip'
+import ThemeSwitcherButton from '../botones/ThemeSwitcherButton'
+import { IconoTooltip } from '../botones/IconoTooltip'
 import { alpha } from '@mui/material/styles'
 
 export const NavbarLogin = () => {

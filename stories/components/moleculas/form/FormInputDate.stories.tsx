@@ -15,7 +15,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputDate',
+  title: 'Moléculas/Formulario/FormInputDate',
   component: FormInputDate,
 
   parameters: {
@@ -26,25 +26,8 @@ export default {
       },
     },
   },
-  // parameters: {
-  //   accion: {
-  //     handles: ['mouseover', 'CLICK aqui'],
-  //   },
-  // },
 } as Meta
 
-// const eventsFromNames = actions('accion')
-
-// click en componenete
-// storiesOf('FormInputDate', module).add('Click', () => (
-//   <FormInputDate
-//     name="HOla"
-//     titulo="ACCION ICONO"
-//     icono="face"
-//     accion={action('HOLA MUNDO ')}
-//   ></FormInputDate>
-// ))
-// replica del componente
 const Template: StoryFn<typeof FormInputDate> = (args) => {
   const { control } = useForm<PersonaType>({
     defaultValues: {
@@ -97,7 +80,7 @@ SB_MinDate.args = {
 }
 
 export const SB_MaxDate = Template.bind({})
-SB_MaxDate.storyName = 'Fecha máxima (1 semana despues)'
+SB_MaxDate.storyName = 'Fecha máxima (1 semana después)'
 SB_MaxDate.args = {
   ...SB_Requerido.args,
   maxDate: dayjs().add(1, 'week'),

@@ -43,6 +43,11 @@ export const darkTheme = createTheme({
       defaultProps: {
         disableElevation: true,
       },
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
     },
     MuiDrawer: {
       styleOverrides: {
@@ -88,6 +93,20 @@ export const darkTheme = createTheme({
         fontSizeLarge: ({ theme }) => ({
           fontSize: `${theme.typography.pxToRem(36)} !important`,
         }),
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
       },
     },
   },

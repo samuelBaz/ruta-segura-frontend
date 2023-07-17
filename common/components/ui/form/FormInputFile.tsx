@@ -1,10 +1,23 @@
-import { Box, Card, Grid, InputLabel, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardActionArea,
+  Grid,
+  InputLabel,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { Variant } from '@mui/material/styles/createTypography'
 import { useEffect, useState } from 'react'
 import { Control, FieldValues, Path, useController } from 'react-hook-form'
-import { Icono, IconoTooltip } from '../../../../common/components/ui'
-import { SubirArchivo } from '../SubirArchivo'
+import {
+  CustomDialog,
+  Icono,
+  IconoTooltip,
+} from '../../../../common/components/ui'
+import { SubirArchivo } from '../archivos/SubirArchivo'
 import { filesToArray, mergeFilesList } from '../../../utils'
+import PdfPreview from '../preview/PdfPreview'
 
 export interface ArchivoType {
   nombre: string
@@ -26,9 +39,8 @@ export interface FormInputFileProps<T extends FieldValues> {
 }
 
 interface CardFileProps {
-  index: number
-  nombre: string
-  espacio: number
+  archivo: ArchivoType
+  quitarArchivo: () => void
 }
 
 const FormInputFile = <T extends FieldValues>({
@@ -42,7 +54,19 @@ const FormInputFile = <T extends FieldValues>({
   labelVariant = 'subtitle2',
 }: FormInputFileProps<T>) => {
   const [archivosCargados, setArchivosCargados] = useState<ArchivoType[]>([])
+
   const { field } = useController({ name, control })
+
+  const [mostrarPDF, setMostrarPDF] = useState<boolean>(false)
+
+  const [archivoEdicion, setArchivoEdicion] = useState<
+    ArchivoType | undefined | null
+  >()
+
+  const cerrarModalPdf = () => {
+    setMostrarPDF(false)
+    setArchivoEdicion(null)
+  }
 
   // para adicionar nuevo archivo a cargar
   const agregarArchivos = (files: FileList) => {
@@ -81,7 +105,15 @@ const FormInputFile = <T extends FieldValues>({
     setArchivosCargados(archivosCargados)
   }
 
-  const CardFile = ({ index, espacio, nombre }: CardFileProps) => (
+  const ContenidoCardFilePreview = ({
+    archivo,
+    icono,
+    quitarArchivo,
+  }: {
+    archivo: ArchivoType
+    icono: string
+    quitarArchivo: () => void
+  }) => (
     <Card
       variant={'outlined'}
       sx={{
@@ -98,7 +130,7 @@ const FormInputFile = <T extends FieldValues>({
         justifyContent={'space-between'}
       >
         <Stack direction={'row'} spacing={1} alignItems={'center'}>
-          <Icono fontSize="large">description</Icono>
+          <Icono fontSize="large">{icono}</Icono>
           <Stack direction={'column'} sx={{ display: 'grid' }}>
             <Typography
               sx={{
@@ -111,10 +143,10 @@ const FormInputFile = <T extends FieldValues>({
               }}
               variant="caption"
             >
-              {nombre}
+              {archivo.nombre}
             </Typography>
             <Typography variant="caption" color={'text.secondary'}>
-              {(espacio / 1000 / 1000).toFixed(2)} Mb
+              {(archivo.espacio / 1000 / 1000).toFixed(2)} Mb
             </Typography>
           </Stack>
         </Stack>
@@ -123,8 +155,10 @@ const FormInputFile = <T extends FieldValues>({
           color="primary"
           titulo={'Quitar archivo'}
           key={`accionQuitarArchivo`}
-          accion={() => {
-            quitarArchivo(index)
+          accion={(event) => {
+            event.preventDefault()
+            event.stopPropagation()
+            quitarArchivo()
           }}
           icono={'cancel'}
           name={'Quitar Archivo'}
@@ -132,6 +166,30 @@ const FormInputFile = <T extends FieldValues>({
       </Stack>
     </Card>
   )
+
+  const CardFilePreview = ({ archivo, quitarArchivo }: CardFileProps) => {
+    return archivo.tipo == 'application/pdf' ? (
+      <CardActionArea
+        component="span"
+        onClick={() => {
+          setArchivoEdicion(archivo)
+          setMostrarPDF(true)
+        }}
+      >
+        {ContenidoCardFilePreview({
+          archivo: archivo,
+          icono: 'picture_as_pdf',
+          quitarArchivo: quitarArchivo,
+        })}
+      </CardActionArea>
+    ) : (
+      ContenidoCardFilePreview({
+        archivo: archivo,
+        icono: 'description',
+        quitarArchivo: quitarArchivo,
+      })
+    )
+  }
 
   useEffect(() => {
     if (field.value) {
@@ -141,62 +199,65 @@ const FormInputFile = <T extends FieldValues>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <Box id={id}>
-      <InputLabel htmlFor={id}>
-        <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
-          {label}
-        </Typography>
-      </InputLabel>
-      {!multiple && archivosCargados.length == 1 ? (
-        <Box
-          sx={{
-            mt: 1,
-            mb: 1,
-            border: '1px dashed #ABAFB3',
-            padding: 2.3,
-            borderRadius: 3,
-            bgcolor: 'background.paper',
-          }}
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <CardFile
-            index={0}
-            espacio={archivosCargados[0].espacio}
-            nombre={archivosCargados[0].nombre}
+    <>
+      <CustomDialog isOpen={mostrarPDF} handleClose={cerrarModalPdf}>
+        <PdfPreview archivo={archivoEdicion} />
+      </CustomDialog>
+      <Box id={id}>
+        <InputLabel htmlFor={id}>
+          <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
+            {label}
+          </Typography>
+        </InputLabel>
+        {!multiple && archivosCargados.length == 1 ? (
+          <Box
+            sx={{
+              mt: 1,
+              mb: 1,
+              border: '1px dashed #ABAFB3',
+              padding: 2.3,
+              borderRadius: 3,
+              bgcolor: 'background.paper',
+            }}
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <CardFilePreview
+              archivo={archivosCargados[0]}
+              quitarArchivo={() => {
+                quitarArchivo(0)
+              }}
+            />
+          </Box>
+        ) : (
+          <SubirArchivo
+            multiple={multiple}
+            tiposPermitidos={tiposPermitidos}
+            handleChange={(files: FileList) => {
+              agregarArchivos(files)
+            }}
           />
-        </Box>
-      ) : (
-        <SubirArchivo
-          multiple={multiple}
-          tiposPermitidos={tiposPermitidos}
-          handleChange={(files: FileList) => {
-            agregarArchivos(files)
-          }}
-        />
-      )}
+        )}
 
-      {multiple && (
-        <Box>
-          <Grid container spacing={1}>
-            {archivosCargados.map((item, index) => {
-              return (
-                <Grid key={index} item xs={12} sm={6} md={6}>
-                  <Card sx={{ borderRadius: 3 }}>
-                    <CardFile
-                      index={index}
-                      espacio={item.espacio}
-                      nombre={item.nombre}
-                    />
-                  </Card>
+        {multiple && (
+          <Box>
+            <Grid container spacing={1}>
+              {archivosCargados.map((archivo, index) => (
+                <Grid key={`archivo-${index}`} item xs={12} sm={6} md={6}>
+                  <CardFilePreview
+                    archivo={archivo}
+                    quitarArchivo={() => {
+                      quitarArchivo(index)
+                    }}
+                  />
                 </Grid>
-              )
-            })}
-          </Grid>
-        </Box>
-      )}
-    </Box>
+              ))}
+            </Grid>
+          </Box>
+        )}
+      </Box>
+    </>
   )
 }
 export default FormInputFile

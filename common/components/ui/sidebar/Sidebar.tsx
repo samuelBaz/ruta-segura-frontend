@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
+  Collapse,
   Drawer,
   List,
   ListItemButton,
@@ -10,22 +11,24 @@ import {
 } from '@mui/material'
 
 import { useRouter } from 'next/router'
-import { useFullScreenLoading, useSidebar } from '../../../context/ui'
+import { useFullScreenLoading, useSidebar } from '../../../../context/ui'
 import Toolbar from '@mui/material/Toolbar'
-import { useAuth } from '../../../context/auth'
-import { imprimir } from '../../utils/imprimir'
-import { Icono } from './Icono'
-import { ModuloType } from '../../../modules/login/types/loginTypes'
-import { versionNumber } from '../../utils'
+import { useAuth } from '../../../../context/auth'
+import { imprimir } from '../../../utils/imprimir'
+import { Icono } from '../Icono'
+import { ModuloType } from '../../../../modules/login/types/loginTypes'
+import { versionNumber } from '../../../utils'
 
 const drawerWidth = 240
+
+type SidebarModuloType = ModuloType & { showed?: boolean; open?: boolean }
 
 export const Sidebar = () => {
   const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
 
   const { usuario, rolUsuario, estaAutenticado, progresoLogin } = useAuth()
 
-  const [modulos, setModulos] = useState<ModuloType[]>([])
+  const [modulos, setModulos] = useState<SidebarModuloType[]>([])
 
   const theme = useTheme()
   const router = useRouter()
@@ -45,7 +48,10 @@ export const Sidebar = () => {
 
     imprimir(`rolSeleccionado`, rolSeleccionado)
 
-    setModulos(rolSeleccionado?.modulos ?? [])
+    setModulos(
+      rolSeleccionado?.modulos.map((modulo) => ({ ...modulo, open: true })) ??
+        []
+    )
   }
 
   const rutaActiva = (routeName: string, currentRoute: string) =>
@@ -102,7 +108,7 @@ export const Sidebar = () => {
           borderWidth: 0.0,
           boxSizing: 'border-box',
         },
-        transition: 'all 0.1s ease-out',
+        transition: 'all 0.2s ease-out',
       }}
     >
       <Toolbar />
@@ -114,6 +120,22 @@ export const Sidebar = () => {
                 display: 'flex',
                 m: 0,
                 alignItems: 'center',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                const tempModulos = structuredClone(modulos)
+                tempModulos[index].open = !tempModulos[index].open
+                setModulos(tempModulos)
+              }}
+              onMouseOver={() => {
+                const tempModulos = structuredClone(modulos)
+                tempModulos[index].showed = true
+                setModulos(tempModulos)
+              }}
+              onMouseLeave={() => {
+                const tempModulos = structuredClone(modulos)
+                tempModulos[index].showed = false
+                setModulos(tempModulos)
               }}
             >
               <Box
@@ -124,6 +146,7 @@ export const Sidebar = () => {
                   borderRadius: 1,
                   alignItems: 'center',
                   margin: '16px 6px',
+                  width: '100%',
                 }}
               >
                 <Box width={'20px'} />
@@ -131,43 +154,55 @@ export const Sidebar = () => {
                   variant={'body2'}
                   color={'text.secondary'}
                 >{`${modulo.label}`}</Typography>
+                <Box sx={{ flexGrow: 1 }} />
+                {(modulo.showed || !modulo.open) && (
+                  <Icono
+                    fontSize={'small'}
+                    sx={{ p: 0, m: 0 }}
+                    color={'secondary'}
+                  >
+                    {modulo.open ? 'expand_more' : 'expand_less'}
+                  </Icono>
+                )}
               </Box>
             </Box>
 
-            <List
-              key={`submodulos-${index}`}
-              component="ul"
-              style={{ cursor: 'pointer' }}
-              sx={{ pt: 0, pb: 0 }}
-            >
-              {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
-                <ListItemButton
-                  id={`submodulo-${index}-${indexSubModulo}`}
-                  key={`submodulo-${index}-${indexSubModulo}`}
-                  component="li"
-                  selected={rutaActiva(subModuloItem.url, router.pathname)}
-                  onClick={() => navigateTo(subModuloItem.url)}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      m: 0,
-                      borderRadius: 1,
-                      alignItems: 'center',
-                    }}
+            <Collapse in={modulo.open}>
+              <List
+                key={`submodulos-${index}`}
+                component="ul"
+                style={{ cursor: 'pointer' }}
+                sx={{ pt: 0, pb: 0 }}
+              >
+                {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
+                  <ListItemButton
+                    id={`submodulo-${index}-${indexSubModulo}`}
+                    key={`submodulo-${index}-${indexSubModulo}`}
+                    component="li"
+                    selected={rutaActiva(subModuloItem.url, router.pathname)}
+                    onClick={() => navigateTo(subModuloItem.url)}
                   >
-                    <Box width={'20px'} />
-                    <Icono>{subModuloItem.propiedades.icono}</Icono>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        m: 0,
+                        borderRadius: 1,
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Box width={'20px'} />
+                      <Icono>{subModuloItem.propiedades.icono}</Icono>
 
-                    <Box width={'20px'} />
-                    <Typography
-                      variant={'body2'}
-                    >{`${subModuloItem.label}`}</Typography>
-                  </Box>
-                </ListItemButton>
-              ))}
-            </List>
+                      <Box width={'20px'} />
+                      <Typography
+                        variant={'body2'}
+                      >{`${subModuloItem.label}`}</Typography>
+                    </Box>
+                  </ListItemButton>
+                ))}
+              </List>
+            </Collapse>
           </div>
         ))}
       </Box>

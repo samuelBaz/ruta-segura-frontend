@@ -18,9 +18,9 @@ import {
   useTheme,
 } from '@mui/material'
 import { ListSkeleton, TableSkeletonBody } from './CustomSkeleton'
-import { Icono } from './Icono'
-import { CriterioOrdenType } from '../../types/ordenTypes'
-import { ToggleOrden } from '../../utils/orden'
+import { Icono } from '../Icono'
+import { CriterioOrdenType } from '../../../types/ordenTypes'
+import { ToggleOrden } from '../../../utils/orden'
 
 export interface CustomDataTableType {
   titulo?: string
@@ -379,7 +379,6 @@ export const CustomDataTable = ({
                                     color="text.secondary"
                                     sx={{
                                       fontWeight: 'medium',
-                                      textTransform: 'none',
                                     }}
                                     align={'left'}
                                   >
@@ -403,7 +402,6 @@ export const CustomDataTable = ({
                                   color="text.secondary"
                                   sx={{
                                     fontWeight: 'medium',
-                                    textTransform: 'none',
                                   }}
                                   align={'left'}
                                 >

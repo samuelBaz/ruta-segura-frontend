@@ -24,19 +24,19 @@ import {
 } from '../../common/utils'
 import { Constantes } from '../../config'
 
-import { Paginacion } from '../../common/components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
 import { useRouter } from 'next/router'
 import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { RolCRUDType } from '../../modules/admin/roles/types/rolCRUDType'
-import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
+import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/roles/ui/ModalRol'
 import { FiltroRol } from '../../modules/admin/roles/ui/FiltroRol'
-import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
-import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
-import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
+import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -188,11 +188,12 @@ const Roles: NextPage = () => {
       name={'Actualizar lista de roles'}
     />,
     permisos.create && (
-      <BotonAgregar
+      <IconoBoton
         id={'agregarRol'}
         key={'agregarRol'}
         texto={'Agregar'}
         variante={xs ? 'icono' : 'boton'}
+        icono={'add_circle_outline'}
         descripcion={'Agregar rol'}
         accion={() => {
           agregarRolModal()

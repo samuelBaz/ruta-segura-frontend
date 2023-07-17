@@ -9,7 +9,7 @@ import { Constantes } from '../config'
 import { useFullScreenLoading } from '../context/ui'
 import { Icono } from '../common/components/ui'
 import { imprimir } from '../common/utils/imprimir'
-import ProgresoLineal from '../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../common/components/ui/progreso/ProgresoLineal'
 
 const Activacion: NextPage = () => {
   const [error, setError] = useState<boolean>(false)
@@ -134,9 +134,7 @@ const Activacion: NextPage = () => {
                 redireccionarInicio().finally()
               }}
             >
-              <Typography sx={{ textTransform: 'none' }}>
-                Ir al inicio
-              </Typography>
+              <Typography>Ir al inicio</Typography>
             </Button>
           )}
         </Box>

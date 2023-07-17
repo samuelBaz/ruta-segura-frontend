@@ -5,7 +5,7 @@ import { Constantes } from '../../../../config'
 
 import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
 import { FormInputText } from '../../../../common/components/ui/form'
-import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../../../../common/components/ui/progreso/ProgresoLineal'
 import { useAlerts, useSession } from '../../../../common/hooks'
 import { imprimir } from '../../../../common/utils/imprimir'
 import {

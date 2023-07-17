@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { FormInputText } from '../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { cambioPassForm, cambioPassPeticion } from './perfilTypes'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
-import { NivelSeguridadPass } from '../../../common/components/ui/NivelSeguridadPass'
+import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
+import { NivelSeguridadPass } from '../../../common/components/ui/utils/NivelSeguridadPass'
 import {
   encodeBase64,
   InterpreteMensajes,

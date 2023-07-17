@@ -9,7 +9,7 @@ import {
   PathValue,
 } from 'react-hook-form'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-import Tiptap from '../TipTap'
+import Tiptap from './TipTap'
 
 type FormInputWysiwygProps<T extends FieldValues> = {
   id: string

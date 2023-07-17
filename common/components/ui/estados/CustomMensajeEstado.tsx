@@ -1,7 +1,7 @@
 import { Tooltip } from '@mui/material'
 import Box from '@mui/material/Box'
 
-import { useThemeContext } from '../../../context/ui/ThemeContext'
+import { useThemeContext } from '../../../../context/ui/ThemeContext'
 import { alpha } from '@mui/material/styles'
 
 export interface MensajeEstadoProps {
