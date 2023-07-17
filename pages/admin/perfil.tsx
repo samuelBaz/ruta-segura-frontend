@@ -189,7 +189,6 @@ const Perfil: NextPage = () => {
                         }}
                         color="primary"
                         variant="contained"
-                        style={{ textTransform: 'none' }}
                       >
                         <Icono color={'inherit'}>vpn_key</Icono>
                         <Box width={'10px'} />

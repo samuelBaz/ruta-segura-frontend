@@ -137,9 +137,7 @@ const Recuperacion: NextPage = () => {
                 >
                   <Icono fontSize={'large'}> mark_email_unread</Icono>
                   <Box height={'20px'} />
-                  <Typography
-                    sx={{ fontWeight: 'medium', textTransform: 'none' }}
-                  >
+                  <Typography sx={{ fontWeight: 'medium' }}>
                     ¡Mensaje enviado!
                   </Typography>
                   <Box height={'20px'} />
@@ -157,9 +155,7 @@ const Recuperacion: NextPage = () => {
                     disabled={indicadorCarga}
                     onClick={redireccionarInicio}
                   >
-                    <Typography
-                      sx={{ fontWeight: 'medium', textTransform: 'none' }}
-                    >
+                    <Typography sx={{ fontWeight: 'medium' }}>
                       Ir al inicio
                     </Typography>
                   </Button>
@@ -219,9 +215,7 @@ const Recuperacion: NextPage = () => {
                         disabled={indicadorCarga}
                         onClick={redireccionarInicio}
                       >
-                        <Typography
-                          sx={{ fontWeight: 'medium', textTransform: 'none' }}
-                        >
+                        <Typography sx={{ fontWeight: 'medium' }}>
                           Cancelar
                         </Typography>
                       </Button>
@@ -230,9 +224,7 @@ const Recuperacion: NextPage = () => {
                         variant="contained"
                         disabled={indicadorCarga}
                       >
-                        <Typography sx={{ textTransform: 'none' }}>
-                          Enviar enlace
-                        </Typography>
+                        <Typography>Enviar enlace</Typography>
                       </Button>
                     </Grid>
                   </Box>

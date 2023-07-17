@@ -198,12 +198,7 @@ export const NavbarUser = () => {
             icono={'help_outline'}
           />
           {!xs && <ThemeSwitcherButton />}
-          <Button
-            size="small"
-            onClick={desplegarMenu}
-            color="primary"
-            style={{ textTransform: 'none' }}
-          >
+          <Button size="small" onClick={desplegarMenu} color="primary">
             <AccountCircleOutlinedIcon />
             {!xs && (
               <Box

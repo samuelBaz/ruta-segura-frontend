@@ -22,7 +22,7 @@ export const IconoBoton = ({
     <Button
       id={id}
       variant={'contained'}
-      sx={{ ml: 1, mr: 1, textTransform: 'none' }}
+      sx={{ ml: 1, mr: 1 }}
       size={'small'}
       onClick={() => {
         accion()

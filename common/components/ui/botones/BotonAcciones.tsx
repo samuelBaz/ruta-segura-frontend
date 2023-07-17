@@ -96,14 +96,13 @@ export const BotonAcciones = ({
             id={id}
             aria-label={label}
             variant={'contained'}
-            sx={{ ml: 1, mr: 1, textTransform: 'none' }}
+            sx={{ ml: 1, mr: 1 }}
             size={'small'}
             onClick={(event) => {
               handleTooltipClose()
               desplegarMenu(event)
             }}
             color="primary"
-            style={{ textTransform: 'none' }}
           >
             {texto}
           </Button>
@@ -118,7 +117,6 @@ export const BotonAcciones = ({
               desplegarMenu(event)
             }}
             color="primary"
-            style={{ textTransform: 'none' }}
           >
             <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
           </IconButton>

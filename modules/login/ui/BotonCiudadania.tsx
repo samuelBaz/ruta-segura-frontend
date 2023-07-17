@@ -35,7 +35,6 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
       sx={{ borderRadius: 2 }}
       variant="contained"
       fullWidth={fullWidth}
-      style={{ textTransform: 'none' }}
       disabled={disabled}
       onClick={accion}
       color={'primary'}

@@ -77,7 +77,7 @@ const LoginNormalContainer = () => {
             fullWidth
             disabled={progresoLogin}
           >
-            <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
+            <Typography sx={{ fontWeight: 'medium' }}>
               Iniciar sesión
             </Typography>
           </Button>

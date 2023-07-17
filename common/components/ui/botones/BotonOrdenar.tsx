@@ -80,7 +80,6 @@ export const BotonOrdenar = ({
             desplegarMenu(event)
           }}
           color="primary"
-          style={{ textTransform: 'none' }}
         >
           <Badge
             color="secondary"

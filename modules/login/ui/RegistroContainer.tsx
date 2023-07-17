@@ -79,9 +79,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
                 mostrarLogin()
               }}
             >
-              <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
-                Entendido
-              </Typography>
+              <Typography sx={{ fontWeight: 'medium' }}>Entendido</Typography>
             </Button>
           </Box>
         </Fade>
@@ -171,9 +169,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
             fullWidth
             disabled={indicadorCarga}
           >
-            <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
-              Crear cuenta
-            </Typography>
+            <Typography sx={{ fontWeight: 'medium' }}>Crear cuenta</Typography>
           </Button>
         </form>
       )}

@@ -379,7 +379,6 @@ export const CustomDataTable = ({
                                     color="text.secondary"
                                     sx={{
                                       fontWeight: 'medium',
-                                      textTransform: 'none',
                                     }}
                                     align={'left'}
                                   >
@@ -403,7 +402,6 @@ export const CustomDataTable = ({
                                   color="text.secondary"
                                   sx={{
                                     fontWeight: 'medium',
-                                    textTransform: 'none',
                                   }}
                                   align={'left'}
                                 >
