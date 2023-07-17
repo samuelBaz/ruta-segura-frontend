@@ -45,7 +45,7 @@ export const LayoutUser: FC<PropsWithChildren<Props>> = ({
           display: 'flex',
           flexDirection: 'column',
           ml: sm || xs || md ? '0%' : sideMenuOpen ? '240px' : '0%',
-          transition: 'all 0.1s ease-out !important',
+          transition: 'all 0.2s ease-out !important',
         }}
       >
         <Toolbar />

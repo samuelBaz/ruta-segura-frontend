@@ -78,7 +78,7 @@ const Perfil: NextPage = () => {
                     // backgroundColor: 'primary.main',
                     display: 'flex',
                     flexDirection: 'column',
-                    transition: 'all 0.1s ease-out !important',
+                    transition: 'all 0.2s ease-out !important',
                     p: 2,
                   }}
                 >

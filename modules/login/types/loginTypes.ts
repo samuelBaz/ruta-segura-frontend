@@ -17,7 +17,7 @@ export interface PropiedadesType {
   orden: number
 }
 
-export interface SubModuloType {
+export type SubModuloType = {
   id: string
   label: string
   url: string
@@ -26,7 +26,7 @@ export interface SubModuloType {
   estado: string
 }
 
-export interface ModuloType {
+export type ModuloType = {
   id: string
   label: string
   url: string
