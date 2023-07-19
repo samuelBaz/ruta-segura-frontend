@@ -32,7 +32,6 @@ export interface MapaProps {
   puntos?: Array<string[]>
   key: string
   onDrag?: (center: number[], zoom: number) => void
-  onZoomed?: (zoom: number, center: number[]) => void
   onClick?: (center: number[], zoom: number) => void
   onClickMarker?: (index: number) => void
   height?: number
