@@ -14,7 +14,7 @@ export interface PersonaType {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputWysiwyg',
+  title: 'Moléculas/Formulario/FormInputWysiwyg',
   component: FormInputWysiwyg,
   argTypes: {
     onChange: {
@@ -24,6 +24,9 @@ export default {
   },
 
   parameters: {
+    status: {
+      type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
+    },
     docs: {
       description: {
         component:
@@ -122,4 +125,15 @@ SB_Tabla.args = {
   name: 'comentario',
   label: 'Tabla',
   id: 'textfield-form-7',
+}
+
+export const SB_Menos_opciones = Template.bind({})
+SB_Menos_opciones.storyName = 'Menos opciones'
+SB_Menos_opciones.args = {
+  label: 'Texto enriquecido',
+  id: 'textfield-form-1',
+  name: 'comentario',
+  mostrarOpcionesTabla: false,
+  mostrarOpcionesHistorial: false,
+  mostrarOpcionesURL: false,
 }

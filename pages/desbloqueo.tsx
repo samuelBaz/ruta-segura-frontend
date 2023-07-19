@@ -93,7 +93,7 @@ const Desbloqueo: NextPage = () => {
               redireccionarInicio().finally()
             }}
           >
-            <Typography sx={{ textTransform: 'none' }}>Ir al inicio</Typography>
+            <Typography>Ir al inicio</Typography>
           </Button>
         </Box>
       </Card>

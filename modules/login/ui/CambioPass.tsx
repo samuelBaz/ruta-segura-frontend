@@ -2,8 +2,8 @@ import { AlertTitle, Box, Button, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import { FormInputText } from '../../../common/components/ui/form'
 import { useForm } from 'react-hook-form'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
-import { NivelSeguridadPass } from '../../../common/components/ui/NivelSeguridadPass'
+import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
+import { NivelSeguridadPass } from '../../../common/components/ui/utils/NivelSeguridadPass'
 import {
   delay,
   encodeBase64,
@@ -180,7 +180,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
             check_circle
           </Icono>
           <Box height={'20px'} />
-          <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
+          <Typography sx={{ fontWeight: 'medium' }}>
             Nueva contraseña
           </Typography>
           <Box height={'15px'} />
@@ -193,9 +193,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
             variant="contained"
             onClick={redireccionarInicio}
           >
-            <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
-              Ir al inicio
-            </Typography>
+            <Typography sx={{ fontWeight: 'medium' }}>Ir al inicio</Typography>
           </Button>
         </Box>
       )}

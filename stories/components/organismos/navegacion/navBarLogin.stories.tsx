@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { NavbarLogin } from '../../../../common/components/ui/NavbarLogin'
+import { NavbarLogin } from '../../../../common/components/ui/navbars/NavbarLogin'
 import { CustomFrame } from '../../../utils/CustomFrame'
 
 export default {
@@ -24,7 +24,7 @@ export default {
 
 const Template1: StoryFn<typeof NavbarLogin> = () => {
   return (
-    <CustomFrame height="70px">
+    <CustomFrame height="70px" padding={'10px'}>
       <NavbarLogin />
     </CustomFrame>
   )

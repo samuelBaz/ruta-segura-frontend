@@ -20,11 +20,14 @@ const puntosExample: Array<Array<string>> = [
 ]
 
 export default {
-  title: 'Moleculas/Mapas/Mapa',
+  title: 'Moléculas/Mapas/Mapa',
   component: Mapa,
   argTypes: {},
   parameters: {
     docs: {
+      status: {
+        type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
+      },
       description: {
         component:
           'Componente que utiliza la biblioteca Leaflet para mostrar un mapa interactivo en una aplicación web. El componente acepta una serie de propiedades, como la ubicación central del mapa, los marcadores y la función de devolución de llamada para manejar los eventos del mapa. También se pueden utilizar las propiedades para personalizar la apariencia y el comportamiento del mapa. El componente utiliza diferentes componentes de Leaflet, como MapContainer, Marker, Popup, TileLayer, Tooltip y ZoomControl para construir el mapa y los marcadores.',

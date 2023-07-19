@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
 import {
   CardActionArea,
   Dialog,
@@ -7,16 +5,22 @@ import {
   IconButton,
   Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
-import Image, { ImageProps } from 'next/legacy/image'
+import Image, { ImageProps } from 'next/image'
 import React, { useState } from 'react'
-import { Icono } from './Icono'
+import { Icono } from '../Icono'
+import { TransitionSlide, TransitionZoom } from '../modales/Animations'
 
 interface ImagenProp extends ImageProps {
   // Props adicionales
 }
 
-const Imagen: React.FC<ImagenProp> = (props) => {
+const ImagenPreview: React.FC<ImagenProp> = (props) => {
+  const theme = useTheme()
+  let dsm = useMediaQuery(theme.breakpoints.down('sm'))
+
   const [mostrar, setMostrar] = useState<boolean>(false)
 
   const cerrarModalImagen = () => {
@@ -25,10 +29,12 @@ const Imagen: React.FC<ImagenProp> = (props) => {
   return (
     <>
       <Dialog
+        fullScreen={dsm}
         open={mostrar}
         onClose={cerrarModalImagen}
         // maxWidth={'xl'}
         title={'Cerrar'}
+        TransitionComponent={dsm ? TransitionSlide : TransitionZoom}
       >
         <DialogTitle sx={{ display: 'contents' }}>
           {props.alt && (
@@ -56,7 +62,7 @@ const Imagen: React.FC<ImagenProp> = (props) => {
             </Stack>
           )}
         </DialogTitle>
-        <img src={props.src.toString()} alt={props.alt}></img>
+        <Image {...props} alt={props.alt} />
       </Dialog>
 
       <CardActionArea
@@ -65,10 +71,10 @@ const Imagen: React.FC<ImagenProp> = (props) => {
         }}
         sx={{ cursor: 'zoom-in' }}
       >
-        <Image {...props} />
+        <Image {...props} alt={props.alt} />
       </CardActionArea>
     </>
   )
 }
 
-export default Imagen
+export default ImagenPreview

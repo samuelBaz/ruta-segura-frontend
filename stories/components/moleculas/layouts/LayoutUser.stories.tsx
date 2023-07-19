@@ -5,7 +5,7 @@ import { CustomFrame } from '../../../utils/CustomFrame'
 import { LayoutUser } from '../../../../common/components/layouts'
 
 export default {
-  title: 'Moleculas/Layouts/LayoutUser',
+  title: 'Moléculas/Layouts/LayoutUser',
   component: LayoutUser,
   argTypes: {
     accion: {

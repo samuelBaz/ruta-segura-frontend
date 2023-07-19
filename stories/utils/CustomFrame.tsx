@@ -11,7 +11,7 @@ interface iFrameProps {
 export const CustomFrame = ({
   height,
   color = '#C5C1BC',
-  padding = '10px',
+  padding = '0px',
   border = 'none',
   children,
 }: iFrameProps) => {

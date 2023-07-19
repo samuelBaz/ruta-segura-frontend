@@ -1,7 +1,7 @@
 import { Box, Button, Card, Divider, Tab, Tabs } from '@mui/material'
 import { TabPanel } from './TabPanel'
 import { FormInputText } from '../../../common/components/ui/form'
-import ProgresoLineal from '../../../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
 import Typography from '@mui/material/Typography'
 import { BotonCiudadania } from './BotonCiudadania'
 import { Constantes } from '../../../config'
@@ -59,12 +59,12 @@ const LoginRegistroContainer = () => {
             variant={'fullWidth'}
           >
             <Tab
-              sx={{ fontWeight: 'medium', textTransform: 'none' }}
+              sx={{ fontWeight: 'medium' }}
               label="Regístrate"
               {...a11yProps(0)}
             />
             <Tab
-              sx={{ fontWeight: 'medium', textTransform: 'none' }}
+              sx={{ fontWeight: 'medium' }}
               label="Inicia sesión"
               {...a11yProps(1)}
             />
@@ -122,10 +122,7 @@ const LoginRegistroContainer = () => {
                 disabled={progresoLogin}
                 color={'primary'}
               >
-                <Typography
-                  fontSize={'small'}
-                  sx={{ fontWeight: 'medium', textTransform: 'none' }}
-                >
+                <Typography fontSize={'small'} sx={{ fontWeight: 'medium' }}>
                   ¿Olvidaste tu contraseña?
                 </Typography>
               </Button>
@@ -137,7 +134,7 @@ const LoginRegistroContainer = () => {
               fullWidth
               disabled={progresoLogin}
             >
-              <Typography sx={{ fontWeight: 'medium', textTransform: 'none' }}>
+              <Typography sx={{ fontWeight: 'medium' }}>
                 Iniciar sesión
               </Typography>
             </Button>

@@ -1,9 +1,10 @@
 // import React from 'react'
 
 import { Meta, StoryFn } from '@storybook/react'
-import { BotonAcciones } from '../../../../common/components/ui/BotonAcciones'
+import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
+
 export default {
-  title: 'Moleculas/Botones/BotonAcciones',
+  title: 'Moléculas/Botones/BotonAcciones',
   component: BotonAcciones,
   argTypes: {
     accion: {

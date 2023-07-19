@@ -9,7 +9,7 @@ import {
   PathValue,
 } from 'react-hook-form'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-import Tiptap from '../TipTap'
+import Tiptap from './TipTap'
 
 type FormInputWysiwygProps<T extends FieldValues> = {
   id: string
@@ -20,9 +20,14 @@ type FormInputWysiwygProps<T extends FieldValues> = {
   rules?: RegisterOptions
   editable?: boolean
   onChange?: (contenido: string) => void
-
   labelVariant?: Variant
   placeholder?: string
+  mostrarOpcionesFormatoTexto?: boolean
+  mostrarOpcionesAlineacion?: boolean
+  mostrarOpcionesLista?: boolean
+  mostrarOpcionesURL?: boolean
+  mostrarOpcionesTabla?: boolean
+  mostrarOpcionesHistorial?: boolean
 }
 
 export const FormInputWysiwyg = <T extends FieldValues>({
@@ -35,11 +40,20 @@ export const FormInputWysiwyg = <T extends FieldValues>({
   placeholder = '',
   editable = true,
   onChange,
+  mostrarOpcionesFormatoTexto,
+  mostrarOpcionesAlineacion,
+  mostrarOpcionesLista,
+  mostrarOpcionesURL,
+  mostrarOpcionesTabla,
+  mostrarOpcionesHistorial,
 }: FormInputWysiwygProps<T>) => {
   return (
     <div>
       <InputLabel htmlFor={id}>
-        <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
+        <Typography
+          variant={labelVariant}
+          sx={{ pb: 1, fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+        >
           {label}
         </Typography>
       </InputLabel>
@@ -53,6 +67,12 @@ export const FormInputWysiwyg = <T extends FieldValues>({
               editable={editable}
               contenido={field.value}
               placeholder={placeholder}
+              mostrarOpcionesFormatoTexto={mostrarOpcionesFormatoTexto}
+              mostrarOpcionesAlineacion={mostrarOpcionesAlineacion}
+              mostrarOpcionesLista={mostrarOpcionesLista}
+              mostrarOpcionesURL={mostrarOpcionesURL}
+              mostrarOpcionesTabla={mostrarOpcionesTabla}
+              mostrarOpcionesHistorial={mostrarOpcionesHistorial}
               onChange={(content: string) => {
                 if (content) {
                   if (onChange) {

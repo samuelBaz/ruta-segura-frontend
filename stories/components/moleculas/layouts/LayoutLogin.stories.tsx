@@ -5,7 +5,7 @@ import { LayoutLogin } from '../../../../common/components/layouts'
 import { CustomFrame } from '../../../utils/CustomFrame'
 
 export default {
-  title: 'Moleculas/Layouts/LayoutLogin',
+  title: 'Moléculas/Layouts/LayoutLogin',
   component: LayoutLogin,
   argTypes: {
     accion: {

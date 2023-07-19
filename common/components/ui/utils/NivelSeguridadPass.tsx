@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Box, LinearProgress } from '@mui/material'
 import { IZXCVBNResult } from 'zxcvbn-typescript'
 import Typography from '@mui/material/Typography'
-import { seguridadPass } from '../../utils'
+import { seguridadPass } from '../../../utils'
 
 export interface LinearColorType {
   progress: number

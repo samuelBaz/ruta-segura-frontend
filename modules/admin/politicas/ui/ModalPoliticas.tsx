@@ -10,7 +10,7 @@ import {
   FormInputDropdownMultiple,
   FormInputText,
 } from '../../../../common/components/ui/form'
-import ProgresoLineal from '../../../../common/components/ui/ProgresoLineal'
+import ProgresoLineal from '../../../../common/components/ui/progreso/ProgresoLineal'
 import { useAlerts, useSession } from '../../../../common/hooks'
 import { imprimir } from '../../../../common/utils/imprimir'
 import {

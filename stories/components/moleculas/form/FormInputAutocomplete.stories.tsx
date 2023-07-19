@@ -47,10 +47,13 @@ interface RespuestaBusqueda {
 }
 
 export default {
-  title: 'Moleculas/Formulario/FormInputAutocomplete',
+  title: 'Moléculas/Formulario/FormInputAutocomplete',
   component: FormInputAutocomplete,
   argTypes: {},
   parameters: {
+    status: {
+      type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
+    },
     docs: {
       description: {
         component:

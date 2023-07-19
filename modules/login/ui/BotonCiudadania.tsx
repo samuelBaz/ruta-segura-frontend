@@ -35,7 +35,6 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
       sx={{ borderRadius: 2 }}
       variant="contained"
       fullWidth={fullWidth}
-      style={{ textTransform: 'none' }}
       disabled={disabled}
       onClick={accion}
       color={'primary'}
@@ -45,6 +44,10 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
         alt={altText}
         width="35"
         height="35"
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
       />
       {children}
     </ColorButton>

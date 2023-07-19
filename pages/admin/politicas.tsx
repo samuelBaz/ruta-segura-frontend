@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import {
   Button,
+  Chip,
   Grid,
   Typography,
   useMediaQuery,
@@ -18,7 +19,7 @@ import {
 } from '../../common/components/ui'
 import { delay, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
-import { Paginacion } from '../../common/components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
 import { useRouter } from 'next/router'
 import { VistaModalPolitica } from '../../modules/admin/politicas/ui'
 import { useAlerts, useSession } from '../../common/hooks'
@@ -27,11 +28,11 @@ import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTyp
 
 import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
-import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
-import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
+import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
+import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
-import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
+import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -97,10 +98,14 @@ const Politicas: NextPage = () => {
         key={`${politicaData.objeto}-${indexPolitica}-objeto`}
         variant={'body2'}
       >{`${politicaData.objeto}`}</Typography>,
-      <Typography
-        key={`${politicaData.accion}-${indexPolitica}-accion`}
-        variant={'body2'}
-      >{`${politicaData.accion}`}</Typography>,
+      <Grid key={`${politicaData.accion}-${indexPolitica}-accion`}>
+        {politicaData.accion.split('|').map((itemAccion, indexAccion) => (
+          <Chip
+            key={`accion-${indexPolitica}-${indexAccion}`}
+            label={itemAccion}
+          />
+        ))}
+      </Grid>,
       <Typography
         key={`${politicaData.accion}-${indexPolitica}-app`}
         variant={'body2'}
@@ -165,11 +170,12 @@ const Politicas: NextPage = () => {
       name={'Actualizar lista de políticas'}
     />,
     permisos.create && (
-      <BotonAgregar
+      <IconoBoton
         id={'agregarPolitica'}
         key={'agregarPolitica'}
         texto={'Agregar'}
         variante={xs ? 'icono' : 'boton'}
+        icono={'add_circle_outline'}
         descripcion={'Agregar política'}
         accion={() => {
           agregarPoliticaModal()

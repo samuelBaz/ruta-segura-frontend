@@ -25,7 +25,7 @@ import {
   titleCase,
 } from '../../common/utils'
 import { useAuth } from '../../context/auth'
-import { Paginacion } from '../../common/components/ui/Paginacion'
+import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
 import { useRouter } from 'next/router'
 import {
   FiltroUsuarios,
@@ -33,16 +33,16 @@ import {
 } from '../../modules/admin/usuarios/ui'
 import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
-import CustomMensajeEstado from '../../common/components/ui/CustomMensajeEstado'
+import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
 import {
   RolType,
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
-import { BotonOrdenar } from '../../common/components/ui/BotonOrdenar'
-import { BotonBuscar } from '../../common/components/ui/BotonBuscar'
+import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
+import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
-import { BotonAgregar } from '../../common/components/ui/BotonAgregar'
+import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -276,11 +276,12 @@ const Usuarios: NextPage = () => {
       name={'Actualizar lista de usuario'}
     />,
     permisos.create && (
-      <BotonAgregar
+      <IconoBoton
         id={'agregarUsuario'}
         key={'agregarUsuario'}
         texto={'Agregar'}
         variante={xs ? 'icono' : 'boton'}
+        icono={'add_circle_outline'}
         descripcion={'Agregar usuario'}
         accion={() => {
           agregarUsuarioModal()

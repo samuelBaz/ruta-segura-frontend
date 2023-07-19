@@ -3,13 +3,13 @@ import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
 import { Box, Grid, InputLabel, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { Paginacion } from '../../../../common/components/ui/Paginacion'
+import { Paginacion } from '../../../../common/components/ui/datatable/Paginacion'
 import {
   CriterioOrdenType,
   OrdenEnum,
 } from '../../../../common/types/ordenTypes'
-import { BotonBuscar } from '../../../../common/components/ui/BotonBuscar'
-import { BotonAcciones } from '../../../../common/components/ui/BotonAcciones'
+import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
+import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',

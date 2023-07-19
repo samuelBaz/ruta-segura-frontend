@@ -7,9 +7,9 @@ import {
   SelectChangeEvent,
   Typography,
 } from '@mui/material'
-import { IconoTooltip } from './IconoTooltip'
+import { IconoTooltip } from '../botones/IconoTooltip'
 import { FC } from 'react'
-import { imprimir } from '../../utils/imprimir'
+import { imprimir } from '../../../utils/imprimir'
 import { styled } from '@mui/material/styles'
 
 interface Props {
