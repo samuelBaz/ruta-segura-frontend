@@ -11,7 +11,7 @@ import {
 } from 'react-leaflet'
 
 import { Map } from 'leaflet'
-import { createRef, ReactNode, useEffect, useRef } from 'react'
+import { createRef, useEffect, useRef } from 'react'
 import { EditControl } from 'react-leaflet-draw'
 import L from 'leaflet'
 
@@ -76,8 +76,6 @@ const MapaDibujar = ({
           poligonos.push(json)
         }
       })
-
-      console.log('DUD ----> ', poligonos)
 
       if (getPoligonos) {
         getPoligonos(poligonos)
