@@ -8,8 +8,13 @@ import {
   timelineItemClasses,
   TimelineSeparator,
 } from '@mui/lab'
-import { ColorIconoType, IBitacoraAcciones, IBitacoraItems } from '../../types'
-import { Icono } from './Icono'
+
+import { Icono } from '../Icono'
+import {
+  ColorIconoType,
+  IBitacoraAcciones,
+  IBitacoraItems,
+} from './bitacoraTypes'
 
 type IconoSizeType = 'small' | 'medium' | 'large' | 'inherit'
 
