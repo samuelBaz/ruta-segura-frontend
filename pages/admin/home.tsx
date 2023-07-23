@@ -30,7 +30,6 @@ const Home: NextPage = () => {
           <Typography
             variant={'h5'}
             component="h1"
-            noWrap={true}
             sx={{ flexGrow: 1, fontWeight: 'medium' }}
           >
             Bienvenid@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}

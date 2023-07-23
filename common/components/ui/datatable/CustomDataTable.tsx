@@ -376,10 +376,8 @@ export const CustomDataTable = ({
                                 >
                                   <Typography
                                     variant={'caption'}
-                                    color="text.secondary"
-                                    sx={{
-                                      fontWeight: 'medium',
-                                    }}
+                                    color="text.primary"
+                                    fontWeight={'medium'}
                                     align={'left'}
                                   >
                                     {columna.nombre}
@@ -399,10 +397,8 @@ export const CustomDataTable = ({
                               ) : (
                                 <Typography
                                   variant={'caption'}
-                                  color="text.secondary"
-                                  sx={{
-                                    fontWeight: 'medium',
-                                  }}
+                                  color="text.primary"
+                                  fontWeight={'medium'}
                                   align={'left'}
                                 >
                                   {columna.nombre}
