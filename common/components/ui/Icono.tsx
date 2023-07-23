@@ -25,18 +25,21 @@ interface Props {
     'inherit' | 'large' | 'medium' | 'small',
     IconPropsSizeOverrides
   >
-  sx?: SxProps<Theme> | undefined
+  sx?: SxProps<Theme>
+  style?: React.CSSProperties
 }
 
 export const Icono: FC<PropsWithChildren<Props>> = ({
   color = 'primary',
   fontSize = 'medium',
   children,
-  sx = {},
+  sx,
+  style,
 }) => {
   return (
     <Icon
       sx={{ ...sx }}
+      style={{ ...style }}
       fontSize={fontSize}
       color={`${color}`}
       className={'material-icons-outlined'}
