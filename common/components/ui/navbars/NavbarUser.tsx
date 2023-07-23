@@ -16,10 +16,6 @@ import {
   useTheme,
 } from '@mui/material'
 
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import MenuOpenOutlined from '@mui/icons-material/MenuOpenOutlined'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
-
 import { useFullScreenLoading, useSidebar } from '../../../../context/ui'
 
 import React, { useEffect, useState } from 'react'
@@ -179,7 +175,11 @@ export const NavbarUser = () => {
             }}
             sx={{ mr: 2 }}
           >
-            {sideMenuOpen ? <MenuOpenOutlined /> : <MenuOutlinedIcon />}
+            {sideMenuOpen ? (
+              <Icono color={'primary'}>menu_open</Icono>
+            ) : (
+              <Icono color={'primary'}>menu</Icono>
+            )}
           </IconButton>
           <Typography
             color={'text.primary'}
@@ -199,7 +199,7 @@ export const NavbarUser = () => {
           />
           {!xs && <ThemeSwitcherButton />}
           <Button size="small" onClick={desplegarMenu} color="primary">
-            <AccountCircleOutlinedIcon />
+            <Icono color={'primary'}>account_circle</Icono>
             {!xs && (
               <Box
                 sx={{ pl: 1 }}
