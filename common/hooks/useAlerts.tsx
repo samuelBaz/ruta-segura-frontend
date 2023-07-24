@@ -24,7 +24,7 @@ export const useAlerts = () => {
             closeSnackbar(key)
           }}
         >
-          <Icono color={'primary'}>close</Icono>
+          <Icono color={'inherit'}>close</Icono>
         </IconButton>
       ),
     })
