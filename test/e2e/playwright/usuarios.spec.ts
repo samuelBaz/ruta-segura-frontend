@@ -1,9 +1,24 @@
 import { expect, test } from '@playwright/test'
 
+interface usuarioPruebaType {
+  ComplementoVisible: number
+  NumeroDocumento: string
+  Complemento: string
+  Nombres: string
+  PrimerApellido: string
+  SegundoApellido: string
+  FechaNacimiento: string
+  LugarNacimientoPais: string
+  LugarNacimientoDepartamento: string
+  LugarNacimientoProvincia: string
+  LugarNacimientoLocalidad: string
+  Observacion: string
+}
+
 test('Usuarios - crear/editar usuario', async ({ page, isMobile }) => {
   const fs = require('fs')
 
-  const rawCiudadanos = fs.readFileSync(process.env.PATH_CIUDADANOS)
+  const rawCiudadanos = fs.readFileSync(process.env.PATH_SEGIP)
 
   const ciudadanos: Array<usuarioPruebaType> = JSON.parse(rawCiudadanos)
 
@@ -56,17 +71,3 @@ test('Usuarios - crear/editar usuario', async ({ page, isMobile }) => {
   ).toBeDefined()
 })
 
-interface usuarioPruebaType {
-  ComplementoVisible: number
-  NumeroDocumento: string
-  Complemento: string
-  Nombres: string
-  PrimerApellido: string
-  SegundoApellido: string
-  FechaNacimiento: string
-  LugarNacimientoPais: string
-  LugarNacimientoDepartamento: string
-  LugarNacimientoProvincia: string
-  LugarNacimientoLocalidad: string
-  Observacion: string
-}
