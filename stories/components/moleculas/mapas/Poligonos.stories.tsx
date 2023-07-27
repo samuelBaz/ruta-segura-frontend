@@ -5,8 +5,9 @@ import {
 } from '../../../../common/components/ui/mapas/GeoUtils'
 import { Meta, StoryFn } from '@storybook/react'
 import MapaDibujar from '../../../../common/components/ui/mapas/MapaDibujar'
+import G from 'geojson'
 
-const poligonoEjemplo = {
+const poligonoEjemplo: G.Feature = {
   type: 'Feature',
   properties: {},
   geometry: {
@@ -55,9 +56,12 @@ const Template: StoryFn<typeof MapaDibujar> = (args) => {
     if (
       args.poligono &&
       args.poligono.geometry &&
+      args.poligono.geometry.type === 'Polygon' &&
       args.poligono.geometry.coordinates
     ) {
-      setPuntos([...args.poligono.geometry.coordinates[0]])
+      const points = args.poligono.geometry.coordinates[0].map(
+        (coordinate) => [`${coordinate[0]}`, `${coordinate[1]}`])
+      setPuntos([...points])
       const zoom: number = calcularZoom([
         ...args.poligono.geometry.coordinates[0],
       ])
@@ -88,7 +92,7 @@ const Template: StoryFn<typeof MapaDibujar> = (args) => {
 export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
-  poligono: null,
+  poligono: undefined,
   onlyread: false,
 }
 

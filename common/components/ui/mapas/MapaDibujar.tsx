@@ -14,15 +14,16 @@ import { Map } from 'leaflet'
 import { createRef, useEffect, useRef } from 'react'
 import { EditControl } from 'react-leaflet-draw'
 import L from 'leaflet'
+import G from 'geojson'
 
 export interface DibujarMapaProps {
   onlyread?: boolean
   centro?: number[]
-  poligono?: any
-  areaPermitida?: any
+  poligono: G.Feature
+  areaPermitida?: G.Polygon
   key: string
   onClick?: (center: number[], zoom: number) => void
-  getPoligonos?: (poligonos: any[]) => void
+  getPoligonos?: (poligonos: G.Feature<any>[]) => void
   height?: number
   zoom?: number
   id: string
@@ -40,7 +41,8 @@ const MapaDibujar = ({
   id,
   zoom = 8,
 }: DibujarMapaProps) => {
-  const featureGroupRef = useRef<any>(null)
+  const featureGroupRef = useRef<L.FeatureGroup<any> | null>(null)
+  const mapRef = createRef<Map>()
 
   function ChangeMapView() {
     const map = useMap()
@@ -57,8 +59,6 @@ const MapaDibujar = ({
   }
 
   const retornarPoligonos = () => {
-    const poligonos: any = []
-
     // Obtener todas las capas de características dentro del FeatureGroup
     const featureGroup = featureGroupRef.current
     if (featureGroup?.getLayers()) {
@@ -66,29 +66,24 @@ const MapaDibujar = ({
 
       // Filtrar las capas de polígonos
       const polygons: L.Polygon[] = layers.filter(
-        (layer: any) => layer instanceof L.Polygon
+        (layer: L.Layer): layer is L.Polygon => layer instanceof L.Polygon
       )
 
-      // Acceder a las coordenadas de cada polígono
-      polygons.forEach((polygon: L.Polygon) => {
-        if (polygon) {
-          const json = polygon.toGeoJSON()
-          poligonos.push(json)
-        }
-      })
+      const poligonos = polygons.filter(
+        (polygon: L.Polygon) => !!polygon).map((polygon) => polygon.toGeoJSON())
 
       if (getPoligonos) {
+        console.log('DUD poligono---->', poligono)
         getPoligonos(poligonos)
       }
     }
   }
 
-  const mapRef = createRef<Map>()
 
   useEffect(() => {
     const featureGroup = featureGroupRef.current
-    if (poligono && featureGroup) {
-      const reverse = poligono.coordinates[0].map((coordinate: any) =>
+    if (poligono && featureGroup && poligono.geometry.type === 'Polygon') {
+      const reverse = poligono.geometry.coordinates[0].map((coordinate: any) =>
         coordinate.reverse()
       )
 

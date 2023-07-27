@@ -162,8 +162,8 @@ const Mapa = ({
   const showPosition = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        var latitud = position.coords.latitude
-        var longitud = position.coords.longitude
+        const latitud = position.coords.latitude
+        const longitud = position.coords.longitude
         if (mapRef.current) {
           mapRef.current.flyTo([latitud, longitud], 15)
         }
