@@ -69,16 +69,15 @@ const MapaDibujar = ({
         (layer: L.Layer): layer is L.Polygon => layer instanceof L.Polygon
       )
 
-      const poligonos = polygons.filter(
-        (polygon: L.Polygon) => !!polygon).map((polygon) => polygon.toGeoJSON())
+      const poligonos = polygons
+        .filter((polygon: L.Polygon) => !!polygon)
+        .map((polygon) => polygon.toGeoJSON())
 
       if (getPoligonos) {
-        console.log('DUD poligono---->', poligono)
         getPoligonos(poligonos)
       }
     }
   }
-
 
   useEffect(() => {
     const featureGroup = featureGroupRef.current
