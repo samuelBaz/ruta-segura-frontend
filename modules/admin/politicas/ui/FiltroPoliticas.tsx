@@ -64,6 +64,7 @@ export const FiltroPolitica = ({
             control={control}
             label={'Filtro'}
             bgcolor={'background.paper'}
+            clearable
           />
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
