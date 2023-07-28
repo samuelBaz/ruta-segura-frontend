@@ -7,7 +7,6 @@ import { Constantes } from '../../../../config'
 import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
 import {
   FormInputDropdown,
-  FormInputDropdownMultiple,
   FormInputText,
 } from '../../../../common/components/ui/form'
 import ProgresoLineal from '../../../../common/components/ui/progreso/ProgresoLineal'
@@ -19,6 +18,7 @@ import {
   PoliticaCRUDType,
 } from '../PoliticasCRUDTypes'
 import { RolType } from '../../usuarios/types/usuariosCRUDTypes'
+import { FormInputAutocomplete } from '../../../../common/components/ui/form/FormInputAutocomplete'
 
 export interface ModalPoliticaType {
   politica?: PoliticaCRUDType
@@ -63,7 +63,9 @@ export const VistaModalPolitica = ({
     useForm<CrearEditarPoliticaCRUDType>({
       defaultValues: {
         app: politica?.app,
-        accion: politica?.accion.split('|'),
+        accion: politica?.accion
+          .split('|')
+          .map((val) => ({ key: val, value: val, label: val })),
         objeto: politica?.objeto,
         sujeto: politica?.sujeto,
       },
@@ -76,7 +78,7 @@ export const VistaModalPolitica = ({
   ) => {
     await guardarActualizarPoliticaPeticion({
       ...data,
-      ...{ accion: data.accion.join('|') },
+      ...{ accion: data.accion.map((value) => value.value).join('|') },
     })
   }
 
@@ -163,11 +165,15 @@ export const VistaModalPolitica = ({
               />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-              <FormInputDropdownMultiple
+              <FormInputAutocomplete
                 id={'accion'}
                 name="accion"
                 control={control}
                 label="Acción"
+                multiple
+                forcePopupIcon
+                freeSolo
+                newValues
                 disabled={loadingModal}
                 options={(valorApp == 'frontend'
                   ? opcionesAccionesFrontend

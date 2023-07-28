@@ -14,6 +14,7 @@ export const useSession = () => {
   const router = useRouter()
 
   const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
+
   const sesionPeticion = async ({
     url,
     tipo = 'get',
@@ -69,7 +70,6 @@ export const useSession = () => {
 
   const borrarCookiesSesion = () => {
     eliminarCookie('token') // Eliminando access_token
-    eliminarCookie('rol') // Eliminando rol
     eliminarCookie('jid') // Eliminando refresh token
   }
 
@@ -108,6 +108,9 @@ export const useSession = () => {
     try {
       const respuesta = await Servicios.post({
         url: `${Constantes.baseUrl}/token`,
+        body: {
+          token: leerCookie('token'),
+        },
       })
 
       guardarCookie('token', respuesta.datos?.access_token)

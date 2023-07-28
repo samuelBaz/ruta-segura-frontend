@@ -20,7 +20,6 @@ test('Políticas - crear/editar política', async ({ page, isMobile }) => {
   await page.getByRole('option', { name: 'frontend' }).click()
   await page.locator('#accion').click()
   await page.getByRole('option', { name: 'read' }).click()
-  await page.getByRole('option', { name: 'read' }).press('Escape')
   await page.getByRole('button', { name: 'Guardar' }).click()
   await page.waitForResponse((response) =>
     response.url().includes('/politicas')

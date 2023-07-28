@@ -60,6 +60,7 @@ export interface UsuarioType {
   estado: string
   roles: RoleType[]
   persona: PersonaType
+  idRol: string
 }
 
 export interface PoliticaType {

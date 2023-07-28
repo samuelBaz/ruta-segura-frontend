@@ -37,6 +37,7 @@ interface ContextProps {
   ingresar: ({ usuario, contrasena }: LoginType) => Promise<void>
   progresoLogin: boolean
   permisoUsuario: (routerName: string) => Promise<CasbinTypes>
+  permisoAccion: (objeto: string, accion: string) => Promise<boolean>
 }
 
 const AuthContext = createContext<ContextProps>({} as ContextProps)
@@ -47,7 +48,6 @@ interface AuthContextType {
 
 export const AuthProvider = ({ children }: AuthContextType) => {
   const [user, setUser] = useState<UsuarioType | null>(null)
-  const [idRol, setIdRol] = useState<string | null>()
   const [loading, setLoading] = useState<boolean>(true)
 
   // Hook para mostrar alertas
@@ -58,7 +58,8 @@ export const AuthProvider = ({ children }: AuthContextType) => {
   const router = useRouter()
 
   const { sesionPeticion, borrarCookiesSesion } = useSession()
-  const { interpretarPermiso, inicializarCasbin } = useCasbinEnforcer()
+  const { inicializarCasbin, interpretarPermiso, permisoSobreAccion } =
+    useCasbinEnforcer()
   const [enforcer, setEnforcer] = useState<Enforcer>()
 
   const inicializarUsuario = async () => {
@@ -89,7 +90,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const borrarSesionUsuario = () => {
     setUser(null)
-    setIdRol(null)
     borrarCookiesSesion()
   }
 
@@ -146,11 +146,6 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       setUser(respuesta.datos)
       imprimir(`Usuarios ✅`, respuesta.datos)
 
-      if (respuesta?.datos?.roles?.length > 0) {
-        imprimir(`rol inicial 👨‍💻: ${respuesta.datos.roles[0].idRol}`)
-        await AlmacenarRol({ idRol: respuesta.datos.roles[0].idRol })
-      }
-
       await obtenerPermisos()
 
       mostrarFullScreen()
@@ -168,20 +163,31 @@ export const AuthProvider = ({ children }: AuthContextType) => {
     }
   }
 
-  const AlmacenarRol = async ({ idRol }: idRolType) => {
-    imprimir(`Almacenando rol 👮‍♂️: ${idRol}`)
-    setIdRol(idRol)
-    guardarCookie('rol', idRol)
-  }
-
   const CambiarRol = async ({ idRol }: idRolType) => {
     imprimir(`Cambiando rol 👮‍♂️: ${idRol}`)
-    setIdRol(idRol)
-    guardarCookie('rol', idRol)
-    await inicializarUsuario()
+    await actualizarRol({ idRol })
+    await obtenerPermisos()
     await router.replace({
       pathname: '/admin/home',
     })
+  }
+
+  const actualizarRol = async ({ idRol }: idRolType) => {
+    const respuestaUsuario = await sesionPeticion({
+      tipo: 'patch',
+      url: `${Constantes.baseUrl}/cambiarRol`,
+      body: {
+        idRol,
+      },
+    })
+
+    guardarCookie('token', respuestaUsuario.datos?.access_token)
+    imprimir(`Token ✅: ${respuestaUsuario.datos?.access_token}`)
+
+    setUser(respuestaUsuario.datos)
+    imprimir(
+      `rol definido en obtenerUsuarioRol 👨‍💻: ${respuestaUsuario.datos.idRol}`
+    )
   }
 
   const obtenerPermisos = async () => {
@@ -189,9 +195,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       url: `${Constantes.baseUrl}/autorizacion/permisos`,
     })
 
-    if (respuestaPermisos.datos) {
-      setEnforcer(await inicializarCasbin(respuestaPermisos.datos))
-    }
+    setEnforcer(await inicializarCasbin(respuestaPermisos.datos))
   }
 
   const obtenerUsuarioRol = async () => {
@@ -199,20 +203,13 @@ export const AuthProvider = ({ children }: AuthContextType) => {
       url: `${Constantes.baseUrl}/usuarios/cuenta/perfil`,
     })
 
-    if (respuestaUsuario?.datos?.roles?.length == 0) {
-      throw new Error('Error, no tienes los roles necesarios para acceder')
-    }
-
     setUser(respuestaUsuario.datos)
     imprimir(
-      `rol definido en obtenerUsuarioRol 👨‍💻: ${respuestaUsuario.datos.roles[0].idRol}`
+      `rol definido en obtenerUsuarioRol 👨‍💻: ${respuestaUsuario.datos.idRol}`
     )
-    await AlmacenarRol({
-      idRol: leerCookie('rol') ?? respuestaUsuario.datos.roles[0].idRol,
-    })
   }
 
-  const rolUsuario = () => user?.roles.find((rol) => rol.idRol == idRol)
+  const rolUsuario = () => user?.roles.find((rol) => rol.idRol == user?.idRol)
 
   return (
     <AuthContext.Provider
@@ -225,7 +222,14 @@ export const AuthProvider = ({ children }: AuthContextType) => {
         ingresar: login,
         progresoLogin: loading,
         permisoUsuario: (routerName: string) =>
-          interpretarPermiso(routerName, enforcer, rolUsuario()?.rol),
+          interpretarPermiso({ routerName, enforcer, rol: rolUsuario()?.rol }),
+        permisoAccion: (objeto: string, accion: string) =>
+          permisoSobreAccion({
+            objeto,
+            enforcer,
+            rol: rolUsuario()?.rol ?? '',
+            accion,
+          }),
       }}
     >
       {children}

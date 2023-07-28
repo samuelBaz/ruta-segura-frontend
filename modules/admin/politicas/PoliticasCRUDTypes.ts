@@ -1,5 +1,7 @@
 /// CRUD de políticas
 
+import { optionType } from '../../../common/components/ui/form/FormInputAutocomplete'
+
 export interface PoliticaCRUDType {
   sujeto: string
   objeto: string
@@ -10,7 +12,7 @@ export interface PoliticaCRUDType {
 export interface CrearEditarPoliticaCRUDType {
   sujeto: string
   objeto: string
-  accion: string[]
+  accion: optionType[]
   app: string
 }
 
