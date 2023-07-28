@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.9.2...v1.10.0) (2023-07-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* al reorganizar los componentes se cambiaron varias importaciones
+* Se reemplaza "BotonAgregar" por "IconoBoton"
+* será necesario llamar a la API /cambiarRol para obtener un nuevo token con otro rol
+
+### Features
+
+* añadida API para cambio de rol activo en token ([42a06a0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/42a06a010763947267ee4c7f949ce84a53a4b62e))
+* añadida función de adición y verificación de permisos personalizados en políticas de Casbin ([e5df5c9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e5df5c9b1325ac6dd9c96d152ca247d646feda71))
+* se agrego opción de abrir y cerrar secciones de módulos en Sidebar ([2e03d98](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2e03d983f2da23d82d2ea1fa4c524e92fab33910))
+* se reoganizaron los componentes en grupos, dada la cantidad de los mismos ([eb323bf](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/eb323bf052294a6a4226eb182c1e7719350794a5))
+
+
+### Bug Fixes
+
+* añadido token en petición de refresh token ([2ad6378](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2ad6378195c24dbcae489eeec89592669c675a12))
+* corrección de un error que hacía que el texto de los botones siempre estuviera en mayúscula ([e3013ff](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e3013ff3b5be71033a4cf0b81cd9b6585bbb6a56))
+* corregido error en tamaño de iconos de @mui/material/Icon aplicando propiedad style ([84371de](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/84371decc9017bd63697d3e26825ce72b81d5e8d))
+* eliminado "@mui/icons-material" y reemplazada cada instancia por iconos de "@mui/material/Icon" ([7904198](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/790419870315a7aa6c1a7d6b74e8b14d90a6edab))
+* renombrado componente "BotonAgregar" por "IconoBoton" para tener funciones más genéricas ([abbad68](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/abbad686f0cb2d7cf5117d69dc075c85a2038a93))
+
 ### [1.9.2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.9.1...v1.9.2) (2023-07-14)
 
 
