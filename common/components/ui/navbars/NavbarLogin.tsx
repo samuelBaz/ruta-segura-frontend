@@ -39,7 +39,8 @@ export const NavbarLogin = () => {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: alpha(theme.palette.background.paper, 0.96),
+          backgroundColor: alpha(theme.palette.background.paper, 0.8),
+          backdropFilter: 'blur(12px)',
         }}
       >
         <Toolbar>

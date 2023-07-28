@@ -15,9 +15,9 @@ import {
   Typography,
 } from '@mui/material'
 import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-import ClearOutlined from '@mui/icons-material/ClearOutlined'
 import React from 'react'
 import { Variant } from '@mui/material/styles/createTypography'
+import { Icono } from '../Icono'
 
 export interface optionType {
   key: string
@@ -107,7 +107,7 @@ export const FormInputDropdown = <T extends FieldValues>({
                     }}
                     color={'primary'}
                   >
-                    <ClearOutlined />
+                    <Icono color={'primary'}>clear</Icono>
                   </IconButton>
                 ) : undefined
               }

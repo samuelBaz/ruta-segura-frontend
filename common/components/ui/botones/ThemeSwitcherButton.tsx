@@ -1,7 +1,6 @@
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import { IconButton, IconButtonProps, Tooltip } from '@mui/material'
 import { useThemeContext } from '../../../../context/ui/ThemeContext'
+import { Icono } from '../Icono'
 
 interface ThemeSwitcherButtonProps extends IconButtonProps {}
 
@@ -15,9 +14,9 @@ const ThemeSwitcherButton = ({ ...rest }: ThemeSwitcherButtonProps) => {
     >
       <IconButton {...rest} onClick={toggleTheme}>
         {themeMode === 'light' ? (
-          <LightModeOutlinedIcon color={'primary'} />
+          <Icono color={'primary'}>light_mode</Icono>
         ) : (
-          <DarkModeOutlinedIcon color={'primary'} />
+          <Icono color={'primary'}>dark_mode</Icono>
         )}
       </IconButton>
     </Tooltip>

@@ -11,9 +11,10 @@ import {
   useTheme,
 } from '@mui/material'
 import { BaseSyntheticEvent, FC, PropsWithChildren } from 'react'
-import CloseIcon from '@mui/icons-material/Close'
+
 import { TransitionSlide, TransitionZoom } from './Animations'
 import { PortalProps } from '@mui/base/Portal'
+import { Icono } from '../Icono'
 
 interface Props {
   isOpen: boolean
@@ -88,7 +89,7 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
               <Box />
             )}
             <IconButton onClick={handleClose} color={'primary'}>
-              <CloseIcon />
+              <Icono color={'primary'}>close</Icono>
             </IconButton>
           </Grid>
         </DialogTitle>

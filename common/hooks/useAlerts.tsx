@@ -1,6 +1,6 @@
 import { useSnackbar, VariantType } from 'notistack'
 import { IconButton } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import { Icono } from '../components/ui'
 
 export interface AlertType {
   mensaje: string
@@ -24,7 +24,7 @@ export const useAlerts = () => {
             closeSnackbar(key)
           }}
         >
-          <CloseIcon />
+          <Icono color={'inherit'}>close</Icono>
         </IconButton>
       ),
     })

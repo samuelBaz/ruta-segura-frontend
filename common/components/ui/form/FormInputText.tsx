@@ -15,12 +15,10 @@ import {
   InputAdornment,
   InputLabel,
 } from '@mui/material'
-import ClearOutlined from '@mui/icons-material/ClearOutlined'
 import { Variant } from '@mui/material/styles/createTypography'
-import { InputHTMLAttributes, useState } from 'react'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import React, { InputHTMLAttributes, useState } from 'react'
 import { InputBaseProps } from '@mui/material/InputBase'
+import { Icono } from '../Icono'
 
 type FormInputTextProps<T extends FieldValues> = {
   id: string
@@ -64,7 +62,6 @@ export const FormInputText = <T extends FieldValues>({
   // Add these variables to your component to track the state
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
-  const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
   return (
     <div>
@@ -118,15 +115,16 @@ export const FormInputText = <T extends FieldValues>({
                         field.onChange('')
                       }}
                     >
-                      <ClearOutlined />
+                      <Icono color={'primary'}>clear</Icono>
                     </IconButton>
                   ) : type == 'password' ? (
                     <InputAdornment position="end">
-                      <IconButton
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      <IconButton onClick={handleClickShowPassword}>
+                        {showPassword ? (
+                          <Icono color={'inherit'}>visibility</Icono>
+                        ) : (
+                          <Icono color={'inherit'}>visibility_off</Icono>
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ) : undefined,

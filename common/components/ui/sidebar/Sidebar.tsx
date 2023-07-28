@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {
   Box,
   Collapse,
+  Divider,
   Drawer,
   List,
   ListItemButton,
@@ -158,10 +159,10 @@ export const Sidebar = () => {
                 {(modulo.showed || !modulo.open) && (
                   <Icono
                     fontSize={'small'}
-                    sx={{ p: 0, m: 0 }}
+                    sx={{ p: 0, m: 0, mx: 1.5 }}
                     color={'secondary'}
                   >
-                    {modulo.open ? 'expand_more' : 'expand_less'}
+                    {modulo.open ? 'expand_more' : 'navigate_next'}
                   </Icono>
                 )}
               </Box>
@@ -203,6 +204,7 @@ export const Sidebar = () => {
                 ))}
               </List>
             </Collapse>
+            {!modulo.open && <Divider sx={{ mx: 1 }} />}
           </div>
         ))}
       </Box>
