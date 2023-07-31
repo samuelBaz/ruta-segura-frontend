@@ -194,7 +194,14 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                       startAdornment: (
                         <Fragment>
                           {searchIcon && (
-                            <Box sx={{ pt: 1, pl: 1 }}>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                pl: 1,
+                              }}
+                            >
                               <Icono color="secondary" fontSize="small">
                                 search
                               </Icono>

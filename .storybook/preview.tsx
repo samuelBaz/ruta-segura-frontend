@@ -3,26 +3,27 @@ import { ThemeProvider } from '@mui/material/styles'
 import { darkTheme, lightTheme } from '../themes'
 import { themes } from '@storybook/theming'
 import { addons } from '@storybook/addons'
-import { createElement, useEffect, useState } from 'react'
+import React, {
+  createElement,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from 'react'
 import { DARK_MODE_EVENT_NAME, useDarkMode } from 'storybook-dark-mode'
-import { DocsContainer } from '@storybook/blocks'
+import { DocsContainer, DocsContainerProps } from '@storybook/blocks'
 import 'material-icons/iconfont/outlined.css'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 // get channel to listen to event emitter
 const channel = addons.getChannel()
 
 // create a component that listens for the DARK_MODE event
-const ThemeWrapper = (props) => {
+const ThemeWrapper = (props: PropsWithChildren) => {
   // this example uses hook but you can also use class component as well
   const [isDark, setDark] = useState(false)
 
   useEffect(() => {
     // listen to DARK_MODE event
     channel.on(DARK_MODE_EVENT_NAME, setDark)
-
-    document.body.style.backgroundColor = (
-      isDark ? darkTheme : lightTheme
-    ).palette.background.default
 
     return () => channel.off(DARK_MODE_EVENT_NAME, setDark)
   }, [channel, setDark])
@@ -79,7 +80,7 @@ const preview: Preview = {
       //👇 Your own default viewport
     },
     docs: {
-      container: (props) => {
+      container: (props: DocsContainerProps) => {
         const isDark = useDarkMode()
         const currentProps = { ...props }
         currentProps.theme = isDark ? themes.dark : themes.light
