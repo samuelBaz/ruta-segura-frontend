@@ -35,11 +35,13 @@ export interface MapaProps {
   onClickMarker?: (index: number) => void
   height?: number
   draggable?: boolean
-  readonly?: boolean
   zoom?: number
   id: string
   children?: ReactNode
   cardMap?: ReactNode
+  zoomControl?: boolean
+  scrollWheelZoom?: boolean
+  maxZoom?: number
 }
 
 const Mapa = ({
@@ -51,20 +53,22 @@ const Mapa = ({
   onClick,
   onClickMarker,
   cardMap,
-  readonly = false,
   draggable = false,
   id,
   zoom = 6,
+  maxZoom = 19,
+  scrollWheelZoom = false,
+  zoomControl = false,
 }: MapaProps) => {
   const markerRefs = useRef([])
   const mapRef = createRef<Map>()
 
   const ChangeMapView = () => {
     const map = useMap()
-    map.setView([centro[0], centro[1]])
+    map.flyTo([centro[0], centro[1]], zoom)
     const mapEvents = useMapEvents({
       click: (e) => {
-        if (onClick && !readonly) {
+        if (onClick) {
           onClick([e.latlng.lat, e.latlng.lng], mapEvents.getZoom())
         }
       },
@@ -91,7 +95,7 @@ const Mapa = ({
           <Marker
             key={`${index}-marker`}
             icon={ICON}
-            draggable={false}
+            draggable={draggable}
             ref={markerRefs.current[index]}
             eventHandlers={{
               dragend: (e) => dragEvent(e),
@@ -99,9 +103,9 @@ const Mapa = ({
                 if (onClickMarker) {
                   onClickMarker(index)
                   await delay(300)
-                  map.setView([Number(punto[0]) + 0.005, Number(punto[1])], 15)
+                  map.flyTo([Number(punto[0]) + 0.005, Number(punto[1])], 15)
                 } else {
-                  map.setView([Number(punto[0]) + 0.005, Number(punto[1])], 15)
+                  map.flyTo([Number(punto[0]) + 0.005, Number(punto[1])], 15)
                 }
               },
             }}
@@ -119,36 +123,6 @@ const Mapa = ({
     })
   }
 
-  const SingleMarker = ({ puntos }: { puntos: string[][] }) => {
-    if (puntos.length < 1) return null
-
-    const punto = puntos[0]
-
-    if (!(!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))) {
-      return null
-    }
-
-    return (
-      <Marker
-        icon={ICON}
-        draggable={draggable}
-        eventHandlers={{
-          dragend: (e) => dragEvent(e),
-        }}
-        position={[Number(punto[0]), Number(punto[1])]}
-        ref={markerRefs.current[0]}
-      >
-        <Box sx={{ p: 10 }}>
-          {cardMap ? (
-            <Popup offset={[0, -40]}>{cardMap}</Popup>
-          ) : (
-            punto[2] && <Tooltip direction="bottom">{punto[2]}</Tooltip>
-          )}
-        </Box>
-      </Marker>
-    )
-  }
-
   if (markerRefs.current.length !== puntos.length) {
     markerRefs.current = puntos.map(
       (_, i) => markerRefs.current[i] || createRef()
@@ -156,8 +130,8 @@ const Mapa = ({
   }
 
   useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.setZoom(zoom)
+    if (mapRef?.current) {
+      mapRef?.current.flyTo([centro[0], centro[1]], zoom)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zoom])
@@ -169,22 +143,22 @@ const Mapa = ({
           key={key}
           id={id}
           ref={mapRef}
-          maxZoom={16}
+          maxZoom={maxZoom}
           center={[Number(centro[0]), Number(centro[1])]}
           zoom={zoom}
-          scrollWheelZoom={false}
-          zoomControl={false}
+          scrollWheelZoom={scrollWheelZoom}
+          zoomControl={zoomControl}
           style={{ height: height, width: '100%' }}
         >
           <ChangeMapView />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <ZoomControl zoomInTitle="Acercar" zoomOutTitle="Alejar" />
+          <ZoomControl
+            zoomInTitle="Acercar"
+            zoomOutTitle="Alejar"
+            position={'bottomright'}
+          />
 
-          {puntos.length == 1 ? (
-            <SingleMarker puntos={puntos} />
-          ) : (
-            puntos.length > 0 && <Markers puntos={puntos} />
-          )}
+          <Markers puntos={puntos} />
         </MapContainer>
         <Typography>{`${[Number(centro[0]), Number(centro[1])]}`}</Typography>
       </div>

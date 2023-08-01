@@ -16,7 +16,7 @@ import { useDebouncedCallback } from 'use-debounce'
 import { Servicios } from '../../../../common/services'
 import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
-import { InterpreteMensajes, delay } from '../../../../common/utils'
+import { InterpreteMensajes } from '../../../../common/utils'
 
 interface AddressLeaflet {
   city: string
@@ -131,11 +131,12 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   ) => {
     try {
       setLoadingAutoComplete(true)
-      let referencia = `Bolivia`
-      if (direccion) referencia = `${referencia};${direccion}`
+      const referencia = `Bolivia`
+
+      const parametros = [referencia, direccion ?? '']
 
       const respuesta = await Servicios.peticionHTTP({
-        url: `${Constantes.apiOpenStreetMap}/search/${referencia}`,
+        url: `${Constantes.apiOpenStreetMap}/search/${parametros.join(';')}`,
         params: {
           format: 'json',
           addressdetails: '1',
@@ -171,7 +172,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         })
       }
       setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
-      await delay(500) // TODO: encontrar una mejor solución para el cambio de centro seguido el cambio de zoom
+      // await delay(500) // TODO: encontrar una mejor solución para el cambio de centro seguido el cambio de zoom
       setZoom(15)
     } catch (e) {
       imprimir('Error al actualizar ubicación', e)
@@ -186,7 +187,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [watchZona]
+    [JSON.stringify(watchZona)]
   )
 
   /*
@@ -237,5 +238,5 @@ export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
   puntos: [],
-  readonly: false,
+  draggable: false,
 }

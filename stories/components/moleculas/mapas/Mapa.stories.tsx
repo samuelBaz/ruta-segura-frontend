@@ -42,9 +42,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   const [puntos, setPuntos] = useState<Array<string[]>>([])
 
   const agregarPunto = (latlng: number[]) => {
-    const puntosActuales = []
-    puntosActuales.push([latlng[0].toString(), latlng[1].toString()])
-    setPuntos([...puntosActuales])
+    setPuntos([[latlng[0].toString(), latlng[1].toString()]])
   }
 
   useEffect(() => {
@@ -68,7 +66,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         zoom={zoom}
         puntos={puntos}
         centro={centro}
-        draggable
+        draggable={args.draggable}
         onClick={agregarPunto}
         onDrag={agregarPunto}
       />
@@ -80,12 +78,11 @@ export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
   puntos: [],
-  readonly: false,
 }
 
 export const SoloLectura = Template.bind({})
 SoloLectura.storyName = 'Solo lectura'
 SoloLectura.args = {
   puntos: puntosExample,
-  readonly: true,
+  draggable: false,
 }
