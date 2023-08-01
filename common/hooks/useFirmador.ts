@@ -94,7 +94,7 @@ const useFirmador = () => {
 
   const obtenerEstado = async () => {
     try {
-      const respuesta = await Servicios.peticion({
+      const respuesta = await Servicios.peticionHTTP({
         url: Constantes.firmadorUrl ?? '',
         withCredentials: false,
       })
