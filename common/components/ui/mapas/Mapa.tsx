@@ -186,6 +186,10 @@ const Mapa = ({
     }
   }, [locationRef])
 
+  useEffect(() => {
+    console.log('DUD Este es el centro ----->', centro)
+  }, [centro])
+
   return (
     <>
       <div>
