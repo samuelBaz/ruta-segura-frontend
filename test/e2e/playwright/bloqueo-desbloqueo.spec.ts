@@ -2,10 +2,10 @@ import { expect, test } from '@playwright/test'
 import { numeroAleatorio, palabraAleatoria } from './utils/generador'
 import { Servicios } from '../../../common/services'
 
-test('Creación y desbloqueo de Cuenta', async ({ page }) => {
+test('Bloqueo y desbloqueo de Cuenta', async ({ page }) => {
   // Creación de cuenta
   await page.goto('/login')
-  const randomNumber = numeroAleatorio(0, 100)
+  const randomNumber = numeroAleatorio(0, 1000)
   const password = [
     palabraAleatoria(),
     palabraAleatoria(),
