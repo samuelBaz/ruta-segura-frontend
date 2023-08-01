@@ -16,7 +16,7 @@ import { useDebouncedCallback } from 'use-debounce'
 import { Servicios } from '../../../../common/services'
 import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
-import { InterpreteMensajes } from '../../../../common/utils'
+import { InterpreteMensajes, delay } from '../../../../common/utils'
 
 interface AddressLeaflet {
   city: string
@@ -155,7 +155,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     }
   }
 
-  const actualizarUbicacion = (select: optionType) => {
+  const actualizarUbicacion = async (select: optionType) => {
     try {
       const ubicacion: LeafletUbicacionType = JSON.parse(
         select.value != undefined ? select.value + '' : ''
@@ -171,6 +171,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         })
       }
       setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
+      await delay(500) // TODO: encontrar una mejor solución para el cambio de centro seguido el cambio de zoom
       setZoom(15)
     } catch (e) {
       imprimir('Error al actualizar ubicación', e)
