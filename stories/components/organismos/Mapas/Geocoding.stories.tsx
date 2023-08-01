@@ -171,7 +171,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         })
       }
       setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
-      await delay(500)
+      await delay(500) // TODO: encontrar una mejor solución para el cambio de centro seguido el cambio de zoom
       setZoom(15)
     } catch (e) {
       imprimir('Error al actualizar ubicación', e)

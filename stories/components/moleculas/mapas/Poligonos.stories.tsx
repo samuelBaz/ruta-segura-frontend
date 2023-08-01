@@ -34,7 +34,7 @@ const poligonoEjemplo: G.Feature = {
 }
 
 export default {
-  title: 'Moleculas/Mapas/Poligonos',
+  title: 'Moléculas/Mapas/Poligonos',
   component: MapaDibujar,
   argTypes: {},
   parameters: {
@@ -59,8 +59,10 @@ const Template: StoryFn<typeof MapaDibujar> = (args) => {
       args.poligono.geometry.type === 'Polygon' &&
       args.poligono.geometry.coordinates
     ) {
-      const points = args.poligono.geometry.coordinates[0].map(
-        (coordinate) => [`${coordinate[0]}`, `${coordinate[1]}`])
+      const points = args.poligono.geometry.coordinates[0].map((coordinate) => [
+        `${coordinate[0]}`,
+        `${coordinate[1]}`,
+      ])
       setPuntos([...points])
       const zoom: number = calcularZoom([
         ...args.poligono.geometry.coordinates[0],
