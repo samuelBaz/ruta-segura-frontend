@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { MutableRefObject, createRef, useEffect, useRef, useState } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import {
   calcularZoom,
@@ -17,6 +17,7 @@ import { Servicios } from '../../../../common/services'
 import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { InterpreteMensajes } from '../../../../common/utils'
+import { DragEndEvent, DragEndEventHandlerFn, Map } from 'leaflet'
 
 interface AddressLeaflet {
   city: string
@@ -73,6 +74,9 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   const [zoom, setZoom] = useState<number | undefined>()
   const [centro, setCentro] = useState<number[] | undefined>()
   const [puntos, setPuntos] = useState<Array<string[]>>([])
+
+  const mapRef = createRef<Map>()
+  const markerRefs: MutableRefObject<never[]> = useRef([])
 
   const agregarPunto = (latlng: number[]) => {
     const puntosActuales = []
@@ -179,6 +183,15 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     }
   }
 
+  const dragEvent: DragEndEventHandlerFn = (e: DragEndEvent) => {
+    const marker = e.target
+    if (marker != null) {
+      const lat = marker.getLatLng().lat
+      const lng = marker.getLatLng().lng
+      agregarPunto([lat, lng])
+    }
+  }
+
   useEffect(
     () => {
       imprimir(typeof watchZona, watchZona)
@@ -218,6 +231,8 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         <Box height={10} />
         <Grid item>
           <Mapa
+            mapRef={mapRef}
+            markerRefs={markerRefs}
             id={'geocoding-mapa'}
             key={'geocoding-mapa'}
             zoom={zoom}
@@ -225,7 +240,7 @@ const Template: StoryFn<typeof Mapa> = (args) => {
             centro={centro}
             draggable
             onClick={agregarPunto}
-            onDrag={agregarPunto}
+            onDrag={dragEvent}
           />
         </Grid>
         <Typography>{defaultCategoriaOption.value}</Typography>
