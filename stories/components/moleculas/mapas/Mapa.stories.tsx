@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { MutableRefObject, createRef, useEffect, useRef, useState } from 'react'
 import {
   calcularZoom,
   getCentro,
 } from '../../../../common/components/ui/mapas/GeoUtils'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
+import { DragEndEvent, DragEndEventHandlerFn, Map } from 'leaflet'
 
 const puntosExample: Array<Array<string>> = [
   ['-16.5000', ' -68.1500'],
@@ -26,7 +27,7 @@ export default {
   parameters: {
     docs: {
       status: {
-        type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
+        type: 'beta',
       },
       description: {
         component:
@@ -41,8 +42,25 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   const [centro, setCentro] = useState<number[] | undefined>()
   const [puntos, setPuntos] = useState<Array<string[]>>([])
 
+  const mapRef = createRef<Map>()
+  const markerRefs: MutableRefObject<never[]> = useRef([])
+
   const agregarPunto = (latlng: number[]) => {
     setPuntos([[latlng[0].toString(), latlng[1].toString()]])
+  }
+
+  const dragEvent: DragEndEventHandlerFn = (e: DragEndEvent) => {
+    const marker = e.target
+    if (marker != null) {
+      const lat = marker.getLatLng().lat
+      const lng = marker.getLatLng().lng
+      agregarPunto([lat, lng])
+    }
+  }
+
+  const clickMarker = async (index: number) => {
+    const marker = puntos[index]
+    mapRef.current?.flyTo([Number(marker[0]) + 0.005, Number(marker[1])], 15)
   }
 
   useEffect(() => {
@@ -61,6 +79,8 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   return (
     <>
       <Mapa
+        mapRef={mapRef}
+        markerRefs={markerRefs}
         id="mapa"
         key={'mapa'}
         zoom={zoom}
@@ -68,7 +88,8 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         centro={centro}
         draggable={args.draggable}
         onClick={agregarPunto}
-        onDrag={agregarPunto}
+        onDrag={dragEvent}
+        onClickMarker={clickMarker}
       />
     </>
   )

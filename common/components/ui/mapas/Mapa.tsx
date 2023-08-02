@@ -1,18 +1,23 @@
 import {
   MapContainer,
-  Marker,
   Popup,
   TileLayer,
   Tooltip,
   useMap,
   useMapEvents,
   ZoomControl,
+  Marker,
 } from 'react-leaflet'
 
 import { Box, Typography } from '@mui/material'
-import { DragEndEvent, DragEndEventHandlerFn, icon, Map } from 'leaflet'
-import { createRef, ReactNode, useEffect, useRef } from 'react'
-import { delay } from '../../../utils'
+import { DragEndEvent, icon, Map } from 'leaflet'
+import {
+  createRef,
+  MutableRefObject,
+  ReactNode,
+  RefObject,
+  useEffect,
+} from 'react'
 import 'leaflet/dist/leaflet.css'
 
 const ICON = icon({
@@ -26,10 +31,12 @@ const ICON = icon({
 })
 
 export interface MapaProps {
+  mapRef: RefObject<Map>
+  markerRefs: MutableRefObject<never[]>
   centro?: number[]
   puntos?: Array<string[]>
   key: string
-  onDrag?: (center: number[], zoom: number) => void
+  onDrag?: (event: DragEndEvent) => void
   onZoomed?: (zoom: number, center: number[]) => void
   onClick?: (center: number[], zoom: number) => void
   onClickMarker?: (index: number) => void
@@ -45,6 +52,8 @@ export interface MapaProps {
 }
 
 const Mapa = ({
+  mapRef,
+  markerRefs,
   centro = [-17.405356227442883, -66.15823659326952],
   puntos = [],
   key,
@@ -60,15 +69,12 @@ const Mapa = ({
   scrollWheelZoom = false,
   zoomControl = false,
 }: MapaProps) => {
-  const markerRefs = useRef([])
-  const mapRef = createRef<Map>()
-
   const ChangeMapView = () => {
     const map = useMap()
     map.flyTo([centro[0], centro[1]], zoom)
     const mapEvents = useMapEvents({
       click: (e) => {
-        if (onClick) {
+        if (onClick && draggable) {
           onClick([e.latlng.lat, e.latlng.lng], mapEvents.getZoom())
         }
       },
@@ -76,19 +82,7 @@ const Mapa = ({
     return null
   }
 
-  const dragEvent: DragEndEventHandlerFn = (e: DragEndEvent) => {
-    const marker = e.target
-    if (marker != null) {
-      const lat = marker.getLatLng().lat
-      const lng = marker.getLatLng().lng
-      if (onDrag) {
-        onDrag([lat, lng], zoom)
-      }
-    }
-  }
-
   const Markers = ({ puntos }: { puntos: string[][] }) => {
-    const map = useMap()
     return puntos.map((punto: string[], index: number) => {
       if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
         return (
@@ -98,14 +92,14 @@ const Mapa = ({
             draggable={draggable}
             ref={markerRefs.current[index]}
             eventHandlers={{
-              dragend: (e) => dragEvent(e),
-              click: async () => {
+              dragend: (e) => {
+                if (onDrag) {
+                  onDrag(e)
+                }
+              },
+              click: () => {
                 if (onClickMarker) {
                   onClickMarker(index)
-                  await delay(300)
-                  map.flyTo([Number(punto[0]) + 0.005, Number(punto[1])], 15)
-                } else {
-                  map.flyTo([Number(punto[0]) + 0.005, Number(punto[1])], 15)
                 }
               },
             }}
