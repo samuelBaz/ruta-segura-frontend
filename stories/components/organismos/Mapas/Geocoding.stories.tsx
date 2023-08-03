@@ -1,4 +1,4 @@
-import { MutableRefObject, createRef, useEffect, useRef, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import {
   calcularZoom,
@@ -17,7 +17,7 @@ import { Servicios } from '../../../../common/services'
 import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { InterpreteMensajes } from '../../../../common/utils'
-import { DragEndEvent, DragEndEventHandlerFn, Map } from 'leaflet'
+import { Map } from 'leaflet'
 
 interface AddressLeaflet {
   city: string
@@ -70,13 +70,12 @@ export default {
   },
 } as Meta
 
-const Template: StoryFn<typeof Mapa> = (args) => {
+const Template: StoryFn = (args) => {
   const [zoom, setZoom] = useState<number | undefined>()
   const [centro, setCentro] = useState<number[] | undefined>()
   const [puntos, setPuntos] = useState<Array<string[]>>([])
 
   const mapRef = createRef<Map>()
-  const markerRefs: MutableRefObject<never[]> = useRef([])
 
   const agregarPunto = (latlng: number[]) => {
     const puntosActuales = []
@@ -183,15 +182,6 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     }
   }
 
-  const dragEvent: DragEndEventHandlerFn = (e: DragEndEvent) => {
-    const marker = e.target
-    if (marker != null) {
-      const lat = marker.getLatLng().lat
-      const lng = marker.getLatLng().lng
-      agregarPunto([lat, lng])
-    }
-  }
-
   useEffect(
     () => {
       imprimir(typeof watchZona, watchZona)
@@ -232,15 +222,11 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         <Grid item>
           <Mapa
             mapRef={mapRef}
-            markerRefs={markerRefs}
             id={'geocoding-mapa'}
             key={'geocoding-mapa'}
             zoom={zoom}
-            puntos={puntos}
             centro={centro}
-            draggable
             onClick={agregarPunto}
-            onDrag={dragEvent}
           />
         </Grid>
         <Typography>{defaultCategoriaOption.value}</Typography>
@@ -253,5 +239,4 @@ export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
   puntos: [],
-  draggable: false,
 }
