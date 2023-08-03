@@ -118,7 +118,7 @@ const TemplatePdf: StoryFn = () => {
         `data:application/pdf;base64,${documentoFirmado}`
       )
       const blob = await pdf64.blob()
-      var documento = new File([blob], 'DocumentoFirmado', {
+      const documento = new File([blob], 'DocumentoFirmado', {
         type: 'application/pdf',
       })
       const link = document.createElement('a')
@@ -165,7 +165,7 @@ const TemplatePdf: StoryFn = () => {
         'documentoFirmado'
       )
       handleClick(`Finalizado -> Documento firmado: ${documentoFirmado}`)
-      obtenerArchivoDescarga(documentoFirmado)
+      await obtenerArchivoDescarga(documentoFirmado)
     } catch (error) {
       imprimir(`Error al firmar: ${error}`)
       handleClick(`Error -> No se puedo firmar documento`)
