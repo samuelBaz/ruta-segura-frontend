@@ -139,8 +139,9 @@ const Template: StoryFn = (args) => {
       const parametros = [referencia, direccion ?? '']
 
       const respuesta = await Servicios.peticionHTTP({
-        url: `${Constantes.apiOpenStreetMap}/search/${parametros.join(';')}`,
+        url: `${Constantes.apiOpenStreetMap}/search`,
         params: {
+          q: parametros.join(' '),
           format: 'json',
           addressdetails: '1',
           limit: '10',
@@ -175,7 +176,6 @@ const Template: StoryFn = (args) => {
         })
       }
       setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
-      // await delay(500) // TODO: encontrar una mejor solución para el cambio de centro seguido el cambio de zoom
       setZoom(15)
     } catch (e) {
       imprimir('Error al actualizar ubicación', e)
@@ -186,7 +186,7 @@ const Template: StoryFn = (args) => {
     () => {
       imprimir(typeof watchZona, watchZona)
       if (watchZona) {
-        actualizarUbicacion(watchZona)
+        actualizarUbicacion(watchZona).finally(() => {})
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -223,7 +223,6 @@ const Template: StoryFn = (args) => {
           <Mapa
             mapRef={mapRef}
             id={'geocoding-mapa'}
-            key={'geocoding-mapa'}
             zoom={zoom}
             centro={centro}
             onClick={agregarPunto}
