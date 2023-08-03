@@ -1,51 +1,27 @@
 import {
   MapContainer,
-  Popup,
   TileLayer,
-  Tooltip,
   useMap,
   useMapEvents,
   ZoomControl,
-  Marker,
 } from 'react-leaflet'
 
-import { Box, Typography } from '@mui/material'
-import { DragEndEvent, icon, Map } from 'leaflet'
-import {
-  createRef,
-  MutableRefObject,
-  ReactNode,
-  RefObject,
-  useEffect,
-} from 'react'
+import { Typography } from '@mui/material'
+import { Map } from 'leaflet'
+import { ReactNode, RefObject, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
-
-const ICON = icon({
-  iconRetinaUrl: '/leaflet/marker-icon.png',
-
-  iconUrl: '/leaflet/marker-icon.png',
-
-  shadowUrl: '/leaflet/marker-shadow.png',
-  // iconSize: [40, 40],
-  iconAnchor: [12.5, 41],
-})
 
 export interface MapaProps {
   mapRef: RefObject<Map>
-  markerRefs: MutableRefObject<never[]>
   centro?: number[]
-  puntos?: Array<string[]>
   key: string
-  onDrag?: (event: DragEndEvent) => void
   onZoomed?: (zoom: number, center: number[]) => void
   onClick?: (center: number[], zoom: number) => void
-  onClickMarker?: (index: number) => void
   height?: number
-  draggable?: boolean
   zoom?: number
   id: string
   children?: ReactNode
-  cardMap?: ReactNode
+  markers?: ReactNode
   zoomControl?: boolean
   scrollWheelZoom?: boolean
   maxZoom?: number
@@ -53,16 +29,11 @@ export interface MapaProps {
 
 const Mapa = ({
   mapRef,
-  markerRefs,
+  markers,
   centro = [-17.405356227442883, -66.15823659326952],
-  puntos = [],
   key,
   height = 500,
-  onDrag,
   onClick,
-  onClickMarker,
-  cardMap,
-  draggable = false,
   id,
   zoom = 6,
   maxZoom = 19,
@@ -74,53 +45,12 @@ const Mapa = ({
     map.flyTo([centro[0], centro[1]], zoom)
     const mapEvents = useMapEvents({
       click: (e) => {
-        if (onClick && draggable) {
+        if (onClick) {
           onClick([e.latlng.lat, e.latlng.lng], mapEvents.getZoom())
         }
       },
     })
     return null
-  }
-
-  const Markers = ({ puntos }: { puntos: string[][] }) => {
-    return puntos.map((punto: string[], index: number) => {
-      if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
-        return (
-          <Marker
-            key={`${index}-marker`}
-            icon={ICON}
-            draggable={draggable}
-            ref={markerRefs.current[index]}
-            eventHandlers={{
-              dragend: (e) => {
-                if (onDrag) {
-                  onDrag(e)
-                }
-              },
-              click: () => {
-                if (onClickMarker) {
-                  onClickMarker(index)
-                }
-              },
-            }}
-            position={[Number(punto[0]), Number(punto[1])]}
-          >
-            <Box sx={{ p: 10 }}>
-              {cardMap ? (
-                <Popup offset={[0, -40]}>{cardMap}</Popup>
-              ) : (
-                punto[2] && <Tooltip direction="bottom">{punto[2]}</Tooltip>
-              )}
-            </Box>
-          </Marker>
-        )
-    })
-  }
-
-  if (markerRefs.current.length !== puntos.length) {
-    markerRefs.current = puntos.map(
-      (_, i) => markerRefs.current[i] || createRef()
-    )
   }
 
   useEffect(() => {
@@ -151,8 +81,7 @@ const Mapa = ({
             zoomOutTitle="Alejar"
             position={'bottomright'}
           />
-
-          <Markers puntos={puntos} />
+          {markers}
         </MapContainer>
         <Typography>{`${[Number(centro[0]), Number(centro[1])]}`}</Typography>
       </div>

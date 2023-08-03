@@ -5,7 +5,19 @@ import {
 } from '../../../../common/components/ui/mapas/GeoUtils'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
-import { DragEndEvent, DragEndEventHandlerFn, Map } from 'leaflet'
+import { DragEndEvent, DragEndEventHandlerFn, Map, icon } from 'leaflet'
+import { Marker, Popup } from 'react-leaflet'
+import { Box, Typography } from '@mui/material'
+
+const ICON = icon({
+  iconRetinaUrl: '/leaflet/marker-icon.png',
+
+  iconUrl: '/leaflet/marker-icon.png',
+
+  shadowUrl: '/leaflet/marker-shadow.png',
+  // iconSize: [40, 40],
+  iconAnchor: [12.5, 41],
+})
 
 const puntosExample: Array<Array<string>> = [
   ['-16.5000', ' -68.1500'],
@@ -37,7 +49,7 @@ export default {
   },
 } as Meta
 
-const Template: StoryFn<typeof Mapa> = (args) => {
+const Template: StoryFn = (args) => {
   const [zoom, setZoom] = useState<number | undefined>()
   const [centro, setCentro] = useState<number[] | undefined>()
   const [puntos, setPuntos] = useState<Array<string[]>>([])
@@ -63,6 +75,31 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     mapRef.current?.flyTo([Number(marker[0]) + 0.005, Number(marker[1])], 15)
   }
 
+  if (markerRefs.current.length !== puntos.length) {
+    markerRefs.current = puntos.map(
+      (_, i) => markerRefs.current[i] || createRef()
+    )
+  }
+
+  const Markers = () => {
+    return puntos.map((punto: string[], index: number) => {
+      if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
+        return (
+          <Marker
+            key={`${index}-marker`}
+            icon={ICON}
+            draggable={puntos.length < 2}
+            ref={markerRefs.current[index]}
+            eventHandlers={{
+              dragend: (e) => dragEvent(e),
+              click: () => clickMarker(index),
+            }}
+            position={[Number(punto[0]), Number(punto[1])]}
+          ></Marker>
+        )
+    })
+  }
+
   useEffect(() => {
     if (args.puntos) {
       setPuntos([...args.puntos])
@@ -80,16 +117,91 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     <>
       <Mapa
         mapRef={mapRef}
-        markerRefs={markerRefs}
         id="mapa"
         key={'mapa'}
         zoom={zoom}
-        puntos={puntos}
         centro={centro}
-        draggable={args.draggable}
-        onClick={agregarPunto}
-        onDrag={dragEvent}
-        onClickMarker={clickMarker}
+        onClick={puntos.length < 2 ? agregarPunto : undefined}
+        markers={<Markers />}
+      />
+    </>
+  )
+}
+
+const Template2: StoryFn = (args) => {
+  const [zoom, setZoom] = useState<number | undefined>()
+  const [centro, setCentro] = useState<number[] | undefined>()
+  const [puntos, setPuntos] = useState<Array<string[]>>([])
+
+  const mapRef = createRef<Map>()
+  const markerRefs: MutableRefObject<never[]> = useRef([])
+
+  const agregarPunto = (latlng: number[]) => {
+    setPuntos([[latlng[0].toString(), latlng[1].toString()]])
+  }
+
+  const dragEvent: DragEndEventHandlerFn = (e: DragEndEvent) => {
+    const marker = e.target
+    if (marker != null) {
+      const lat = marker.getLatLng().lat
+      const lng = marker.getLatLng().lng
+      agregarPunto([lat, lng])
+    }
+  }
+
+  if (markerRefs.current.length !== puntos.length) {
+    markerRefs.current = puntos.map(
+      (_, i) => markerRefs.current[i] || createRef()
+    )
+  }
+
+  const Markers = () => {
+    return puntos.map((punto: string[], index: number) => {
+      if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
+        return (
+          <Marker
+            key={`${index}-marker`}
+            icon={ICON}
+            draggable={puntos.length < 2}
+            ref={markerRefs.current[index]}
+            eventHandlers={{
+              dragend: (e) => dragEvent(e),
+            }}
+            position={[Number(punto[0]), Number(punto[1])]}
+          >
+            <Box sx={{ p: 10 }}>
+              <Popup offset={[0, -40]}>
+                <Typography>Marcador de ejemplo</Typography>
+              </Popup>
+            </Box>
+          </Marker>
+        )
+    })
+  }
+
+  useEffect(() => {
+    if (args.puntos) {
+      setPuntos([...args.puntos])
+      const zoom: number = calcularZoom([...args.puntos])
+      setZoom(zoom)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    setCentro(getCentro(puntos))
+  }, [puntos])
+
+  return (
+    <>
+      <Mapa
+        mapRef={mapRef}
+        id="mapa"
+        key={'mapa'}
+        zoom={zoom}
+        centro={centro}
+        onClick={puntos.length < 2 ? agregarPunto : undefined}
+        markers={<Markers />}
       />
     </>
   )
@@ -105,5 +217,10 @@ export const SoloLectura = Template.bind({})
 SoloLectura.storyName = 'Solo lectura'
 SoloLectura.args = {
   puntos: puntosExample,
-  draggable: false,
+}
+
+export const SoloLecturaConTooltip = Template2.bind({})
+SoloLecturaConTooltip.storyName = 'Solo lectura con tooltip'
+SoloLecturaConTooltip.args = {
+  puntos: puntosExample,
 }
