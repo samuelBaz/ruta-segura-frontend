@@ -1,68 +1,43 @@
 import {
   MapContainer,
-  Marker,
-  Popup,
   TileLayer,
-  Tooltip,
   useMap,
   useMapEvents,
   ZoomControl,
 } from 'react-leaflet'
 
-import { Box, Typography } from '@mui/material'
-import { DragEndEvent, DragEndEventHandlerFn, icon, Map } from 'leaflet'
-import { createRef, ReactNode, useEffect, useRef } from 'react'
-import { delay } from '../../../utils'
+import { Typography } from '@mui/material'
+import { Map } from 'leaflet'
+import { ReactNode, RefObject, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
 
-const ICON = icon({
-  iconRetinaUrl: '/leaflet/marker-icon.png',
-
-  iconUrl: '/leaflet/marker-icon.png',
-
-  shadowUrl: '/leaflet/marker-shadow.png',
-  // iconSize: [40, 40],
-  iconAnchor: [12.5, 41],
-})
-
 export interface MapaProps {
+  mapRef: RefObject<Map>
   centro?: number[]
-  puntos?: Array<string[]>
-  key: string
-  onDrag?: (center: number[], zoom: number) => void
   onZoomed?: (zoom: number, center: number[]) => void
   onClick?: (center: number[], zoom: number) => void
-  onClickMarker?: (index: number) => void
   height?: number
-  draggable?: boolean
   zoom?: number
   id: string
   children?: ReactNode
-  cardMap?: ReactNode
+  markers?: ReactNode
   zoomControl?: boolean
   scrollWheelZoom?: boolean
   maxZoom?: number
 }
 
 const Mapa = ({
+  mapRef,
+  markers,
   centro = [-17.405356227442883, -66.15823659326952],
-  puntos = [],
-  key,
   height = 500,
-  onDrag,
   onClick,
-  onClickMarker,
-  cardMap,
-  draggable = false,
   id,
   zoom = 6,
   maxZoom = 19,
   scrollWheelZoom = false,
   zoomControl = false,
 }: MapaProps) => {
-  const markerRefs = useRef([])
-  const mapRef = createRef<Map>()
-
   const ChangeMapView = () => {
     const map = useMap()
     map.flyTo([centro[0], centro[1]], zoom)
@@ -76,59 +51,6 @@ const Mapa = ({
     return null
   }
 
-  const dragEvent: DragEndEventHandlerFn = (e: DragEndEvent) => {
-    const marker = e.target
-    if (marker != null) {
-      const lat = marker.getLatLng().lat
-      const lng = marker.getLatLng().lng
-      if (onDrag) {
-        onDrag([lat, lng], zoom)
-      }
-    }
-  }
-
-  const Markers = ({ puntos }: { puntos: string[][] }) => {
-    const map = useMap()
-    return puntos.map((punto: string[], index: number) => {
-      if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
-        return (
-          <Marker
-            key={`${index}-marker`}
-            icon={ICON}
-            draggable={draggable}
-            ref={markerRefs.current[index]}
-            eventHandlers={{
-              dragend: (e) => dragEvent(e),
-              click: async () => {
-                if (onClickMarker) {
-                  onClickMarker(index)
-                  await delay(300)
-                  map.flyTo([Number(punto[0]) + 0.005, Number(punto[1])], 15)
-                } else {
-                  map.flyTo([Number(punto[0]) + 0.005, Number(punto[1])], 15)
-                }
-              },
-            }}
-            position={[Number(punto[0]), Number(punto[1])]}
-          >
-            <Box sx={{ p: 10 }}>
-              {cardMap ? (
-                <Popup offset={[0, -40]}>{cardMap}</Popup>
-              ) : (
-                punto[2] && <Tooltip direction="bottom">{punto[2]}</Tooltip>
-              )}
-            </Box>
-          </Marker>
-        )
-    })
-  }
-
-  if (markerRefs.current.length !== puntos.length) {
-    markerRefs.current = puntos.map(
-      (_, i) => markerRefs.current[i] || createRef()
-    )
-  }
-
   useEffect(() => {
     if (mapRef?.current) {
       mapRef?.current.flyTo([centro[0], centro[1]], zoom)
@@ -140,7 +62,6 @@ const Mapa = ({
     <>
       <div>
         <MapContainer
-          key={key}
           id={id}
           ref={mapRef}
           maxZoom={maxZoom}
@@ -157,8 +78,7 @@ const Mapa = ({
             zoomOutTitle="Alejar"
             position={'bottomright'}
           />
-
-          <Markers puntos={puntos} />
+          {markers}
         </MapContainer>
         <Typography>{`${[Number(centro[0]), Number(centro[1])]}`}</Typography>
       </div>
