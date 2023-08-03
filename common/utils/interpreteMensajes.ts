@@ -13,6 +13,6 @@ export const InterpreteMensajes = (mensaje: any): string => {
       'Solicitud errónea 🚨'
     )
   } catch (e) {
-    return isHTML(mensaje) ? 'Solicitud erronea 🚨' : `${mensaje}`
+    return isHTML(mensaje) ? 'Solicitud errónea 🚨' : `${mensaje}`
   }
 }
