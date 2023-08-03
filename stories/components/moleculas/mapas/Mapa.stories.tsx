@@ -81,24 +81,22 @@ const Template: StoryFn = (args) => {
     )
   }
 
-  const Markers = () => {
-    return puntos.map((punto: string[], index: number) => {
-      if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
-        return (
-          <Marker
-            key={`${index}-marker`}
-            icon={ICON}
-            draggable={puntos.length < 2}
-            ref={markerRefs.current[index]}
-            eventHandlers={{
-              dragend: (e) => dragEvent(e),
-              click: () => clickMarker(index),
-            }}
-            position={[Number(punto[0]), Number(punto[1])]}
-          ></Marker>
-        )
-    })
-  }
+  const Markers = () =>
+    puntos
+      .filter((punto) => !isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
+      .map((punto, index) => (
+        <Marker
+          key={`${index}-marker`}
+          icon={ICON}
+          draggable={puntos.length < 2}
+          ref={markerRefs.current[index]}
+          eventHandlers={{
+            dragend: (e) => dragEvent(e),
+            click: () => clickMarker(index),
+          }}
+          position={[Number(punto[0]), Number(punto[1])]}
+        />
+      ))
 
   useEffect(() => {
     if (args.puntos) {
@@ -155,29 +153,27 @@ const Template2: StoryFn = (args) => {
     )
   }
 
-  const Markers = () => {
-    return puntos.map((punto: string[], index: number) => {
-      if (!isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
-        return (
-          <Marker
-            key={`${index}-marker`}
-            icon={ICON}
-            draggable={puntos.length < 2}
-            ref={markerRefs.current[index]}
-            eventHandlers={{
-              dragend: (e) => dragEvent(e),
-            }}
-            position={[Number(punto[0]), Number(punto[1])]}
-          >
-            <Box sx={{ p: 10 }}>
-              <Popup offset={[0, -40]}>
-                <Typography>Marcador de ejemplo</Typography>
-              </Popup>
-            </Box>
-          </Marker>
-        )
-    })
-  }
+  const Markers = () =>
+    puntos
+      .filter((punto) => !isNaN(Number(punto[0])) && !isNaN(Number(punto[1])))
+      .map((punto, index) => (
+        <Marker
+          key={`${index}-marker`}
+          icon={ICON}
+          draggable={puntos.length < 2}
+          ref={markerRefs.current[index]}
+          eventHandlers={{
+            dragend: (e) => dragEvent(e),
+          }}
+          position={[Number(punto[0]), Number(punto[1])]}
+        >
+          <Box sx={{ p: 10 }}>
+            <Popup offset={[0, -40]}>
+              <Typography>Marcador de ejemplo</Typography>
+            </Popup>
+          </Box>
+        </Marker>
+      ))
 
   useEffect(() => {
     if (args.puntos) {
