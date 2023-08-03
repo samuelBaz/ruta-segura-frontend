@@ -14,7 +14,6 @@ import 'leaflet/dist/leaflet.css'
 export interface MapaProps {
   mapRef: RefObject<Map>
   centro?: number[]
-  key: string
   onZoomed?: (zoom: number, center: number[]) => void
   onClick?: (center: number[], zoom: number) => void
   height?: number
@@ -31,7 +30,6 @@ const Mapa = ({
   mapRef,
   markers,
   centro = [-17.405356227442883, -66.15823659326952],
-  key,
   height = 500,
   onClick,
   id,
@@ -64,7 +62,6 @@ const Mapa = ({
     <>
       <div>
         <MapContainer
-          key={key}
           id={id}
           ref={mapRef}
           maxZoom={maxZoom}
