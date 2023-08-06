@@ -19,6 +19,7 @@ import { Variant } from '@mui/material/styles/createTypography'
 import React, { InputHTMLAttributes, useState } from 'react'
 import { InputBaseProps } from '@mui/material/InputBase'
 import { Icono } from '../Icono'
+import { OutlinedInputProps } from '@mui/material/OutlinedInput'
 
 type FormInputTextProps<T extends FieldValues> = {
   id: string
@@ -30,6 +31,7 @@ type FormInputTextProps<T extends FieldValues> = {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: StandardInputProps['onChange']
+  InputProps?: Partial<OutlinedInputProps>
   inputProps?: InputBaseProps['inputProps']
   onEnter?: () => void
   clearable?: boolean
@@ -50,6 +52,7 @@ export const FormInputText = <T extends FieldValues>({
   rules,
   disabled,
   onChange,
+  InputProps,
   inputProps,
   onEnter,
   clearable,
@@ -128,6 +131,7 @@ export const FormInputText = <T extends FieldValues>({
                       </IconButton>
                     </InputAdornment>
                   ) : undefined,
+                ...InputProps,
               }}
             />
             {!!error && <FormHelperText error>{error?.message}</FormHelperText>}
