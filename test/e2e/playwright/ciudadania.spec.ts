@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { numeroAleatorio } from './utils/generador'
 import { delay } from '../../../common/utils'
+import { imprimir } from '../../../common/utils/imprimir'
 
 interface CiudadanosPruebaType {
   ci: string
@@ -28,6 +29,8 @@ test('Ciudadanía - Inicio de sesión', async ({ page, isMobile }) => {
   }
 
   const algunCiudadano = ciudadanos[indice]
+
+  imprimir(algunCiudadano)
 
   await page.goto('/login')
   await page.getByRole('button', { name: 'Ingresa con Ciudadanía' }).click()
@@ -58,6 +61,9 @@ test('Ciudadanía - Inicio de sesión', async ({ page, isMobile }) => {
   if (autorizar) {
     await page.getByRole('button', { name: 'Continuar' }).click()
   }
+
+  // en caso de ser móvil
+  if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
 
   await page
     .getByRole('button', {
