@@ -94,7 +94,7 @@ class ServiciosClass {
     params,
     responseType,
     withCredentials,
-  }: peticionFormato): Promise<any> {
+  }: peticionFormato) {
     return await this.peticion({
       url,
       tipo: 'get',
@@ -113,7 +113,7 @@ class ServiciosClass {
     params,
     responseType,
     withCredentials,
-  }: peticionFormato): Promise<any> {
+  }: peticionFormato) {
     return await this.peticion({
       url,
       tipo: 'post',
@@ -132,7 +132,7 @@ class ServiciosClass {
     params,
     responseType,
     withCredentials,
-  }: peticionFormato): Promise<any> {
+  }: peticionFormato) {
     return await this.peticion({
       url,
       tipo: 'put',
@@ -151,7 +151,7 @@ class ServiciosClass {
     params,
     responseType,
     withCredentials,
-  }: peticionFormato): Promise<any> {
+  }: peticionFormato) {
     return await this.peticion({
       url,
       tipo: 'patch',
@@ -170,7 +170,7 @@ class ServiciosClass {
     params,
     responseType,
     withCredentials,
-  }: peticionFormato): Promise<any> {
+  }: peticionFormato) {
     return await this.peticion({
       url,
       tipo: 'delete',
