@@ -1,3 +1,5 @@
+import { optionType } from '../../../../common/components/ui/form/FormInputAutocomplete'
+
 export interface Propiedades {
   icono?: string
   descripcion?: string
@@ -25,7 +27,11 @@ export interface CrearEditarModulosType {
   url: string
   nombre: string
   esSeccion: boolean
-  propiedades: Propiedades
+  propiedades: {
+    icono?: optionType
+    descripcion?: string
+    orden: number
+  }
   estado: string
   idModulo?: string
 }
