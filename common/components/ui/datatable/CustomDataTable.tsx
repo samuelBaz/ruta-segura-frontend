@@ -24,6 +24,7 @@ import { ToggleOrden } from '../../../utils/orden'
 
 export interface CustomDataTableType {
   titulo?: string
+  tituloPersonalizado?: ReactNode
   error?: boolean
   cargando?: boolean
   acciones?: Array<ReactNode>
@@ -38,6 +39,7 @@ export interface CustomDataTableType {
 
 export const CustomDataTable = ({
   titulo,
+  tituloPersonalizado,
   error = false,
   cargando = false,
   acciones = [],
@@ -131,6 +133,8 @@ export const CustomDataTable = ({
           <Typography variant={'h5'} sx={{ fontWeight: 'medium', pl: 1 }}>
             {`${titulo}`}
           </Typography>
+        ) : tituloPersonalizado ? (
+          tituloPersonalizado
         ) : (
           <Box />
         )}
@@ -259,12 +263,13 @@ export const CustomDataTable = ({
                   ) : (
                     <div>
                       {contenidoTabla.map((contenidoFila, index) => (
-                        <Card // en lugar de CardActionArea para no usar hover en movil
+                        <Card // en lugar de CardActionArea para no usar hover en móvil
                           sx={{
                             borderRadius: 3,
                             mb: 2,
                           }}
                           key={`row-id-${index}`}
+                          variant={'outlined'}
                         >
                           <Card
                             key={`celda-id-${index}`}
