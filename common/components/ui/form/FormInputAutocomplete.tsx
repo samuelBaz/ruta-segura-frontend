@@ -22,14 +22,12 @@ import { Variant } from '@mui/material/styles/createTypography'
 import { AutocompleteInputChangeReason } from '@mui/base/useAutocomplete/useAutocomplete'
 import { Icono } from '../Icono'
 import { OutlinedInputProps } from '@mui/material/OutlinedInput'
+import { optionType } from './FormInputDropdown'
+import { imprimir } from '../../../utils/imprimir'
 
-export interface optionType {
-  key: string
-  value: string
-  label: string
-}
+export type CustomOptionType<K> = K & { key: string }
 
-type FormInputDropdownAutocompleteProps<T extends FieldValues> = {
+type FormInputDropdownAutocompleteProps<K, T extends FieldValues> = {
   id: string
   name: Path<T>
   control: Control<T, object>
@@ -44,24 +42,30 @@ type FormInputDropdownAutocompleteProps<T extends FieldValues> = {
   onChange?: (keys: AutocompleteValue<unknown, false, false, false>) => void
   InputProps?: Partial<OutlinedInputProps>
   filterOptions?: (
-    options: optionType[],
-    state: FilterOptionsState<optionType>
-  ) => optionType[]
+    options: CustomOptionType<K>[],
+    state: FilterOptionsState<CustomOptionType<K>>
+  ) => CustomOptionType<K>[]
   onInputChange?: (
     event: React.SyntheticEvent,
     value: string,
     reason: AutocompleteInputChangeReason
   ) => void
-  isOptionEqualToValue?: (option: optionType, value: optionType) => boolean
+  isOptionEqualToValue?: (
+    option: CustomOptionType<K>,
+    value: CustomOptionType<K>
+  ) => boolean
+  getOptionLabel: (option: CustomOptionType<K>) => string
+  renderOption: (option: CustomOptionType<K>) => React.ReactNode
   newValues?: boolean
   clearable?: boolean
   bgcolor?: string
   loading?: boolean
-  options: optionType[]
+  selectOnFocus?: boolean
+  options: CustomOptionType<K>[]
   labelVariant?: Variant
 }
 
-export const FormInputAutocomplete = <T extends FieldValues>({
+export const FormInputAutocomplete = <K, T extends FieldValues>({
   id,
   name,
   control,
@@ -77,13 +81,16 @@ export const FormInputAutocomplete = <T extends FieldValues>({
   InputProps,
   filterOptions,
   onInputChange,
-  isOptionEqualToValue = (option, value) => option.value == value.value,
+  isOptionEqualToValue,
+  getOptionLabel,
+  renderOption,
   newValues,
   options,
   bgcolor,
   loading,
+  selectOnFocus,
   labelVariant = 'subtitle2',
-}: FormInputDropdownAutocompleteProps<T>) => {
+}: FormInputDropdownAutocompleteProps<K, T>) => {
   const [value, setValue] = React.useState<string>('')
 
   return (
@@ -110,6 +117,7 @@ export const FormInputAutocomplete = <T extends FieldValues>({
               disabled={disabled}
               value={field.value}
               options={options}
+              selectOnFocus={selectOnFocus}
               filterSelectedOptions={true}
               filterOptions={filterOptions}
               inputValue={value}
@@ -128,14 +136,10 @@ export const FormInputAutocomplete = <T extends FieldValues>({
               }}
               getOptionLabel={(option) => {
                 if (typeof option == 'string') return option
-                return option?.label ?? ''
+                return getOptionLabel(option) ?? ''
               }}
               renderOption={(props, option) => {
-                return (
-                  <li {...props} key={option.value}>
-                    {option.label}
-                  </li>
-                )
+                return <li {...props}>{renderOption(option)}</li>
               }}
               renderInput={(params) => {
                 params.inputProps.onKeyDown = (
@@ -158,6 +162,8 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                         value: inputValue.trim(),
                       }
 
+                      imprimir(`newOption: `, newOption)
+
                       if (!multiple) {
                         const opcionTemp = field.value as optionType
                         field.onChange(opcionTemp)
@@ -168,6 +174,8 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                         const registrado = opcionesTemp.some(
                           (value1) => value1.value == newOption.value
                         )
+
+                        imprimir(`registrado: `, registrado)
 
                         if (!registrado && ![''].includes(newOption.value)) {
                           // Se agregara sí es que no fue agregado antes

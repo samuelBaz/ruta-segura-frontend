@@ -2,13 +2,11 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { useForm } from 'react-hook-form'
-import {
-  FormInputAutocomplete,
-  optionType,
-} from '../../../../common/components/ui/form/FormInputAutocomplete'
+import { FormInputAutocomplete } from '../../../../common/components/ui/form/FormInputAutocomplete'
 import { useEffect, useState } from 'react'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { Servicios } from '../../../../common/services'
+import { optionType } from '../../../../common/components/ui/form'
 
 export interface PersonaType {
   id: number
@@ -111,10 +109,14 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
       label="Productos"
       disabled={false}
       options={opciones}
+      filterOptions={(options) => options}
       onInputChange={async (event, value) => {
         await busqueda({ buscar: value })
       }}
       rules={{ required: 'Este campo es requerido' }}
+      isOptionEqualToValue={(option, value) => option.value == value.value}
+      getOptionLabel={(option: optionType) => option.label}
+      renderOption={(option: optionType) => <>{option.label}</>}
     />
   )
 }
@@ -156,10 +158,14 @@ const TemplateAbierto: StoryFn<typeof FormInputAutocomplete> = (args) => {
       label="Idiomas"
       disabled={false}
       options={[]}
+      filterOptions={(options) => options}
       onInputChange={async (event, value) => {
         imprimir(value)
       }}
       rules={{ required: 'Este campo es requerido' }}
+      isOptionEqualToValue={(option, value) => option.value == value.value}
+      getOptionLabel={(option: optionType) => option.label}
+      renderOption={(option: optionType) => <>{option.label}</>}
     />
   )
 }
@@ -185,7 +191,6 @@ SB_Multiple.args = {
   searchIcon: true,
   forcePopupIcon: true,
   newValues: false,
-  isOptionEqualToValue: (option, value) => option.value == value.value,
 }
 
 export const SB_MultipleAbierto = TemplateAbierto.bind({})
@@ -198,5 +203,4 @@ SB_MultipleAbierto.args = {
   multiple: true,
   forcePopupIcon: false,
   newValues: true,
-  isOptionEqualToValue: (option, value) => option.value == value.value,
 }

@@ -6,10 +6,7 @@ import {
 } from '../../../../common/components/ui/mapas/GeoUtils'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
-import {
-  FormInputAutocomplete,
-  optionType,
-} from '../../../../common/components/ui/form/FormInputAutocomplete'
+import { FormInputAutocomplete } from '../../../../common/components/ui/form/FormInputAutocomplete'
 import { useForm } from 'react-hook-form'
 import { useAlerts } from '../../../../common/hooks'
 import { useDebouncedCallback } from 'use-debounce'
@@ -18,6 +15,7 @@ import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { InterpreteMensajes, delay } from '../../../../common/utils'
 import { Map } from 'leaflet'
+import { optionType } from '../../../../common/components/ui/form'
 
 interface AddressLeaflet {
   city: string
@@ -217,6 +215,11 @@ const Template: StoryFn = (args) => {
             onInputChange={(event, value) => {
               actualizacionDireccion(value)
             }}
+            isOptionEqualToValue={(option, value) =>
+              option.value == value.value
+            }
+            getOptionLabel={(option: optionType) => option.label}
+            renderOption={(option: optionType) => <>{option.label}</>}
           />
         </Grid>
         <Box height={10} />

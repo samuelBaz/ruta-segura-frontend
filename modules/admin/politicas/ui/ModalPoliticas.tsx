@@ -186,6 +186,11 @@ export const VistaModalPolitica = ({
                   label: opcionAccion,
                 }))}
                 rules={{ required: 'Este campo es requerido' }}
+                getOptionLabel={(option) => option.label}
+                renderOption={(option) => <>{option.label}</>}
+                isOptionEqualToValue={(option, value) =>
+                  option.value == value.value
+                }
               />
             </Grid>
           </Grid>
