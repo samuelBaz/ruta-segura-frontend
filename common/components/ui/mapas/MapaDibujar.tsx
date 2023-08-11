@@ -138,6 +138,7 @@ const MapaDibujar = ({
           <ZoomControl
             zoomInTitle="Acercar"
             zoomOutTitle="Alejar"
+            position={'bottomright'}
           ></ZoomControl>
           <ChangeMapView />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

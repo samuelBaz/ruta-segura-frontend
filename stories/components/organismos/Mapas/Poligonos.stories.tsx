@@ -51,7 +51,7 @@ interface SearchType {
 }
 
 export default {
-  title: 'Organismos/Mapas/Poligonos',
+  title: 'Organismos/Mapas/Polígonos',
   component: Mapa,
   argTypes: {},
   parameters: {
@@ -198,7 +198,7 @@ const Template: StoryFn = (args) => {
             onlyread={args.onlyRead}
             id={`mapa-poligonos-dibujar`}
             key={`mapa-poligonos-dibujar`}
-            height={300}
+            height={500}
             zoom={zoom}
             centro={centro}
             poligono={null}

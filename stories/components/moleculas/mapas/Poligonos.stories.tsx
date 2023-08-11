@@ -88,7 +88,7 @@ const Template: StoryFn<typeof MapaDibujar> = (args) => {
         onlyread={args.onlyread}
         id={`mapa-poligonos-dibujar`}
         key={`mapa-poligonos-dibujar`}
-        height={300}
+        height={500}
         zoom={zoom}
         centro={centro}
         poligono={args.poligono}
