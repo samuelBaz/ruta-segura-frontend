@@ -106,12 +106,14 @@ const Template: StoryFn = (args) => {
   ) => {
     try {
       setLoadingAutoComplete(true)
-      let referencia = `Bolivia`
-      if (direccion) referencia = `${referencia};${direccion}`
+      const referencia = `Bolivia`
+
+      const parametros = [referencia, direccion ?? '']
 
       const respuesta = await Servicios.peticionHTTP({
-        url: `${Constantes.apiOpenStreetMap}/search/${referencia}`,
+        url: `${Constantes.apiOpenStreetMap}/search`,
         params: {
+          q: parametros.join(' '),
           format: 'json',
           addressdetails: '1',
           limit: '10',

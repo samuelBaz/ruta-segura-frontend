@@ -23,7 +23,6 @@ export interface DibujarMapaProps {
   centro?: number[]
   poligono: Feature | null
   areaPermitida?: Feature | null
-  key: string
   onClick?: (center: number[], zoom: number) => void
   getPoligonos?: (poligonos: Feature[]) => void
   height?: number
@@ -36,7 +35,6 @@ const MapaDibujar = ({
   featureGroupRef,
   centro = [-17.405356227442883, -66.15823659326952],
   onlyread = false,
-  key,
   areaPermitida,
   poligono,
   height = 500,
@@ -126,58 +124,62 @@ const MapaDibujar = ({
 
   return (
     <>
-      <MapContainer
-        key={key}
-        id={id}
-        ref={mapRef}
-        maxZoom={16}
-        center={[Number(centro[0]), Number(centro[1])]}
-        zoom={zoom}
-        scrollWheelZoom={false}
-        style={{ height: height, width: '100%' }}
-        zoomControl={false}
-      >
-        <ZoomControl zoomInTitle="Acercar" zoomOutTitle="Alejar"></ZoomControl>
-        <ChangeMapView />
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {areaPermitida && (
-          <GeoJSON
-            data={areaPermitida}
-            style={{
-              lineCap: 'butt',
-              weight: 3,
-              opacity: 1,
-              color: 'green',
-              dashArray: '5',
-              fillOpacity: 0,
-            }}
-          />
-        )}
-        {!onlyread ? (
-          <FeatureGroup ref={featureGroupRef}>
-            <EditControl
-              position="topright"
-              onCreated={retornarPoligonos}
-              onDeleted={retornarPoligonos}
-              onEdited={retornarPoligonos}
-              draw={{
-                marker: false,
-                circle: !onlyread,
-                rectangle: !onlyread,
-                polyline: !onlyread,
-                polygon: !onlyread,
-                circlemarker: false,
-              }}
-              edit={{
-                remove: !onlyread,
-                edit: !onlyread,
+      <div>
+        <MapContainer
+          id={id}
+          ref={mapRef}
+          maxZoom={16}
+          center={[Number(centro[0]), Number(centro[1])]}
+          zoom={zoom}
+          scrollWheelZoom={false}
+          style={{ height: height, width: '100%' }}
+          zoomControl={false}
+        >
+          <ZoomControl
+            zoomInTitle="Acercar"
+            zoomOutTitle="Alejar"
+          ></ZoomControl>
+          <ChangeMapView />
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {areaPermitida && (
+            <GeoJSON
+              data={areaPermitida}
+              style={{
+                lineCap: 'butt',
+                weight: 3,
+                opacity: 1,
+                color: 'green',
+                dashArray: '5',
+                fillOpacity: 0,
               }}
             />
-          </FeatureGroup>
-        ) : (
-          <>{poligono && <GeoJSON data={poligono} />}</>
-        )}
-      </MapContainer>
+          )}
+          {!onlyread ? (
+            <FeatureGroup ref={featureGroupRef}>
+              <EditControl
+                position="topright"
+                onCreated={retornarPoligonos}
+                onDeleted={retornarPoligonos}
+                onEdited={retornarPoligonos}
+                draw={{
+                  marker: false,
+                  circle: !onlyread,
+                  rectangle: !onlyread,
+                  polyline: !onlyread,
+                  polygon: !onlyread,
+                  circlemarker: false,
+                }}
+                edit={{
+                  remove: !onlyread,
+                  edit: !onlyread,
+                }}
+              />
+            </FeatureGroup>
+          ) : (
+            <>{poligono && <GeoJSON data={poligono} />}</>
+          )}
+        </MapContainer>
+      </div>
     </>
   )
 }
