@@ -1,9 +1,5 @@
-import { createRef, useEffect, useState } from 'react'
+import { createRef, useEffect, useRef, useState } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
-import {
-  calcularZoom,
-  getCentro,
-} from '../../../../common/components/ui/mapas/GeoUtils'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
 import {
@@ -16,8 +12,9 @@ import { useDebouncedCallback } from 'use-debounce'
 import { Servicios } from '../../../../common/services'
 import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
-import { InterpreteMensajes, delay } from '../../../../common/utils'
-import { Map } from 'leaflet'
+import { InterpreteMensajes } from '../../../../common/utils'
+import MapaDibujar from '../../../../common/components/ui/mapas/MapaDibujar'
+import { FeatureGroup, Map } from 'leaflet'
 
 interface AddressLeaflet {
   city: string
@@ -54,13 +51,10 @@ interface SearchType {
 }
 
 export default {
-  title: 'Organismos/Mapas/Mapa con API de OSM',
+  title: 'Organismos/Mapas/Polígonos',
   component: Mapa,
   argTypes: {},
   parameters: {
-    status: {
-      type: 'beta', // 'beta' | 'stable' | 'deprecated' | 'releaseCandidate'
-    },
     docs: {
       description: {
         component:
@@ -71,33 +65,11 @@ export default {
 } as Meta
 
 const Template: StoryFn = (args) => {
-  const [zoom, setZoom] = useState<number | undefined>()
+  const [zoom, setZoom] = useState<number | undefined>(15)
   const [centro, setCentro] = useState<number[] | undefined>()
-  const [puntos, setPuntos] = useState<Array<string[]>>([])
 
+  const featureGroupRef = useRef<FeatureGroup | null>(null)
   const mapRef = createRef<Map>()
-
-  const agregarPunto = (latlng: number[]) => {
-    const puntosActuales = []
-    puntosActuales.push([latlng[0].toString(), latlng[1].toString()])
-    setPuntos([...puntosActuales])
-  }
-
-  useEffect(
-    () => {
-      if (args.puntos) {
-        setPuntos([...args.puntos])
-        const zoom: number = calcularZoom([...args.puntos])
-        setZoom(zoom)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  useEffect(() => {
-    setCentro(getCentro(puntos))
-  }, [puntos])
 
   /*
   -------------------- buscador de MAPA ------------------
@@ -160,7 +132,7 @@ const Template: StoryFn = (args) => {
     }
   }
 
-  const actualizarUbicacion = async (select: optionType) => {
+  const actualizarUbicacion = (select: optionType) => {
     try {
       const ubicacion: LeafletUbicacionType = JSON.parse(
         select.value != undefined ? select.value + '' : ''
@@ -176,7 +148,6 @@ const Template: StoryFn = (args) => {
         })
       }
       setCentro([Number(ubicacion.lat), Number(ubicacion.lon)])
-      await delay(500) // TODO: encontrar una mejor solución para el cambio de centro seguido el cambio de zoom
       setZoom(15)
     } catch (e) {
       imprimir('Error al actualizar ubicación', e)
@@ -187,11 +158,11 @@ const Template: StoryFn = (args) => {
     () => {
       imprimir(typeof watchZona, watchZona)
       if (watchZona) {
-        actualizarUbicacion(watchZona).finally(() => {})
+        actualizarUbicacion(watchZona)
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(watchZona)]
+    [watchZona]
   )
 
   /*
@@ -221,12 +192,16 @@ const Template: StoryFn = (args) => {
         </Grid>
         <Box height={10} />
         <Grid item>
-          <Mapa
+          <MapaDibujar
             mapRef={mapRef}
-            id={'geocoding-mapa'}
+            featureGroupRef={featureGroupRef}
+            onlyread={args.onlyRead}
+            id={`mapa-poligonos-dibujar`}
+            key={`mapa-poligonos-dibujar`}
+            height={500}
             zoom={zoom}
             centro={centro}
-            onClick={agregarPunto}
+            poligono={null}
           />
         </Grid>
         <Typography>{defaultCategoriaOption.value}</Typography>
@@ -238,5 +213,5 @@ const Template: StoryFn = (args) => {
 export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
-  puntos: [],
+  readonly: false,
 }
