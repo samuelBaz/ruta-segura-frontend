@@ -1,9 +1,5 @@
-import { useEffect, useState } from 'react'
+import { createRef, useEffect, useRef, useState } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
-import {
-  calcularZoom,
-  getCentro,
-} from '../../../../common/components/ui/mapas/GeoUtils'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
 import {
@@ -18,6 +14,7 @@ import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { InterpreteMensajes } from '../../../../common/utils'
 import MapaDibujar from '../../../../common/components/ui/mapas/MapaDibujar'
+import { FeatureGroup, Map } from 'leaflet'
 
 interface AddressLeaflet {
   city: string
@@ -67,26 +64,12 @@ export default {
   },
 } as Meta
 
-const Template: StoryFn<typeof Mapa> = (args) => {
-  const [zoom, setZoom] = useState<number | undefined>()
+const Template: StoryFn = (args) => {
+  const [zoom, setZoom] = useState<number | undefined>(15)
   const [centro, setCentro] = useState<number[] | undefined>()
-  const [puntos, setPuntos] = useState<Array<string[]>>([])
 
-  useEffect(
-    () => {
-      if (args.puntos) {
-        setPuntos([...args.puntos])
-        const zoom: number = calcularZoom([...args.puntos])
-        setZoom(zoom)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  useEffect(() => {
-    setCentro(getCentro(puntos))
-  }, [puntos])
+  const featureGroupRef = useRef<FeatureGroup | null>(null)
+  const mapRef = createRef<Map>()
 
   /*
   -------------------- buscador de MAPA ------------------
@@ -208,7 +191,9 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         <Box height={10} />
         <Grid item>
           <MapaDibujar
-            onlyread
+            mapRef={mapRef}
+            featureGroupRef={featureGroupRef}
+            onlyread={args.onlyRead}
             id={`mapa-poligonos-dibujar`}
             key={`mapa-poligonos-dibujar`}
             height={300}

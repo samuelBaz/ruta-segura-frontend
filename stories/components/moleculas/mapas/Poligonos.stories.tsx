@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { createRef, useEffect, useRef, useState } from 'react'
 import {
   calcularZoom,
   getCentro,
@@ -6,6 +6,7 @@ import {
 import { Meta, StoryFn } from '@storybook/react'
 import MapaDibujar from '../../../../common/components/ui/mapas/MapaDibujar'
 import G from 'geojson'
+import { FeatureGroup, Map } from 'leaflet'
 
 const poligonoEjemplo: G.Feature = {
   type: 'Feature',
@@ -52,6 +53,9 @@ const Template: StoryFn<typeof MapaDibujar> = (args) => {
   const [centro, setCentro] = useState<number[] | undefined>()
   const [puntos, setPuntos] = useState<Array<string[]>>([])
 
+  const featureGroupRef = useRef<FeatureGroup | null>(null)
+  const mapRef = createRef<Map>()
+
   useEffect(() => {
     if (
       args.poligono &&
@@ -79,6 +83,8 @@ const Template: StoryFn<typeof MapaDibujar> = (args) => {
   return (
     <>
       <MapaDibujar
+        mapRef={mapRef}
+        featureGroupRef={featureGroupRef}
         onlyread={args.onlyread}
         id={`mapa-poligonos-dibujar`}
         key={`mapa-poligonos-dibujar`}

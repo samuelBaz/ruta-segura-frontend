@@ -11,26 +11,30 @@ import {
 } from 'react-leaflet'
 
 import { Map } from 'leaflet'
-import { createRef, useEffect, useRef } from 'react'
+import { RefObject, useEffect } from 'react'
 import { EditControl } from 'react-leaflet-draw'
 import L from 'leaflet'
-import G from 'geojson'
+import { FeatureCollection, Feature } from 'geojson'
 
 export interface DibujarMapaProps {
+  mapRef: RefObject<Map>
+  featureGroupRef: RefObject<L.FeatureGroup>
   onlyread?: boolean
   centro?: number[]
-  poligono: G.Feature
-  areaPermitida?: G.Polygon
+  poligono: Feature | null
+  areaPermitida?: Feature | null
   key: string
   onClick?: (center: number[], zoom: number) => void
-  getPoligonos?: (poligonos: G.Feature<any>[]) => void
+  getPoligonos?: (poligonos: Feature[]) => void
   height?: number
   zoom?: number
   id: string
 }
 
 const MapaDibujar = ({
-  centro = [-16.299051014581817, -66.00585937500001],
+  mapRef,
+  featureGroupRef,
+  centro = [-17.405356227442883, -66.15823659326952],
   onlyread = false,
   key,
   areaPermitida,
@@ -41,9 +45,6 @@ const MapaDibujar = ({
   id,
   zoom = 8,
 }: DibujarMapaProps) => {
-  const featureGroupRef = useRef<L.FeatureGroup<any> | null>(null)
-  const mapRef = createRef<Map>()
-
   function ChangeMapView() {
     const map = useMap()
     map.setView([centro[0], centro[1]], zoom)
@@ -62,37 +63,14 @@ const MapaDibujar = ({
     // Obtener todas las capas de características dentro del FeatureGroup
     const featureGroup = featureGroupRef.current
     if (featureGroup?.getLayers()) {
-      const layers = featureGroup.getLayers()
-
-      // Filtrar las capas de polígonos
-      const polygons: L.Polygon[] = layers.filter(
-        (layer: L.Layer): layer is L.Polygon => layer instanceof L.Polygon
-      )
-
-      const poligonos = polygons
-        .filter((polygon: L.Polygon) => !!polygon)
-        .map((polygon) => polygon.toGeoJSON())
+      const layers = featureGroup.toGeoJSON() as FeatureCollection
+      const poligonos = layers.features.map((layer: Feature) => layer)
 
       if (getPoligonos) {
         getPoligonos(poligonos)
       }
     }
   }
-
-  useEffect(() => {
-    const featureGroup = featureGroupRef.current
-    if (poligono && featureGroup && poligono.geometry.type === 'Polygon') {
-      const reverse = poligono.geometry.coordinates[0].map((coordinate: any) =>
-        coordinate.reverse()
-      )
-
-      //controlamos tambien editando por que duplica los poligonos
-      if (reverse) {
-        L.polygon(reverse).addTo(featureGroup)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [featureGroupRef.current])
 
   useEffect(() => {
     //botones
@@ -197,7 +175,7 @@ const MapaDibujar = ({
             />
           </FeatureGroup>
         ) : (
-          <GeoJSON data={poligono} />
+          <>{poligono && <GeoJSON data={poligono} />}</>
         )}
       </MapContainer>
     </>
