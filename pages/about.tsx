@@ -8,11 +8,9 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
 import { useSidebar } from '../context/ui'
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import { IconButton, ListItemButton } from '@mui/material'
+import { Icono } from '../common/components/ui'
 
 const drawerWidth = 240
 
@@ -38,7 +36,7 @@ export default function ClippedDrawer() {
               }
             }}
           >
-            <MenuOutlinedIcon />
+            <Icono color={'primary'}>menu</Icono>
           </IconButton>
           <Typography variant="h6" noWrap component="div" color={'primary'}>
             Clipped drawer
@@ -63,7 +61,11 @@ export default function ClippedDrawer() {
             {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
               <ListItemButton key={text}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index % 2 === 0 ? (
+                    <Icono color={'primary'}>inbox</Icono>
+                  ) : (
+                    <Icono color={'primary'}>mail</Icono>
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -74,7 +76,11 @@ export default function ClippedDrawer() {
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
               <ListItemButton key={text}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index % 2 === 0 ? (
+                    <Icono color={'primary'}>inbox</Icono>
+                  ) : (
+                    <Icono color={'primary'}>mail</Icono>
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>

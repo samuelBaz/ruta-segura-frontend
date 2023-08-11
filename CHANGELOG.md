@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.0...v1.10.1) (2023-08-09)
+
+
+### Features
+
+* agregando componente de backdrop ([c3366cf](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c3366cfbcb29b6a9cef75923a68834defdb00087))
+* agregando test e2e para bloqueo y desbloqueo de cuenta ([059e5b8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/059e5b81a9c96cc60930cbf1e396eb5eacf0eaa1))
+* añadiendo utilidad firmador ([1744023](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/17440232f7b03daa22ba1abf6e252bb6fa37be0c))
+* se adicionó test e2e para probar inicio de sessión con ciudadania digital ([30b3070](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/30b307022bfaaa5eefe9d28a49c79215e879c4de))
+* se adicionó test e2e para registro de cuentas ([d154c94](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d154c94e1c7cbe22f7ab81c20e225d8a2e7cb318))
+* se agrega lista de iconos disponibles en vista modal para agregar nuevos módulos ([b03d797](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b03d7975a624878d28522c11b5d55be6597c4823))
+
+
+### Bug Fixes
+
+* actualización StoryBook 7.1.1 ([e7b89ab](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e7b89aba7eb25ef89e268413b543d4665a4b9e48))
+* arreglo de cambio de posicion de centro ([622e61a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/622e61a4561a1027651c855512b6bf869d8b2544))
+* arreglo de storybook de geocoding ([39fdbe0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/39fdbe0118f38b3a974263ab0300daa0e377c8e2))
+* corrección en Autocomplete en evento de enter de items no multiples ([549d2f2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/549d2f2466a110977c05f617f87a35755b2617a8))
+* corrección en formato de petición de Open Street Maps ([12ce2d0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/12ce2d034d24c0674b462be127dd71dae2a3a728))
+* corrección en mapa para zoom de animación en cambio de posición ([1846bcd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1846bcd30f1b07a832e74a4777ed7a64248d6e58))
+* corrección en referencia de archivo de prueba para test e2e de ciudadanos ([39b1fe6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/39b1fe65c4eae44282b51b4631e3e9165fde7133))
+* modificando hook y storybook de firmador ([a36524a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a36524a8af72fecc50788bc85c6c067aa197aa5e))
+* refactorizado de eventos de mapa ([0104ee2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/0104ee244e3dfe0e858a2a4120fa7f2caed79369))
+* refactorizado de eventos en mapa geocoding ([0fa6933](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/0fa69331a6d4e9f9d63fe4fbbeb75461254e3f43))
+* refactorizadon de coponente de marcadores ([1994749](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1994749654bab6d277cf5a7a708d70ff9e1635c3))
+
+## [1.10.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.9.2...v1.10.0) (2023-07-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* al reorganizar los componentes se cambiaron varias importaciones
+* Se reemplaza "BotonAgregar" por "IconoBoton"
+* será necesario llamar a la API /cambiarRol para obtener un nuevo token con otro rol
+
+### Features
+
+* añadida API para cambio de rol activo en token ([42a06a0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/42a06a010763947267ee4c7f949ce84a53a4b62e))
+* añadida función de adición y verificación de permisos personalizados en políticas de Casbin ([e5df5c9](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e5df5c9b1325ac6dd9c96d152ca247d646feda71))
+* se agrego opción de abrir y cerrar secciones de módulos en Sidebar ([2e03d98](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2e03d983f2da23d82d2ea1fa4c524e92fab33910))
+* se reoganizaron los componentes en grupos, dada la cantidad de los mismos ([eb323bf](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/eb323bf052294a6a4226eb182c1e7719350794a5))
+
+
+### Bug Fixes
+
+* añadido token en petición de refresh token ([2ad6378](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2ad6378195c24dbcae489eeec89592669c675a12))
+* corrección de un error que hacía que el texto de los botones siempre estuviera en mayúscula ([e3013ff](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e3013ff3b5be71033a4cf0b81cd9b6585bbb6a56))
+* corregido error en tamaño de iconos de @mui/material/Icon aplicando propiedad style ([84371de](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/84371decc9017bd63697d3e26825ce72b81d5e8d))
+* eliminado "@mui/icons-material" y reemplazada cada instancia por iconos de "@mui/material/Icon" ([7904198](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/790419870315a7aa6c1a7d6b74e8b14d90a6edab))
+* renombrado componente "BotonAgregar" por "IconoBoton" para tener funciones más genéricas ([abbad68](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/abbad686f0cb2d7cf5117d69dc075c85a2038a93))
+
 ### [1.9.2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.9.1...v1.9.2) (2023-07-14)
 
 

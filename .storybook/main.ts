@@ -8,7 +8,6 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     'storybook-dark-mode',
-    '@storybook/addon-mdx-gfm',
     '@etchteam/storybook-addon-status',
   ],
   framework: {

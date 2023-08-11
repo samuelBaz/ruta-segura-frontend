@@ -21,6 +21,7 @@ import React, { Fragment } from 'react'
 import { Variant } from '@mui/material/styles/createTypography'
 import { AutocompleteInputChangeReason } from '@mui/base/useAutocomplete/useAutocomplete'
 import { Icono } from '../Icono'
+import { OutlinedInputProps } from '@mui/material/OutlinedInput'
 
 export interface optionType {
   key: string
@@ -41,6 +42,7 @@ type FormInputDropdownAutocompleteProps<T extends FieldValues> = {
   rules?: RegisterOptions
   disabled?: boolean
   onChange?: (keys: AutocompleteValue<unknown, false, false, false>) => void
+  InputProps?: Partial<OutlinedInputProps>
   filterOptions?: (
     options: optionType[],
     state: FilterOptionsState<optionType>
@@ -72,6 +74,7 @@ export const FormInputAutocomplete = <T extends FieldValues>({
   rules,
   disabled,
   onChange,
+  InputProps,
   filterOptions,
   onInputChange,
   isOptionEqualToValue = (option, value) => option.value == value.value,
@@ -155,17 +158,23 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                         value: inputValue.trim(),
                       }
 
-                      const opcionesTemp = field.value as Array<optionType>
+                      if (!multiple) {
+                        const opcionTemp = field.value as optionType
+                        field.onChange(opcionTemp)
+                        setValue('')
+                      } else {
+                        const opcionesTemp = field.value as Array<optionType>
 
-                      const registrado = opcionesTemp.some(
-                        (value1) => value1.value == newOption.value
-                      )
+                        const registrado = opcionesTemp.some(
+                          (value1) => value1.value == newOption.value
+                        )
 
-                      if (!registrado && ![''].includes(newOption.value)) {
-                        // Se agregara sí es que no fue agregado antes
-                        field.onChange([...field.value, newOption])
+                        if (!registrado && ![''].includes(newOption.value)) {
+                          // Se agregara sí es que no fue agregado antes
+                          field.onChange([...field.value, newOption])
+                        }
+                        setValue('')
                       }
-                      setValue('')
 
                       break
                     }
@@ -194,7 +203,14 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                       startAdornment: (
                         <Fragment>
                           {searchIcon && (
-                            <Box sx={{ pt: 1, pl: 1 }}>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                pl: 1,
+                              }}
+                            >
                               <Icono color="secondary" fontSize="small">
                                 search
                               </Icono>
@@ -203,6 +219,7 @@ export const FormInputAutocomplete = <T extends FieldValues>({
                           {params.InputProps.startAdornment}
                         </Fragment>
                       ),
+                      ...InputProps,
                     }}
                   />
                 )

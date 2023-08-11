@@ -14,7 +14,6 @@ import { LayoutUser } from '../../common/components/layouts'
 import React, { useState } from 'react'
 import { siteName, titleCase } from '../../common/utils'
 import { CustomDialog, Icono } from '../../common/components/ui'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import { formatoFecha } from '../../common/utils/fechas'
 import { CambioPassModal } from '../../modules/admin/perfil/CambioPassModal'
 import { Constantes } from '../../config'
@@ -82,9 +81,12 @@ const Perfil: NextPage = () => {
                     p: 2,
                   }}
                 >
-                  <AccountCircleOutlinedIcon
-                    sx={{ fontSize: 100, color: 'text.secondary' }}
-                  />
+                  <Icono
+                    sx={{ color: 'text.secondary' }}
+                    style={{ fontSize: 100 }}
+                  >
+                    account_circle
+                  </Icono>
 
                   <Typography variant={'body1'} color="text.secondary">
                     {titleCase(

@@ -1,5 +1,5 @@
 import { Box, Button, DialogActions, DialogContent, Grid } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   FormInputDropdown,
@@ -15,6 +15,11 @@ import {
   CrearEditarModulosType,
   GuardarModulosType,
 } from '../types/CrearEditarModulosType'
+import { Icono } from '../../../../common/components/ui'
+import {
+  FormInputAutocomplete,
+  optionType,
+} from '../../../../common/components/ui/form/FormInputAutocomplete'
 
 export const VistaModalModulo = ({
   modulo,
@@ -23,6 +28,8 @@ export const VistaModalModulo = ({
   modulos,
 }: ModalModuloType) => {
   const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
+  const [opciones, setOpciones] = useState<Array<optionType>>([])
 
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
@@ -36,7 +43,15 @@ export const VistaModalModulo = ({
       label: modulo?.label,
       url: modulo?.url,
       nombre: modulo?.nombre,
-      propiedades: modulo?.propiedades,
+      propiedades: {
+        orden: modulo?.propiedades?.orden,
+        descripcion: modulo?.propiedades?.descripcion,
+        icono: {
+          value: modulo?.propiedades?.icono,
+          label: modulo?.propiedades?.icono,
+          key: modulo?.propiedades?.icono,
+        },
+      },
       estado: modulo?.estado,
       idModulo: modulo?.modulo?.id,
       esSeccion: modulo?.esSeccion,
@@ -44,6 +59,7 @@ export const VistaModalModulo = ({
   })
 
   const checked = watch('esSeccion')
+  const iconoWatch = watch('propiedades.icono')
 
   const guardarActualizarModulo = async (data: CrearEditarModulosType) => {
     await guardarActualizarModuloPeticion({
@@ -53,7 +69,11 @@ export const VistaModalModulo = ({
       estado: data.estado,
       nombre: data.nombre,
       id: data.id,
-      propiedades: data.propiedades,
+      propiedades: {
+        icono: data.propiedades.icono?.value,
+        orden: data.propiedades.orden,
+        descripcion: data.propiedades.descripcion,
+      },
     })
   }
 
@@ -89,6 +109,21 @@ export const VistaModalModulo = ({
     }
   }
 
+  const mostrarIconos = async () => {
+    const iconos = await import('material-icons/_data/versions.json')
+    setOpciones(
+      Object.keys(iconos).map((value) => ({
+        key: value,
+        label: value,
+        value: value,
+      }))
+    )
+  }
+
+  useEffect(() => {
+    mostrarIconos().finally(() => {})
+  }, [])
+
   return (
     <form onSubmit={handleSubmit(guardarActualizarModulo)}>
       <DialogContent dividers>
@@ -117,7 +152,7 @@ export const VistaModalModulo = ({
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
-                <FormInputText
+                <FormInputAutocomplete
                   id={'icono'}
                   control={control}
                   name="propiedades.icono"
@@ -126,6 +161,17 @@ export const VistaModalModulo = ({
                   rules={
                     !checked ? { required: 'Este campo es requerido' } : {}
                   }
+                  freeSolo
+                  newValues
+                  forcePopupIcon
+                  options={opciones}
+                  InputProps={{
+                    startAdornment: iconoWatch?.value && (
+                      <Icono sx={{ ml: 1 }} color={'inherit'}>
+                        {iconoWatch?.value}
+                      </Icono>
+                    ),
+                  }}
                 />
               </Grid>
             </Grid>

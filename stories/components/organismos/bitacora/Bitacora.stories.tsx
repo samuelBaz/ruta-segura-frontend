@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { IBitacoraAcciones } from '../../../../common/types'
-import { Bitacora } from '../../../../common/components/ui/Bitacora'
+import { IBitacoraAcciones } from '../../../../common/components/ui/bitacora/bitacoraTypes'
+import { Bitacora } from '../../../../common/components/ui/bitacora/Bitacora'
 import { Grid, Typography } from '@mui/material'
 import {
   formatoLiteral,

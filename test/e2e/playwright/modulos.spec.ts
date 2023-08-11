@@ -19,6 +19,7 @@ test('Módulos - crear/editar módulo', async ({ page, isMobile }) => {
   await page.locator('#idModulo').click()
   await page.getByRole('option', { name: 'Configuración' }).click()
   await page.locator('#icono').fill('check')
+  await page.getByRole('option', { name: 'check', exact: true }).click()
   await page.locator('#nombre').fill(moduloAleatorio)
   await page.locator('#label').fill(moduloAleatorio)
   await page.locator('#url').fill(moduloAleatorio)

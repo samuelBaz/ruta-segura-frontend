@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import {
   calcularZoom,
@@ -17,6 +17,7 @@ import { Servicios } from '../../../../common/services'
 import { Constantes } from '../../../../config'
 import { imprimir } from '../../../../common/utils/imprimir'
 import { InterpreteMensajes, delay } from '../../../../common/utils'
+import { Map } from 'leaflet'
 
 interface AddressLeaflet {
   city: string
@@ -69,10 +70,12 @@ export default {
   },
 } as Meta
 
-const Template: StoryFn<typeof Mapa> = (args) => {
+const Template: StoryFn = (args) => {
   const [zoom, setZoom] = useState<number | undefined>()
   const [centro, setCentro] = useState<number[] | undefined>()
   const [puntos, setPuntos] = useState<Array<string[]>>([])
+
+  const mapRef = createRef<Map>()
 
   const agregarPunto = (latlng: number[]) => {
     const puntosActuales = []
@@ -131,12 +134,14 @@ const Template: StoryFn<typeof Mapa> = (args) => {
   ) => {
     try {
       setLoadingAutoComplete(true)
-      let referencia = `Bolivia`
-      if (direccion) referencia = `${referencia};${direccion}`
+      const referencia = `Bolivia`
+
+      const parametros = [referencia, direccion ?? '']
 
       const respuesta = await Servicios.peticionHTTP({
-        url: `${Constantes.apiOpenStreetMap}/search/${referencia}`,
+        url: `${Constantes.apiOpenStreetMap}/search`,
         params: {
+          q: parametros.join(' '),
           format: 'json',
           addressdetails: '1',
           limit: '10',
@@ -182,11 +187,11 @@ const Template: StoryFn<typeof Mapa> = (args) => {
     () => {
       imprimir(typeof watchZona, watchZona)
       if (watchZona) {
-        actualizarUbicacion(watchZona)
+        actualizarUbicacion(watchZona).finally(() => {})
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [watchZona]
+    [JSON.stringify(watchZona)]
   )
 
   /*
@@ -217,14 +222,11 @@ const Template: StoryFn<typeof Mapa> = (args) => {
         <Box height={10} />
         <Grid item>
           <Mapa
+            mapRef={mapRef}
             id={'geocoding-mapa'}
-            key={'geocoding-mapa'}
             zoom={zoom}
-            puntos={puntos}
             centro={centro}
-            draggable
             onClick={agregarPunto}
-            onDrag={agregarPunto}
           />
         </Grid>
         <Typography>{defaultCategoriaOption.value}</Typography>
@@ -237,5 +239,4 @@ export const PorDefecto = Template.bind({})
 PorDefecto.storyName = 'Por defecto'
 PorDefecto.args = {
   puntos: [],
-  readonly: false,
 }
