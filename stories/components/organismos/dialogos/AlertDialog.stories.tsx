@@ -57,8 +57,8 @@ AccionesComponeneteHijo.args = {
   children: (
     <div>
       {' '}
-      <Button onClick={action('Cancelar accion')}>Cancelar</Button>{' '}
-      <Button onClick={action('Aceptar accion')}>Aceptar</Button>{' '}
+      <Button onClick={action('Cancelar acción')}>Cancelar</Button>{' '}
+      <Button onClick={action('Aceptar acción')}>Aceptar</Button>{' '}
     </div>
   ),
   disablePortal: true,

@@ -119,7 +119,7 @@ const MapaDibujar = ({
       'Haga clic en cancelar para deshacer los cambios.'
 
     L.drawLocal.edit.handlers.remove.tooltip.text =
-      'Click en una figura para eliminarla.'
+      'Clic en una figura para eliminarla.'
   }, [])
 
   return (

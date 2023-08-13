@@ -118,8 +118,8 @@ export const Paginacion: FC<Props> = ({
             name={'Anterior página'}
             desactivado={pagina == 1}
             titulo={'Anterior página'}
-            accion={async () => {
-              await cambioPagina(pagina - 1)
+            accion={() => {
+              cambioPagina(pagina - 1)
             }}
             icono={'chevron_left'}
           />
@@ -128,8 +128,8 @@ export const Paginacion: FC<Props> = ({
             name={'Siguiente página'}
             desactivado={pagina * limite >= total}
             titulo={'Siguiente página'}
-            accion={async () => {
-              await cambioPagina(pagina + 1)
+            accion={() => {
+              cambioPagina(pagina + 1)
             }}
             icono={'chevron_right'}
           />

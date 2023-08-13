@@ -3,13 +3,14 @@ import { imprimir } from './imprimir'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/es'
 
-const customParseFormat = require('dayjs/plugin/customParseFormat')
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+
 dayjs.extend(customParseFormat)
 
 // Agregar el plugin relativeTime a Dayjs
 dayjs.extend(relativeTime)
 
-// Configurar el idioma español como idioma predeterminado de Dayjs
+// Configurar el idioma español como predeterminado en Dayjs
 dayjs.locale('es')
 
 export const stringToDate = (fecha: string, formatoInicial: string): Date => {

@@ -129,7 +129,7 @@ const TemplatePdf: StoryFn = () => {
       link.remove()
     } catch (e) {
       imprimir('No se encontro archivo de la solicitud')
-      handleClick('Error -> No se encontro archivo de la solicitud')
+      handleClick('Error -> No se encontró archivo de la solicitud')
     }
   }
 
