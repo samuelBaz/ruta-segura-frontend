@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Grid,
   Typography,
@@ -87,10 +88,9 @@ const Modulos: NextPage = () => {
   const [ordenCriterios, setOrdenCriterios] = useState<
     Array<CriterioOrdenType>
   >([
-    { campo: 'icono', nombre: 'Icono' },
     { campo: 'orden', nombre: 'Orden' },
-    { campo: 'nombre', nombre: 'Nombre', ordenar: true },
     { campo: 'label', nombre: 'Label', ordenar: true },
+    { campo: 'nombre', nombre: 'Nombre', ordenar: true },
     { campo: 'descripcion', nombre: 'Descripción' },
     { campo: 'url', nombre: 'URL', ordenar: true },
     { campo: 'estado', nombre: 'Estado', ordenar: true },
@@ -310,29 +310,40 @@ const Modulos: NextPage = () => {
   const contenidoTabla: Array<Array<ReactNode>> = modulosData.map(
     (moduloData, indexModulo) => [
       <Typography
-        key={`${moduloData.id}-${indexModulo}-icono`}
-        variant={'body2'}
-      >
-        {moduloData.modulo === null ? (
-          <></>
-        ) : (
-          <Icono color="inherit">{`${moduloData.propiedades.icono}`}</Icono>
-        )}
-      </Typography>,
-      <Typography
         key={`${moduloData.id}-${indexModulo}-orden`}
         variant={'body2'}
       >
         {moduloData.propiedades.orden}
       </Typography>,
-      <Typography
+      <Box
         key={`${moduloData.id}-${indexModulo}-nombre`}
-        variant={'body2'}
-      >{`${moduloData.nombre}`}</Typography>,
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          borderRadius: 1,
+          alignItems: 'center',
+        }}
+      >
+        {moduloData.modulo === null ? (
+          <></>
+        ) : (
+          <Icono
+            sx={{ mr: 1 }}
+            color="inherit"
+          >{`${moduloData.propiedades.icono}`}</Icono>
+        )}
+        <Typography
+          key={`${moduloData.id}-${indexModulo}-nombre`}
+          component={'span'}
+          variant={'body2'}
+        >
+          {`${moduloData.label}`}
+        </Typography>
+      </Box>,
       <Typography
         key={`${moduloData.id}-${indexModulo}-label`}
         variant={'body2'}
-      >{`${moduloData.label}`}</Typography>,
+      >{`${moduloData.nombre}`}</Typography>,
       <Typography
         key={`${moduloData.id}-${indexModulo}-descripcion`}
         variant={'body2'}
