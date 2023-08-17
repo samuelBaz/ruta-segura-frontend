@@ -1,11 +1,8 @@
-import { createRef, useEffect, useRef, useState } from 'react'
+import React, { createRef, useEffect, useRef, useState } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import { Meta, StoryFn } from '@storybook/react'
 import Mapa from '../../../../common/components/ui/mapas/Mapa'
-import {
-  FormInputAutocomplete,
-  optionType,
-} from '../../../../common/components/ui/form/FormInputAutocomplete'
+import { FormInputAutocomplete } from '../../../../common/components/ui/form/FormInputAutocomplete'
 import { useForm } from 'react-hook-form'
 import { useAlerts } from '../../../../common/hooks'
 import { useDebouncedCallback } from 'use-debounce'
@@ -15,6 +12,7 @@ import { imprimir } from '../../../../common/utils/imprimir'
 import { InterpreteMensajes } from '../../../../common/utils'
 import MapaDibujar from '../../../../common/components/ui/mapas/MapaDibujar'
 import { FeatureGroup, Map } from 'leaflet'
+import { optionType } from '../../../../common/components/ui/form'
 
 interface AddressLeaflet {
   city: string
@@ -70,10 +68,6 @@ const Template: StoryFn = (args) => {
 
   const featureGroupRef = useRef<FeatureGroup | null>(null)
   const mapRef = createRef<Map>()
-
-  /*
-  -------------------- buscador de MAPA ------------------
-  */
 
   const { control, watch } = useForm<SearchType>({
     defaultValues: {},
@@ -188,6 +182,12 @@ const Template: StoryFn = (args) => {
             onInputChange={(event, value) => {
               actualizacionDireccion(value)
             }}
+            freeSolo
+            getOptionLabel={(option) => option.label}
+            renderOption={(option) => <>{option.label}</>}
+            isOptionEqualToValue={(option, value) =>
+              option.value == value.value
+            }
           />
         </Grid>
         <Box height={10} />

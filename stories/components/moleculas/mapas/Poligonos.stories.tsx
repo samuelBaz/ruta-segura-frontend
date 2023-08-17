@@ -35,7 +35,7 @@ const poligonoEjemplo: G.Feature = {
 }
 
 export default {
-  title: 'Moléculas/Mapas/Poligonos',
+  title: 'Moléculas/Mapas/Polígonos',
   component: MapaDibujar,
   argTypes: {},
   parameters: {

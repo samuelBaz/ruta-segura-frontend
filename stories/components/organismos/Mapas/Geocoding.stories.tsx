@@ -215,6 +215,7 @@ const Template: StoryFn = (args) => {
             onInputChange={(event, value) => {
               actualizacionDireccion(value)
             }}
+            freeSolo
             isOptionEqualToValue={(option, value) =>
               option.value == value.value
             }
