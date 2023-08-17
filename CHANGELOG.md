@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.1...v1.10.2) (2023-08-17)
+
+
+### Features
+
+* agregado de storybook de mapas con poligonos ([29e72f5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/29e72f56611630f0876b45e06309740ec86283c6))
+* añadido título personalizado opcional para componente CustomDataTable ([866909a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/866909af357c82bf1d76c2dcfa673ac3445b0443))
+
+
+### Bug Fixes
+
+* agregado de location en mapa ([e93d0ce](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e93d0ce723429fdf2f338b6008efd5a0f03ba614))
+* agregado de tipados en componente de poligonos ([8eaa2b7](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/8eaa2b7a5b0adfec3f372fc356b7cc55e418b6a7))
+* añadida opción de variantes de botones en componente IconoBoton ([b5b3e45](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b5b3e45e6acc40f352deba097aa4c672e3ef2e73))
+* arreglo de componente de poligonos ([310787d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/310787d851741052c496f6199066ae999a523966))
+* arreglo de ubicacion de centro ([e1c0a52](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e1c0a521df9d002593a5c57609afaa59ec99f95c))
+* arreglo de ubicacion de componente de poligonos ([07b310e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/07b310e160d332bdd173802663a0dc969ad1a308))
+* eliminado de key prop ([d126a67](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d126a67e9aaae9a9e2a37b8059a9453d889ea54c))
+
 ### [1.10.1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.0...v1.10.1) (2023-08-09)
 
 
