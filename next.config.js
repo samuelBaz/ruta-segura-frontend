@@ -1,7 +1,7 @@
 /**
- * @typedef {import('next').NextConfig} NextConfig
- * @typedef {import('webpack').Configuration} WebpackConfig
- * @typedef {import('next/dist/server/config-shared').WebpackConfigContext} WebpackConfigContext
+ * @typedef {import("next").NextConfig} NextConfig
+ * @typedef {import("webpack").Configuration} WebpackConfig
+ * @typedef {import("next/dist/server/config-shared").WebpackConfigContext} WebpackConfigContext
  * @typedef {(config: WebpackConfig, context: WebpackConfigContext) => any} NextWebpackConfig
  */
 
@@ -10,7 +10,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   openAnalyzer: false,
 })
 
-/** @type {Omit<NextConfig, 'webpack'>} nextConfig */
+/** @type {Omit<NextConfig, "webpack">} nextConfig */
 const nextConfig = {
   basePath:
     '' === process.env.NEXT_PUBLIC_PATH
@@ -33,6 +33,9 @@ const nextConfig = {
   output: 'standalone',
   eslint: {
     dirs: ['common', 'context', 'modules', 'pages', 'themes', 'stories'],
+  },
+  experimental: {
+    appDir: false,
   },
 }
 
