@@ -1,6 +1,6 @@
 import Icon from '@mui/material/Icon'
 
-import { FC, PropsWithChildren } from 'react'
+import { CSSProperties, FC, PropsWithChildren } from 'react'
 import { OverridableStringUnion } from '@mui/types'
 import {
   IconPropsColorOverrides,
@@ -26,7 +26,7 @@ interface Props {
     IconPropsSizeOverrides
   >
   sx?: SxProps<Theme>
-  style?: React.CSSProperties
+  style?: CSSProperties
 }
 
 export const Icono: FC<PropsWithChildren<Props>> = ({
