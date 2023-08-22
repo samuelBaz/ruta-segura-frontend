@@ -34,9 +34,6 @@ const nextConfig = {
   eslint: {
     dirs: ['common', 'context', 'modules', 'pages', 'themes', 'stories'],
   },
-  experimental: {
-    appDir: false,
-  },
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
