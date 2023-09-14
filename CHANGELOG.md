@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.2...v1.10.3) (2023-09-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* se necesita definir funciones getOptionLabel, renderOption, isOptionEqualToValue
+
+### Features
+
+* ajuste sutil en diseño de Sidebar, para reducir ancho y ampliar tamaño de contenido ([1aaee1e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1aaee1e9be6a391075c14a8f2f970059c5f410fd))
+* campo de autocompletado de tipo genérico ([431080d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/431080d8aa3c11e980ecbaee8b4a8964084b7f9d))
+
+
+### Bug Fixes
+
+* correcció de parámetros adicionales requeridos en campo de autocompletado ([1032c0f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1032c0f3cad4b08cf1074c90b41d5313a9ced9e8))
+* corrección de tipado den Next.config.js ([cb17734](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/cb1773404e5b91c499a154e15ff50e02597425ab))
+
 ### [1.10.2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.1...v1.10.2) (2023-08-17)
 
 
