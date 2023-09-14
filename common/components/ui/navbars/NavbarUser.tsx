@@ -174,7 +174,7 @@ export const NavbarUser = () => {
                 openSideMenu()
               }
             }}
-            sx={{ mr: 2 }}
+            sx={{ mr: 1 }}
           >
             {sideMenuOpen ? (
               <Icono color={'primary'}>menu_open</Icono>

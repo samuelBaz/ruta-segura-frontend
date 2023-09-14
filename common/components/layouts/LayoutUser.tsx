@@ -40,11 +40,11 @@ export const LayoutUser: FC<PropsWithChildren<Props>> = ({
       <Box
         component="main"
         sx={{
-          width: sm || xs || md ? '100%' : sideMenuOpen ? '78%' : '100%',
+          width: sm || xs || md ? '100%' : sideMenuOpen ? '80%' : '100%',
           // backgroundColor: 'primary.main',
           display: 'flex',
           flexDirection: 'column',
-          ml: sm || xs || md ? '0%' : sideMenuOpen ? '240px' : '0%',
+          ml: sm || xs || md ? '0%' : sideMenuOpen ? '200px' : '0%',
           transition: 'all 0.2s ease-out !important',
         }}
       >

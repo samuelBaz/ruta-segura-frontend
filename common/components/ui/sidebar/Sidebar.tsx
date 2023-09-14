@@ -20,7 +20,7 @@ import { Icono } from '../Icono'
 import { ModuloType } from '../../../../modules/login/types/loginTypes'
 import { versionNumber } from '../../../utils'
 
-const drawerWidth = 240
+const drawerWidth = 220
 
 type SidebarModuloType = ModuloType & { showed?: boolean; open?: boolean }
 
@@ -192,7 +192,7 @@ export const Sidebar = () => {
                         alignItems: 'center',
                       }}
                     >
-                      <Box width={'20px'} />
+                      <Box width={'10px'} />
                       <Icono>{subModuloItem.propiedades.icono}</Icono>
 
                       <Box width={'20px'} />
