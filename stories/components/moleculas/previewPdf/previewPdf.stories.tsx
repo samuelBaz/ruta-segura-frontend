@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import PdfPreview from '../../../../common/components/ui/preview/PdfPreview'
 import { TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { ArchivoType } from '../../../../common/components/ui/form/FormInputImage'
+import { ArchivoType } from '../../../../common/types/fileType'
 
 export default {
   title: 'Moléculas/Previa/PDF',

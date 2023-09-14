@@ -18,13 +18,7 @@ import {
 import { SubirArchivo } from '../archivos/SubirArchivo'
 import { filesToArray, mergeFilesList } from '../../../utils'
 import PdfPreview from '../preview/PdfPreview'
-
-export interface ArchivoType {
-  nombre: string
-  tipo: string
-  espacio: number
-  imgUrlLocal: string
-}
+import { ArchivoType } from '../../../types/fileType'
 
 export interface FormInputFileProps<T extends FieldValues> {
   id: string

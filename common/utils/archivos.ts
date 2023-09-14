@@ -1,4 +1,4 @@
-import { ArchivoType } from '../components/ui/form/FormInputImage'
+import { ArchivoType } from '../types/fileType'
 
 export const filesToArray = (files: FileList): ArchivoType[] =>
   Array.from(files ?? []).map((file) => ({

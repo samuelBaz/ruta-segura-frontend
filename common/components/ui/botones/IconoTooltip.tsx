@@ -1,10 +1,4 @@
-import {
-  FC,
-  MouseEventHandler,
-  PropsWithChildren,
-  ReactNode,
-  useState,
-} from 'react'
+import { FC, MouseEventHandler, ReactNode, useState } from 'react'
 import { IconButton, Tooltip } from '@mui/material'
 import { Icono } from '../Icono'
 
@@ -27,7 +21,7 @@ interface Props {
   id: string
 }
 
-export const IconoTooltip: FC<PropsWithChildren<Props>> = ({
+export const IconoTooltip: FC<Props> = ({
   color = 'primary',
   icono,
   titulo,

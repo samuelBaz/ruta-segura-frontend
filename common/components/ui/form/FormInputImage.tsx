@@ -17,13 +17,7 @@ import { IconoTooltip } from '../botones/IconoTooltip'
 import ImagenPreview from '../preview/ImagenPreview'
 import { SubirArchivo } from '../archivos/SubirArchivo'
 import { filesToArray, mergeFilesList } from '../../../utils'
-
-export interface ArchivoType {
-  nombre: string
-  tipo: string
-  espacio: number
-  imgUrlLocal: string
-}
+import { ArchivoType } from '../../../types/fileType'
 
 export interface FormInputImageProps<T extends FieldValues> {
   id: string
