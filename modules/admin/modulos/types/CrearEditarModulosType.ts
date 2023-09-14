@@ -1,4 +1,4 @@
-import { optionType } from '../../../../common/components/ui/form/FormInputAutocomplete'
+import { optionType } from '../../../../common/components/ui/form'
 
 export interface Propiedades {
   icono?: string

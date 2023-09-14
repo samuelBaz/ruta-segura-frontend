@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import {
   FormInputDropdown,
   FormInputText,
+  optionType,
 } from '../../../../common/components/ui/form'
 import ProgresoLineal from '../../../../common/components/ui/progreso/ProgresoLineal'
 import { useAlerts, useSession } from '../../../../common/hooks'
@@ -16,10 +17,7 @@ import {
   GuardarModulosType,
 } from '../types/CrearEditarModulosType'
 import { Icono } from '../../../../common/components/ui'
-import {
-  FormInputAutocomplete,
-  optionType,
-} from '../../../../common/components/ui/form/FormInputAutocomplete'
+import { FormInputAutocomplete } from '../../../../common/components/ui/form/FormInputAutocomplete'
 
 export const VistaModalModulo = ({
   modulo,
@@ -172,6 +170,8 @@ export const VistaModalModulo = ({
                       </Icono>
                     ),
                   }}
+                  getOptionLabel={(option) => option.label}
+                  renderOption={(option) => <>{option.label}</>}
                 />
               </Grid>
             </Grid>

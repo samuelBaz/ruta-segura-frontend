@@ -1,6 +1,6 @@
 /// CRUD de políticas
 
-import { optionType } from '../../../common/components/ui/form/FormInputAutocomplete'
+import { optionType } from '../../../common/components/ui/form'
 
 export interface PoliticaCRUDType {
   sujeto: string
