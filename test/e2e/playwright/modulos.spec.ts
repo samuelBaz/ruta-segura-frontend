@@ -25,8 +25,10 @@ test('Módulos - crear/editar módulo', async ({ page, isMobile }) => {
   await page.locator('#url').fill(moduloAleatorio)
   await page.locator('#orden').fill(numeroAleatorio(1, 100).toString())
   await page.locator('#descripcion').fill(moduloAleatorio)
-  await page.getByRole('button', { name: 'Guardar' }).click()
-  await page.waitForResponse((response) => response.url().includes('/modulos'))
+  await Promise.all([
+    page.getByRole('button', { name: 'Guardar' }).click(),
+    page.waitForResponse((response) => response.url().includes('/modulos')),
+  ])
   await page.locator('#accionFiltrarModuloToggle').click()
   await page.locator('#buscar').click()
   await page.locator('#buscar').fill(moduloAleatorio)
@@ -42,8 +44,12 @@ test('Módulos - crear/editar módulo', async ({ page, isMobile }) => {
   await page.locator('#url').fill(moduloAleatorio2)
   await page.locator('#orden').fill(numeroAleatorio(1, 100).toString())
   await page.locator('#descripcion').fill(moduloAleatorio2)
-  await page.getByRole('button', { name: 'Guardar' }).click()
-  await page.waitForResponse((response) => response.url().includes('/modulos'))
+
+  await Promise.all([
+    page.getByRole('button', { name: 'Guardar' }).click(),
+    page.waitForResponse((response) => response.url().includes('/modulos')),
+  ])
+
   await page.locator('#buscar').fill(moduloAleatorio2)
 
   expect(page.getByRole('cell', { name: moduloAleatorio })).toBeDefined()
