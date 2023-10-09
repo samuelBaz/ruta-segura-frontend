@@ -195,7 +195,7 @@ export const Sidebar = () => {
                       <Box width={'10px'} />
                       <Icono>{subModuloItem.propiedades.icono}</Icono>
 
-                      <Box width={'20px'} />
+                      <Box width={'16px'} />
                       <Typography
                         variant={'body2'}
                       >{`${subModuloItem.label}`}</Typography>
