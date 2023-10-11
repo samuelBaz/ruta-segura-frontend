@@ -25,7 +25,7 @@ import TextAlign from '@tiptap/extension-text-align'
 import { Editor, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { MouseEvent, useCallback, useRef, useState } from 'react'
-import { Icono } from '../Icono'
+import { Icono } from '@/components/Icono'
 import xss from 'xss'
 import { styled } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
@@ -644,7 +644,7 @@ const Tiptap = ({
         </Stack>
       )}
       {editable ? (
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor} className="custom_tiptap" />
       ) : (
         <div
           dangerouslySetInnerHTML={{
@@ -654,29 +654,29 @@ const Tiptap = ({
       )}
       {editable && (
         <style jsx global>{`
-          .ProseMirror {
+          .custom_tiptap .ProseMirror {
             padding-left: 20px;
             padding-right: 20px;
             border: 1px solid ${palette.primary.main};
             border-radius: 5px;
           }
 
-          .ProseMirror:focus-visible {
+          .custom_tiptap .ProseMirror:focus-visible {
             outline: 0 !important;
             border: 2px solid;
 
             border-color: ${palette.primary.main} !important;
           }
 
-          table {
+          .custom_tiptap table {
             border-collapse: collapse;
             table-layout: fixed;
             width: 100%;
             margin: 0;
           }
 
-          td,
-          th {
+          .custom_tiptap td,
+          .custom_tiptap th {
             min-width: 1em;
             border: 1px solid;
             padding: 3px 5px;
@@ -685,11 +685,11 @@ const Tiptap = ({
             position: relative;
           }
 
-          th {
+          .custom_tiptap th {
             text-align: left;
           }
 
-          .selectedCell:after {
+          .custom_tiptap .selectedCell:after {
             z-index: 2;
             position: absolute;
             content: '';
@@ -701,7 +701,7 @@ const Tiptap = ({
             pointer-events: none;
           }
 
-          .column-resize-handle {
+          .custom_tiptap .column-resize-handle {
             position: absolute;
             right: -2px;
             top: 0;
@@ -711,12 +711,12 @@ const Tiptap = ({
             pointer-events: none;
           }
 
-          .tableWrapper {
+          .custom_tiptap .tableWrapper {
             padding: 1rem 0;
             overflow-x: auto;
           }
 
-          .resize-cursor {
+          .custom_tiptap .resize-cursor {
             cursor: col-resize;
           }
         `}</style>
