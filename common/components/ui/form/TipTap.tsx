@@ -12,6 +12,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
+  Typography,
   useTheme,
 } from '@mui/material'
 
@@ -24,8 +25,8 @@ import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import { Editor, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { MouseEvent, useCallback, useRef, useState } from 'react'
-import { Icono } from '@/components/Icono'
+import React, { MouseEvent, useCallback, useRef, useState } from 'react'
+import { Icono } from '../Icono'
 import xss from 'xss'
 import { styled } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
@@ -139,50 +140,56 @@ const MenuBar = ({
     /* Formato Texto */
     mostrarOpcionesFormatoTexto && (
       <StyledToggleButtonGroup>
-        <Tooltip title="Bold" placement="bottom-start">
-          <ToggleButton
-            LinkComponent={'span'}
-            size="small"
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            disabled={!editor.can().chain().focus().toggleBold().run()}
-            value={'bold'}
-            selected={editor.isActive('bold')}
-          >
-            <Icono color={'inherit'} fontSize="small">
-              format_bold
-            </Icono>
-          </ToggleButton>
-        </Tooltip>
+        <ToggleButton
+          LinkComponent={'span'}
+          size="small"
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          disabled={!editor.can().chain().focus().toggleBold().run()}
+          value={'bold'}
+          selected={editor.isActive('bold')}
+        >
+          <Tooltip title="Bold" placement="bottom-start">
+            <Typography sx={{}} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="small">
+                format_bold
+              </Icono>
+            </Typography>
+          </Tooltip>
+        </ToggleButton>
         {/* Italic */}
-        <Tooltip title="Italic" placement="bottom-start">
-          <ToggleButton
-            LinkComponent={'span'}
-            size="small"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            disabled={!editor.can().chain().focus().toggleItalic().run()}
-            value={'italic'}
-            selected={editor.isActive('italic')}
-          >
-            <Icono color={'inherit'} fontSize="small">
-              format_italic
-            </Icono>
-          </ToggleButton>
-        </Tooltip>
+        <ToggleButton
+          LinkComponent={'span'}
+          size="small"
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          disabled={!editor.can().chain().focus().toggleItalic().run()}
+          value={'italic'}
+          selected={editor.isActive('italic')}
+        >
+          <Tooltip title="Italic" placement="bottom-start">
+            <Typography sx={{}} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="small">
+                format_italic
+              </Icono>
+            </Typography>
+          </Tooltip>
+        </ToggleButton>
         {/* Subrayado */}
-        <Tooltip title="Italic" placement="bottom-start">
-          <ToggleButton
-            LinkComponent={'span'}
-            size="small"
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-            disabled={!editor.can().chain().focus().toggleUnderline().run()}
-            value={'italic'}
-            selected={editor.isActive('italic')}
-          >
-            <Icono color={'inherit'} fontSize="small">
-              format_underlined
-            </Icono>
-          </ToggleButton>
-        </Tooltip>
+        <ToggleButton
+          LinkComponent={'span'}
+          size="small"
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          disabled={!editor.can().chain().focus().toggleUnderline().run()}
+          value={'italic'}
+          selected={editor.isActive('italic')}
+        >
+          <Tooltip title="Italic" placement="bottom-start">
+            <Typography sx={{}} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="small">
+                format_underlined
+              </Icono>
+            </Typography>
+          </Tooltip>
+        </ToggleButton>
       </StyledToggleButtonGroup>
     ),
     /* Alinear */
@@ -308,30 +315,34 @@ const MenuBar = ({
     /* Historial */
     mostrarOpcionesHistorial && (
       <StyledToggleButtonGroup>
-        <Tooltip title="Deshacer" placement="bottom-start">
-          <ToggleButton
-            size="small"
-            value={'undo'}
-            onClick={() => editor.chain().focus().undo().run()}
-            disabled={!editor.can().chain().focus().undo().run()}
-          >
-            <Icono color={'inherit'} fontSize="small">
-              undo
-            </Icono>
-          </ToggleButton>
-        </Tooltip>
-        <Tooltip title="Rehacer" placement="bottom-start">
-          <ToggleButton
-            size="small"
-            value={'undo'}
-            onClick={() => editor.chain().focus().redo().run()}
-            disabled={!editor.can().chain().focus().redo().run()}
-          >
-            <Icono color={'inherit'} fontSize="small">
-              redo
-            </Icono>
-          </ToggleButton>
-        </Tooltip>
+        <ToggleButton
+          size="small"
+          value={'undo'}
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().chain().focus().undo().run()}
+        >
+          <Tooltip title="Deshacer" placement="bottom-start">
+            <Typography sx={{}} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="small">
+                undo
+              </Icono>
+            </Typography>
+          </Tooltip>
+        </ToggleButton>
+        <ToggleButton
+          size="small"
+          value={'undo'}
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().chain().focus().redo().run()}
+        >
+          <Tooltip title="Rehacer" placement="bottom-start">
+            <Typography sx={{}} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="small">
+                redo
+              </Icono>
+            </Typography>
+          </Tooltip>
+        </ToggleButton>
       </StyledToggleButtonGroup>
     ),
   ]
@@ -550,7 +561,7 @@ const MenuBar = ({
         {gruposOpciones
           .filter((grupo) => grupo)
           .map((grupo, index) => (
-            <>
+            <React.Fragment key={`grupoOpciones-${index}`}>
               {grupo}
               {index != gruposOpciones.filter((grupo) => grupo).length - 1 && (
                 <Divider
@@ -559,7 +570,7 @@ const MenuBar = ({
                   sx={{ mx: 0.5, my: 1 }}
                 />
               )}
-            </>
+            </React.Fragment>
           ))}
       </Grid>
     </>
