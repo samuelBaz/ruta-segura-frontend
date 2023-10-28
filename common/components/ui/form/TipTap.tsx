@@ -25,7 +25,7 @@ import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import { Editor, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React, { MouseEvent, useCallback, useRef, useState } from 'react'
+import { Fragment, MouseEvent, useCallback, useRef, useState } from 'react'
 import { Icono } from '../Icono'
 import xss from 'xss'
 import { styled } from '@mui/material/styles'
@@ -561,7 +561,7 @@ const MenuBar = ({
         {gruposOpciones
           .filter((grupo) => grupo)
           .map((grupo, index) => (
-            <React.Fragment key={`grupoOpciones-${index}`}>
+            <Fragment key={`grupoOpciones-${index}`}>
               {grupo}
               {index != gruposOpciones.filter((grupo) => grupo).length - 1 && (
                 <Divider
@@ -570,7 +570,7 @@ const MenuBar = ({
                   sx={{ mx: 0.5, my: 1 }}
                 />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
       </Grid>
     </>
