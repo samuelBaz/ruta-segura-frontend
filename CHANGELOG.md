@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.3...v1.10.4) (2023-10-28)
+
+
+### Features
+
+* actualización de dependencias, NextJS 13.5.6, MUI 5.14.15, Storybook 7.5.1 ([e35cec6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e35cec68bec13a5b6dc289f906e79fb436fada2f))
+
+
+### Bug Fixes
+
+* 🩹 correccion errores eslint componente tiptap ([9bc9bbd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9bc9bbdf6ec2d175396f43beb5c321d2101c8eba))
+* 🩹 correccion estilos globales en componente tip tap ([322a7b0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/322a7b05fc0fbf08d277991818ab5706ec740793))
+* conectando storybook con matomo ([ff033a8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ff033a898a7b176395f7ba0b280271dae099d288))
+
 ### [1.10.3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.2...v1.10.3) (2023-09-14)
 
 
