@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.4...v1.10.5) (2023-10-30)
+
+
+### Features
+
+* actualización de dependencias, Next 14, Storybook 7.5.2 ([1ec6ac2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1ec6ac2796aa7e8889b0f13eddacf4078d56c247))
+
 ### [1.10.4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.3...v1.10.4) (2023-10-28)
 
 
