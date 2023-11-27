@@ -149,8 +149,8 @@ const MenuBar = ({
           selected={editor.isActive('bold')}
         >
           <Tooltip title="Bold" placement="bottom-start">
-            <Typography sx={{}} variant={'inherit'}>
-              <Icono color={'inherit'} fontSize="small">
+            <Typography sx={{ display: 'flex', }} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="medium">
                 format_bold
               </Icono>
             </Typography>
@@ -165,9 +165,9 @@ const MenuBar = ({
           value={'italic'}
           selected={editor.isActive('italic')}
         >
-          <Tooltip title="Italic" placement="bottom-start">
-            <Typography sx={{}} variant={'inherit'}>
-              <Icono color={'inherit'} fontSize="small">
+          <Tooltip title="Italic" placement="bottom-end">
+            <Typography sx={{ display: 'flex' }} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="medium">
                 format_italic
               </Icono>
             </Typography>
@@ -182,9 +182,9 @@ const MenuBar = ({
           value={'italic'}
           selected={editor.isActive('italic')}
         >
-          <Tooltip title="Italic" placement="bottom-start">
-            <Typography sx={{}} variant={'inherit'}>
-              <Icono color={'inherit'} fontSize="small">
+          <Tooltip title="Underline" placement="bottom">
+            <Typography sx={{ display: 'flex'}} variant={'inherit'}>
+              <Icono color={'inherit'} fontSize="medium">
                 format_underlined
               </Icono>
             </Typography>
