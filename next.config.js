@@ -1,10 +1,9 @@
-/** @type {import("next").NextConfig} */
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: false,
   openAnalyzer: false,
 })
 
+/** @type {import("next").NextConfig} */
 const nextConfig = {
   basePath:
     '' === process.env.NEXT_PUBLIC_PATH
