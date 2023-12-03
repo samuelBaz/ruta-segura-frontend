@@ -83,7 +83,13 @@ const preview: Preview = {
       container: (props: DocsContainerProps) => {
         const isDark = useDarkMode()
         const currentProps = { ...props }
-        currentProps.theme = isDark ? themes.dark : themes.light
+        currentProps.theme = isDark
+          ? { ...themes.dark, appPreviewBg: 'black', barHoverColor: '' }
+          : {
+              ...themes.light,
+              appPreviewBg: 'white',
+              barHoverColor: '',
+            }
         return createElement(DocsContainer, currentProps)
       },
     },
