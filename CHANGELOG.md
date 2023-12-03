@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.5...v1.10.6) (2023-12-03)
+
+
+### Features
+
+* actualización de dependencias MUI 5.14.19, NextJS 14.0.3 ([2bc1e3f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2bc1e3f9f33b4ca1408bb379639c84c7d275807e))
+
+
+### Bug Fixes
+
+* :bug: 🩹 correccion tooltip y centreado en items toolbar de tiptap ([3460355](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/34603557cd8932e3de0127601061a44d1e16d846))
+* corrección de importación de tipado en variable nextConfig ([59b337b](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/59b337bf787fa7222719ad23ea481643e6912f65))
+* modificado tipo de contenedor de documentos de vista previa de Storybook ([027403e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/027403e98507b0b451a93845cda3b30cbccbf358))
+
 ### [1.10.5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.4...v1.10.5) (2023-10-30)
 
 
