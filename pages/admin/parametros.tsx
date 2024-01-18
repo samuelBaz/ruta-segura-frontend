@@ -79,7 +79,7 @@ const Parametros: NextPage = () => {
 
   /// Método que muestra alerta de cambio de estado
 
-  const editarEstadoParametroModal = async (parametro: ParametroCRUDType) => {
+  const editarEstadoParametroModal = (parametro: ParametroCRUDType) => {
     setParametroEdicion(parametro) // para mostrar datos de modal en la alerta
     setMostrarAlertaEstadoParametro(true) // para mostrar alerta de parametro
   }
@@ -169,8 +169,8 @@ const Parametros: NextPage = () => {
           parametroData.estado == 'ACTIVO'
             ? 'success'
             : parametroData.estado == 'INACTIVO'
-            ? 'error'
-            : 'info'
+              ? 'error'
+              : 'info'
         }
       />,
 

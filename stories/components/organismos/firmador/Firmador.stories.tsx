@@ -133,7 +133,7 @@ const TemplatePdf: StoryFn = () => {
     }
   }
 
-  const fileABase64 = async (file: File) => {
+  const fileABase64 = (file: File) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.onloadend = () => {

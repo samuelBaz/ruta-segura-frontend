@@ -70,7 +70,7 @@ const Template: StoryFn = (args) => {
     }
   }
 
-  const clickMarker = async (index: number) => {
+  const clickMarker = (index: number) => {
     const marker = puntos[index]
     mapRef.current?.flyTo([Number(marker[0]) + 0.005, Number(marker[1])], 15)
   }

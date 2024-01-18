@@ -76,7 +76,7 @@ const Roles: NextPage = () => {
 
   const [mostrarAlertaEstadoRol, setMostrarAlertaEstadoRol] = useState(false)
 
-  const editarEstadoRolModal = async (rol: RolCRUDType) => {
+  const editarEstadoRolModal = (rol: RolCRUDType) => {
     setRolEdicion(rol) // para mostrar datos de Rol en la alerta
     setMostrarAlertaEstadoRol(true) // para mostrar alerta de Roles
   }
@@ -125,8 +125,8 @@ const Roles: NextPage = () => {
             rolData.estado == 'ACTIVO'
               ? 'success'
               : rolData.estado == 'INACTIVO'
-              ? 'error'
-              : 'info'
+                ? 'error'
+                : 'info'
           }
         />
       </Typography>,
@@ -136,8 +136,8 @@ const Roles: NextPage = () => {
             id={`cambiarEstadoRol-${rolData.id}`}
             titulo={rolData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
             color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
-            accion={async () => {
-              await editarEstadoRolModal(rolData)
+            accion={() => {
+              editarEstadoRolModal(rolData)
             }}
             desactivado={rolData.estado == 'PENDIENTE'}
             icono={rolData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}

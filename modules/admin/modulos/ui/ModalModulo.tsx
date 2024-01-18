@@ -44,11 +44,13 @@ export const VistaModalModulo = ({
       propiedades: {
         orden: modulo?.propiedades?.orden,
         descripcion: modulo?.propiedades?.descripcion,
-        icono: {
-          value: modulo?.propiedades?.icono,
-          label: modulo?.propiedades?.icono,
-          key: modulo?.propiedades?.icono,
-        },
+        icono: modulo?.propiedades?.icono
+          ? {
+              value: modulo?.propiedades?.icono,
+              label: modulo?.propiedades?.icono,
+              key: modulo?.propiedades?.icono,
+            }
+          : undefined,
       },
       estado: modulo?.estado,
       idModulo: modulo?.modulo?.id,

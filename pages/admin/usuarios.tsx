@@ -177,8 +177,8 @@ const Usuarios: NextPage = () => {
             usuarioData.estado == 'ACTIVO'
               ? 'success'
               : usuarioData.estado == 'INACTIVO'
-              ? 'error'
-              : 'info'
+                ? 'error'
+                : 'info'
           }
         />
       </Typography>,
@@ -429,21 +429,21 @@ const Usuarios: NextPage = () => {
 
   /// Método que muestra alerta de cambio de estado
 
-  const editarEstadoUsuarioModal = async (usuario: UsuarioCRUDType) => {
+  const editarEstadoUsuarioModal = (usuario: UsuarioCRUDType) => {
     setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
     setMostrarAlertaEstadoUsuario(true) // para mostrar alerta de usuarios
   }
 
   /// Método que muestra alerta de restablecimiento de contraseña
 
-  const restablecimientoPassUsuarioModal = async (usuario: UsuarioCRUDType) => {
+  const restablecimientoPassUsuarioModal = (usuario: UsuarioCRUDType) => {
     setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
     setMostrarAlertaRestablecerUsuario(true) // para mostrar alerta de usuarios
   }
 
   /// Método que muestra alerta de reenvio de correo
 
-  const reenvioCorreoModal = async (usuario: UsuarioCRUDType) => {
+  const reenvioCorreoModal = (usuario: UsuarioCRUDType) => {
     setUsuarioEdicion(usuario) // para mostrar datos de usuario en la alerta
     setMostrarAlertaReenvioCorreo(true) // para mostrar alerta de usuarios
   }

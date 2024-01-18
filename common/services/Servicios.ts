@@ -24,7 +24,7 @@ export const estadosCorrectos: number[] = [200, 201, 202, 204]
 export const estadosSinPermiso: number[] = [401]
 
 class ServiciosClass {
-  async peticionHTTP({
+  peticionHTTP({
     url,
     tipo = 'get',
     headers,

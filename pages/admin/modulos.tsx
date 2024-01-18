@@ -201,7 +201,7 @@ const Modulos: NextPage = () => {
 
   /// Método que muestra alerta de cambio de estado
 
-  const editarEstadoModuloModal = async (modulo: ModuloCRUDType) => {
+  const editarEstadoModuloModal = (modulo: ModuloCRUDType) => {
     setModuloEdicion(modulo) // para mostrar datos de modal en la alerta
     setMostrarAlertaEstadoModulo(true) // para mostrar alerta de modulo
   }
@@ -284,7 +284,7 @@ const Modulos: NextPage = () => {
             id: 'agregarModulo',
             mostrar: true,
             titulo: 'Nuevo módulo',
-            accion: async () => {
+            accion: () => {
               agregarModuloModal({ esSeccion: false })
             },
             desactivado: false,
@@ -295,7 +295,7 @@ const Modulos: NextPage = () => {
             id: '1',
             mostrar: true,
             titulo: 'Nueva sección',
-            accion: async () => {
+            accion: () => {
               agregarModuloModal({ esSeccion: true })
             },
             desactivado: false,
@@ -365,8 +365,8 @@ const Modulos: NextPage = () => {
           moduloData.estado == 'ACTIVO'
             ? 'success'
             : moduloData.estado == 'INACTIVO'
-            ? 'error'
-            : 'info'
+              ? 'error'
+              : 'info'
         }
       />,
       <Grid key={`${moduloData.id}-${indexModulo}-accion`}>
@@ -376,8 +376,8 @@ const Modulos: NextPage = () => {
               id={`cambiarEstadoModulo-${moduloData.id}`}
               titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
               color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
-              accion={async () => {
-                await editarEstadoModuloModal({
+              accion={() => {
+                editarEstadoModuloModal({
                   ...moduloData,
                   ...{ esSeccion: moduloData?.modulo == null },
                 })
@@ -433,8 +433,8 @@ const Modulos: NextPage = () => {
               ? 'Editar Sección'
               : 'Editar Módulo'
             : moduloEdicion?.esSeccion
-            ? 'Nueva Sección'
-            : 'Nuevo Módulo'
+              ? 'Nueva Sección'
+              : 'Nuevo Módulo'
         }
       >
         <VistaModalModulo

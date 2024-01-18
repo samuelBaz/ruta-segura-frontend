@@ -110,7 +110,7 @@ const Template: StoryFn<typeof FormInputAutocomplete> = (args) => {
       disabled={false}
       options={opciones}
       filterOptions={(options) => options}
-      onInputChange={async (event, value) => {
+      onInputChange={async (_, value) => {
         await busqueda({ buscar: value })
       }}
       rules={{ required: 'Este campo es requerido' }}
@@ -159,7 +159,7 @@ const TemplateAbierto: StoryFn<typeof FormInputAutocomplete> = (args) => {
       disabled={false}
       options={[]}
       filterOptions={(options) => options}
-      onInputChange={async (event, value) => {
+      onInputChange={(event, value) => {
         imprimir(value)
       }}
       rules={{ required: 'Este campo es requerido' }}
