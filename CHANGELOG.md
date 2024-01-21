@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.7](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.6...v1.10.7) (2024-01-21)
+
+
+### Features
+
+* actualización de dependencias NextJS 14.0.4, MUI 5.15.5, StoryBook 7.6.9 y otros ([be73146](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/be731467976f52952440f038664b307934dcb3e7))
+* actualización NextJS 14.1.0 ([3749989](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/3749989d52a2a1a2f3fba56d6e8ee3eb30005f8e))
+* añadida regla "require-await" para asegurar el uso correcto de Async/Await ([55b209a](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/55b209a5c14ad3c3315082eda681413cfda451fd))
+
 ### [1.10.6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.5...v1.10.6) (2023-12-03)
 
 
