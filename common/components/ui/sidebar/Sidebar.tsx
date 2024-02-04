@@ -6,6 +6,7 @@ import {
   Drawer,
   List,
   ListItemButton,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
@@ -102,11 +103,10 @@ export const Sidebar = () => {
       }}
       sx={{
         width: sideMenuOpen ? drawerWidth : `0`,
-        border: 'none',
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
-          borderWidth: 0.0,
+          // borderWidth: 0.0,
           boxSizing: 'border-box',
         },
         transition: 'all 0.2s ease-out',
@@ -120,6 +120,7 @@ export const Sidebar = () => {
               sx={{
                 display: 'flex',
                 m: 0,
+                mx: 0.5,
                 alignItems: 'center',
                 cursor: 'pointer',
               }}
@@ -153,8 +154,11 @@ export const Sidebar = () => {
                 <Box width={'20px'} />
                 <Typography
                   variant={'body2'}
-                  color={'text.secondary'}
-                >{`${modulo.label}`}</Typography>
+                  color={'text'}
+                  sx={{ fontWeight: '400' }}
+                >
+                  {`${modulo.label}`}
+                </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 {(modulo.showed || !modulo.open) && (
                   <Icono
@@ -181,6 +185,11 @@ export const Sidebar = () => {
                     key={`submodulo-${index}-${indexSubModulo}`}
                     component="li"
                     selected={rutaActiva(subModuloItem.url, router.pathname)}
+                    sx={{
+                      borderRadius: '10px',
+                      px: 0.5,
+                      mx: 1.5,
+                    }}
                     onClick={() => navigateTo(subModuloItem.url)}
                   >
                     <Box
@@ -193,12 +202,42 @@ export const Sidebar = () => {
                       }}
                     >
                       <Box width={'10px'} />
-                      <Icono>{subModuloItem.propiedades.icono}</Icono>
+                      <Icono
+                        color={
+                          rutaActiva(subModuloItem.url, router.pathname)
+                            ? 'primary'
+                            : 'inherit'
+                        }
+                        fontSize={'small'}
+                      >
+                        {subModuloItem.propiedades.icono}
+                      </Icono>
 
                       <Box width={'16px'} />
-                      <Typography
-                        variant={'body2'}
-                      >{`${subModuloItem.label}`}</Typography>
+                      <Tooltip
+                        title={subModuloItem.propiedades.descripcion}
+                        enterDelay={1000}
+                        placement={'left'}
+                      >
+                        <Typography
+                          variant={'body2'}
+                          sx={{
+                            fontWeight: rutaActiva(
+                              subModuloItem.url,
+                              router.pathname
+                            )
+                              ? '600'
+                              : '500',
+                          }}
+                          color={
+                            rutaActiva(subModuloItem.url, router.pathname)
+                              ? 'primary'
+                              : 'text'
+                          }
+                        >
+                          {`${subModuloItem.label}`}
+                        </Typography>
+                      </Tooltip>
                     </Box>
                   </ListItemButton>
                 ))}
