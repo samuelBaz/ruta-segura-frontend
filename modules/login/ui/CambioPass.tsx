@@ -69,7 +69,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
       await delay(1000)
       const respuesta = await Servicios.peticion({
         url: `${Constantes.baseUrl}/usuarios/cuenta/nueva-contrasena`,
-        tipo: 'patch',
+        method: 'patch',
         body: params,
       })
       imprimir(InterpreteMensajes(respuesta))

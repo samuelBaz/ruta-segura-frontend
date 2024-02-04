@@ -174,7 +174,7 @@ export const AuthProvider = ({ children }: AuthContextType) => {
 
   const actualizarRol = async ({ idRol }: idRolType) => {
     const respuestaUsuario = await sesionPeticion({
-      tipo: 'patch',
+      method: 'patch',
       url: `${Constantes.baseUrl}/cambiarRol`,
       body: {
         idRol,

@@ -69,7 +69,7 @@ export const CambioPassModal = ({
       setLoadingModal(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios/cuenta/contrasena`,
-        tipo: 'patch',
+        method: 'patch',
         body: params,
       })
       Alerta({ mensaje: InterpreteMensajes(respuesta), variant: 'success' })

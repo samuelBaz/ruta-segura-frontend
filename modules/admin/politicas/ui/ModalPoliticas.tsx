@@ -90,7 +90,7 @@ export const VistaModalPolitica = ({
       await delay(1000)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/politicas`,
-        tipo: politicaActual ? 'patch' : 'post',
+        method: politicaActual ? 'patch' : 'post',
         body: politicaNueva,
         params: {
           sujeto: politicaActual?.sujeto,
@@ -178,8 +178,8 @@ export const VistaModalPolitica = ({
                 options={(valorApp == 'frontend'
                   ? opcionesAccionesFrontend
                   : valorApp == 'backend'
-                  ? opcionesAccionesBackend
-                  : []
+                    ? opcionesAccionesBackend
+                    : []
                 ).map((opcionAccion) => ({
                   key: opcionAccion,
                   value: opcionAccion,

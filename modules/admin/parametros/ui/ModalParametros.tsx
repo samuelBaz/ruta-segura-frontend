@@ -58,7 +58,7 @@ export const VistaModalParametro = ({
         url: `${Constantes.baseUrl}/parametros${
           parametro.id ? `/${parametro.id}` : ''
         }`,
-        tipo: !!parametro.id ? 'patch' : 'post',
+        method: !!parametro.id ? 'patch' : 'post',
         body: parametro,
       })
       Alerta({

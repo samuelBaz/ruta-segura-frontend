@@ -81,7 +81,7 @@ export const VistaModalUsuario = ({
         url: `${Constantes.baseUrl}/usuarios${
           usuario.id ? `/${usuario.id}` : ''
         }`,
-        tipo: !!usuario.id ? 'patch' : 'post',
+        method: !!usuario.id ? 'patch' : 'post',
         body: {
           ...usuario,
           ...{

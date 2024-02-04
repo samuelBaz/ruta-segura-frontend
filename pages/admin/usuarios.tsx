@@ -348,7 +348,7 @@ const Usuarios: NextPage = () => {
         url: `${Constantes.baseUrl}/usuarios/${usuario.id}/${
           usuario.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
         }`,
-        tipo: 'patch',
+        method: 'patch',
       })
       imprimir(`respuesta inactivar usuario: ${respuesta}`)
       Alerta({
@@ -370,7 +370,7 @@ const Usuarios: NextPage = () => {
       setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios/${usuario.id}/restauracion`,
-        tipo: 'patch',
+        method: 'patch',
       })
       imprimir(`respuesta restablecer usuario: ${respuesta}`)
       Alerta({
@@ -392,7 +392,7 @@ const Usuarios: NextPage = () => {
       setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios/${usuario.id}/reenviar`,
-        tipo: 'patch',
+        method: 'patch',
       })
       imprimir(`respuesta reenviar correo usuario: ${respuesta}`)
       Alerta({

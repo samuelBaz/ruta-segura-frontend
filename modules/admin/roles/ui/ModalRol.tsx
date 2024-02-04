@@ -49,7 +49,7 @@ export const VistaModalRol = ({
         url: `${Constantes.baseUrl}/autorizacion/roles${
           Rol.id ? `/${Rol.id}` : ''
         }`,
-        tipo: !!Rol.id ? 'patch' : 'post',
+        method: !!Rol.id ? 'patch' : 'post',
         body: Rol,
       })
       Alerta({

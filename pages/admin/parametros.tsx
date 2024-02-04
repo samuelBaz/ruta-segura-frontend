@@ -109,7 +109,7 @@ const Parametros: NextPage = () => {
         url: `${Constantes.baseUrl}/parametros/${parametro.id}/${
           parametro.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
         }`,
-        tipo: 'patch',
+        method: 'patch',
       })
       imprimir(`respuesta estado parametro: ${respuesta}`)
       Alerta({

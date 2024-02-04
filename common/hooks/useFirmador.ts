@@ -50,7 +50,7 @@ const useFirmador = () => {
       )
 
       const respuestaPeticion = await Servicios.peticion({
-        tipo: 'POST',
+        method: 'POST',
         url: `${Constantes.firmadorUrl}/sign`,
         body: documentoEnviar,
         withCredentials: false,

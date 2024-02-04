@@ -87,7 +87,7 @@ export const VistaModalModulo = ({
         url: `${Constantes.baseUrl}/autorizacion/modulos${
           modulo.id ? `/${modulo.id}` : ''
         }`,
-        tipo: !!modulo.id ? 'patch' : 'post',
+        method: !!modulo.id ? 'patch' : 'post',
         body: {
           ...modulo,
           propiedades: {

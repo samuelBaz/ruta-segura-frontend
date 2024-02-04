@@ -219,7 +219,7 @@ const Politicas: NextPage = () => {
       setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/politicas`,
-        tipo: 'delete',
+        method: 'delete',
         params: {
           sujeto: politica?.sujeto,
           objeto: politica?.objeto,

@@ -39,7 +39,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
       await delay(1000)
       const respuesta = await Servicios.peticion({
         url: `${Constantes.baseUrl}/usuarios/crear-cuenta`,
-        tipo: 'post',
+        method: 'post',
         body: { ...cuenta, contrasenaNueva: cuenta.newPassword1 },
       })
       setIndicadorCreacionCuenta(true)

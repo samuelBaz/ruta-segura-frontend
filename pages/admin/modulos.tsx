@@ -229,7 +229,7 @@ const Modulos: NextPage = () => {
         url: `${Constantes.baseUrl}/autorizacion/modulos/${modulo.id}/${
           modulo.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
         }`,
-        tipo: 'patch',
+        method: 'patch',
       })
       imprimir(`respuesta estado modulo: ${respuesta}`)
       Alerta({

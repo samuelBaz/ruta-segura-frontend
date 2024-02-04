@@ -17,7 +17,7 @@ export const useSession = () => {
 
   const sesionPeticion = async ({
     url,
-    tipo = 'get',
+    method = 'get',
     body,
     headers,
     params,
@@ -36,17 +36,17 @@ export const useSession = () => {
         ...headers,
       }
 
-      imprimir(`enviando 🔐🌍`, body, tipo, url, cabeceras)
+      imprimir(`enviando 🔐🌍`, body, method, url, cabeceras)
       const response = await Servicios.peticionHTTP({
         url,
-        tipo,
+        method: method,
         headers: cabeceras,
         body,
         params,
         responseType,
         withCredentials,
       })
-      imprimir('respuesta 🔐📡', body, tipo, url, response)
+      imprimir('respuesta 🔐📡', body, method, url, response)
       return response.data
     } catch (e: import('axios').AxiosError | any) {
       if (e.code === 'ECONNABORTED') {

@@ -1,14 +1,13 @@
 import axios, {
   AxiosError,
-  RawAxiosRequestHeaders,
-  AxiosResponse,
   Method,
+  RawAxiosRequestHeaders,
   ResponseType,
 } from 'axios'
 import { imprimir } from '../utils/imprimir'
 
 export type peticionFormatoMetodo = {
-  tipo?: Method
+  method?: Method
 } & peticionFormato
 
 export type peticionFormato = {
@@ -24,17 +23,17 @@ export const estadosCorrectos: number[] = [200, 201, 202, 204]
 export const estadosSinPermiso: number[] = [401]
 
 class ServiciosClass {
-  peticionHTTP({
+  peticionHTTP = ({
     url,
-    tipo = 'get',
+    method = 'get',
     headers,
     body,
     params,
     responseType,
     withCredentials = true,
-  }: peticionFormatoMetodo): Promise<AxiosResponse> {
-    return axios({
-      method: tipo,
+  }: peticionFormatoMetodo) =>
+    axios({
+      method: method,
       url: url,
       headers: headers,
       timeout: 30000,
@@ -46,7 +45,6 @@ class ServiciosClass {
         return estadosCorrectos.some((estado: number) => status === estado)
       },
     })
-  }
 
   isNetworkError(err: AxiosError | any) {
     return !!err.isAxiosError && !err.response
@@ -54,7 +52,7 @@ class ServiciosClass {
 
   async peticion({
     url,
-    tipo = 'get',
+    method = 'get',
     headers,
     body,
     params,
@@ -62,17 +60,17 @@ class ServiciosClass {
     withCredentials = true,
   }: peticionFormatoMetodo) {
     try {
-      imprimir(`enviando 🌍`, body, tipo, url, headers)
+      imprimir(`enviando 🌍`, body, method, url, headers)
       const response = await this.peticionHTTP({
         url,
-        tipo,
+        method: method,
         headers,
         body,
         params,
         responseType,
         withCredentials,
       })
-      imprimir('respuesta 📡', body, tipo, url, response)
+      imprimir('respuesta 📡', body, method, url, response)
       return response.data
     } catch (e: AxiosError | any) {
       if (e.code === 'ECONNABORTED') {
@@ -97,7 +95,7 @@ class ServiciosClass {
   }: peticionFormato) {
     return await this.peticion({
       url,
-      tipo: 'get',
+      method: 'get',
       headers,
       body,
       params,
@@ -116,7 +114,7 @@ class ServiciosClass {
   }: peticionFormato) {
     return await this.peticion({
       url,
-      tipo: 'post',
+      method: 'post',
       headers,
       body,
       params,
@@ -135,7 +133,7 @@ class ServiciosClass {
   }: peticionFormato) {
     return await this.peticion({
       url,
-      tipo: 'put',
+      method: 'put',
       headers,
       body,
       params,
@@ -154,7 +152,7 @@ class ServiciosClass {
   }: peticionFormato) {
     return await this.peticion({
       url,
-      tipo: 'patch',
+      method: 'patch',
       headers,
       body,
       params,
@@ -173,7 +171,7 @@ class ServiciosClass {
   }: peticionFormato) {
     return await this.peticion({
       url,
-      tipo: 'delete',
+      method: 'delete',
       headers,
       body,
       params,

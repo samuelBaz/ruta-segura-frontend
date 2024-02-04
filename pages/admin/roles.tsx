@@ -209,7 +209,7 @@ const Roles: NextPage = () => {
         url: `${Constantes.baseUrl}/autorizacion/roles/${rol.id}/${
           rol.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
         }`,
-        tipo: 'patch',
+        method: 'patch',
       })
       imprimir(`respuesta inactivar rol: ${respuesta}`)
       Alerta({
