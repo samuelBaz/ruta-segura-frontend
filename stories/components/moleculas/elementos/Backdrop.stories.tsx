@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { BackdropVista } from '../../../../common/components/ui/Backdrop'
+import { CustomFrame } from '../../../utils/CustomFrame'
 
 export default {
   title: 'Moleculas/Elementos/Backdrop',
@@ -14,7 +15,9 @@ export default {
 } as Meta
 
 const Template: StoryFn<typeof BackdropVista> = (args) => (
-  <BackdropVista {...args} />
+  <CustomFrame height="120px">
+    <BackdropVista {...args} />
+  </CustomFrame>
 )
 
 export const Default = Template.bind({})
