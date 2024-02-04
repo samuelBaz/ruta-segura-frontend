@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { NextPage } from 'next'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { LayoutUser } from '../../common/components/layouts'
@@ -38,6 +31,7 @@ import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
+import { Acciones } from '../../common/components/ui/botones/Acciones'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -369,9 +363,10 @@ const Modulos: NextPage = () => {
               : 'info'
         }
       />,
-      <Grid key={`${moduloData.id}-${indexModulo}-accion`}>
-        <Grid key={`${moduloData.id}-${indexModulo}-acciones`}>
-          {permisos.update && (
+      <Acciones
+        key={`${moduloData.id}-${indexModulo}-acciones`}
+        acciones={[
+          permisos.update && (
             <IconoTooltip
               id={`cambiarEstadoModulo-${moduloData.id}`}
               titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
@@ -390,9 +385,8 @@ const Modulos: NextPage = () => {
                   : 'Activar Módulo'
               }
             />
-          )}
-
-          {permisos.update && (
+          ),
+          permisos.update && (
             <IconoTooltip
               id={`editarModulo-${moduloData.id}`}
               titulo={'Editar'}
@@ -407,9 +401,9 @@ const Modulos: NextPage = () => {
               icono={'edit'}
               name={'Editar módulo'}
             />
-          )}
-        </Grid>
-      </Grid>,
+          ),
+        ]}
+      ></Acciones>,
     ]
   )
   return (
@@ -421,8 +415,12 @@ const Modulos: NextPage = () => {
           moduloEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
         } el módulo: ${titleCase(moduloEdicion?.nombre ?? '')} ?`}
       >
-        <Button onClick={cancelarAlertaEstadoModulo}>Cancelar</Button>
-        <Button onClick={aceptarAlertaEstadoModulo}>Aceptar</Button>
+        <Button variant={'outlined'} onClick={cancelarAlertaEstadoModulo}>
+          Cancelar
+        </Button>
+        <Button variant={'contained'} onClick={aceptarAlertaEstadoModulo}>
+          Aceptar
+        </Button>
       </AlertDialog>
       <CustomDialog
         isOpen={modalModulo}

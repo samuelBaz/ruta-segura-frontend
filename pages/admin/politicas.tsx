@@ -33,6 +33,7 @@ import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
+import { Acciones } from '../../common/components/ui/botones/Acciones'
 
 const Politicas: NextPage = () => {
   const [politicasData, setPoliticasData] = useState<PoliticaCRUDType[]>([])
@@ -111,35 +112,37 @@ const Politicas: NextPage = () => {
         variant={'body2'}
       >{`${politicaData.app}`}</Typography>,
 
-      <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
-        {permisos.update && (
-          <IconoTooltip
-            id={`editarPolitica-${indexPolitica}`}
-            titulo={'Editar'}
-            color={'primary'}
-            accion={() => {
-              imprimir(`Editaremos`, politicaData)
-              editarPoliticaModal(politicaData)
-            }}
-            icono={'edit'}
-            name={'Editar política'}
-          />
-        )}
-
-        {permisos.delete && (
-          <IconoTooltip
-            id={`eliminarPolitica-${indexPolitica}`}
-            titulo={'Eliminar'}
-            color={'error'}
-            accion={() => {
-              imprimir(`Eliminaremos`, politicaData)
-              eliminarPoliticaModal(politicaData)
-            }}
-            icono={'delete_outline'}
-            name={'Eliminar política'}
-          />
-        )}
-      </Grid>,
+      <Acciones
+        key={`${politicaData.accion}-${indexPolitica}-acciones`}
+        acciones={[
+          permisos.update && (
+            <IconoTooltip
+              id={`editarPolitica-${indexPolitica}`}
+              titulo={'Editar'}
+              color={'primary'}
+              accion={() => {
+                imprimir(`Editaremos`, politicaData)
+                editarPoliticaModal(politicaData)
+              }}
+              icono={'edit'}
+              name={'Editar política'}
+            />
+          ),
+          permisos.delete && (
+            <IconoTooltip
+              id={`eliminarPolitica-${indexPolitica}`}
+              titulo={'Eliminar'}
+              color={'error'}
+              accion={() => {
+                imprimir(`Eliminaremos`, politicaData)
+                eliminarPoliticaModal(politicaData)
+              }}
+              icono={'delete_outline'}
+              name={'Eliminar política'}
+            />
+          ),
+        ]}
+      ></Acciones>,
     ]
   )
 
@@ -326,8 +329,12 @@ const Politicas: NextPage = () => {
         titulo={'Alerta'}
         texto={`¿Está seguro de eliminar la política ${politicaEdicion?.app}-${politicaEdicion?.objeto}-${politicaEdicion?.sujeto}-${politicaEdicion?.accion} ?`}
       >
-        <Button onClick={cancelarAlertaEliminarPolitica}>Cancelar</Button>
-        <Button onClick={aceptarAlertaEliminarPoliticas}>Aceptar</Button>
+        <Button variant={'outlined'} onClick={cancelarAlertaEliminarPolitica}>
+          Cancelar
+        </Button>
+        <Button variant={'contained'} onClick={aceptarAlertaEliminarPoliticas}>
+          Aceptar
+        </Button>
       </AlertDialog>
       <CustomDialog
         isOpen={modalPolitica}
