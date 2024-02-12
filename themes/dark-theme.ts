@@ -39,12 +39,12 @@ export const darkTheme = createTheme({
     MuiAppBar: {
       defaultProps: {
         elevation: 0,
-        variant: 'elevation',
+        variant: 'outlined',
       },
       styleOverrides: {
         colorPrimary: {
           borderTop: 0,
-          backgroundColor: alpha('#302F2E', 0.6),
+          backgroundColor: alpha('#302F2E', 0.4),
           backdropFilter: 'blur(12px)',
         },
       },
@@ -63,8 +63,8 @@ export const darkTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#302F2E',
-          borderWidth: 0.0,
+          backgroundColor: '#2A2928',
+          // borderWidth: 0.0,
         },
       },
     },
@@ -85,7 +85,7 @@ export const darkTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: '#373635',
+          backgroundColor: '#2A2928',
         },
       },
     },

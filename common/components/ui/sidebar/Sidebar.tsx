@@ -152,13 +152,20 @@ export const Sidebar = () => {
                 }}
               >
                 <Box width={'15px'} />
-                <Typography
-                  variant={'body2'}
-                  color={'text.secondary'}
-                  sx={{ fontWeight: '400' }}
+                <Tooltip
+                  title={modulo.propiedades.descripcion}
+                  enterDelay={1000}
+                  placement={'left'}
                 >
-                  {`${modulo.label}`}
-                </Typography>
+                  <Typography
+                    variant={'body2'}
+                    color={'text.secondary'}
+                    sx={{ fontWeight: '400' }}
+                  >
+                    {`${modulo.label}`}
+                  </Typography>
+                </Tooltip>
+
                 <Box sx={{ flexGrow: 1 }} />
                 {(modulo.showed || !modulo.open) && (
                   <Icono

@@ -13,7 +13,7 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: '#F5F5F5',
+      default: '#FAFAFA',
       paper: '#Fff',
     },
     primary: {
@@ -39,12 +39,12 @@ export const lightTheme = createTheme({
     MuiAppBar: {
       defaultProps: {
         elevation: 0,
-        variant: 'elevation',
+        variant: 'outlined',
       },
       styleOverrides: {
         colorPrimary: {
           borderTop: 0,
-          backgroundColor: alpha('#FFF', 0.6),
+          backgroundColor: alpha('#FFF', 0.4),
           backdropFilter: 'blur(12px)',
         },
       },
@@ -63,8 +63,8 @@ export const lightTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#FBFBFB',
-          borderWidth: 0.0,
+          backgroundColor: '#FFF',
+          // borderWidth: 0.0,
         },
       },
     },
