@@ -4,6 +4,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Chip,
   Grid,
   Typography,
 } from '@mui/material'
@@ -30,16 +31,15 @@ const Home: NextPage = () => {
           <Typography
             variant={'h5'}
             component="h1"
-            sx={{ flexGrow: 1, fontWeight: 'medium' }}
+            sx={{ flexGrow: 1, fontWeight: '600' }}
           >
-            Bienvenid@ {titleCase(usuario?.persona?.nombres ?? '')}{' '}
-            {titleCase(
-              usuario?.persona?.primerApellido ??
-                usuario?.persona?.segundoApellido ??
-                ''
-            )}
+            Bienvenid@ {titleCase(usuario?.persona?.nombres ?? '')}
           </Typography>
-          <Typography variant={'subtitle2'}>{rolUsuario?.nombre}</Typography>
+          <Chip
+            label={rolUsuario?.nombre}
+            variant={'outlined'}
+            size={'small'}
+          />
         </Grid>
       </Grid>
       <Grid>
@@ -64,7 +64,7 @@ const Home: NextPage = () => {
                   >
                     <Grid>
                       <Box height={'20px'} />
-                      <Typography sx={{ fontSize: 14, fontWeight: 'medium' }}>
+                      <Typography sx={{ fontSize: 14, fontWeight: '600' }}>
                         {modulo.label}
                       </Typography>
                       <Box height={'20px'} />
@@ -92,18 +92,19 @@ const Home: NextPage = () => {
                             }}
                           >
                             <Card
-                              variant={'outlined'}
                               sx={{
                                 borderRadius: 3,
                               }}
                             >
                               <CardContent>
                                 <Grid container direction="row">
-                                  <Icono>{subModulo.propiedades.icono}</Icono>
+                                  <Icono color={'inherit'}>
+                                    {subModulo.propiedades.icono}
+                                  </Icono>
                                   <Box height={'30px'} width={'10px'} />
                                   <Typography
                                     variant="caption"
-                                    sx={{ fontSize: 14, fontWeight: 'medium' }}
+                                    sx={{ fontSize: 14, fontWeight: '600' }}
                                   >
                                     {`${subModulo.label}`}
                                   </Typography>

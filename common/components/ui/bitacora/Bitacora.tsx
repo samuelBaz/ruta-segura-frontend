@@ -49,8 +49,8 @@ export const Bitacora = ({
                 ...(index === 0
                   ? { borderRadius: '12px 12px 0px 0px' }
                   : index === acciones.length - 1
-                  ? { borderRadius: '0px 0px 12px 12px' }
-                  : {}),
+                    ? { borderRadius: '0px 0px 12px 12px' }
+                    : {}),
               }}
             >
               <Typography

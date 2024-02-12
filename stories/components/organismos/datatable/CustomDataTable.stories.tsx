@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
-import { Box, Grid, InputLabel, TextField, Typography } from '@mui/material'
+import { Box, InputLabel, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { Paginacion } from '../../../../common/components/ui/datatable/Paginacion'
@@ -10,6 +10,7 @@ import {
 } from '../../../../common/types/ordenTypes'
 import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
+import { Acciones } from '../../../../common/components/ui/botones/Acciones'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
@@ -93,34 +94,38 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
       {solicitudData.fechaPublicacion}
     </Typography>,
 
-    <Grid key={`${solicitudData.id}-${index}-acciones`}>
-      <>
+    <Acciones
+      key={`${solicitudData.id}-${index}-acciones`}
+      acciones={[
         <IconoTooltip
+          key={'editarLibro'}
           id={'editarLibro'}
           titulo={'Editar libro'}
           color={'success'}
           accion={() => {}}
           icono={'edit'}
           name={'Editar libro'}
-        />
+        />,
         <IconoTooltip
+          key={'verLibro'}
           id={'verLibro'}
           titulo={'Ver libro'}
           color={'info'}
           accion={() => {}}
           icono={'visibility'}
           name={'Ver libro'}
-        />
+        />,
         <IconoTooltip
+          key={'eliminarLibro'}
           id={'eliminarLibro'}
           titulo={'Eliminar libro'}
           color={'warning'}
           accion={() => {}}
           icono={'delete'}
           name={'Eliminar libro'}
-        />
-      </>
-    </Grid>,
+        />,
+      ]}
+    />,
   ]
 )
 export const Columnas = Template.bind({})
@@ -228,9 +233,9 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
 
   return <CustomDataTable {...args} />
 }
-export const Acciones = Template3.bind({})
+export const Acciones3 = Template3.bind({})
 
-Acciones.args = {
+Acciones3.args = {
   ...Columnas.args,
 }
 /// Variable con parámetros de paginación
@@ -324,34 +329,38 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
         {solicitudData.fechaPublicacion}
       </Typography>,
 
-      <Grid key={`${solicitudData.id}-${index}-acciones`}>
-        <>
+      <Acciones
+        key={`${solicitudData.id}-${index}-acciones`}
+        acciones={[
           <IconoTooltip
+            key={'editarLibro'}
             id={'editarLibro'}
             titulo={'Editar libro'}
             color={'success'}
             accion={() => {}}
             icono={'edit'}
             name={'Editar libro'}
-          />
+          />,
           <IconoTooltip
+            key={'verLibro'}
             id={'verLibro'}
             titulo={'Ver libro'}
             color={'info'}
             accion={() => {}}
             icono={'visibility'}
             name={'Ver libro'}
-          />
+          />,
           <IconoTooltip
+            key={'eliminarLibro'}
             id={'eliminarLibro'}
             titulo={'Eliminar libro'}
             color={'warning'}
             accion={() => {}}
             icono={'delete'}
             name={'Eliminar libro'}
-          />
-        </>
-      </Grid>,
+          />,
+        ]}
+      ></Acciones>,
     ]
   )
   args.columnas = ordenCriterios
@@ -496,34 +505,38 @@ const Template2: StoryFn<typeof CustomDataTable> = (args) => {
         {solicitudData.fechaPublicacion}
       </Typography>,
 
-      <Grid key={`${solicitudData.id}-${index}-acciones`}>
-        <>
+      <Acciones
+        key={`${solicitudData.id}-${index}-acciones`}
+        acciones={[
           <IconoTooltip
+            key={'editarLibro'}
             id={'editarLibro'}
             titulo={'Editar libro'}
             color={'success'}
             accion={() => {}}
             icono={'edit'}
             name={'Editar libro'}
-          />
+          />,
           <IconoTooltip
+            key={'verLibro'}
             id={'verLibro'}
             titulo={'Ver libro'}
             color={'info'}
             accion={() => {}}
             icono={'visibility'}
             name={'Ver libro'}
-          />
+          />,
           <IconoTooltip
+            key={'eliminarLibro'}
             id={'eliminarLibro'}
             titulo={'Eliminar libro'}
             color={'warning'}
             accion={() => {}}
             icono={'delete'}
             name={'Eliminar libro'}
-          />
-        </>
-      </Grid>,
+          />,
+        ]}
+      />,
     ]
   )
   args.acciones = datosSeleccionado.length == 0 ? acciones : accionesMultiples

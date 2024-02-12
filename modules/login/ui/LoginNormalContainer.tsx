@@ -31,11 +31,7 @@ const LoginNormalContainer = () => {
           alignItems={'center'}
           sx={{ borderRadius: 12 }}
         >
-          <Typography
-            align={'center'}
-            color={'primary'}
-            sx={{ flexGrow: 1, fontWeight: 'medium' }}
-          >
+          <Typography align={'center'} color={'primary'} sx={{ flexGrow: 1 }}>
             Iniciar Sesión
           </Typography>
           <Box sx={{ mt: 1, mb: 1 }}></Box>
@@ -77,9 +73,7 @@ const LoginNormalContainer = () => {
             fullWidth
             disabled={progresoLogin}
           >
-            <Typography sx={{ fontWeight: 'medium' }}>
-              Iniciar sesión
-            </Typography>
+            Iniciar sesión
           </Button>
 
           <Box sx={{ pt: 1, pb: 2 }}>
@@ -95,7 +89,7 @@ const LoginNormalContainer = () => {
               window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
             }}
           >
-            <Typography sx={{ fontWeight: 'medium', pl: 1, pr: 1 }}>
+            <Typography sx={{ pl: 1, pr: 1 }}>
               Ingresa con Ciudadanía
             </Typography>
           </BotonCiudadania>

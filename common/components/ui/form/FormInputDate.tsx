@@ -56,7 +56,7 @@ export const FormInputDate = <T extends FieldValues>({
       <InputLabel htmlFor={id}>
         <Typography
           variant={labelVariant}
-          sx={{ fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+          sx={{ color: 'text.primary', fontWeight: '600' }}
         >
           {label}
         </Typography>

@@ -137,7 +137,7 @@ const Recuperacion: NextPage = () => {
                 >
                   <Icono fontSize={'large'}> mark_email_unread</Icono>
                   <Box height={'20px'} />
-                  <Typography sx={{ fontWeight: 'medium' }}>
+                  <Typography sx={{ fontWeight: '600' }}>
                     ¡Mensaje enviado!
                   </Typography>
                   <Box height={'20px'} />
@@ -155,7 +155,7 @@ const Recuperacion: NextPage = () => {
                     disabled={indicadorCarga}
                     onClick={redireccionarInicio}
                   >
-                    <Typography sx={{ fontWeight: 'medium' }}>
+                    <Typography sx={{ fontWeight: '600' }}>
                       Ir al inicio
                     </Typography>
                   </Button>
@@ -171,10 +171,7 @@ const Recuperacion: NextPage = () => {
                     >
                       <Icono fontSize={'large'}> manage_search</Icono>
                       <Box height={'20px'} />
-                      <Typography
-                        sx={{ fontWeight: 'medium' }}
-                        variant={'subtitle2'}
-                      >
+                      <Typography sx={{ fontWeight: '600' }} variant={'h6'}>
                         Recupera tu cuenta
                       </Typography>
                     </Box>
@@ -191,7 +188,6 @@ const Recuperacion: NextPage = () => {
                       type={'email'}
                       label="Correo"
                       size={'small'}
-                      labelVariant={'subtitle1'}
                       disabled={indicadorCarga}
                       rules={{
                         required: 'Este campo es requerido',
@@ -204,28 +200,26 @@ const Recuperacion: NextPage = () => {
                     <Box height={'15px'} />
                     <ProgresoLineal mostrar={indicadorCarga} />
                     <Box height={'15px'} />
-                    <Grid
-                      container
-                      justifyContent="space-evenly"
-                      alignItems={'center'}
-                    >
-                      <Button
-                        type="button"
-                        variant="text"
-                        disabled={indicadorCarga}
-                        onClick={redireccionarInicio}
-                      >
-                        <Typography sx={{ fontWeight: 'medium' }}>
+                    <Grid container spacing={'2'} justifyContent={'flex-end'}>
+                      <Grid item>
+                        <Button
+                          type="button"
+                          variant="outlined"
+                          disabled={indicadorCarga}
+                          onClick={redireccionarInicio}
+                        >
                           Cancelar
-                        </Typography>
-                      </Button>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        disabled={indicadorCarga}
-                      >
-                        <Typography>Enviar enlace</Typography>
-                      </Button>
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          disabled={indicadorCarga}
+                        >
+                          Enviar enlace
+                        </Button>
+                      </Grid>
                     </Grid>
                   </Box>
                 </form>

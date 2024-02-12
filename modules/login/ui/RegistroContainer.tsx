@@ -61,7 +61,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
               check_circle
             </Icono>
             <Box height={'15px'} />
-            <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
+            <Typography sx={{ fontWeight: '600' }} variant={'subtitle2'}>
               ¡Tu cuenta ha sido registrada!
             </Typography>
             <Box height={'15px'} />
@@ -79,7 +79,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
                 mostrarLogin()
               }}
             >
-              <Typography sx={{ fontWeight: 'medium' }}>Entendido</Typography>
+              <Typography sx={{ fontWeight: '600' }}>Entendido</Typography>
             </Button>
           </Box>
         </Fade>
@@ -87,7 +87,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
       {!indicadorCreacionCuenta && (
         <form onSubmit={handleSubmit(guardarActualizarCuenta)}>
           <Grid>
-            <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
+            <Typography sx={{ fontWeight: '600' }} variant={'subtitle2'}>
               Datos de usuario
             </Typography>
             <Box height={'20px'} />
@@ -169,7 +169,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
             fullWidth
             disabled={indicadorCarga}
           >
-            <Typography sx={{ fontWeight: 'medium' }}>Crear cuenta</Typography>
+            <Typography sx={{ fontWeight: '600' }}>Crear cuenta</Typography>
           </Button>
         </form>
       )}

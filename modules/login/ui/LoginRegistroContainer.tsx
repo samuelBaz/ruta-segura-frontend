@@ -59,12 +59,12 @@ const LoginRegistroContainer = () => {
             variant={'fullWidth'}
           >
             <Tab
-              sx={{ fontWeight: 'medium' }}
+              sx={{ fontWeight: '600' }}
               label="Regístrate"
               {...a11yProps(0)}
             />
             <Tab
-              sx={{ fontWeight: 'medium' }}
+              sx={{ fontWeight: '600' }}
               label="Inicia sesión"
               {...a11yProps(1)}
             />
@@ -80,8 +80,6 @@ const LoginRegistroContainer = () => {
               control={control}
               name="usuario"
               label="Usuario"
-              size={'medium'}
-              labelVariant={'subtitle1'}
               disabled={progresoLogin}
               rules={{ required: 'Este campo es requerido' }}
             />
@@ -91,8 +89,6 @@ const LoginRegistroContainer = () => {
               control={control}
               name="contrasena"
               label="Contraseña"
-              size={'medium'}
-              labelVariant={'subtitle1'}
               type={'password'}
               disabled={progresoLogin}
               rules={{
@@ -122,7 +118,7 @@ const LoginRegistroContainer = () => {
                 disabled={progresoLogin}
                 color={'primary'}
               >
-                <Typography fontSize={'small'} sx={{ fontWeight: 'medium' }}>
+                <Typography fontSize={'small'} sx={{ fontWeight: '600' }}>
                   ¿Olvidaste tu contraseña?
                 </Typography>
               </Button>
@@ -134,9 +130,7 @@ const LoginRegistroContainer = () => {
               fullWidth
               disabled={progresoLogin}
             >
-              <Typography sx={{ fontWeight: 'medium' }}>
-                Iniciar sesión
-              </Typography>
+              Iniciar sesión
             </Button>
 
             <Box sx={{ pt: 2, pb: 2 }}>
@@ -152,9 +146,7 @@ const LoginRegistroContainer = () => {
                 window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
               }}
             >
-              <Typography sx={{ fontWeight: 'medium', pl: 1, pr: 1 }}>
-                Ingresa con Ciudadanía
-              </Typography>
+              Ingresa con Ciudadanía
             </BotonCiudadania>
           </form>
         </TabPanel>

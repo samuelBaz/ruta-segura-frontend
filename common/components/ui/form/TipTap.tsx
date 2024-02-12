@@ -149,7 +149,7 @@ const MenuBar = ({
           selected={editor.isActive('bold')}
         >
           <Tooltip title="Bold" placement="bottom-start">
-            <Typography sx={{ display: 'flex', }} variant={'inherit'}>
+            <Typography sx={{ display: 'flex' }} variant={'inherit'}>
               <Icono color={'inherit'} fontSize="medium">
                 format_bold
               </Icono>
@@ -183,7 +183,7 @@ const MenuBar = ({
           selected={editor.isActive('italic')}
         >
           <Tooltip title="Underline" placement="bottom">
-            <Typography sx={{ display: 'flex'}} variant={'inherit'}>
+            <Typography sx={{ display: 'flex' }} variant={'inherit'}>
               <Icono color={'inherit'} fontSize="medium">
                 format_underlined
               </Icono>

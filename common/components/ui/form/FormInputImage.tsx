@@ -92,7 +92,10 @@ const FormInputImage = <T extends FieldValues>({
   return (
     <Box id={id}>
       <InputLabel htmlFor={id}>
-        <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
+        <Typography
+          variant={labelVariant}
+          sx={{ color: 'text.primary', fontWeight: '600' }}
+        >
           {label}
         </Typography>
       </InputLabel>

@@ -1,10 +1,11 @@
 import { createTheme } from '@mui/material'
-import { Poppins } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
+import { alpha } from '@mui/material/styles'
 
-const poppins = Poppins({
+const OpenSansFont = Open_Sans({
   subsets: ['latin'],
   style: ['normal'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 })
 
@@ -24,18 +25,27 @@ export const lightTheme = createTheme({
     error: {
       main: '#BA1B1B',
     },
+    action: {
+      active: '#757575',
+    },
+    text: {
+      primary: '#1A1A1A',
+    },
   },
   typography: {
-    fontFamily: poppins.style.fontFamily,
+    fontFamily: OpenSansFont.style.fontFamily,
   },
   components: {
     MuiAppBar: {
       defaultProps: {
         elevation: 0,
+        variant: 'elevation',
       },
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#FFF',
+          borderTop: 0,
+          backgroundColor: alpha('#FFF', 0.6),
+          backdropFilter: 'blur(12px)',
         },
       },
     },
@@ -46,6 +56,7 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
+          fontWeight: '600',
         },
       },
     },
@@ -53,16 +64,29 @@ export const lightTheme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: '#FBFBFB',
+          borderWidth: 0.0,
         },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          borderRadius: '10px',
+          '&.Mui-selected': {
+            backgroundColor: alpha(theme.palette.primary.main, 0.12),
+          },
+        }),
       },
     },
     MuiCard: {
       defaultProps: {
         elevation: 0,
+        variant: 'outlined',
       },
       styleOverrides: {
         root: {
           backgroundColor: '#FFFFFF',
+          borderRadius: 3,
         },
       },
     },

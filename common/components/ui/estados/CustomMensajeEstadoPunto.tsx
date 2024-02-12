@@ -79,7 +79,7 @@ const CustomMensajeEstado = ({
             color: 'text.primary',
             alignItems: 'flex-end',
             overflow: 'hidden',
-            fontWeight: 'medium',
+            fontWeight: '600',
             fontSize: fontSize,
             whiteSpace: 'nowrap',
             opacity: 1,

@@ -66,7 +66,7 @@ export const FormInputDropdown = <T extends FieldValues>({
       <InputLabel htmlFor={id}>
         <Typography
           variant={labelVariant}
-          sx={{ pb: 1, fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+          sx={{ pb: 1, color: 'text.primary', fontWeight: '600' }}
         >
           {label}
         </Typography>

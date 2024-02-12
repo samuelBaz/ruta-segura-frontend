@@ -1,6 +1,4 @@
-
 window.STORYBOOK_MATOMO_OPTIONS = {
-    urlBase: process.env.NEXT_PUBLIC_STORYBOOK_MATOMO_URL,
-    siteId: process.env.NEXT_PUBLIC_STORYBOOK_MATOMO_SITE_ID,
-  }
-  
+  urlBase: process.env.NEXT_PUBLIC_STORYBOOK_MATOMO_URL,
+  siteId: process.env.NEXT_PUBLIC_STORYBOOK_MATOMO_SITE_ID,
+}

@@ -7,6 +7,7 @@ import {
   IconPropsSizeOverrides,
 } from '@mui/material/Icon/Icon'
 import { SxProps, Theme } from '@mui/material'
+import 'material-icons/iconfont/outlined.css'
 
 interface Props {
   color?: OverridableStringUnion<
@@ -41,7 +42,7 @@ export const Icono: FC<PropsWithChildren<Props>> = ({
       sx={{ ...sx }}
       style={{ ...style }}
       fontSize={fontSize}
-      color={`${color}`}
+      color={color}
       className={'material-icons-outlined'}
     >
       {children}

@@ -106,8 +106,6 @@ export const Sidebar = () => {
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
-          // borderWidth: 0.0,
-          boxSizing: 'border-box',
         },
         transition: 'all 0.2s ease-out',
       }}
@@ -147,15 +145,14 @@ export const Sidebar = () => {
                   m: 0,
                   borderRadius: 1,
                   alignItems: 'center',
-                  margin: '16px 6px',
+                  margin: '12px 6px',
                   width: '100%',
                 }}
               >
-                <Box width={'20px'} />
+                <Box width={'15px'} />
                 <Typography
-                  variant={'body2'}
                   color={'text'}
-                  sx={{ fontWeight: '400' }}
+                  sx={{ fontWeight: '500', fontSize: 14 }}
                 >
                   {`${modulo.label}`}
                 </Typography>
@@ -184,9 +181,9 @@ export const Sidebar = () => {
                     id={`submodulo-${index}-${indexSubModulo}`}
                     key={`submodulo-${index}-${indexSubModulo}`}
                     component="li"
+                    about={subModuloItem.propiedades.descripcion}
                     selected={rutaActiva(subModuloItem.url, router.pathname)}
                     sx={{
-                      borderRadius: '10px',
                       px: 0.5,
                       mx: 1.5,
                     }}
@@ -213,7 +210,7 @@ export const Sidebar = () => {
                         {subModuloItem.propiedades.icono}
                       </Icono>
 
-                      <Box width={'16px'} />
+                      <Box width={'12px'} />
                       <Tooltip
                         title={subModuloItem.propiedades.descripcion}
                         enterDelay={1000}
@@ -226,8 +223,8 @@ export const Sidebar = () => {
                               subModuloItem.url,
                               router.pathname
                             )
-                              ? '600'
-                              : '500',
+                              ? '500'
+                              : '400',
                           }}
                           color={
                             rutaActiva(subModuloItem.url, router.pathname)

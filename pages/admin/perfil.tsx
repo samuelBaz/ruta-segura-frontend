@@ -58,7 +58,7 @@ const Perfil: NextPage = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant={'h5'} sx={{ fontWeight: 'medium' }}>
+          <Typography variant={'h5'} sx={{ fontWeight: '600' }}>
             Perfil
           </Typography>
         </Grid>
@@ -114,12 +114,12 @@ const Perfil: NextPage = () => {
                     direction={'column'}
                   >
                     <Typography
-                      sx={{ fontWeight: 'medium' }}
+                      sx={{ fontWeight: '600' }}
                       variant={'subtitle2'}
                     >
                       Usuario
                     </Typography>
-                    <Typography>{`@${usuario?.usuario}`}</Typography>
+                    <Typography>{`${usuario?.usuario}`}</Typography>
                   </Grid>
                   <Box height={'20px'} />
                   <Grid
@@ -128,7 +128,7 @@ const Perfil: NextPage = () => {
                     direction={'column'}
                   >
                     <Typography
-                      sx={{ fontWeight: 'medium' }}
+                      sx={{ fontWeight: '600' }}
                       variant={'subtitle2'}
                     >
                       Número de documento
@@ -145,7 +145,7 @@ const Perfil: NextPage = () => {
                   >
                     {usuario?.persona.fechaNacimiento && (
                       <Typography
-                        sx={{ fontWeight: 'medium' }}
+                        sx={{ fontWeight: '600' }}
                         variant={'subtitle2'}
                       >
                         Fecha de nacimiento
@@ -167,7 +167,7 @@ const Perfil: NextPage = () => {
                     direction={'column'}
                   >
                     <Typography
-                      sx={{ fontWeight: 'medium' }}
+                      sx={{ fontWeight: '600' }}
                       variant={'subtitle2'}
                     >
                       Roles
@@ -195,7 +195,7 @@ const Perfil: NextPage = () => {
                         <Icono color={'inherit'}>vpn_key</Icono>
                         <Box width={'10px'} />
                         <Typography
-                          sx={{ fontWeight: 'medium' }}
+                          sx={{ fontWeight: '600' }}
                           variant={'body2'}
                         >
                           Cambiar contraseña
@@ -211,14 +211,16 @@ const Perfil: NextPage = () => {
                           window.open(Constantes.ciudadaniaUrl, '_blank')
                         }}
                       >
-                        <Typography
-                          variant={'body2'}
-                          sx={{ fontWeight: 'medium', pl: 1, pr: 1 }}
-                        >
-                          Ver perfil en Ciudadanía
-                        </Typography>
-                        <Box width={'10px'} />
-                        <Icono color={'inherit'}>north_east</Icono>
+                        <Grid container justifyContent={'center'}>
+                          <Typography
+                            variant={'body2'}
+                            sx={{ fontWeight: '600' }}
+                          >
+                            Ver perfil en Ciudadanía
+                          </Typography>
+                          <Box width={'10px'} />
+                          <Icono color={'inherit'}>north_east</Icono>
+                        </Grid>
                       </BotonCiudadania>
                     </Box>
                   )}

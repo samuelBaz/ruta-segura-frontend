@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Button, ButtonProps } from '@mui/material'
+import { Box, Button, ButtonProps } from '@mui/material'
 import { FC, MouseEventHandler, PropsWithChildren } from 'react'
 import { styled } from '@mui/system'
 import { Constantes } from '../../../config'
@@ -49,7 +49,7 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
           height: 'auto',
         }}
       />
-      {children}
+      <Box sx={{ px: 1 }}>{children}</Box>
     </ColorButton>
   )
 }

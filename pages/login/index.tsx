@@ -100,7 +100,7 @@ const Index: NextPage = () => {
           <Box display="flex" justifyContent="center" alignItems="center">
             <Box
               display={'flex'}
-              justifyContent={'center'}
+              justifyContent={'space-around'}
               alignItems={'center'}
               color={'primary'}
             >
