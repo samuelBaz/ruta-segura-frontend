@@ -106,6 +106,8 @@ export const Sidebar = () => {
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
+          // borderWidth: 0.0,
+          boxSizing: 'border-box',
         },
         transition: 'all 0.2s ease-out',
       }}
@@ -145,14 +147,15 @@ export const Sidebar = () => {
                   m: 0,
                   borderRadius: 1,
                   alignItems: 'center',
-                  margin: '12px 6px',
+                  margin: '16px 6px',
                   width: '100%',
                 }}
               >
                 <Box width={'15px'} />
                 <Typography
-                  color={'text'}
-                  sx={{ fontWeight: '500', fontSize: 14 }}
+                  variant={'body2'}
+                  color={'text.secondary'}
+                  sx={{ fontWeight: '400' }}
                 >
                   {`${modulo.label}`}
                 </Typography>
@@ -205,12 +208,12 @@ export const Sidebar = () => {
                             ? 'primary'
                             : 'inherit'
                         }
-                        fontSize={'small'}
+                        fontSize={'medium'}
                       >
                         {subModuloItem.propiedades.icono}
                       </Icono>
 
-                      <Box width={'12px'} />
+                      <Box width={'16px'} />
                       <Tooltip
                         title={subModuloItem.propiedades.descripcion}
                         enterDelay={1000}
