@@ -32,6 +32,9 @@ import { imprimir } from '../../../utils/imprimir'
 import { RoleType } from '../../../../modules/login/types/loginTypes'
 import { useThemeContext } from '../../../../context/ui/ThemeContext'
 import { useSession } from '../../../hooks'
+import Grid from '@mui/material/Grid'
+import Image from 'next/image'
+import { Constantes } from '../../../../config'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -180,13 +183,46 @@ export const NavbarUser = () => {
               <Icono color={'primary'}>menu</Icono>
             )}
           </IconButton>
-          <Typography
-            color={'text.primary'}
-            component="div"
-            sx={{ flexGrow: 1, fontWeight: '600' }}
+          <Grid
+            container
+            alignItems={'center'}
+            flexDirection={'row'}
+            sx={{ flexGrow: 1 }}
           >
-            {siteName()}
-          </Typography>
+            <Box display={'inline-flex'}>
+              <Grid
+                container
+                alignItems={'center'}
+                flexDirection={'row'}
+                justifyContent={'flex-start'}
+                onClick={async () => {
+                  await router.replace({
+                    pathname: '/admin/home',
+                  })
+                }}
+                sx={{ cursor: 'pointer' }}
+              >
+                <Image
+                  src={`${Constantes.sitePath}/icono.png`}
+                  alt={''}
+                  width="30"
+                  height="30"
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
+                />
+                <Box sx={{ px: 0.5 }} />
+                <Typography
+                  color={'text.primary'}
+                  component="div"
+                  sx={{ fontWeight: '600' }}
+                >
+                  {siteName()}
+                </Typography>
+              </Grid>
+            </Box>
+          </Grid>
           <IconoTooltip
             id={'ayudaUser'}
             name={'Ayuda'}
@@ -197,11 +233,16 @@ export const NavbarUser = () => {
             icono={'help_outline'}
           />
           {!xs && <ThemeSwitcherButton />}
-          <Button size="small" onClick={desplegarMenu} color="primary">
+          <Button
+            sx={{ px: 1.5, minWidth: 0 }}
+            size="small"
+            onClick={desplegarMenu}
+            color="primary"
+          >
             <Icono color={'primary'}>account_circle</Icono>
             {!xs && (
               <Box
-                sx={{ pl: 1 }}
+                sx={{ p: 1 }}
                 display={'flex'}
                 flexDirection={'column'}
                 alignItems={'start'}
