@@ -120,7 +120,7 @@ export const Sidebar = () => {
               sx={{
                 display: 'flex',
                 m: 0,
-                mx: 0.5,
+                mx: 0.4,
                 alignItems: 'center',
                 cursor: 'pointer',
               }}
@@ -147,7 +147,7 @@ export const Sidebar = () => {
                   m: 0,
                   borderRadius: 1,
                   alignItems: 'center',
-                  margin: '16px 6px',
+                  margin: '12px 6px',
                   width: '100%',
                 }}
               >
@@ -208,7 +208,7 @@ export const Sidebar = () => {
                         alignItems: 'center',
                       }}
                     >
-                      <Box width={'10px'} />
+                      <Box width={'9px'} />
                       <Icono
                         color={
                           rutaActiva(subModuloItem.url, router.pathname)
@@ -220,7 +220,7 @@ export const Sidebar = () => {
                         {subModuloItem.propiedades.icono}
                       </Icono>
 
-                      <Box width={'16px'} />
+                      <Box width={'12px'} />
                       <Tooltip
                         title={subModuloItem.propiedades.descripcion}
                         enterDelay={1000}

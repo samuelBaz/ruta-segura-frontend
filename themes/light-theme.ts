@@ -44,6 +44,8 @@ export const lightTheme = createTheme({
       styleOverrides: {
         colorPrimary: {
           borderTop: 0,
+          borderLeft: 0,
+          borderRight: 0,
           backgroundColor: alpha('#FFF', 0.4),
           backdropFilter: 'blur(12px)',
         },
@@ -103,6 +105,13 @@ export const lightTheme = createTheme({
           sx: {
             backgroundColor: '#FFFFFF',
           },
+        },
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#FFFFFF',
         },
       },
     },
