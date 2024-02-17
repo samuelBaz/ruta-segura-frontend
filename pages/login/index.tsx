@@ -64,6 +64,7 @@ const Index: NextPage = () => {
               <Typography
                 variant={'h4'}
                 component="h1"
+                fontWeight={'500'}
                 align={sm || xs ? 'center' : 'left'}
               >
                 Frontend base con Next.js, MUI v5 y TypeScript

@@ -80,6 +80,8 @@ const LoginRegistroContainer = () => {
               control={control}
               name="usuario"
               label="Usuario"
+              size={'medium'}
+              labelVariant={'subtitle1'}
               disabled={progresoLogin}
               rules={{ required: 'Este campo es requerido' }}
             />
@@ -89,6 +91,8 @@ const LoginRegistroContainer = () => {
               control={control}
               name="contrasena"
               label="Contraseña"
+              size={'medium'}
+              labelVariant={'subtitle1'}
               type={'password'}
               disabled={progresoLogin}
               rules={{
@@ -130,7 +134,7 @@ const LoginRegistroContainer = () => {
               fullWidth
               disabled={progresoLogin}
             >
-              Iniciar sesión
+              <Typography sx={{ fontWeight: '600' }}>Iniciar sesión</Typography>
             </Button>
 
             <Box sx={{ pt: 2, pb: 2 }}>
@@ -146,7 +150,9 @@ const LoginRegistroContainer = () => {
                 window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
               }}
             >
-              Ingresa con Ciudadanía
+              <Typography sx={{ fontWeight: 'medium', pl: 1, pr: 1 }}>
+                Ingresa con Ciudadanía
+              </Typography>
             </BotonCiudadania>
           </form>
         </TabPanel>
