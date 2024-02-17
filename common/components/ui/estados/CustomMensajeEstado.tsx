@@ -101,7 +101,7 @@ const CustomMensajeEstado = ({
                 ? coloresTextoOscuro[color]
                 : coloresTextoClaro[color],
             overflow: 'hidden',
-            fontWeight: '600',
+            fontWeight: '700',
             fontSize: fontSize,
             opacity: 1,
             letterSpacing: letterSpacing,
