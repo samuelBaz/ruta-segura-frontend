@@ -171,7 +171,7 @@ export const Sidebar = () => {
                   <Icono
                     fontSize={'small'}
                     sx={{ p: 0, m: 0, mx: 1.5 }}
-                    color={'secondary'}
+                    color={'action'}
                   >
                     {modulo.open ? 'expand_more' : 'navigate_next'}
                   </Icono>
@@ -213,7 +213,7 @@ export const Sidebar = () => {
                         color={
                           rutaActiva(subModuloItem.url, router.pathname)
                             ? 'primary'
-                            : 'inherit'
+                            : 'action'
                         }
                         fontSize={'medium'}
                       >
@@ -233,13 +233,13 @@ export const Sidebar = () => {
                               subModuloItem.url,
                               router.pathname
                             )
-                              ? '500'
-                              : '400',
+                              ? '600'
+                              : '500',
                           }}
                           color={
                             rutaActiva(subModuloItem.url, router.pathname)
                               ? 'primary'
-                              : 'text'
+                              : undefined
                           }
                         >
                           {`${subModuloItem.label}`}
@@ -256,10 +256,9 @@ export const Sidebar = () => {
       </Box>
       <Box sx={{ pb: 2 }} display="flex" flex="1" justifyContent="space-around">
         <Box sx={{ alignSelf: 'flex-end' }}>
-          <Typography
-            color="text.secondary"
-            variant={'body2'}
-          >{`v${versionNumber()}`}</Typography>
+          <Typography color="text.secondary" variant={'body2'}>
+            {`v${versionNumber()}`}
+          </Typography>
         </Box>
       </Box>
     </Drawer>

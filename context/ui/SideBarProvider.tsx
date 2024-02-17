@@ -15,7 +15,7 @@ interface UIContextType {
 const UIContext = createContext<UIContextType>({} as UIContextType)
 const useSidebar = () => useContext(UIContext)
 
-const SideBarProvider: FC<PropsWithChildren<any>> = ({ children }) => {
+const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
   const [sideMenuOpen, setSideMenuOpen] = useState<boolean>(true)
 
   const openSideMenu = () => {
