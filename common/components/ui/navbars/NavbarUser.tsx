@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   DialogContent,
+  Divider,
   FormControlLabel,
   IconButton,
   List,
@@ -10,6 +11,7 @@ import {
   Menu,
   MenuItem,
   Radio,
+  ToggleButton,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -233,11 +235,13 @@ export const NavbarUser = () => {
             icono={'help_outline'}
           />
           {!xs && <ThemeSwitcherButton />}
-          <Button
-            sx={{ px: 1.5, minWidth: 0 }}
+          <ToggleButton
+            sx={{ px: 1.5, minWidth: 0, borderWidth: 0 }}
             size="small"
             onClick={desplegarMenu}
             color="primary"
+            value={''}
+            selected={!!anchorEl}
           >
             <Icono color={'primary'}>account_circle</Icono>
             {!xs && (
@@ -256,7 +260,7 @@ export const NavbarUser = () => {
                 </Typography>
               </Box>
             )}
-          </Button>
+          </ToggleButton>
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -272,7 +276,7 @@ export const NavbarUser = () => {
             onClose={cerrarMenu}
             autoFocus={false}
           >
-            <MenuItem sx={{ p: 2 }} onClick={abrirPerfil}>
+            <MenuItem onClick={abrirPerfil}>
               <Icono color={'inherit'} fontSize={'small'}>
                 person
               </Icono>
@@ -299,11 +303,11 @@ export const NavbarUser = () => {
                 </Typography>
               </Box>
             </MenuItem>
+            <Divider />
             {roles.length > 1 && (
-              <Box>
+              <>
                 <MenuItem
                   sx={{
-                    p: 2,
                     ml: 0,
                     '&.MuiButtonBase-root:hover': {
                       bgcolor: 'transparent',
@@ -315,10 +319,10 @@ export const NavbarUser = () => {
                   </Icono>
                   <Box width={'15px'} />
                   <Typography variant={'body2'} fontWeight={'500'}>
-                    Roles{' '}
+                    Roles
                   </Typography>
                 </MenuItem>
-                <List key={`roles`} sx={{ p: 0 }}>
+                <List key={`roles`} sx={{ p: 0, pl: 2 }}>
                   {roles.map((rol, indexRol) => (
                     <ListItem key={`rol-${indexRol}`}>
                       <Box
@@ -327,6 +331,7 @@ export const NavbarUser = () => {
                           flexDirection: 'row',
                           borderRadius: 1,
                           alignItems: 'center',
+                          cursor: 'pointer',
                         }}
                       >
                         <Box width={'20px'} />
@@ -349,9 +354,10 @@ export const NavbarUser = () => {
                     </ListItem>
                   ))}
                 </List>
-              </Box>
+              </>
             )}
-            <MenuItem sx={{ p: 2 }} onClick={toggleTheme}>
+            <Divider />
+            <MenuItem sx={{ px: 2.5, py: 1.5, mt: 1 }} onClick={toggleTheme}>
               {themeMode === 'light' ? (
                 <Icono color={'inherit'} fontSize={'small'}>
                   dark_mode
@@ -367,12 +373,16 @@ export const NavbarUser = () => {
                 {themeMode === 'light' ? `Modo oscuro` : `Modo claro`}{' '}
               </Typography>
             </MenuItem>
-            <MenuItem sx={{ p: 2 }} onClick={accionMostrarAlertaCerrarSesion}>
-              <Icono color={'inherit'} fontSize={'small'}>
+            <Divider />
+            <MenuItem
+              sx={{ px: 2.5, py: 1.5, mt: 1 }}
+              onClick={accionMostrarAlertaCerrarSesion}
+            >
+              <Icono color={'error'} fontSize={'small'}>
                 logout
               </Icono>
               <Box width={'15px'} />
-              <Typography variant={'body2'} fontWeight={'500'}>
+              <Typography variant={'body2'} fontWeight={'600'} color={'error'}>
                 Cerrar sesión
               </Typography>
             </MenuItem>
