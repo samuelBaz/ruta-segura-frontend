@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
-import { Box, InputLabel, TextField, Typography } from '@mui/material'
+import { Box, InputLabel, Stack, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { Paginacion } from '../../../../common/components/ui/datatable/Paginacion'
@@ -10,7 +10,6 @@ import {
 } from '../../../../common/types/ordenTypes'
 import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
-import { Acciones } from '../../../../common/components/ui/botones/Acciones'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
@@ -94,38 +93,32 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
       {solicitudData.fechaPublicacion}
     </Typography>,
 
-    <Acciones
-      key={`${solicitudData.id}-${index}-acciones`}
-      acciones={[
-        <IconoTooltip
-          key={'editarLibro'}
-          id={'editarLibro'}
-          titulo={'Editar libro'}
-          color={'success'}
-          accion={() => {}}
-          icono={'edit'}
-          name={'Editar libro'}
-        />,
-        <IconoTooltip
-          key={'verLibro'}
-          id={'verLibro'}
-          titulo={'Ver libro'}
-          color={'info'}
-          accion={() => {}}
-          icono={'visibility'}
-          name={'Ver libro'}
-        />,
-        <IconoTooltip
-          key={'eliminarLibro'}
-          id={'eliminarLibro'}
-          titulo={'Eliminar libro'}
-          color={'warning'}
-          accion={() => {}}
-          icono={'delete'}
-          name={'Eliminar libro'}
-        />,
-      ]}
-    />,
+    <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
+      <IconoTooltip
+        id={'editarLibro'}
+        titulo={'Editar libro'}
+        color={'success'}
+        accion={() => {}}
+        icono={'edit'}
+        name={'Editar libro'}
+      />
+      <IconoTooltip
+        id={'verLibro'}
+        titulo={'Ver libro'}
+        color={'info'}
+        accion={() => {}}
+        icono={'visibility'}
+        name={'Ver libro'}
+      />
+      <IconoTooltip
+        id={'eliminarLibro'}
+        titulo={'Eliminar libro'}
+        color={'warning'}
+        accion={() => {}}
+        icono={'delete'}
+        name={'Eliminar libro'}
+      />
+    </Stack>,
   ]
 )
 export const Columnas = Template.bind({})
@@ -329,38 +322,32 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
         {solicitudData.fechaPublicacion}
       </Typography>,
 
-      <Acciones
-        key={`${solicitudData.id}-${index}-acciones`}
-        acciones={[
-          <IconoTooltip
-            key={'editarLibro'}
-            id={'editarLibro'}
-            titulo={'Editar libro'}
-            color={'success'}
-            accion={() => {}}
-            icono={'edit'}
-            name={'Editar libro'}
-          />,
-          <IconoTooltip
-            key={'verLibro'}
-            id={'verLibro'}
-            titulo={'Ver libro'}
-            color={'info'}
-            accion={() => {}}
-            icono={'visibility'}
-            name={'Ver libro'}
-          />,
-          <IconoTooltip
-            key={'eliminarLibro'}
-            id={'eliminarLibro'}
-            titulo={'Eliminar libro'}
-            color={'warning'}
-            accion={() => {}}
-            icono={'delete'}
-            name={'Eliminar libro'}
-          />,
-        ]}
-      ></Acciones>,
+      <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
+        <IconoTooltip
+          id={'editarLibro'}
+          titulo={'Editar libro'}
+          color={'success'}
+          accion={() => {}}
+          icono={'edit'}
+          name={'Editar libro'}
+        />
+        <IconoTooltip
+          id={'verLibro'}
+          titulo={'Ver libro'}
+          color={'info'}
+          accion={() => {}}
+          icono={'visibility'}
+          name={'Ver libro'}
+        />
+        <IconoTooltip
+          id={'eliminarLibro'}
+          titulo={'Eliminar libro'}
+          color={'warning'}
+          accion={() => {}}
+          icono={'delete'}
+          name={'Eliminar libro'}
+        />
+      </Stack>,
     ]
   )
   args.columnas = ordenCriterios
@@ -505,38 +492,32 @@ const Template2: StoryFn<typeof CustomDataTable> = (args) => {
         {solicitudData.fechaPublicacion}
       </Typography>,
 
-      <Acciones
-        key={`${solicitudData.id}-${index}-acciones`}
-        acciones={[
-          <IconoTooltip
-            key={'editarLibro'}
-            id={'editarLibro'}
-            titulo={'Editar libro'}
-            color={'success'}
-            accion={() => {}}
-            icono={'edit'}
-            name={'Editar libro'}
-          />,
-          <IconoTooltip
-            key={'verLibro'}
-            id={'verLibro'}
-            titulo={'Ver libro'}
-            color={'info'}
-            accion={() => {}}
-            icono={'visibility'}
-            name={'Ver libro'}
-          />,
-          <IconoTooltip
-            key={'eliminarLibro'}
-            id={'eliminarLibro'}
-            titulo={'Eliminar libro'}
-            color={'warning'}
-            accion={() => {}}
-            icono={'delete'}
-            name={'Eliminar libro'}
-          />,
-        ]}
-      />,
+      <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
+        <IconoTooltip
+          id={'editarLibro'}
+          titulo={'Editar libro'}
+          color={'success'}
+          accion={() => {}}
+          icono={'edit'}
+          name={'Editar libro'}
+        />
+        <IconoTooltip
+          id={'verLibro'}
+          titulo={'Ver libro'}
+          color={'info'}
+          accion={() => {}}
+          icono={'visibility'}
+          name={'Ver libro'}
+        />
+        <IconoTooltip
+          id={'eliminarLibro'}
+          titulo={'Eliminar libro'}
+          color={'warning'}
+          accion={() => {}}
+          icono={'delete'}
+          name={'Eliminar libro'}
+        />
+      </Stack>,
     ]
   )
   args.acciones = datosSeleccionado.length == 0 ? acciones : accionesMultiples

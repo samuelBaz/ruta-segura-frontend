@@ -1,5 +1,11 @@
 import type { NextPage } from 'next'
-import { Button, Typography, useMediaQuery, useTheme } from '@mui/material'
+import {
+  Button,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -31,7 +37,6 @@ import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
-import { Acciones } from '../../common/components/ui/botones/Acciones'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
@@ -168,45 +173,44 @@ const Parametros: NextPage = () => {
               : 'info'
         }
       />,
-      <Acciones
+      <Stack
+        direction={'row'}
         key={`${parametroData.id}-${indexParametro}-acciones`}
-        acciones={[
-          permisos.update && (
-            <IconoTooltip
-              id={`cambiarEstadoParametro-${parametroData.id}`}
-              titulo={
-                parametroData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'
-              }
-              color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
-              accion={() => {
-                editarEstadoParametroModal(parametroData)
-              }}
-              desactivado={parametroData.estado == 'PENDIENTE'}
-              icono={
-                parametroData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
-              }
-              name={
-                parametroData.estado == 'ACTIVO'
-                  ? 'Inactivar Parámetro'
-                  : 'Activar Parámetro'
-              }
-            />
-          ),
-          permisos.update && (
-            <IconoTooltip
-              id={`editarParametros-${parametroData.id}`}
-              name={'Parámetros'}
-              titulo={'Editar'}
-              color={'primary'}
-              accion={() => {
-                imprimir(`Editaremos`, parametroData)
-                editarParametroModal(parametroData)
-              }}
-              icono={'edit'}
-            />
-          ),
-        ]}
-      />,
+      >
+        {permisos.update && (
+          <IconoTooltip
+            id={`cambiarEstadoParametro-${parametroData.id}`}
+            titulo={parametroData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
+            accion={async () => {
+              await editarEstadoParametroModal(parametroData)
+            }}
+            desactivado={parametroData.estado == 'PENDIENTE'}
+            icono={
+              parametroData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
+            }
+            name={
+              parametroData.estado == 'ACTIVO'
+                ? 'Inactivar Parámetro'
+                : 'Activar Parámetro'
+            }
+          />
+        )}
+
+        {permisos.update && (
+          <IconoTooltip
+            id={`editarParametros-${parametroData.id}`}
+            name={'Parámetros'}
+            titulo={'Editar'}
+            color={'primary'}
+            accion={() => {
+              imprimir(`Editaremos`, parametroData)
+              editarParametroModal(parametroData)
+            }}
+            icono={'edit'}
+          />
+        )}
+      </Stack>,
     ]
   )
 

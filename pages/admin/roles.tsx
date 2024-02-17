@@ -1,5 +1,11 @@
 import type { NextPage } from 'next'
-import { Button, Typography, useMediaQuery, useTheme } from '@mui/material'
+import {
+  Button,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useAuth } from '../../context/auth'
 import { LayoutUser } from '../../common/components/layouts'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -31,7 +37,6 @@ import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
-import { Acciones } from '../../common/components/ui/botones/Acciones'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -125,39 +130,34 @@ const Roles: NextPage = () => {
           }
         />
       </Typography>,
-      <Acciones
-        key={`${rolData.id}-${indexRol}-accion`}
-        acciones={[
-          permisos.update && (
-            <IconoTooltip
-              id={`cambiarEstadoRol-${rolData.id}`}
-              titulo={rolData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-              color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
-              accion={() => {
-                editarEstadoRolModal(rolData)
-              }}
-              desactivado={rolData.estado == 'PENDIENTE'}
-              icono={rolData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
-              name={
-                rolData.estado == 'ACTIVO' ? 'Inactivar Rol' : 'Activar Rol'
-              }
-            />
-          ),
-          permisos.update && (
-            <IconoTooltip
-              id={`editarRol-${rolData.id}`}
-              titulo={'Editar'}
-              color={'primary'}
-              accion={() => {
-                imprimir(`Editaremos`, rolData)
-                editarRolModal(rolData)
-              }}
-              icono={'edit'}
-              name={'Roles'}
-            />
-          ),
-        ]}
-      ></Acciones>,
+      <Stack direction={'row'} key={`${rolData.id}-${indexRol}-accion`}>
+        {permisos.update && (
+          <IconoTooltip
+            id={`cambiarEstadoRol-${rolData.id}`}
+            titulo={rolData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
+            accion={() => {
+              editarEstadoRolModal(rolData)
+            }}
+            desactivado={rolData.estado == 'PENDIENTE'}
+            icono={rolData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+            name={rolData.estado == 'ACTIVO' ? 'Inactivar Rol' : 'Activar Rol'}
+          />
+        )}
+        {permisos.update && (
+          <IconoTooltip
+            id={`editarRol-${rolData.id}`}
+            titulo={'Editar'}
+            color={'primary'}
+            accion={() => {
+              imprimir(`Editaremos`, rolData)
+              editarRolModal(rolData)
+            }}
+            icono={'edit'}
+            name={'Roles'}
+          />
+        )}
+      </Stack>,
     ]
   )
 

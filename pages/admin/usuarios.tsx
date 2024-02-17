@@ -4,6 +4,7 @@ import {
   Button,
   Chip,
   Grid,
+  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -43,7 +44,6 @@ import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
-import { Acciones } from '../../common/components/ui/botones/Acciones'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -183,74 +183,72 @@ const Usuarios: NextPage = () => {
           }
         />
       </Typography>,
-      <Acciones
+      <Stack
+        direction={'row'}
         key={`${usuarioData.id}-${indexUsuario}-acciones`}
-        acciones={[
-          permisos.update && (
-            <IconoTooltip
-              id={`editarEstadoUsuario-${usuarioData.id}`}
-              titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-              color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
-              accion={async () => {
-                await editarEstadoUsuarioModal(usuarioData)
-              }}
-              desactivado={usuarioData.estado == 'PENDIENTE'}
-              icono={
-                usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
-              }
-              name={
-                usuarioData.estado == 'ACTIVO'
-                  ? 'Inactivar Usuario'
-                  : 'Activar Usuario'
-              }
-            />
-          ),
-          (usuarioData.estado == 'ACTIVO' ||
-            usuarioData.estado == 'INACTIVO') && (
-            <IconoTooltip
-              id={`restablecerContrasena-${usuarioData.id}`}
-              titulo={
-                usuarioData.ciudadaniaDigital
-                  ? 'No puede restablecer la contraseña'
-                  : 'Restablecer contraseña'
-              }
-              color={'info'}
-              accion={async () => {
-                await restablecimientoPassUsuarioModal(usuarioData)
-              }}
-              desactivado={usuarioData.ciudadaniaDigital}
-              icono={'vpn_key'}
-              name={'Restablecer contraseña'}
-            />
-          ),
-          usuarioData.estado == 'PENDIENTE' && (
-            <IconoTooltip
-              id={`reenviarCorreoActivacion-${usuarioData.id}`}
-              titulo={'Reenviar correo de activación'}
-              color={'info'}
-              accion={async () => {
-                await reenvioCorreoModal(usuarioData)
-              }}
-              desactivado={usuarioData.ciudadaniaDigital}
-              icono={'forward_to_inbox'}
-              name={'Reenviar correo de activación'}
-            />
-          ),
-          permisos.update && (
-            <IconoTooltip
-              id={`editarUsusario-${usuarioData.id}`}
-              titulo={'Editar'}
-              color={'primary'}
-              accion={() => {
-                imprimir(`Editaremos`, usuarioData)
-                editarUsuarioModal(usuarioData)
-              }}
-              icono={'edit'}
-              name={'Editar usuario'}
-            />
-          ),
-        ]}
-      />,
+      >
+        {permisos.update && (
+          <IconoTooltip
+            id={`editarEstadoUsuario-${usuarioData.id}`}
+            titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
+            accion={async () => {
+              await editarEstadoUsuarioModal(usuarioData)
+            }}
+            desactivado={usuarioData.estado == 'PENDIENTE'}
+            icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+            name={
+              usuarioData.estado == 'ACTIVO'
+                ? 'Inactivar Usuario'
+                : 'Activar Usuario'
+            }
+          />
+        )}
+        {(usuarioData.estado == 'ACTIVO' ||
+          usuarioData.estado == 'INACTIVO') && (
+          <IconoTooltip
+            id={`restablecerContrasena-${usuarioData.id}`}
+            titulo={
+              usuarioData.ciudadaniaDigital
+                ? 'No puede restablecer la contraseña'
+                : 'Restablecer contraseña'
+            }
+            color={'info'}
+            accion={async () => {
+              await restablecimientoPassUsuarioModal(usuarioData)
+            }}
+            desactivado={usuarioData.ciudadaniaDigital}
+            icono={'vpn_key'}
+            name={'Restablecer contraseña'}
+          />
+        )}
+        {usuarioData.estado == 'PENDIENTE' && (
+          <IconoTooltip
+            id={`reenviarCorreoActivacion-${usuarioData.id}`}
+            titulo={'Reenviar correo de activación'}
+            color={'info'}
+            accion={async () => {
+              await reenvioCorreoModal(usuarioData)
+            }}
+            desactivado={usuarioData.ciudadaniaDigital}
+            icono={'forward_to_inbox'}
+            name={'Reenviar correo de activación'}
+          />
+        )}
+        {permisos.update && (
+          <IconoTooltip
+            id={`editarUsusario-${usuarioData.id}`}
+            titulo={'Editar'}
+            color={'primary'}
+            accion={() => {
+              imprimir(`Editaremos`, usuarioData)
+              editarUsuarioModal(usuarioData)
+            }}
+            icono={'edit'}
+            name={'Editar usuario'}
+          />
+        )}
+      </Stack>,
     ]
   )
 
