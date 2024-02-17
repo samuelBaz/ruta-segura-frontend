@@ -51,6 +51,14 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontWeight: '600',
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
@@ -73,6 +81,7 @@ export const darkTheme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: ({ theme }) => ({
+          color: '#EDEDED',
           borderRadius: '10px',
           '&.Mui-selected': {
             backgroundColor: alpha(theme.palette.primary.main, 0.24),
@@ -110,12 +119,19 @@ export const darkTheme = createTheme({
     MuiMenu: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#2A2928',
+          backgroundColor: alpha('#2A2928', 0.9),
+          backdropFilter: 'blur(12px)',
         },
+      },
+      defaultProps: {
+        elevation: 3,
       },
     },
     MuiIcon: {
       styleOverrides: {
+        colorAction: {
+          color: '#EDEDED',
+        },
         fontSizeInherit: () => ({
           fontSize: 'inherit !important',
         }),

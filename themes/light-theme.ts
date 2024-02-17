@@ -51,6 +51,14 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontWeight: '600',
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
@@ -73,6 +81,7 @@ export const lightTheme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: ({ theme }) => ({
+          color: '#454F5B',
           borderRadius: '10px',
           '&.Mui-selected': {
             backgroundColor: alpha(theme.palette.primary.main, 0.12),
@@ -111,12 +120,19 @@ export const lightTheme = createTheme({
     MuiMenu: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: alpha('#FFF', 0.9),
+          backdropFilter: 'blur(12px)',
         },
+      },
+      defaultProps: {
+        elevation: 3,
       },
     },
     MuiIcon: {
       styleOverrides: {
+        colorAction: {
+          color: '#454F5B',
+        },
         fontSizeInherit: () => ({
           fontSize: 'inherit !important',
         }),
