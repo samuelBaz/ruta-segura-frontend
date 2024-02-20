@@ -104,7 +104,7 @@ const Roles: NextPage = () => {
   >([
     { campo: 'rol', nombre: 'Rol', ordenar: true },
     { campo: 'nombre', nombre: 'Nombre', ordenar: true },
-    { campo: 'descripcion', nombre: 'Descripcion', ordenar: true },
+    { campo: 'descripcion', nombre: 'Descripción', ordenar: true },
     { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
   ])
