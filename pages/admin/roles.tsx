@@ -104,6 +104,7 @@ const Roles: NextPage = () => {
   >([
     { campo: 'rol', nombre: 'Rol', ordenar: true },
     { campo: 'nombre', nombre: 'Nombre', ordenar: true },
+    { campo: 'descripcion', nombre: 'Descripcion', ordenar: true },
     { campo: 'estado', nombre: 'Estado', ordenar: true },
     { campo: 'acciones', nombre: 'Acciones' },
   ])
@@ -117,6 +118,10 @@ const Roles: NextPage = () => {
         key={`${rolData.id}-${indexRol}-nombre`}
         variant={'body2'}
       >{`${rolData.nombre}`}</Typography>,
+      <Typography
+        key={`${rolData.id}-${indexRol}-descripcion`}
+        variant={'body2'} sx={{ wordBreak: "break-word" }}
+      >{`${rolData.descripcion}`}</Typography>,
       <Typography key={`${rolData.id}-${indexRol}-estado`} component={'div'}>
         <CustomMensajeEstado
           titulo={rolData.estado}
