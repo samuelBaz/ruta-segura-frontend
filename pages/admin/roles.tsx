@@ -120,7 +120,7 @@ const Roles: NextPage = () => {
       >{`${rolData.nombre}`}</Typography>,
       <Typography
         key={`${rolData.id}-${indexRol}-descripcion`}
-        variant={'body2'} sx={{ wordBreak: "break-word" }}
+        variant={'body2'} 
       >{`${rolData.descripcion}`}</Typography>,
       <Typography key={`${rolData.id}-${indexRol}-estado`} component={'div'}>
         <CustomMensajeEstado
