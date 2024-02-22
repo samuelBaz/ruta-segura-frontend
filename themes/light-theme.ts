@@ -116,7 +116,7 @@ export const lightTheme = createTheme({
           width: 28,
           height: 16,
           padding: 0,
-          margin: 'auto',
+          margin: 8,
           '&:active': {
             '& .MuiSwitch-thumb': {
               width: 15,

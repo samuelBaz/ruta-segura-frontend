@@ -2,7 +2,7 @@ import { Switch, Tooltip } from '@mui/material'
 import { ChangeEventHandler, FC } from 'react'
 interface Props {
   titulo: string
-  accion: ChangeEventHandler<any> | undefined
+  accion: ChangeEventHandler<HTMLInputElement> | undefined
   desactivado?: boolean
   name: string
   id: string
@@ -18,22 +18,20 @@ export const CustomSwitch: FC<Props> = ({
   id,
   accion,
   marcado,
-}) => {
-  return (
-    <Tooltip title={titulo}>
-      <Switch
-        aria-label="Custom Switch"
-        color={color}
-        id={id}
-        disabled={desactivado}
-        name={name}
-        checked={marcado}
-        onChange={(event) => {
-          if (accion) {
-            accion(event)
-          }
-        }}
-      />
-    </Tooltip>
-  )
-}
+}) => (
+  <Tooltip title={titulo}>
+    <Switch
+      aria-label="Custom Switch"
+      color={color}
+      id={id}
+      disabled={desactivado}
+      name={name}
+      checked={marcado}
+      onChange={(event) => {
+        if (accion) {
+          accion(event)
+        }
+      }}
+    />
+  </Tooltip>
+)
