@@ -37,11 +37,11 @@ import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
+import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
   const [errorParametrosData, setErrorParametrosData] = useState<any>()
@@ -104,7 +104,7 @@ const Parametros: NextPage = () => {
     parametro: ParametroCRUDType
   ) => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros/${parametro.id}/${
           parametro.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
@@ -176,36 +176,32 @@ const Parametros: NextPage = () => {
 
       <Grid key={`${parametroData.id}-${indexParametro}-acciones`}>
         {permisos.update && (
-          <IconoTooltip
+          <CustomSwitch
             id={`cambiarEstadoParametro-${parametroData.id}`}
             titulo={parametroData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={async () => {
               await editarEstadoParametroModal(parametroData)
             }}
-            desactivado={parametroData.estado == 'PENDIENTE'}
-            icono={
-              parametroData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
-            }
             name={
               parametroData.estado == 'ACTIVO'
                 ? 'Inactivar Parámetro'
                 : 'Activar Parámetro'
             }
+            color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
+            marcado={parametroData.estado == 'ACTIVO' ? true : false}
+            desactivado={parametroData.estado == 'PENDIENTE'}
           />
         )}
-
         {permisos.update && (
           <IconoTooltip
             id={`editarParametros-${parametroData.id}`}
             name={'Parámetros'}
             titulo={'Editar'}
             color={'primary'}
-            accion={() => {
-              imprimir(`Editaremos`, parametroData)
-              editarParametroModal(parametroData)
-            }}
             icono={'edit'}
+            accion={async () => {
+              await editarParametroModal(parametroData)
+            }}
           />
         )}
       </Grid>,
@@ -256,7 +252,6 @@ const Parametros: NextPage = () => {
   const obtenerParametrosPeticion = async () => {
     try {
       setLoading(true)
-
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros`,
         params: {
