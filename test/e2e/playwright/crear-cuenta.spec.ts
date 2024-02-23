@@ -4,6 +4,7 @@ import { Servicios } from '../../../common/services'
 
 test('Registro y activación de cuenta', async ({ page }) => {
   await page.goto('/login')
+  await page.getByRole('button', { name: 'Registrarse', exact: true }).click()
   const randomNumber = numeroAleatorio(0, 1000)
   const password = [
     palabraAleatoria(),
@@ -11,7 +12,7 @@ test('Registro y activación de cuenta', async ({ page }) => {
     numeroAleatorio(1000, 9999),
   ].join('-')
 
-  await page.getByRole('tab', { name: 'Regístrate' }).click()
+  //await page.getByRole('tab', { name: 'Regístrate' }).click()
   await page.getByLabel('Nombre de usuario').fill(String(randomNumber))
   await page
     .getByLabel('Correo electrónico')

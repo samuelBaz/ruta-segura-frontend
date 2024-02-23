@@ -71,7 +71,7 @@ const LoginRegistroContainer = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <RegistroContainer mostrarLogin={() => setValue(1)} />
+          <RegistroContainer />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <form onSubmit={handleSubmit(iniciarSesion)}>

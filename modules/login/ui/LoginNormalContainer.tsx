@@ -7,9 +7,16 @@ import { Constantes } from '../../../config'
 import { useAuth } from '../../../context/auth'
 import { useForm } from 'react-hook-form'
 import { LoginType } from '../types/loginTypes'
+import { useRouter } from 'next/router'
+import { useFullScreenLoading } from '../../../context/ui'
+import { delay } from '../../../common/utils'
 
 const LoginNormalContainer = () => {
+  const router = useRouter()
+
   const { ingresar, progresoLogin } = useAuth()
+
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const { handleSubmit, control } = useForm<LoginType>({
     defaultValues: {
@@ -36,7 +43,7 @@ const LoginNormalContainer = () => {
             color={'primary'}
             sx={{ flexGrow: 1, fontWeight: 'medium' }}
           >
-            Iniciar Sesión
+            Inicio de Sesión
           </Typography>
           <Box sx={{ mt: 1, mb: 1 }}></Box>
           <FormInputText
@@ -70,6 +77,27 @@ const LoginNormalContainer = () => {
           <Box sx={{ mt: 1, mb: 1 }}>
             <ProgresoLineal mostrar={progresoLogin} />
           </Box>
+          <Box sx={{ height: 0 }}></Box>
+          <Box display="flex" flex="1" justifyContent="start">
+            <Button
+              onClick={async () => {
+                mostrarFullScreen()
+                await delay(500)
+                await router.replace({
+                  pathname: '/recuperacion',
+                })
+                ocultarFullScreen()
+              }}
+              size={'small'}
+              variant={'text'}
+              disabled={progresoLogin}
+              color={'primary'}
+            >
+              <Typography fontSize={'small'} sx={{ fontWeight: 'medium' }}>
+                ¿Olvidaste tu contraseña?
+              </Typography>
+            </Button>
+          </Box>
           <Box sx={{ height: 15 }}></Box>
           <Button
             type="submit"
@@ -99,6 +127,18 @@ const LoginNormalContainer = () => {
               Ingresa con Ciudadanía
             </Typography>
           </BotonCiudadania>
+          <Typography variant="body1" textAlign="center" mt={2} fontSize={14}>
+            ¿No tienes una cuenta?{' '}
+            <Button
+              variant="text"
+              sx={{ p: 0 }}
+              onClick={() => {
+                router.push('registro')
+              }}
+            >
+              Regístrate
+            </Button>
+          </Typography>
         </Box>
       </form>
     </Card>
