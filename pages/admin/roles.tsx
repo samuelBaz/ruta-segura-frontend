@@ -37,6 +37,7 @@ import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
+import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -137,15 +138,15 @@ const Roles: NextPage = () => {
       </Typography>,
       <Grid key={`${rolData.id}-${indexRol}-accion`}>
         {permisos.update && (
-          <IconoTooltip
+          <CustomSwitch
             id={`cambiarEstadoRol-${rolData.id}`}
             titulo={rolData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={() => {
               editarEstadoRolModal(rolData)
             }}
             desactivado={rolData.estado == 'PENDIENTE'}
-            icono={rolData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+            marcado={rolData.estado == 'ACTIVO' ? true : false}
+            color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
             name={rolData.estado == 'ACTIVO' ? 'Inactivar Rol' : 'Activar Rol'}
           />
         )}
@@ -209,7 +210,7 @@ const Roles: NextPage = () => {
 
   const cambiarEstadoRolPeticion = async (rol: RolCRUDType) => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/roles/${rol.id}/${
           rol.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
