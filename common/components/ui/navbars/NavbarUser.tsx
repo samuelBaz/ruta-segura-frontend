@@ -303,9 +303,9 @@ export const NavbarUser = () => {
                 </Typography>
               </Box>
             </MenuItem>
-            <Divider />
             {roles.length > 1 && (
               <>
+                <Divider />
                 <MenuItem
                   sx={{
                     ml: 0,
