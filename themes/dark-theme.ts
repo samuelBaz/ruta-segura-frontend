@@ -157,6 +157,11 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiTooltip: {
+      defaultProps: {
+        arrow: true,
+      },
+    },
     // Agregado Override para Mui Switch
     MuiSwitch: {
       styleOverrides: {
