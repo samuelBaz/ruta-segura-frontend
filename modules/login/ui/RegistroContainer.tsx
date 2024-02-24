@@ -94,7 +94,7 @@ const RegistroContainer = () => {
         <form onSubmit={handleSubmit(guardarActualizarCuenta)}>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
             <Icono fontSize={'large'}> person_add</Icono>
-            <Box height={'20px'} />
+            <Box height={'10px'} />
             <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
               Formulario de Registro
             </Typography>

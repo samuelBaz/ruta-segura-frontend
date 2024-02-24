@@ -1,35 +1,22 @@
-import { Box, Button, Card, Divider, Tab, Tabs } from '@mui/material'
+import { Box, Button, Card, Divider } from '@mui/material'
 import { FormInputText } from '../../../common/components/ui/form'
 import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLineal'
 import Typography from '@mui/material/Typography'
 import { BotonCiudadania } from './BotonCiudadania'
 import { Constantes } from '../../../config'
 import { useAuth } from '../../../context/auth'
-import { SyntheticEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LoginType } from '../types/loginTypes'
-import RegistroContainer from './RegistroContainer'
 import { useRouter } from 'next/router'
 import { useFullScreenLoading } from '../../../context/ui'
 import { delay } from '../../../common/utils'
 
-const LoginRegistroContainer = () => {
-  const { ingresar, progresoLogin } = useAuth()
-
-  const [value, setValue] = useState<number>(1)
-
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
-
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
-
+const LoginContainer = () => {
   const router = useRouter()
 
-  const a11yProps = (index: number) => ({
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  })
+  const { ingresar, progresoLogin } = useAuth()
+
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const { handleSubmit, control } = useForm<LoginType>({
     defaultValues: {
@@ -43,34 +30,21 @@ const LoginRegistroContainer = () => {
   }
 
   return (
-    <Card sx={{ borderRadius: 4, p: 2, maxWidth: '450px' }}>
-      <Box
-        display={'grid'}
-        justifyContent={'center'}
-        alignItems={'center'}
-        sx={{ borderRadius: 12 }}
-      >
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="Pestaña inicio de sesión"
-            variant={'fullWidth'}
+    <Card sx={{ borderRadius: 4, p: 4, px: 5, maxWidth: '450px' }}>
+      <form onSubmit={handleSubmit(iniciarSesion)}>
+        <Box
+          display={'grid'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          sx={{ borderRadius: 12 }}
+        >
+          <Typography
+            align={'center'}
+            sx={{ flexGrow: 1, fontWeight: 'medium' }}
           >
-            <Tab
-              sx={{ fontWeight: 'medium' }}
-              label="Regístrate"
-              {...a11yProps(0)}
-            />
-            <Tab
-              sx={{ fontWeight: 'medium' }}
-              label="Inicia sesión"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </Box>
-        <RegistroContainer />
-        <form onSubmit={handleSubmit(iniciarSesion)}>
+            Inicio de Sesión
+          </Typography>
+          <Box sx={{ mt: 1, mb: 1 }}></Box>
           <FormInputText
             id={'usuario'}
             control={control}
@@ -99,16 +73,15 @@ const LoginRegistroContainer = () => {
               },
             }}
           />
-          <Box sx={{ mt: 1, mb: 1 }}>
+          <Box sx={{ mt: 0.5, mb: 0.5 }}>
             <ProgresoLineal mostrar={progresoLogin} />
           </Box>
-          <Box sx={{ height: 0 }}></Box>
           <Box display="flex" flex="1" justifyContent="start">
             <Button
               onClick={async () => {
                 mostrarFullScreen()
                 await delay(500)
-                await router.replace({
+                await router.push({
                   pathname: '/recuperacion',
                 })
                 ocultarFullScreen()
@@ -152,10 +125,25 @@ const LoginRegistroContainer = () => {
               Ingresa con Ciudadanía
             </Typography>
           </BotonCiudadania>
-        </form>
-      </Box>
+          <Box sx={{ mt: 3 }}>
+            <Typography variant="body1" textAlign="center" fontSize={14}>
+              ¿No tienes una cuenta?{' '}
+              <Button
+                variant="text"
+                sx={{ p: 0 }}
+                disabled={progresoLogin}
+                onClick={async () => {
+                  await router.push('registro')
+                }}
+              >
+                Regístrate
+              </Button>
+            </Typography>
+          </Box>
+        </Box>
+      </form>
     </Card>
   )
 }
 
-export default LoginRegistroContainer
+export default LoginContainer

@@ -10,7 +10,7 @@ import { useFullScreenLoading } from '../../context/ui'
 import { useEffect } from 'react'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
-import LoginNormalContainer from '../../modules/login/ui/LoginNormalContainer'
+import LoginContainer from '../../modules/login/ui/LoginContainer'
 
 const Index: NextPage = () => {
   const theme = useTheme()
@@ -104,8 +104,7 @@ const Index: NextPage = () => {
               alignItems={'center'}
               color={'primary'}
             >
-              <LoginNormalContainer />
-              {/* <LoginRegistroTabContainer /> */}
+              <LoginContainer />
             </Box>
           </Box>
         </Grid>
