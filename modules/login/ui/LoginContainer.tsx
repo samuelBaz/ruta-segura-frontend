@@ -30,7 +30,13 @@ const LoginContainer = () => {
   }
 
   return (
-    <Card sx={{ borderRadius: 4, p: 4, px: 5, maxWidth: '450px' }}>
+    <Card
+      sx={{
+        borderRadius: 4,
+        p: 3,
+        px: 4,
+      }}
+    >
       <form onSubmit={handleSubmit(iniciarSesion)}>
         <Box
           display={'grid'}
@@ -38,10 +44,7 @@ const LoginContainer = () => {
           alignItems={'center'}
           sx={{ borderRadius: 12 }}
         >
-          <Typography
-            align={'center'}
-            sx={{ flexGrow: 1, fontWeight: 'medium' }}
-          >
+          <Typography align={'center'} sx={{ fontWeight: '600' }}>
             Inicio de Sesión
           </Typography>
           <Box sx={{ mt: 1, mb: 1 }}></Box>
@@ -91,7 +94,7 @@ const LoginContainer = () => {
               disabled={progresoLogin}
               color={'primary'}
             >
-              <Typography fontSize={'small'} sx={{ fontWeight: 'medium' }}>
+              <Typography fontSize={'small'} sx={{ fontWeight: '600' }}>
                 ¿Olvidaste tu contraseña?
               </Typography>
             </Button>
@@ -103,7 +106,7 @@ const LoginContainer = () => {
             fullWidth
             disabled={progresoLogin}
           >
-            Iniciar sesión
+            <Typography sx={{ fontWeight: '600' }}>Iniciar sesión</Typography>
           </Button>
 
           <Box sx={{ pt: 2, pb: 2 }}>
@@ -119,7 +122,7 @@ const LoginContainer = () => {
               window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
             }}
           >
-            <Typography sx={{ pl: 1, pr: 1 }}>
+            <Typography sx={{ fontWeight: '600', pl: 1, pr: 1 }}>
               Ingresa con Ciudadanía
             </Typography>
           </BotonCiudadania>

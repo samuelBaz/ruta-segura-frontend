@@ -49,7 +49,7 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
           height: 'auto',
         }}
       />
-      <Box sx={{ px: 1 }}>{children}</Box>
+      <Box>{children}</Box>
     </ColorButton>
   )
 }
