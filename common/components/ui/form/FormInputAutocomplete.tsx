@@ -98,7 +98,7 @@ export const FormInputAutocomplete = <K, T extends FieldValues>({
       <InputLabel htmlFor={id}>
         <Typography
           variant={labelVariant}
-          sx={{ color: 'text.primary', fontWeight: '600' }}
+          sx={{ color: 'text.primary', fontWeight: '500' }}
         >
           {label}
         </Typography>
