@@ -28,7 +28,6 @@ const config: PlaywrightTestConfig = {
       slowMo: Number(process.env.SLOWMO ?? '0'),
     },
     screenshot: 'only-on-failure',
-    video: 'on',
   },
   projects: [
     {
