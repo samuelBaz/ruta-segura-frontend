@@ -38,6 +38,7 @@ import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
+import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -224,7 +225,7 @@ const Modulos: NextPage = () => {
   /// Petición que cambia el estado de un módulo
   const cambiarEstadoModuloPeticion = async (modulo: ModuloCRUDType) => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/modulos/${modulo.id}/${
           modulo.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
@@ -371,25 +372,25 @@ const Modulos: NextPage = () => {
       />,
       <Stack direction={'row'} key={`${moduloData.id}-${indexModulo}-acciones`}>
         {permisos.update && (
-          <IconoTooltip
-            id={`cambiarEstadoModulo-${moduloData.id}`}
-            titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
-            accion={() => {
-              editarEstadoModuloModal({
-                ...moduloData,
-                ...{ esSeccion: moduloData?.modulo == null },
-              })
-            }}
-            desactivado={moduloData.estado == 'PENDIENTE'}
-            icono={moduloData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
-            name={
-              moduloData.estado == 'ACTIVO'
-                ? 'Inactivar Módulo'
-                : 'Activar Módulo'
-            }
-          />
-        )}
+            <CustomSwitch
+              id={`cambiarEstadoModulo-${moduloData.id}`}
+              titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+              accion={() => {
+                editarEstadoModuloModal({
+                  ...moduloData,
+                  ...{ esSeccion: moduloData?.modulo == null },
+                })
+              }}
+              desactivado={moduloData.estado == 'PENDIENTE'}
+              color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
+              marcado={moduloData.estado == 'ACTIVO' ? true : false}
+              name={
+                moduloData.estado == 'ACTIVO'
+                  ? 'Inactivar Módulo'
+                  : 'Activar Módulo'
+              }
+            />
+          )}
         {permisos.update && (
           <IconoTooltip
             id={`editarModulo-${moduloData.id}`}

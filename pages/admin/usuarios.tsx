@@ -44,6 +44,7 @@ import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { ordenFiltrado } from '../../common/utils/orden'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
+import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -188,15 +189,15 @@ const Usuarios: NextPage = () => {
         key={`${usuarioData.id}-${indexUsuario}-acciones`}
       >
         {permisos.update && (
-          <IconoTooltip
-            id={`editarEstadoUsuario-${usuarioData.id}`}
+          <CustomSwitch
+            id={`cambiarEstadoUsuario-${usuarioData.id}`}
             titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={async () => {
               await editarEstadoUsuarioModal(usuarioData)
             }}
             desactivado={usuarioData.estado == 'PENDIENTE'}
-            icono={usuarioData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+            color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
+            marcado={usuarioData.estado == 'ACTIVO' ? true : false}
             name={
               usuarioData.estado == 'ACTIVO'
                 ? 'Inactivar Usuario'
@@ -347,7 +348,7 @@ const Usuarios: NextPage = () => {
   /// Petición que cambia el estado de un usuario
   const cambiarEstadoUsuarioPeticion = async (usuario: UsuarioCRUDType) => {
     try {
-      setLoading(true)
+      //setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/usuarios/${usuario.id}/${
           usuario.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
