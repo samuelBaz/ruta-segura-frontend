@@ -34,6 +34,7 @@ export const VistaModalRol = ({
       id: rol?.id,
       rol: rol?.rol,
       nombre: rol?.nombre,
+      descripcion: rol?.descripcion,
     },
   })
 
@@ -88,6 +89,18 @@ export const VistaModalRol = ({
                 label="Nombre"
                 disabled={loadingModal}
                 rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <FormInputText
+                id={'descripcion'}
+                control={control}
+                name="descripcion"
+                label="Descripción"
+                multiline
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+                rows={3}
               />
             </Grid>
           </Grid>
