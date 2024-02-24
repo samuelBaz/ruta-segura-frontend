@@ -48,7 +48,7 @@ const Index: NextPage = () => {
   return (
     <LayoutLogin title={siteName()}>
       <Grid container justifyContent="space-evenly" alignItems={'center'}>
-        <Grid item xl={6} md={5} xs={12}>
+        <Grid item xl={7} md={7} xs={12}>
           <Box
             display={'flex'}
             justifyContent={'center'}
@@ -74,6 +74,9 @@ const Index: NextPage = () => {
         </Grid>
         <Grid
           item
+          xl={0}
+          md={0}
+          xs={0}
           sx={{
             display: {
               sm: 'none',
@@ -97,7 +100,7 @@ const Index: NextPage = () => {
             />
           </Box>
         </Grid>
-        <Grid item xl={4} md={5} xs={12}>
+        <Grid item xl={4} md={4} xs={12}>
           <Box display="flex" justifyContent="center" alignItems="center">
             <Box
               display={'flex'}

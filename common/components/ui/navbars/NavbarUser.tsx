@@ -169,7 +169,7 @@ export const NavbarUser = () => {
             aria-label="Menu lateral"
             name={sideMenuOpen ? 'Cerrar menú lateral' : 'Abrir menú lateral'}
             edge="start"
-            color={'primary'}
+            color={'inherit'}
             onClick={() => {
               if (sideMenuOpen) {
                 closeSideMenu()
@@ -180,9 +180,9 @@ export const NavbarUser = () => {
             sx={{ mr: 0 }}
           >
             {sideMenuOpen ? (
-              <Icono color={'primary'}>menu_open</Icono>
+              <Icono color={'action'}>menu_open</Icono>
             ) : (
-              <Icono color={'primary'}>menu</Icono>
+              <Icono color={'action'}>menu</Icono>
             )}
           </IconButton>
           <Grid
@@ -232,6 +232,7 @@ export const NavbarUser = () => {
             accion={() => {
               abrirModalAyuda()
             }}
+            color={'action'}
             icono={'help_outline'}
           />
           {!xs && <ThemeSwitcherButton />}
@@ -243,7 +244,7 @@ export const NavbarUser = () => {
             value={''}
             selected={!!anchorEl}
           >
-            <Icono color={'primary'}>account_circle</Icono>
+            <Icono color={'action'}>account_circle</Icono>
             {!xs && (
               <Box
                 sx={{ p: 1 }}

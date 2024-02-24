@@ -47,7 +47,15 @@ const LoginContainer = () => {
           <Typography align={'center'} sx={{ fontWeight: '600' }}>
             Inicio de Sesión
           </Typography>
-          <Box sx={{ mt: 1, mb: 1 }}></Box>
+          <Box sx={{ mt: 2, mb: 2 }}>
+            <Typography
+              fontSize={14}
+              variant={'body1'}
+              color={'text.secondary'}
+            >
+              Ingresa tus credenciales para iniciar sesión
+            </Typography>
+          </Box>
           <FormInputText
             id={'usuario'}
             control={control}
