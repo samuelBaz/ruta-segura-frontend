@@ -13,12 +13,15 @@ import ProgresoLineal from '../../../common/components/ui/progreso/ProgresoLinea
 import { Icono } from '../../../common/components/ui'
 import { NivelSeguridadPass } from '../../../common/components/ui/utils/NivelSeguridadPass'
 import { CrearCuentaType } from '../types/nuevaPassPeticionTypes'
+import { useRouter } from 'next/router'
 
-const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
+const RegistroContainer = () => {
   const [indicadorCarga, setIndicadorCarga] = useState<boolean>(false)
 
   const [indicadorCreacionCuenta, setIndicadorCreacionCuenta] =
     useState<boolean>(false)
+
+  const router = useRouter()
 
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
@@ -76,7 +79,10 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
               onClick={() => {
                 reset()
                 setIndicadorCreacionCuenta(false)
-                mostrarLogin()
+                //mostrarLogin()
+                router.replace({
+                  pathname: '/login',
+                })
               }}
             >
               <Typography sx={{ fontWeight: 'medium' }}>Entendido</Typography>
@@ -86,6 +92,18 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
       )}
       {!indicadorCreacionCuenta && (
         <form onSubmit={handleSubmit(guardarActualizarCuenta)}>
+          <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+            <Icono fontSize={'large'}> person_add</Icono>
+            <Box height={'20px'} />
+            <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
+              Formulario de Registro
+            </Typography>
+          </Box>
+          <Box height={'20px'} />
+          <Typography variant="body2" color="text.secondary">
+            Por favor, ingresa tus datos para registrar tu cuenta.
+          </Typography>
+          <Box height={'20px'} />
           <Grid>
             <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
               Datos de usuario
@@ -129,7 +147,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
                   id={'newPassword1'}
                   control={control}
                   name="newPassword1"
-                  label="Nueva contraseña"
+                  label="Contraseña"
                   disabled={indicadorCarga}
                   type={'password'}
                   rules={{ required: 'Este campo es requerido' }}
@@ -146,7 +164,7 @@ const RegistroContainer = ({ mostrarLogin }: { mostrarLogin: () => void }) => {
                   id={'newPassword2'}
                   control={control}
                   name="newPassword2"
-                  label="Repita su nueva contraseña"
+                  label="Repita su contraseña"
                   disabled={indicadorCarga}
                   type={'password'}
                   rules={{
