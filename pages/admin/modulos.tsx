@@ -370,27 +370,31 @@ const Modulos: NextPage = () => {
               : 'info'
         }
       />,
-      <Stack direction={'row'} key={`${moduloData.id}-${indexModulo}-acciones`}>
+      <Stack
+        key={`${moduloData.id}-${indexModulo}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
+      >
         {permisos.update && (
-            <CustomSwitch
-              id={`cambiarEstadoModulo-${moduloData.id}`}
-              titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-              accion={() => {
-                editarEstadoModuloModal({
-                  ...moduloData,
-                  ...{ esSeccion: moduloData?.modulo == null },
-                })
-              }}
-              desactivado={moduloData.estado == 'PENDIENTE'}
-              color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
-              marcado={moduloData.estado == 'ACTIVO' ? true : false}
-              name={
-                moduloData.estado == 'ACTIVO'
-                  ? 'Inactivar Módulo'
-                  : 'Activar Módulo'
-              }
-            />
-          )}
+          <CustomSwitch
+            id={`cambiarEstadoModulo-${moduloData.id}`}
+            titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            accion={() => {
+              editarEstadoModuloModal({
+                ...moduloData,
+                ...{ esSeccion: moduloData?.modulo == null },
+              })
+            }}
+            desactivado={moduloData.estado == 'PENDIENTE'}
+            color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
+            marcado={moduloData.estado == 'ACTIVO'}
+            name={
+              moduloData.estado == 'ACTIVO'
+                ? 'Inactivar Módulo'
+                : 'Activar Módulo'
+            }
+          />
+        )}
         {permisos.update && (
           <IconoTooltip
             id={`editarModulo-${moduloData.id}`}

@@ -185,19 +185,20 @@ const Usuarios: NextPage = () => {
         />
       </Typography>,
       <Stack
-        direction={'row'}
         key={`${usuarioData.id}-${indexUsuario}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
       >
         {permisos.update && (
           <CustomSwitch
             id={`cambiarEstadoUsuario-${usuarioData.id}`}
             titulo={usuarioData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            accion={async () => {
-              await editarEstadoUsuarioModal(usuarioData)
+            accion={() => {
+              editarEstadoUsuarioModal(usuarioData)
             }}
             desactivado={usuarioData.estado == 'PENDIENTE'}
             color={usuarioData.estado == 'ACTIVO' ? 'success' : 'error'}
-            marcado={usuarioData.estado == 'ACTIVO' ? true : false}
+            marcado={usuarioData.estado == 'ACTIVO'}
             name={
               usuarioData.estado == 'ACTIVO'
                 ? 'Inactivar Usuario'

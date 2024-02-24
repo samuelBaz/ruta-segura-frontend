@@ -121,7 +121,7 @@ const Roles: NextPage = () => {
       >{`${rolData.nombre}`}</Typography>,
       <Typography
         key={`${rolData.id}-${indexRol}-descripcion`}
-        variant={'body2'} 
+        variant={'body2'}
       >{`${rolData.descripcion}`}</Typography>,
       <Typography key={`${rolData.id}-${indexRol}-estado`} component={'div'}>
         <CustomMensajeEstado
@@ -136,7 +136,11 @@ const Roles: NextPage = () => {
           }
         />
       </Typography>,
-      <Stack direction={'row'} key={`${rolData.id}-${indexRol}-accion`}>
+      <Stack
+        key={`${rolData.id}-${indexRol}-accion`}
+        direction={'row'}
+        alignItems={'center'}
+      >
         {permisos.update && (
           <CustomSwitch
             id={`cambiarEstadoRol-${rolData.id}`}
@@ -145,7 +149,7 @@ const Roles: NextPage = () => {
               editarEstadoRolModal(rolData)
             }}
             desactivado={rolData.estado == 'PENDIENTE'}
-            marcado={rolData.estado == 'ACTIVO' ? true : false}
+            marcado={rolData.estado == 'ACTIVO'}
             color={rolData.estado == 'ACTIVO' ? 'success' : 'error'}
             name={rolData.estado == 'ACTIVO' ? 'Inactivar Rol' : 'Activar Rol'}
           />

@@ -174,8 +174,9 @@ const Parametros: NextPage = () => {
         }
       />,
       <Stack
-        direction={'row'}
         key={`${parametroData.id}-${indexParametro}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
       >
         {permisos.update && (
           <CustomSwitch
@@ -190,7 +191,7 @@ const Parametros: NextPage = () => {
                 : 'Activar Parámetro'
             }
             color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
-            marcado={parametroData.estado == 'ACTIVO' ? true : false}
+            marcado={parametroData.estado == 'ACTIVO'}
             desactivado={parametroData.estado == 'PENDIENTE'}
           />
         )}
