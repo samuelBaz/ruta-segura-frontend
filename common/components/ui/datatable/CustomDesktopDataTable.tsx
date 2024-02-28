@@ -22,6 +22,7 @@ import { ToggleOrden } from '../../../utils/orden'
 export interface CustomDataTableType {
   titulo?: string
   tituloPersonalizado?: ReactNode
+  cabeceraPersonalizada?: ReactNode
   error?: boolean
   cargando?: boolean
   acciones?: Array<ReactNode>
@@ -37,6 +38,7 @@ export interface CustomDataTableType {
 export const CustomDesktopDataTable = ({
   titulo,
   tituloPersonalizado,
+  cabeceraPersonalizada,
   error = false,
   cargando = false,
   acciones = [],
@@ -87,7 +89,8 @@ export const CustomDesktopDataTable = ({
 
       if (
         indicesSeleccionados.filter((value) => value).length ==
-        indicesSeleccionados.length
+          indicesSeleccionados.length &&
+        indicesSeleccionados.length != 0
       )
         setTodoSeleccionado(true)
     },
@@ -117,44 +120,47 @@ export const CustomDesktopDataTable = ({
   return (
     <Box sx={{ pb: 2 }}>
       {/*título y acciones*/}
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        {titulo ? (
-          <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
-            {`${titulo}`}
-          </Typography>
-        ) : tituloPersonalizado ? (
-          tituloPersonalizado
-        ) : (
-          <Box />
-        )}
-        <Box>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            {seleccionable &&
-              indicesSeleccionados.filter((value) => value).length > 0 && (
-                <Box sx={{ mx: 1 }}>
-                  <Typography key={'contador'} variant={'subtitle2'}>
-                    {`${
-                      indicesSeleccionados.filter((value) => value).length
-                    } seleccionados`}
-                  </Typography>
-                </Box>
-              )}
-            {acciones.map((accion, index) => (
-              <div key={`accion-id-${index}`}>{accion}</div>
-            ))}
-          </Grid>
-        </Box>
-      </Grid>
+      {!cabeceraPersonalizada && (
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          {titulo ? (
+            <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
+              {`${titulo}`}
+            </Typography>
+          ) : tituloPersonalizado ? (
+            tituloPersonalizado
+          ) : (
+            <Box />
+          )}
+          <Box>
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              {seleccionable &&
+                indicesSeleccionados.filter((value) => value).length > 0 && (
+                  <Box sx={{ mx: 1 }}>
+                    <Typography key={'contador'} variant={'subtitle2'}>
+                      {`${
+                        indicesSeleccionados.filter((value) => value).length
+                      } seleccionados`}
+                    </Typography>
+                  </Box>
+                )}
+              {acciones.map((accion, index) => (
+                <div key={`accion-id-${index}`}>{accion}</div>
+              ))}
+            </Grid>
+          </Box>
+        </Grid>
+      )}
+      {cabeceraPersonalizada && cabeceraPersonalizada}
       {/* filtros */}
       <Box
         sx={{
@@ -253,7 +259,10 @@ export const CustomDesktopDataTable = ({
                       <TableHead>
                         <TableRow>
                           {seleccionable && (
-                            <TableCell key={`cabecera-id-seleccionar`}>
+                            <TableCell
+                              key={`cabecera-id-seleccionar`}
+                              sx={{ p: 1.2 }}
+                            >
                               <Checkbox
                                 checked={todoSeleccionado}
                                 disabled={cargando}

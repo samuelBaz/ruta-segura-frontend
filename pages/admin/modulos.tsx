@@ -38,6 +38,7 @@ import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/types/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/utils/orden'
+import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -224,7 +225,7 @@ const Modulos: NextPage = () => {
   /// Petición que cambia el estado de un módulo
   const cambiarEstadoModuloPeticion = async (modulo: ModuloCRUDType) => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/modulos/${modulo.id}/${
           modulo.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
@@ -369,12 +370,15 @@ const Modulos: NextPage = () => {
               : 'info'
         }
       />,
-      <Stack direction={'row'} key={`${moduloData.id}-${indexModulo}-acciones`}>
+      <Stack
+        key={`${moduloData.id}-${indexModulo}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
+      >
         {permisos.update && (
-          <IconoTooltip
+          <CustomSwitch
             id={`cambiarEstadoModulo-${moduloData.id}`}
             titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={() => {
               editarEstadoModuloModal({
                 ...moduloData,
@@ -382,7 +386,8 @@ const Modulos: NextPage = () => {
               })
             }}
             desactivado={moduloData.estado == 'PENDIENTE'}
-            icono={moduloData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
+            color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
+            marcado={moduloData.estado == 'ACTIVO'}
             name={
               moduloData.estado == 'ACTIVO'
                 ? 'Inactivar Módulo'

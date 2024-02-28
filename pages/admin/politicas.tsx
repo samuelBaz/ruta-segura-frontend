@@ -112,8 +112,9 @@ const Politicas: NextPage = () => {
         variant={'body2'}
       >{`${politicaData.app}`}</Typography>,
       <Stack
-        direction={'row'}
         key={`${politicaData.accion}-${indexPolitica}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
       >
         {permisos.update && (
           <IconoTooltip

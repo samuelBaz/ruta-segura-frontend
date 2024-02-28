@@ -211,7 +211,12 @@ const Perfil: NextPage = () => {
                           window.open(Constantes.ciudadaniaUrl, '_blank')
                         }}
                       >
-                        <Grid container justifyContent={'center'}>
+                        <Grid
+                          container
+                          justifyContent={'center'}
+                          alignItems={'center'}
+                        >
+                          <Box width={'10px'} />
                           <Typography
                             variant={'body2'}
                             sx={{ fontWeight: '600' }}

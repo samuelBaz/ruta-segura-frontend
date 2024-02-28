@@ -40,6 +40,7 @@ export const NavbarLogin = () => {
             id={'ayudaLogin'}
             name={'Ayuda'}
             titulo={'Ayuda'}
+            color={'action'}
             accion={() => {
               abrirModalAyuda()
             }}
