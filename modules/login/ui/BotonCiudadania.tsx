@@ -51,13 +51,13 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
         style={{
           maxWidth: '100%',
           height: 'auto',
-          border: '1px solid #a9a8a8',
+          // border: '1px solid #a9a8a8',
           borderRadius: 20,
         }}
       />
       <Box
         sx={{
-          px: 1,
+          px: 0,
           color: themeMode == 'light' ? palette.grey[800] : '#fff',
         }}
       >
