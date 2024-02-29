@@ -1,29 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Box,
-  Collapse,
-  Divider,
-  Drawer,
-  List,
-  ListItemButton,
-  Tooltip,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { useMediaQuery, useTheme } from '@mui/material'
 
 import { useRouter } from 'next/router'
 import { useFullScreenLoading, useSidebar } from '../../../../context/ui'
-import Toolbar from '@mui/material/Toolbar'
 import { useAuth } from '../../../../context/auth'
 import { imprimir } from '../../../utils/imprimir'
-import { Icono } from '../Icono'
-import { ModuloType } from '../../../../modules/login/types/loginTypes'
-import { versionNumber } from '../../../utils'
+import { CustomDrawer, SidebarModuloType } from './CustomDrawer'
 
 const drawerWidth = 220
-
-type SidebarModuloType = ModuloType & { showed?: boolean; open?: boolean }
 
 export const Sidebar = () => {
   const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
@@ -56,9 +40,6 @@ export const Sidebar = () => {
     )
   }
 
-  const rutaActiva = (routeName: string, currentRoute: string) =>
-    currentRoute.includes(routeName, 0)
-
   const navigateTo = async (url: string) => {
     if (sm || xs || md) {
       closeSideMenu()
@@ -83,7 +64,7 @@ export const Sidebar = () => {
   }, [usuario])
 
   return (
-    <Drawer
+    <CustomDrawer
       variant={sm || xs || md ? 'temporary' : 'persistent'}
       open={
         sideMenuOpen &&
@@ -98,9 +79,6 @@ export const Sidebar = () => {
         )
       }
       onClose={closeSideMenu}
-      ModalProps={{
-        keepMounted: true, // Better open performance on mobile.
-      }}
       sx={{
         width: sideMenuOpen ? drawerWidth : `0`,
         flexShrink: 0,
@@ -111,156 +89,10 @@ export const Sidebar = () => {
         },
         transition: 'all 0.2s ease-out',
       }}
-    >
-      <Toolbar />
-      <Box sx={{ overflow: 'auto' }}>
-        {modulos.map((modulo, index) => (
-          <div key={`div-${index}`}>
-            <Box
-              sx={{
-                display: 'flex',
-                m: 0,
-                mx: 0.4,
-                alignItems: 'center',
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                const tempModulos = structuredClone(modulos)
-                tempModulos[index].open = !tempModulos[index].open
-                setModulos(tempModulos)
-              }}
-              onMouseOver={() => {
-                const tempModulos = structuredClone(modulos)
-                tempModulos[index].showed = true
-                setModulos(tempModulos)
-              }}
-              onMouseLeave={() => {
-                const tempModulos = structuredClone(modulos)
-                tempModulos[index].showed = false
-                setModulos(tempModulos)
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  m: 0,
-                  borderRadius: 1,
-                  alignItems: 'center',
-                  margin: '12px 6px',
-                  width: '100%',
-                }}
-              >
-                <Box width={'15px'} />
-                <Tooltip
-                  title={modulo.propiedades.descripcion}
-                  enterDelay={1000}
-                  placement={'left'}
-                >
-                  <Typography
-                    variant={'body2'}
-                    color={'text.secondary'}
-                    sx={{ fontWeight: '400' }}
-                  >
-                    {`${modulo.label}`}
-                  </Typography>
-                </Tooltip>
-
-                <Box sx={{ flexGrow: 1 }} />
-                {(modulo.showed || !modulo.open) && (
-                  <Icono
-                    fontSize={'small'}
-                    sx={{ p: 0, m: 0, mx: 1.5 }}
-                    color={'action'}
-                  >
-                    {modulo.open ? 'expand_more' : 'navigate_next'}
-                  </Icono>
-                )}
-              </Box>
-            </Box>
-
-            <Collapse in={modulo.open}>
-              <List
-                key={`submodulos-${index}`}
-                component="ul"
-                style={{ cursor: 'pointer' }}
-                sx={{ pt: 0, pb: 0 }}
-              >
-                {modulo.subModulo.map((subModuloItem, indexSubModulo) => (
-                  <ListItemButton
-                    id={`submodulo-${index}-${indexSubModulo}`}
-                    key={`submodulo-${index}-${indexSubModulo}`}
-                    component="li"
-                    about={subModuloItem.propiedades.descripcion}
-                    selected={rutaActiva(subModuloItem.url, router.pathname)}
-                    sx={{
-                      px: 0.5,
-                      mx: 1.5,
-                    }}
-                    onClick={() => navigateTo(subModuloItem.url)}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        m: 0,
-                        borderRadius: 1,
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Box width={'9px'} />
-                      <Icono
-                        color={
-                          rutaActiva(subModuloItem.url, router.pathname)
-                            ? 'primary'
-                            : 'action'
-                        }
-                        fontSize={'medium'}
-                      >
-                        {subModuloItem.propiedades.icono}
-                      </Icono>
-
-                      <Box width={'12px'} />
-                      <Tooltip
-                        title={subModuloItem.propiedades.descripcion}
-                        enterDelay={1000}
-                        placement={'left'}
-                      >
-                        <Typography
-                          variant={'body2'}
-                          sx={{
-                            fontWeight: rutaActiva(
-                              subModuloItem.url,
-                              router.pathname
-                            )
-                              ? '600'
-                              : '500',
-                          }}
-                          color={
-                            rutaActiva(subModuloItem.url, router.pathname)
-                              ? 'primary'
-                              : undefined
-                          }
-                        >
-                          {`${subModuloItem.label}`}
-                        </Typography>
-                      </Tooltip>
-                    </Box>
-                  </ListItemButton>
-                ))}
-              </List>
-            </Collapse>
-            {!modulo.open && <Divider sx={{ mx: 1 }} />}
-          </div>
-        ))}
-      </Box>
-      <Box sx={{ pb: 2 }} display="flex" flex="1" justifyContent="space-around">
-        <Box sx={{ alignSelf: 'flex-end' }}>
-          <Typography color="text.secondary" variant={'body2'}>
-            {`v${versionNumber()}`}
-          </Typography>
-        </Box>
-      </Box>
-    </Drawer>
+      rutaActual={router.pathname}
+      modulos={modulos}
+      setModulos={setModulos}
+      navigateTo={navigateTo}
+    />
   )
 }
