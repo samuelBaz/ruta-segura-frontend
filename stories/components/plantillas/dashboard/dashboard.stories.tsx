@@ -15,6 +15,6 @@ export default {
 } as Meta<typeof Dashboard>
 
 // replica del componente
-export const Template: StoryFn<typeof Dashboard> = (args: any) => {
+export const Template: StoryFn<typeof Dashboard> = () => {
   return <Dashboard />
 }
