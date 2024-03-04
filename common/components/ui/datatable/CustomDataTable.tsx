@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { useMediaQuery, useTheme } from '@mui/material'
-import { CriterioOrdenType } from '../../../types/ordenTypes'
+import { CriterioOrdenType } from './ordenTypes'
 import { CustomDesktopDataTable } from './CustomDesktopDataTable'
 import { CustomMobileTableMobile } from './CustomMobileTableMobile'
 

@@ -35,9 +35,9 @@ import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensaj
 import { BotonAcciones } from '../../common/components/ui/botones/BotonAcciones'
 import { useAlerts, useSession } from '../../common/hooks'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
-import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
-import { ordenFiltrado } from '../../common/utils/orden'
+import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Modulos: NextPage = () => {
