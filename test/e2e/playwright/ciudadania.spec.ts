@@ -65,12 +65,13 @@ test('Ciudadanía - Inicio de sesión', async ({ page, isMobile }) => {
   // en caso de ser móvil
   if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
 
-  await page
+  /* await page
     .getByRole('button', {
       name: 'Perfil',
       exact: true,
     })
-    .click()
+    .click() */
+  await page.click("[id='/admin/perfil']")
   const locator = page.getByText(`CI ${algunCiudadano.ci}`)
   await expect(locator).toContainText(`CI ${algunCiudadano.ci}`)
   if (isMobile) {
