@@ -14,6 +14,7 @@ import Toolbar from '@mui/material/Toolbar'
 import React from 'react'
 import { Icono } from '../Icono'
 import { ModuloType } from '../../../../modules/login/types/loginTypes'
+import BadgeVariant from '../CustomBadge'
 
 export type SidebarModuloType = ModuloType & {
   showed?: boolean
@@ -28,6 +29,8 @@ export const CustomDrawer = ({
   setModulos,
   navigateTo,
   rutaActual,
+  badgeVariant,
+  mostrarMensaje,
 }: {
   variant?: 'permanent' | 'persistent' | 'temporary'
   open?: boolean | undefined
@@ -37,9 +40,13 @@ export const CustomDrawer = ({
   setModulos: (modulos: Array<SidebarModuloType>) => void
   navigateTo: (url: string) => void
   rutaActual: string
+  badgeVariant: string
+  mostrarMensaje: (id: string) => string
 }) => {
   const rutaActiva = (routeName: string, currentRoute: string) =>
     currentRoute.includes(routeName, 0)
+
+  console.log(modulos)
 
   return (
     <Drawer
@@ -135,6 +142,7 @@ export const CustomDrawer = ({
                     sx={{
                       px: 0.5,
                       mx: 1.5,
+                      justifyContent: 'space-between',
                     }}
                     onClick={() => navigateTo(subModuloItem.url)}
                   >
@@ -185,6 +193,12 @@ export const CustomDrawer = ({
                         </Typography>
                       </Tooltip>
                     </Box>
+                    {mostrarMensaje(subModuloItem.url) !== '' && (
+                      <BadgeVariant
+                        content={mostrarMensaje(subModuloItem.url)}
+                        variante={badgeVariant}
+                      />
+                    )}
                   </ListItemButton>
                 ))}
               </List>

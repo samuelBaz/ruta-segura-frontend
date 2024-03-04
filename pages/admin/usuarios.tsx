@@ -45,6 +45,7 @@ import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTyp
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
+import { useSidebar } from '../../context/ui/SideBarProvider'
 
 const Usuarios: NextPage = () => {
   // data de usuarios
@@ -55,6 +56,9 @@ const Usuarios: NextPage = () => {
 
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
+
+  // Función para agregar un badge en el sidebar
+  const { agregarMensaje } = useSidebar()
 
   /// Indicador de error en una petición
   const [errorData, setErrorData] = useState<any>()
@@ -513,6 +517,10 @@ const Usuarios: NextPage = () => {
   useEffect(() => {
     imprimir('🔒', permisos)
   }, [permisos])
+
+  useEffect(() => {
+    agregarMensaje(router.pathname, total.toString())
+  }, [total])
 
   useEffect(() => {
     definirPermisos().finally()
