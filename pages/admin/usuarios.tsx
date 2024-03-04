@@ -519,11 +519,6 @@ const Usuarios: NextPage = () => {
   }, [permisos])
 
   useEffect(() => {
-    agregarMensaje(router.pathname, total.toString())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [total])
-
-  useEffect(() => {
     definirPermisos().finally()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estaAutenticado])
