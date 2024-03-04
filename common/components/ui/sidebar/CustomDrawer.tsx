@@ -46,8 +46,6 @@ export const CustomDrawer = ({
   const rutaActiva = (routeName: string, currentRoute: string) =>
     currentRoute.includes(routeName, 0)
 
-  console.log(modulos)
-
   return (
     <Drawer
       variant={variant}

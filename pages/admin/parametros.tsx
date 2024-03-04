@@ -320,6 +320,7 @@ const Parametros: NextPage = () => {
 
   useEffect(() => {
     agregarMensaje(router.pathname, total.toString())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [total])
 
   useEffect(() => {
