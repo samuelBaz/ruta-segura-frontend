@@ -41,8 +41,8 @@ import {
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
-import { CriterioOrdenType } from '../../common/types/ordenTypes'
-import { ordenFiltrado } from '../../common/utils/orden'
+import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
+import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 

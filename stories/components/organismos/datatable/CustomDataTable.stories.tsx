@@ -7,7 +7,7 @@ import { Paginacion } from '../../../../common/components/ui/datatable/Paginacio
 import {
   CriterioOrdenType,
   OrdenEnum,
-} from '../../../../common/types/ordenTypes'
+} from '../../../../common/components/ui/datatable/ordenTypes'
 import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
 

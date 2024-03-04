@@ -1,4 +1,4 @@
-import { CriterioOrdenType, OrdenEnum } from '../types/ordenTypes'
+import { CriterioOrdenType, OrdenEnum } from './ordenTypes'
 
 export const ordenFiltrado = (ordenCriterios: Array<CriterioOrdenType>) =>
   ordenCriterios

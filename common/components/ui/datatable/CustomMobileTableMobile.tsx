@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material'
 import { ListSkeleton } from './CustomSkeleton'
-import { CriterioOrdenType } from '../../../types/ordenTypes'
+import { CriterioOrdenType } from './ordenTypes'
 
 export interface CustomDataTableTypeMobile {
   titulo?: string
