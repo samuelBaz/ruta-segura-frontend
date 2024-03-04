@@ -68,7 +68,7 @@
     "@etchteam/storybook-addon-status": "4.2.4",
     "@mdx-js/react": "3.0.0",
     "@next/bundle-analyzer": "14.1.0",
-    "@playwright/test": "^1.42.1",
+    "@playwright/test": "1.41.1",
     "@storybook/addon-actions": "7.6.10",
     "@storybook/addon-docs": "7.6.10",
     "@storybook/addon-essentials": "7.6.10",

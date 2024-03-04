@@ -160,7 +160,6 @@ export const CustomDrawer = ({
                       </Icono>
                       <Box width={'12px'} />
                       <Tooltip
-                        id={subModuloItem.url} // Agregado la ruta como id para los test de Playwright
                         title={subModuloItem.propiedades.descripcion}
                         enterDelay={1000}
                         placement={'left'}
