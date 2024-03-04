@@ -11,6 +11,7 @@ import { useAlerts } from '../../common/hooks'
 import { useAuth } from '../../context/auth'
 import { ParsedUrlQuery } from 'querystring'
 import { useFullScreenLoading } from '../../context/ui'
+import url from 'url'
 
 const Ciudadania: NextPage = () => {
   const router = useRouter()
@@ -29,6 +30,13 @@ const Ciudadania: NextPage = () => {
           accept: 'application/json',
         },
       })
+
+      if (respuesta?.url) {
+        const error = url.parse(respuesta.url, true)
+        Alerta({ mensaje: `${error?.query?.mensaje || 'Error en autenticación'}`, variant: 'error' })
+        await delay(2000)
+        window.location.href = respuesta?.url
+      }
 
       imprimir(`Sesión Autorizada`, respuesta)
       guardarCookie('token', respuesta.access_token)
