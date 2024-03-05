@@ -38,12 +38,10 @@ import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
-import { useSidebar } from '../../context/ui/SideBarProvider'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const { agregarMensaje } = useSidebar()
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
   const [errorParametrosData, setErrorParametrosData] = useState<any>()
