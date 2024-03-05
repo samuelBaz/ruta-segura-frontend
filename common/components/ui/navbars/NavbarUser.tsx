@@ -305,11 +305,12 @@ export const NavbarUser = () => {
               </Box>
             </MenuItem>
             {roles.length > 1 && (
-              <>
+              <Box>
                 <Divider />
                 <MenuItem
                   sx={{
                     ml: 0,
+                    pt: 1.5,
                     '&.MuiButtonBase-root:hover': {
                       bgcolor: 'transparent',
                     },
@@ -355,7 +356,7 @@ export const NavbarUser = () => {
                     </ListItem>
                   ))}
                 </List>
-              </>
+              </Box>
             )}
             <Divider />
             <MenuItem sx={{ px: 2.5, py: 1.5, mt: 1 }} onClick={toggleTheme}>
