@@ -1,11 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react'
-
 import {
   CustomDrawer,
   SidebarModuloType,
 } from '../../../../common/components/ui/sidebar/CustomDrawer'
 import { useEffect, useState } from 'react'
-import { Box, Button } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 
 interface SidebarProps {
   variant: 'small' | 'collapsed' | 'withBadge'
@@ -73,7 +72,7 @@ export default {
 
 // replica del componente
 const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
-  const mensajes: MensajeType = { id: '/admin/usuarios', valor: '44' }
+  const mensajes: MensajeType = { id: '/admin/pedidos', valor: '44' }
 
   const [openSidebar, setOpenSidebar] = useState<boolean>(true)
   const [modulos, setModulos] = useState<SidebarModuloType[]>([
@@ -116,35 +115,47 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
     {
       estado: 'ACTIVO',
       id: '4',
-      label: 'Configuración',
-      nombre: 'configuraciones',
+      label: 'Opciones',
+      nombre: 'opciones',
       open: args.variant !== 'collapsed',
-      propiedades: { orden: 2, descripcion: 'Sección de configuraciones' },
+      propiedades: { orden: 2, descripcion: 'Sección de opciones' },
       showed: false,
       subModulo: [
         {
           estado: 'ACTIVO',
           id: '5',
-          label: 'Usuarios',
-          nombre: 'usuarios',
+          label: 'Productos',
+          nombre: 'productos',
           propiedades: {
-            icono: 'manage_accounts',
+            icono: 'storefront',
             orden: 1,
-            descripcion: 'Control de usuarios del sistema',
+            descripcion: 'Control de productos del sistema',
           },
-          url: args.variant === 'withBadge' ? '/admin/usuarios' : 'admin/123',
+          url: args.variant === 'withBadge' ? '/admin/productos' : 'admin/123',
         },
         {
           estado: 'ACTIVO',
           id: '6',
-          label: 'Parámetros',
-          nombre: 'parametros',
+          label: 'Pedidos',
+          nombre: 'pedidos',
           propiedades: {
-            icono: 'tune',
+            icono: 'local_grocery_store',
             orden: 2,
-            descripcion: 'Parámetros generales del sistema',
+            descripcion: 'Pedidos',
           },
-          url: '/admin/parametros',
+          url: '/admin/pedidos',
+        },
+        {
+          estado: 'ACTIVO',
+          id: '6',
+          label: 'Ventas',
+          nombre: 'ventas',
+          propiedades: {
+            icono: 'receipt',
+            orden: 2,
+            descripcion: 'Ventas realizadas',
+          },
+          url: '/admin/ventas',
         },
       ],
       url: '/configuraciones',
@@ -166,10 +177,11 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
   }, [args.variant])
 
   return (
-    <Box
+    <Grid
+      container
       style={{
         display: 'flex',
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
         alignItems: 'center',
         height: '60vh',
       }}
@@ -199,24 +211,27 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
         mostrarMensaje={mostrarMensaje}
       />
       <Button onClick={() => setOpenSidebar(!openSidebar)} variant="contained">
-        Small
+        {openSidebar ? 'Cerrar' : 'Abrir'}
       </Button>
-    </Box>
+    </Grid>
   )
 }
 
-export const SidebarSmall = Template.bind({})
-SidebarSmall.args = {
+export const BarraLateralDesplegable = Template.bind({})
+BarraLateralDesplegable.storyName = 'Barra lateral desplegable'
+BarraLateralDesplegable.args = {
   variant: 'small',
 }
 
-export const SidebarCollapsed = Template.bind({})
-SidebarCollapsed.args = {
+export const BarraLateralColapsada = Template.bind({})
+BarraLateralColapsada.storyName = 'Barra lateral colapsada'
+BarraLateralColapsada.args = {
   variant: 'collapsed',
 }
 
-export const SidebarWithBadge = Template.bind({})
-SidebarWithBadge.args = {
+export const BarrateralConItemBadge = Template.bind({})
+BarrateralConItemBadge.storyName = 'Barra lateral con itembadge'
+BarrateralConItemBadge.args = {
   variant: 'withBadge',
   variantBadge: 'PorDefecto',
 }
