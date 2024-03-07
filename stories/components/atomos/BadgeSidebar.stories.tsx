@@ -5,7 +5,7 @@ import {
   CustomDrawer,
   SidebarModuloType,
 } from '../../../common/components/ui/sidebar/CustomDrawer'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 import { MensajeType } from '../../../context/ui'
 
@@ -102,8 +102,8 @@ const Template: StoryFn<typeof BadgeVariant> = (args) => {
     },
   ])
 
-  const mostrarMensaje = (id: string): string => {
-    return mensajes.find((mensaje) => mensaje.id === id)?.valor ?? ''
+  const mostrarMensaje = (id: string): ReactNode => {
+    return mensajes.find((mensaje) => mensaje.id === id)?.valor
   }
   useEffect(() => {
     setMensajes([{ id: '/admin/usuarios', valor: args.content }])
@@ -120,7 +120,6 @@ const Template: StoryFn<typeof BadgeVariant> = (args) => {
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
             width: 220,
-            // borderWidth: 0.0,
             boxSizing: 'border-box',
           },
           transition: 'all 0.2s ease-out',
@@ -130,7 +129,7 @@ const Template: StoryFn<typeof BadgeVariant> = (args) => {
         setModulos={setModulos}
         navigateTo={() => {}}
         badgeVariant={args.variante || ''}
-        mostrarMensaje={mostrarMensaje}
+        verificarMensaje={mostrarMensaje}
       />
     </Box>
   )

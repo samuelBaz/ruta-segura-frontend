@@ -5,18 +5,19 @@ import {
   useContext,
   useState,
 } from 'react'
+import { ReactNode } from 'react'
 
 export interface MensajeType {
   id: string
-  valor: string
+  valor: ReactNode
 }
 
 interface UIContextType {
   sideMenuOpen: boolean
   closeSideMenu: () => void
   openSideMenu: () => void
-  agregarMensaje: (id: string, valor: string) => void
-  mostrarMensaje: (id: string) => string | undefined
+  agregarMensaje: (id: string, valor: ReactNode) => void
+  verificarMensaje: (id: string) => ReactNode
 }
 
 const UIContext = createContext<UIContextType>({} as UIContextType)
@@ -33,7 +34,7 @@ const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
   const closeSideMenu = () => {
     setSideMenuOpen(false)
   }
-  const agregarMensaje = (id: string, valor: string) => {
+  const agregarMensaje = (id: string, valor: ReactNode) => {
     const mensajeExistente = mensajes.find((mensaje) => mensaje.id === id)
     const mensajesActualizados = mensajeExistente
       ? mensajes.map((mensaje) =>
@@ -43,7 +44,7 @@ const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
     setMensajes(mensajesActualizados)
   }
 
-  const mostrarMensaje = (id: string) =>
+  const verificarMensaje = (id: string) =>
     mensajes.find((mensaje) => mensaje.id === id)?.valor
 
   return (
@@ -55,7 +56,7 @@ const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
         closeSideMenu,
         openSideMenu,
         agregarMensaje,
-        mostrarMensaje,
+        verificarMensaje,
       }}
     >
       {children}

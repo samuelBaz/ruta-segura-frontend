@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { SxProps } from '@mui/system'
 import Toolbar from '@mui/material/Toolbar'
-import React from 'react'
+import { ReactNode } from 'react'
 import { Icono } from '../Icono'
 import { ModuloType } from '../../../../modules/login/types/loginTypes'
 import CustomBadge from '../CustomBadge'
@@ -30,7 +30,7 @@ export const CustomDrawer = ({
   navigateTo,
   rutaActual,
   badgeVariant,
-  mostrarMensaje,
+  verificarMensaje,
 }: {
   variant?: 'permanent' | 'persistent' | 'temporary'
   open?: boolean | undefined
@@ -41,7 +41,7 @@ export const CustomDrawer = ({
   navigateTo: (url: string) => void
   rutaActual: string
   badgeVariant: string
-  mostrarMensaje: (id: string) => string | undefined
+  verificarMensaje: (id: string) => ReactNode
 }) => {
   const rutaActiva = (routeName: string, currentRoute: string) =>
     currentRoute.includes(routeName, 0)
@@ -190,14 +190,19 @@ export const CustomDrawer = ({
                         </Typography>
                       </Tooltip>
                     </Box>
-                    {mostrarMensaje(subModuloItem.url) ? (
-                      <Box sx={{ mr: 1.5 }}>
-                        <CustomBadge
-                          content={mostrarMensaje(subModuloItem.url) ?? ''}
-                          variante={badgeVariant}
-                        />
-                      </Box>
-                    ) : undefined}
+
+                    <Box sx={{ mr: 2.5 }}>
+                      <CustomBadge
+                        content={verificarMensaje(subModuloItem.url)}
+                        variante={badgeVariant}
+                        sx={{
+                          fontSize: '10px',
+                          padding: '11px 6px',
+                          borderRadius: '60px',
+                          fontWeight: 'bold',
+                        }}
+                      />
+                    </Box>
                   </ListItemButton>
                 ))}
               </List>

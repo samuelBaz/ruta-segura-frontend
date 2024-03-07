@@ -3,12 +3,12 @@ import {
   CustomDrawer,
   SidebarModuloType,
 } from '../../../../common/components/ui/sidebar/CustomDrawer'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Button, Grid } from '@mui/material'
 import { MensajeType } from '../../../../context/ui'
 
 interface SidebarProps {
-  variant: 'small' | 'collapsed' | 'withBadge'
+  variant: 'small' | 'collapsed' | 'withBadge' | 'whitMultiBadge'
   variantBadge:
     | 'PorDefecto'
     | 'Secondary'
@@ -69,7 +69,13 @@ export default {
 
 // replica del componente
 const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
-  const mensajes: MensajeType = { id: '/admin/pedidos', valor: '44' }
+  const mensajes: MensajeType[] = [
+    { id: '/admin/pedidos', valor: '44' },
+    { id: '/admin/ventas', valor: 100 },
+    { id: '/admin/home', valor: '👋' },
+    { id: '/admin/perfil', valor: 'Perfil' },
+    { id: '/admin/productos', valor: '💸' },
+  ]
 
   const [openSidebar, setOpenSidebar] = useState<boolean>(true)
   const [modulos, setModulos] = useState<SidebarModuloType[]>([
@@ -92,7 +98,7 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
             orden: 1,
             descripcion: 'Vista de bienvenida con características del sistema',
           },
-          url: '/admin/home',
+          url: args.variant === 'whitMultiBadge' ? '/admin/home' : '/home',
         },
         {
           estado: 'ACTIVO',
@@ -104,7 +110,7 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
             orden: 2,
             descripcion: 'Información del perfil de usuario que inicio sesión',
           },
-          url: '/admin/perfil',
+          url: args.variant === 'whitMultiBadge' ? '/admin/perfil' : '/perfil',
         },
       ],
       url: '/principal',
@@ -128,7 +134,12 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
             orden: 1,
             descripcion: 'Control de productos del sistema',
           },
-          url: args.variant === 'withBadge' ? '/admin/productos' : 'admin/123',
+          url:
+            args.variant === 'withBadge'
+              ? '/admin/productos'
+              : args.variant === 'whitMultiBadge'
+                ? '/admin/productos'
+                : '/productos',
         },
         {
           estado: 'ACTIVO',
@@ -140,7 +151,8 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
             orden: 2,
             descripcion: 'Pedidos',
           },
-          url: '/admin/pedidos',
+          url:
+            args.variant === 'whitMultiBadge' ? '/admin/pedidos' : '/pedidos',
         },
         {
           estado: 'ACTIVO',
@@ -152,15 +164,21 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
             orden: 2,
             descripcion: 'Ventas realizadas',
           },
-          url: '/admin/ventas',
+          url:
+            args.variant === 'withBadge'
+              ? '/admin/ventas'
+              : args.variant === 'whitMultiBadge'
+                ? '/admin/ventas'
+                : '/ventas',
         },
       ],
       url: '/configuraciones',
     },
   ])
 
-  const mostrarMensaje = (id: string) => {
-    return id === mensajes.id ? mensajes.valor : undefined
+  const verificarMensaje = (id: string): ReactNode => {
+    const mensaje = mensajes.find((mensaje) => mensaje.id === id)
+    return mensaje ? mensaje.valor : null
   }
 
   useEffect(() => {
@@ -196,16 +214,16 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
           },
           transition: 'all 0.2s ease-out',
         }}
-        rutaActual={'/admin/usuarios'}
+        rutaActual={'/admin/pedidos'}
         modulos={modulos}
         setModulos={setModulos}
         navigateTo={() => {}}
         badgeVariant={
-          args.variant === 'withBadge'
+          args.variant === 'withBadge' || args.variant === 'whitMultiBadge'
             ? badgeVariantMap[args.variantBadge ?? 'PorDefecto']
             : ''
         }
-        mostrarMensaje={mostrarMensaje}
+        verificarMensaje={verificarMensaje}
       />
       <Button onClick={() => setOpenSidebar(!openSidebar)} variant="contained">
         {openSidebar ? 'Cerrar' : 'Abrir'}
@@ -239,4 +257,12 @@ BarrateralConItemBadgeOtroColor.storyName =
 BarrateralConItemBadgeOtroColor.args = {
   variant: 'withBadge',
   variantBadge: 'Error',
+}
+
+export const BarrateralConMultiItemBadge = Template.bind({})
+BarrateralConMultiItemBadge.storyName =
+  'Barra lateral con badges que muestran diferentes contenidos'
+BarrateralConMultiItemBadge.args = {
+  variant: 'whitMultiBadge',
+  variantBadge: 'Opacity',
 }
