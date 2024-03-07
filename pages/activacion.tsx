@@ -68,7 +68,8 @@ const Activacion: NextPage = () => {
     <Grid
       container
       justifyContent="center"
-      alignItems={'center'}
+      alignItems={'start'}
+      mt={3}
       style={{ minHeight: '100vh' }}
     >
       <Card
