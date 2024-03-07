@@ -9,7 +9,7 @@ import { CustomDrawer, SidebarModuloType } from './CustomDrawer'
 const drawerWidth = 220
 
 export const Sidebar = () => {
-  const { sideMenuOpen, closeSideMenu, openSideMenu, verificarMensaje } =
+  const { sideMenuOpen, closeSideMenu, openSideMenu, checkContentBadge } =
     useSidebar()
 
   const { usuario, rolUsuario, estaAutenticado, progresoLogin } = useAuth()
@@ -93,8 +93,8 @@ export const Sidebar = () => {
       modulos={modulos}
       setModulos={setModulos}
       navigateTo={navigateTo}
-      badgeVariant="alert"
-      verificarMensaje={verificarMensaje}
+      badgeVariant="primary"
+      checkContentBadge={checkContentBadge}
     />
   )
 }

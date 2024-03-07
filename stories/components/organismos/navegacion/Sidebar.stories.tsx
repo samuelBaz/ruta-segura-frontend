@@ -151,8 +151,7 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
             orden: 2,
             descripcion: 'Pedidos',
           },
-          url:
-            args.variant === 'whitMultiBadge' ? '/admin/pedidos' : '/pedidos',
+          url: '/admin/pedidos',
         },
         {
           estado: 'ACTIVO',
@@ -176,7 +175,7 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
     },
   ])
 
-  const verificarMensaje = (id: string): ReactNode => {
+  const checkContentBadge = (id: string): ReactNode => {
     const mensaje = mensajes.find((mensaje) => mensaje.id === id)
     return mensaje ? mensaje.valor : null
   }
@@ -223,7 +222,7 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
             ? badgeVariantMap[args.variantBadge ?? 'PorDefecto']
             : ''
         }
-        verificarMensaje={verificarMensaje}
+        checkContentBadge={checkContentBadge}
       />
       <Button onClick={() => setOpenSidebar(!openSidebar)} variant="contained">
         {openSidebar ? 'Cerrar' : 'Abrir'}

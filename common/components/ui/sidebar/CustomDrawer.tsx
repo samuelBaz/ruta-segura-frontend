@@ -30,7 +30,7 @@ export const CustomDrawer = ({
   navigateTo,
   rutaActual,
   badgeVariant,
-  verificarMensaje,
+  checkContentBadge,
 }: {
   variant?: 'permanent' | 'persistent' | 'temporary'
   open?: boolean | undefined
@@ -41,7 +41,7 @@ export const CustomDrawer = ({
   navigateTo: (url: string) => void
   rutaActual: string
   badgeVariant: string
-  verificarMensaje: (id: string) => ReactNode
+  checkContentBadge: (id: string) => ReactNode
 }) => {
   const rutaActiva = (routeName: string, currentRoute: string) =>
     currentRoute.includes(routeName, 0)
@@ -193,7 +193,7 @@ export const CustomDrawer = ({
 
                     <Box sx={{ mr: 2.5 }}>
                       <CustomBadge
-                        content={verificarMensaje(subModuloItem.url)}
+                        content={checkContentBadge(subModuloItem.url)}
                         variante={badgeVariant}
                         sx={{
                           fontSize: '10px',

@@ -16,8 +16,8 @@ interface UIContextType {
   sideMenuOpen: boolean
   closeSideMenu: () => void
   openSideMenu: () => void
-  agregarMensaje: (id: string, valor: ReactNode) => void
-  verificarMensaje: (id: string) => ReactNode
+  addContentBadge: (id: string, valor: ReactNode) => void
+  checkContentBadge: (id: string) => ReactNode
 }
 
 const UIContext = createContext<UIContextType>({} as UIContextType)
@@ -34,7 +34,7 @@ const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
   const closeSideMenu = () => {
     setSideMenuOpen(false)
   }
-  const agregarMensaje = (id: string, valor: ReactNode) => {
+  const addContentBadge = (id: string, valor: ReactNode) => {
     const mensajeExistente = mensajes.find((mensaje) => mensaje.id === id)
     const mensajesActualizados = mensajeExistente
       ? mensajes.map((mensaje) =>
@@ -44,7 +44,7 @@ const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
     setMensajes(mensajesActualizados)
   }
 
-  const verificarMensaje = (id: string) =>
+  const checkContentBadge = (id: string) =>
     mensajes.find((mensaje) => mensaje.id === id)?.valor
 
   return (
@@ -55,8 +55,8 @@ const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
         // Methods
         closeSideMenu,
         openSideMenu,
-        agregarMensaje,
-        verificarMensaje,
+        addContentBadge,
+        checkContentBadge,
       }}
     >
       {children}
