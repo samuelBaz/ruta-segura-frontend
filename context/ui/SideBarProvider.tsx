@@ -6,16 +6,17 @@ import {
   useState,
 } from 'react'
 
-interface MensajeType {
+export interface MensajeType {
   id: string
   valor: string
 }
+
 interface UIContextType {
   sideMenuOpen: boolean
   closeSideMenu: () => void
   openSideMenu: () => void
   agregarMensaje: (id: string, valor: string) => void
-  mostrarMensaje: (id: string) => string
+  mostrarMensaje: (id: string) => string | undefined
 }
 
 const UIContext = createContext<UIContextType>({} as UIContextType)
@@ -42,9 +43,8 @@ const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
     setMensajes(mensajesActualizados)
   }
 
-  const mostrarMensaje = (id: string): string => {
-    return mensajes.find((mensaje) => mensaje.id === id)?.valor ?? ''
-  }
+  const mostrarMensaje = (id: string) =>
+    mensajes.find((mensaje) => mensaje.id === id)?.valor
 
   return (
     <UIContext.Provider

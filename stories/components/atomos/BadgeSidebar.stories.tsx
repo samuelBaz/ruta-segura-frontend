@@ -7,11 +7,7 @@ import {
 } from '../../../common/components/ui/sidebar/CustomDrawer'
 import { useEffect, useState } from 'react'
 import { Box } from '@mui/material'
-
-interface MensajeType {
-  id: string
-  valor: string
-}
+import { MensajeType } from '../../../context/ui'
 
 export default {
   title: 'Atomos/Elementos/BadgeSidebar',

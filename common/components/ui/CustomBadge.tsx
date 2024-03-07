@@ -1,11 +1,11 @@
-import { Badge, Box } from '@mui/material'
-import { useTheme } from '@mui/material'
+import { Badge, useTheme } from '@mui/material'
 
 interface BadgeVariantParams {
   content: string
   variante?: string
 }
-const BadgeStyles = ({ content, variante = 'primary' }: BadgeVariantParams) => {
+
+const CustomBadge = ({ content, variante = 'primary' }: BadgeVariantParams) => {
   const { palette } = useTheme()
   const variantesConfig = {
     primary: {
@@ -50,21 +50,19 @@ const BadgeStyles = ({ content, variante = 'primary' }: BadgeVariantParams) => {
       : variantesConfig['primary']
 
   return (
-    <Box marginRight={2.5}>
-      <Badge
-        badgeContent={content}
-        sx={{
-          '& .MuiBadge-badge': {
-            fontSize: '10px',
-            padding: '11px 6px',
-            borderRadius: '60px',
-            fontWeight: 'bold',
-            ...configVariante,
-          },
-        }}
-      />
-    </Box>
+    <Badge
+      badgeContent={content}
+      sx={{
+        '& .MuiBadge-badge': {
+          fontSize: '10px',
+          padding: '11px 6px',
+          borderRadius: '60px',
+          fontWeight: 'bold',
+          ...configVariante,
+        },
+      }}
+    />
   )
 }
 
-export default BadgeStyles
+export default CustomBadge

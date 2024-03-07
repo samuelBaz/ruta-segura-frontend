@@ -5,6 +5,7 @@ import {
 } from '../../../../common/components/ui/sidebar/CustomDrawer'
 import { useEffect, useState } from 'react'
 import { Button, Grid } from '@mui/material'
+import { MensajeType } from '../../../../context/ui'
 
 interface SidebarProps {
   variant: 'small' | 'collapsed' | 'withBadge'
@@ -19,10 +20,6 @@ interface SidebarProps {
     | 'Alert'
 }
 
-interface MensajeType {
-  id: string
-  valor: string
-}
 const badgeVariantMap: { [key in SidebarProps['variantBadge']]: string } = {
   PorDefecto: 'primary',
   Secondary: 'secondary',
@@ -162,8 +159,8 @@ const Template: StoryFn<SidebarProps> = (args: SidebarProps) => {
     },
   ])
 
-  const mostrarMensaje = (id: string): string => {
-    return id === mensajes.id ? mensajes.valor : ''
+  const mostrarMensaje = (id: string) => {
+    return id === mensajes.id ? mensajes.valor : undefined
   }
 
   useEffect(() => {
@@ -230,8 +227,16 @@ BarraLateralColapsada.args = {
 }
 
 export const BarrateralConItemBadge = Template.bind({})
-BarrateralConItemBadge.storyName = 'Barra lateral con itembadge'
+BarrateralConItemBadge.storyName = 'Barra lateral con badge'
 BarrateralConItemBadge.args = {
   variant: 'withBadge',
   variantBadge: 'PorDefecto',
+}
+
+export const BarrateralConItemBadgeOtroColor = Template.bind({})
+BarrateralConItemBadgeOtroColor.storyName =
+  'Barra lateral con badge de otro color'
+BarrateralConItemBadgeOtroColor.args = {
+  variant: 'withBadge',
+  variantBadge: 'Error',
 }
