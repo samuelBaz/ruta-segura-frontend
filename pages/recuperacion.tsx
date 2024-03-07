@@ -116,7 +116,7 @@ const Recuperacion: NextPage = () => {
       <Grid
         container
         justifyContent="center"
-        alignItems={'center'}
+        alignItems={'start'}
         style={{ minHeight: '90vh' }}
       >
         <Card
