@@ -61,6 +61,7 @@
     "swr": "2.2.4",
     "use-debounce": "10.0.0",
     "xss": "1.0.14",
+    "zustand": "4.5.1",
     "zxcvbn-typescript": "5.0.1"
   },
   "devDependencies": {
