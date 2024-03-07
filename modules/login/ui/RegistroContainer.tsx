@@ -76,11 +76,11 @@ const RegistroContainer = () => {
               type="submit"
               variant="contained"
               fullWidth
-              onClick={() => {
+              onClick={async () => {
                 reset()
                 setIndicadorCreacionCuenta(false)
                 //mostrarLogin()
-                router.replace({
+                await router.replace({
                   pathname: '/login',
                 })
               }}

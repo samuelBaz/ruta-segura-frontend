@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
 import ChartPie from './ui/ChartPie'
 import ChartBar from './ui/ChartBar'
-import { Icono } from '../../../../common/components/ui/Icono'
+import { Icono } from '../../../../common/components/ui'
 
 export const Dashboard = () => {
   return (
@@ -131,7 +131,7 @@ export const Dashboard = () => {
         >
           <CardContent>
             <Typography variant="h6" sx={{ fontSize: 17, fontWeight: '600' }}>
-              Evolución de ventas por período de tiempo
+              Ventas por período de tiempo
             </Typography>
             <Box alignItems="center">
               <ChartBar />
@@ -147,8 +147,9 @@ export const Dashboard = () => {
         >
           <CardContent>
             <Typography variant="h6" sx={{ fontSize: 17, fontWeight: '600' }}>
-              Análisis de ventas por área
+              Ventas por área
             </Typography>
+            <Box height={'20px'} />
             <Box alignItems="center">
               <ChartPie />
             </Box>

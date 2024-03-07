@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from 'react'
+import { Ref, forwardRef, useImperativeHandle } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Box } from '@mui/material'
 import { FormInputText } from '../../../../../../common/components/ui/form'
@@ -19,16 +19,16 @@ interface Form2Type {
   nroCelularAlternativo: string
 }
 
-const Form2 = (props: PropsComponente, ref: React.Ref<unknown | undefined>) => {
+const Form2 = (props: PropsComponente, ref: Ref<unknown | undefined>) => {
   const formData = useFormStepStore((state) => state.formData)
   const setFormData = useFormStepStore((state) => state.setFormData)
   const { control, handleSubmit } = useForm<Form2Type>({
     defaultValues: formData,
   })
 
-  const onSubmit: SubmitHandler<Form2Type> = (data) => {
+  const onSubmit: SubmitHandler<Form2Type> = async (data) => {
     setFormData(data)
-    props.accionSiguiente()
+    await props.accionSiguiente()
   }
 
   useImperativeHandle(

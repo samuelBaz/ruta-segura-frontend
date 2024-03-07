@@ -27,7 +27,7 @@ const ChartBar = () => {
         fontSize: '14px',
       },
 
-      custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
         const tooltipTheme = themeMode == 'light' ? 'light' : 'dark'
         return `<div style="
                 background-color: ${tooltipTheme === 'light' ? '#f3f3f3' : '#2A2A2A'};
@@ -61,7 +61,7 @@ const ChartBar = () => {
     },
     theme: {
       monochrome: {
-        enabled: true,
+        enabled: false,
       },
     },
     plotOptions: {

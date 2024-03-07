@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from 'react'
+import { forwardRef, Ref, useImperativeHandle } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Box } from '@mui/material'
 import { FormInputText } from '../../../../../../common/components/ui/form'
@@ -18,17 +18,17 @@ interface Form3Type {
   nroDomicilio: string
 }
 
-const Form3 = (props: PropsComponente, ref: React.Ref<unknown | undefined>) => {
+const Form3 = (props: PropsComponente, ref: Ref<unknown | undefined>) => {
   const formData = useFormStepStore((state) => state.formData)
   const setFormData = useFormStepStore((state) => state.setFormData)
-  
+
   const { control, handleSubmit } = useForm<Form3Type>({
     defaultValues: formData,
   })
 
-  const onSubmit: SubmitHandler<Form3Type> = (data) => {
+  const onSubmit: SubmitHandler<Form3Type> = async (data) => {
     setFormData(data)
-    props.accionSiguiente()
+    await props.accionSiguiente()
   }
 
   useImperativeHandle(

@@ -1,13 +1,14 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { Box } from '@mui/material'
 import StepsFormPageZustand from './page'
+
 export default {
-  title: 'Plantillas/Formulario con pasos (Zustand)',
+  title: 'Plantillas/Formularios/Formulario con pasos (Zustand)',
   component: StepsFormPageZustand,
   parameters: {
     docs: {
       description: {
-        component: `La  plantilla ofrece una solución integral para la creación 
+        component: `La plantilla ofrece una solución integral para la creación 
                     de registros que requieren la recopilación de información a 
                     través de múltiples formularios. Estos formularios están 
                     organizados de manera lógica y se conectan a través de un 

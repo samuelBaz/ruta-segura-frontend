@@ -15,7 +15,7 @@ const ChartPie = () => {
     },
     theme: {
       monochrome: {
-        enabled: true,
+        enabled: false,
       },
     },
     plotOptions: {
