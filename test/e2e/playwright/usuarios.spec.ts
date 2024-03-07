@@ -27,7 +27,8 @@ test('Usuarios - crear/editar usuario', async ({ page, isMobile }) => {
   await page.getByRole('button', { name: 'Iniciar sesión' }).click()
   // en caso de ser móvil
   if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
-  await page.getByRole('button', { name: 'Usuarios', exact: true }).click()
+  // await page.getByRole('button', { name: 'Usuarios', exact: true }).click()
+  await page.click("[id='/admin/usuarios']")
   await page.locator('#agregarUsuario').click()
   await page.locator('#nroDocumento').click()
   await page.locator('#nroDocumento').fill(algunUsuario.NumeroDocumento)

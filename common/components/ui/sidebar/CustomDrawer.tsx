@@ -164,7 +164,6 @@ export const CustomDrawer = ({
                       >
                         {subModuloItem.propiedades.icono}
                       </Icono>
-
                       <Box width={'12px'} />
                       <Tooltip
                         title={subModuloItem.propiedades.descripcion}

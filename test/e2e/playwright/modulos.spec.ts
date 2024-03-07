@@ -13,7 +13,8 @@ test('Módulos - crear/editar módulo', async ({ page, isMobile }) => {
   // en caso de ser móvil
   if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
   // Abriendo ruta de módulos
-  await page.getByRole('button', { name: 'Módulos', exact: true }).click()
+  // await page.getByRole('button', { name: 'Módulos', exact: true }).click()
+  await page.click("[id='/admin/modulos']")
   await page.locator('#agregarModuloSeccion').click()
   await page.getByRole('menuitem', { name: 'Nuevo módulo' }).click()
   await page.locator('#idModulo').click()

@@ -10,7 +10,8 @@ test('Políticas - crear/editar política', async ({ page, isMobile }) => {
   await page.getByRole('button', { name: 'Iniciar sesión' }).click()
   // en caso de ser móvil
   if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
-  await page.getByRole('button', { name: 'Políticas', exact: true }).click()
+  // await page.getByRole('button', { name: 'Políticas', exact: true }).click()
+  await page.click("[id='/admin/politicas']")
   await page.locator('#agregarPolitica').click()
   await page.locator('#sujeto').click()
   await page.getByRole('option', { name: 'ADMINISTRADOR' }).click()

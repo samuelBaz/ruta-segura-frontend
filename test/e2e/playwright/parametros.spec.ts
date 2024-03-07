@@ -10,7 +10,8 @@ test('Parámetros - crear/editar parámetro', async ({ page, isMobile }) => {
   await page.getByRole('button', { name: 'Iniciar sesión' }).click()
   // en caso de ser móvil
   if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
-  await page.getByRole('button', { name: 'Parámetros', exact: true }).click()
+  // await page.getByRole('button', { name: 'Parámetros', exact: true }).click()
+  await page.click("[id='/admin/parametros']")
   await page.locator('#agregarParametro').click()
   await page.locator('#codigo').fill(parametroAleatorio)
   await page.locator('#nombre').fill(parametroAleatorio)

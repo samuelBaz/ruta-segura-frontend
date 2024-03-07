@@ -9,10 +9,12 @@ test('Roles - crear/editar rol', async ({ page, isMobile }) => {
   await page.getByRole('button', { name: 'Iniciar sesión' }).click()
   // en caso de ser móvil
   if (isMobile) await page.getByRole('button', { name: 'menu' }).click()
-  await page.getByRole('button', { name: 'Roles', exact: true }).click()
+  // await page.getByRole('button', { name: 'Roles', exact: true }).click()
+  await page.click("[id='/admin/roles']")
   await page.locator('#agregarRol').click()
   await page.locator('#rol').fill(rolAleatorio)
   await page.locator('#nombre').fill(rolAleatorio)
+  await page.locator('#descripcion').fill(rolAleatorio)
   await page.getByRole('button', { name: 'Guardar' }).click()
 
   await page.waitForResponse((response) => response.url().includes('/roles'))
@@ -26,6 +28,7 @@ test('Roles - crear/editar rol', async ({ page, isMobile }) => {
 
   await page.locator('#rol').fill(rolAleatorio2)
   await page.locator('#nombre').fill(rolAleatorio2)
+  await page.locator('#descripcion').fill(rolAleatorio2)
   await page.getByRole('button', { name: 'Guardar' }).click()
 
   await page.waitForResponse((response) => response.url().includes('/roles'))
