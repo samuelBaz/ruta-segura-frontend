@@ -11,9 +11,10 @@ import {
 } from '@mui/material'
 import { SxProps } from '@mui/system'
 import Toolbar from '@mui/material/Toolbar'
-import React from 'react'
+import { ReactNode } from 'react'
 import { Icono } from '../Icono'
 import { ModuloType } from '../../../../modules/login/types/loginTypes'
+import CustomBadge from '../CustomBadge'
 
 export type SidebarModuloType = ModuloType & {
   showed?: boolean
@@ -28,6 +29,8 @@ export const CustomDrawer = ({
   setModulos,
   navigateTo,
   rutaActual,
+  badgeVariant,
+  checkContentBadge,
 }: {
   variant?: 'permanent' | 'persistent' | 'temporary'
   open?: boolean | undefined
@@ -37,6 +40,8 @@ export const CustomDrawer = ({
   setModulos: (modulos: Array<SidebarModuloType>) => void
   navigateTo: (url: string) => void
   rutaActual: string
+  badgeVariant: string
+  checkContentBadge: (id: string) => ReactNode
 }) => {
   const rutaActiva = (routeName: string, currentRoute: string) =>
     currentRoute.includes(routeName, 0)
@@ -135,6 +140,7 @@ export const CustomDrawer = ({
                     sx={{
                       px: 0.5,
                       mx: 1.5,
+                      justifyContent: 'space-between',
                     }}
                     onClick={() => navigateTo(subModuloItem.url)}
                   >
@@ -183,6 +189,19 @@ export const CustomDrawer = ({
                           {`${subModuloItem.label}`}
                         </Typography>
                       </Tooltip>
+                    </Box>
+
+                    <Box sx={{ mr: 2.5 }}>
+                      <CustomBadge
+                        content={checkContentBadge(subModuloItem.url)}
+                        variante={badgeVariant}
+                        sx={{
+                          fontSize: '10px',
+                          padding: '11px 6px',
+                          borderRadius: '60px',
+                          fontWeight: 'bold',
+                        }}
+                      />
                     </Box>
                   </ListItemButton>
                 ))}

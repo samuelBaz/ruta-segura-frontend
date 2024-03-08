@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useMediaQuery, useTheme } from '@mui/material'
-
 import { useRouter } from 'next/router'
 import { useFullScreenLoading, useSidebar } from '../../../../context/ui'
 import { useAuth } from '../../../../context/auth'
@@ -10,7 +9,8 @@ import { CustomDrawer, SidebarModuloType } from './CustomDrawer'
 const drawerWidth = 220
 
 export const Sidebar = () => {
-  const { sideMenuOpen, closeSideMenu, openSideMenu } = useSidebar()
+  const { sideMenuOpen, closeSideMenu, openSideMenu, checkContentBadge } =
+    useSidebar()
 
   const { usuario, rolUsuario, estaAutenticado, progresoLogin } = useAuth()
 
@@ -93,6 +93,8 @@ export const Sidebar = () => {
       modulos={modulos}
       setModulos={setModulos}
       navigateTo={navigateTo}
+      badgeVariant="primary"
+      checkContentBadge={checkContentBadge}
     />
   )
 }
