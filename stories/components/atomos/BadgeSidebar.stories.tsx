@@ -129,7 +129,7 @@ const Template: StoryFn<typeof BadgeVariant> = (args) => {
         setModulos={setModulos}
         navigateTo={() => {}}
         badgeVariant={args.variante || ''}
-        verificarMensaje={mostrarMensaje}
+        checkContentBadge={mostrarMensaje}
       />
     </Box>
   )
