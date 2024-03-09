@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { CardItem } from './CardItem'
-import { Stack, Box, Grid, Typography } from '@mui/material'
-import { IconoTooltip } from '../../../../common/components/ui'
+import { Box, Grid, Typography } from '@mui/material'
 import { ReactNode } from 'react'
+
 export default {
-  title: 'Organismos/Card/CardItem',
+  title: 'Organismos/CardView/CardView',
   component: CardItem,
   argTypes: {
     accion: {
@@ -15,52 +15,12 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Componente card que toma una serie de propiedades: id, titulo, subtitulo, descipcion, imagen,  acciones, ancho y alto del avatar. El componente se renderiza dependiendo los propiedades establecidas, siendo obligatorias el título, subtítulo y descripción, referencias: [MUI Material Switch Component - Card](https://mui.com/material-ui/react-card/)`,
+        component: `Ejemplo de organismo en diseño atómico para Storybook, que organiza componentes de tarjetas con datos en una interfaz cohesiva y estilizada, demostrando cómo se pueden combinar elementos más simples en una estructura compleja y reutilizable.`,
       },
     },
   },
 } as Meta<typeof CardItem>
 
-const Template: StoryFn<typeof CardItem> = (args) => <CardItem {...args} />
-
-export const Default = Template.bind({})
-Default.storyName = 'Card Item'
-Default.args = {
-  id: '1',
-  titulo: 'Título',
-  subtitulo: 'Subtítulo',
-  descripcion:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  imagen: 'src',
-  acciones: (
-    <Stack direction={'row'}>
-      <IconoTooltip
-        id={'editarLibro'}
-        titulo={'Editar libro'}
-        color={'success'}
-        accion={() => {}}
-        icono={'edit'}
-        name={'Editar libro'}
-      />
-      <IconoTooltip
-        id={'verLibro'}
-        titulo={'Ver libro'}
-        color={'info'}
-        accion={() => {}}
-        icono={'visibility'}
-        name={'Ver libro'}
-      />
-      <IconoTooltip
-        id={'eliminarLibro'}
-        titulo={'Eliminar libro'}
-        color={'warning'}
-        accion={() => {}}
-        icono={'delete'}
-        name={'Eliminar libro'}
-      />
-    </Stack>
-  ),
-}
 const listaLibros = [
   {
     id: '1',
@@ -104,30 +64,30 @@ interface CardDataTableType {
   titulo?: string
   contenidoTabla: Array<Array<ReactNode>>
 }
-const CardItemTable = ({ titulo, contenidoTabla }: CardDataTableType) => {
+
+const CardView = ({ titulo, contenidoTabla }: CardDataTableType) => {
   return (
     <Box sx={{ pb: 2 }}>
       <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
         {`${titulo}`}
       </Typography>
-      <div>
-        <Grid
-          container
-          direction="row"
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 2, sm: 8, md: 12, xl: 12 }}
-        >
-          {contenidoTabla.map((contenidoFila, index) => (
-            <Grid item xs={2} sm={4} md={4} lg={3} key={index}>
-              {contenidoFila.map((contenido, indexContenido) => (
-                <Grid key={indexContenido} display="flex" height="100%">
-                  {contenido}
-                </Grid>
-              ))}
-            </Grid>
-          ))}
-        </Grid>
-      </div>
+      <Box height={'20px'} />
+      <Grid
+        container
+        direction="row"
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 2, sm: 8, md: 12, xl: 12 }}
+      >
+        {contenidoTabla.map((contenidoFila, index) => (
+          <Grid item xs={2} sm={4} md={4} lg={3} key={index}>
+            {contenidoFila.map((contenido, indexContenido) => (
+              <Grid key={indexContenido} display="flex" height="100%">
+                {contenido}
+              </Grid>
+            ))}
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   )
 }
@@ -143,6 +103,6 @@ const TemplateCards: StoryFn<typeof CardItem> = () => {
       />,
     ]
   )
-  return <CardItemTable contenidoTabla={contenidoCards} titulo="Card Table" />
+  return <CardView contenidoTabla={contenidoCards} titulo="Libros" />
 }
-export const CardDataTable = TemplateCards.bind({})
+export const CardViewSample = TemplateCards.bind({})

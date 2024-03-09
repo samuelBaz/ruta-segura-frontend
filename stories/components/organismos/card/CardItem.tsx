@@ -2,72 +2,61 @@ import { FC, ReactNode } from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { Avatar, Grid } from '@mui/material'
+import { Box, CardActions, Grid } from '@mui/material'
+import { Icono } from '../../../../common/components/ui'
+
 interface CardItemProps {
   id?: string
   titulo: string
   subtitulo?: string
   descripcion: string
   imagen?: string
-  altoImg?: number
-  anchoImg?: number
   acciones?: ReactNode
 }
-const TypographyDescripcionStyles = {
-  display: '-webkit-box',
-  WebkitBoxOrient: 'vertical',
-  overflow: 'hidden',
-  WebkitLineClamp: 3,
-  textOverflow: 'ellipsis',
-  textAlign: 'justify',
-}
+
 export const CardItem: FC<CardItemProps> = ({
   titulo,
   subtitulo,
   descripcion,
   imagen,
-  altoImg = 45,
-  anchoImg = 45,
   acciones,
 }) => {
   return (
-    <Card sx={{ borderRadius: '10px', borderWidth: '2px' }}>
-      <CardContent sx={{ direction: 'column', '&:last-child': { pb: '16px' } }}>
+    <Card sx={{ borderRadius: '10px' }}>
+      <CardContent>
         <Grid container direction="row" alignItems="center">
           {imagen && (
-            <Grid>
-              <Avatar
-                src={imagen}
-                alt={imagen}
-                sx={{
-                  width: anchoImg,
-                  height: altoImg,
-                  marginRight: '10px',
-                }}
-                variant="rounded"
-              />
+            <Grid item>
+              <Box sx={{ pr: 1 }}>
+                <Icono color={'primary'} fontSize={'large'}>
+                  book
+                </Icono>
+              </Box>
             </Grid>
           )}
-          <Grid>
-            <Typography sx={{ fontWeight: 'bold' }} variant="subtitle1">
+          <Grid item>
+            <Typography fontWeight={'600'} variant="subtitle1">
               {titulo}
             </Typography>
+            <Grid>
+              <Typography variant="subtitle2" color={'text.secondary'}>
+                {subtitulo}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid sx={{ marginTop: '10px' }}>
-          <Typography variant="caption">{subtitulo}</Typography>
-        </Grid>
+        <Box height={'10px'} />
         <Grid>
-          <Typography sx={TypographyDescripcionStyles} variant="subtitle2">
-            {descripcion}
-          </Typography>
+          <Typography variant="body2">{descripcion}</Typography>
         </Grid>
+      </CardContent>
+      <CardActions>
         {acciones && (
           <Grid container alignItems={'center'} justifyContent="flex-end">
             {acciones}
           </Grid>
         )}
-      </CardContent>
+      </CardActions>
     </Card>
   )
 }
