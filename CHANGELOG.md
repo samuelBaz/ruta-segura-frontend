@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.7...v1.10.8) (2024-03-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* cambio para seguir con el estandar de los parámetros de petición HTTP estandar
+
+### Features
+
+* logout en caso error en autenticación ([1bac425](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/1bac42523beec897018837ee8b705ab4d249df30))
+
+
+### Bug Fixes
+
+* cambio de nombre de variable de "tipo" de método HTTP a "method" ([2f5596e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2f5596e3433fb61478a0fc05156761bfe8969cda))
+* límite de paginación extendido por defecto a 50 ([9d4023d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9d4023dff6d5243fb9c2bc7f85177b99b43b0a93))
+
 ### [1.10.7](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.6...v1.10.7) (2024-01-21)
 
 
