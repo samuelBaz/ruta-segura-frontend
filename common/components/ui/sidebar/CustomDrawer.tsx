@@ -15,6 +15,7 @@ import { ReactNode } from 'react'
 import { Icono } from '../Icono'
 import { ModuloType } from '../../../../modules/login/types/loginTypes'
 import CustomBadge from '../CustomBadge'
+import { versionNumber } from '../../../utils'
 
 export type SidebarModuloType = ModuloType & {
   showed?: boolean
@@ -210,6 +211,13 @@ export const CustomDrawer = ({
             {!modulo.open && <Divider sx={{ mx: 1 }} />}
           </div>
         ))}
+      </Box>
+      <Box sx={{ pb: 2 }} display="flex" flex="1" justifyContent="space-around">
+        <Box sx={{ alignSelf: 'flex-end' }}>
+          <Typography color="text.secondary" variant={'body2'}>
+            {`v${versionNumber()}`}
+          </Typography>
+        </Box>
       </Box>
     </Drawer>
   )
