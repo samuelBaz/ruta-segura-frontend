@@ -10,6 +10,8 @@ import {
 } from '../../../../common/components/ui/datatable/ordenTypes'
 import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
+import { stringToDate } from '../../../../common/utils/fechas'
+import { FiltrosDatatable } from './FiltrosDataTable'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
@@ -35,6 +37,7 @@ const Template: StoryFn<typeof CustomDataTable> = (args) => (
 const columnas: Array<ColumnaType> = [
   { campo: 'nombre', nombre: 'Nombre' },
   { campo: 'resumen', nombre: 'Resumen' },
+  { campo: 'categoria', nombre: 'Categoría' },
   { campo: 'fechaPublicacion', nombre: 'Fecha Publicación' },
   { campo: 'acciones', nombre: 'Eventos' },
 ]
@@ -42,6 +45,7 @@ const solicitudesData = [
   {
     id: '1',
     nombre: 'Cien años de soledad',
+    categoria: 'Fantasía',
     resumen:
       'Una novela de realismo mágico que cuenta la historia de la familia Buendía a lo largo de varias generaciones en el ficticio pueblo de Macondo.',
     fechaPublicacion: '1967-05-30',
@@ -49,6 +53,7 @@ const solicitudesData = [
   {
     id: '2',
     nombre: '1984',
+    categoria: 'Fantasía',
     resumen:
       'Una novela distópica que presenta una sociedad totalitaria y vigilante en la que el gobierno controla cada aspecto de la vida de sus ciudadanos.',
     fechaPublicacion: '1949-06-08',
@@ -56,6 +61,7 @@ const solicitudesData = [
   {
     id: '3',
     nombre: 'El señor de los anillos',
+    categoria: 'Fantasía',
     resumen:
       'Una épica trilogía de fantasía que sigue las aventuras de hobbits, elfos, magos y guerreros en su búsqueda para destruir el anillo del poder y derrotar al malvado Sauron.',
     fechaPublicacion: '1954-07-29',
@@ -63,6 +69,7 @@ const solicitudesData = [
   {
     id: '4',
     nombre: 'Matar a un ruiseñor',
+    categoria: 'Histórico',
     resumen:
       'Una novela clásica de la literatura estadounidense que aborda temas de racismo y justicia a través de la historia de un abogado que defiende a un hombre negro injustamente acusado de un delito.',
     fechaPublicacion: '1960-07-11',
@@ -70,9 +77,58 @@ const solicitudesData = [
   {
     id: '5',
     nombre: 'Harry Potter y la piedra filosofal',
+    categoria: 'Fantasía',
     resumen:
       'El primer libro de la serie de fantasía juvenil que sigue las aventuras de un joven mago llamado Harry Potter mientras asiste a la escuela de magia y hechicería de Hogwarts.',
     fechaPublicacion: '1997-06-26',
+  },
+  {
+    id: '6',
+    nombre: `Planeta 'Volver a empezar'`,
+    categoria: 'Romance',
+    resumen:
+      'La alegŕa de Ryle se desvanece cuando piensa que, aunque ya no están casados, sigue teniendo un papel en la familia, y no consentirá que Atlas Corrigan esté presente en su vida y en la de su hija.',
+    fechaPublicacion: '2023-01-11',
+  },
+  {
+    id: '7',
+    nombre: 'Emperador de Roma',
+    categoria: 'Histórico',
+    resumen:
+      'Emperador de Roma nos lleva directamente hasta el corazón de Roma, y de nuestras fantasías sobre lo que era ser romano, a través de un relato como nunca antes se había contado.',
+    fechaPublicacion: '2023-10-25',
+  },
+  {
+    id: '8',
+    nombre: 'Planeta silencioso',
+    categoria: 'Ciencia',
+    resumen:
+      'Goulson explora la conexión intrínseca entre el cambio climático, la naturaleza, la vida silvestre y la disminución de la biodiversidad y analiza el impacto dañino por el uso excesivo de insecticidas y fertilizantes para la tierra y sus habitantes.',
+    fechaPublicacion: '2023-04-05',
+  },
+  {
+    id: '9',
+    nombre: 'Breves respuestas a las grandes preguntas',
+    categoria: 'Ciencia',
+    resumen:
+      'Esta obra simplifica los hechos y descubrimientos de Stephen Hawking, el cual fue reconocido como una de las mentes más brillantes de nuestro tiempo y una figura de inspiración después de desafiar su diagnóstico de ELA a la edad de veintiún años.',
+    fechaPublicacion: '2018-08-30',
+  },
+  {
+    id: '10',
+    nombre: 'Una historia ridícula',
+    categoria: 'Humor',
+    resumen:
+      'Marcial es un hombre exigente, con don de palabra, y orgulloso de su formación autodidacta. Un día se encuentra con una mujer que no solo le fascina, sino que reúne todo aquello que le gustaría tener en la vida: buen gusto, alta posición, relaciones con gente interesante.',
+    fechaPublicacion: '2022-02-02',
+  },
+  {
+    id: '11',
+    nombre: 'El Irlandés',
+    categoria: 'Histórico',
+    resumen:
+      'Más conocido como "el irlandés", Frank Sheeran fue un sicario responsable de más de 25 asesinatos, entre ellos el de Jimmy Hoffa, poderoso jefe del sindicato de camioneros.',
+    fechaPublicacion: '2019-08-22',
   },
 ]
 
@@ -87,7 +143,14 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
     </Typography>,
 
     <Typography
-      key={`${solicitudData.id}-${index}-fechaEntrega`}
+      key={`${solicitudData.id}-${index}-categoria`}
+      variant={'body2'}
+    >
+      {`${solicitudData.categoria}`}
+    </Typography>,
+
+    <Typography
+      key={`${solicitudData.id}-${index}-fechaPublicacion`}
       variant={'body2'}
     >
       {solicitudData.fechaPublicacion}
@@ -316,7 +379,7 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
       </Typography>,
 
       <Typography
-        key={`${solicitudData.id}-${index}-fechaEntrega`}
+        key={`${solicitudData.id}-${index}-fechaPublicacion`}
         variant={'body2'}
       >
         {solicitudData.fechaPublicacion}
@@ -486,7 +549,7 @@ const Template2: StoryFn<typeof CustomDataTable> = (args) => {
       </Typography>,
 
       <Typography
-        key={`${solicitudData.id}-${index}-fechaEntrega`}
+        key={`${solicitudData.id}-${index}-fechaPublicacion`}
         variant={'body2'}
       >
         {solicitudData.fechaPublicacion}
@@ -600,5 +663,155 @@ const Template4: StoryFn<typeof CustomDataTable> = (args) => {
 export const Filtros = Template4.bind({})
 
 Filtros.args = {
+  ...Columnas.args,
+}
+/// Ejemplo filtros adicionales en cabecera personalizada
+
+const Template5: StoryFn<typeof CustomDataTable> = (args) => {
+  const categoriasSet = new Set(solicitudesData.map((libro) => libro.categoria))
+  const categorias = Array.from(categoriasSet)
+  const [filtroPalabraClave, setFiltroPalabraClave] = useState<string>('')
+  const [filtroCategorias, setFiltroCategorias] = useState<string[]>([])
+
+  const [filtroFechaInicial, setFiltroFechaInicial] = useState<Date>()
+  const [filtroFechaFinal, setFiltroFechaFinal] = useState<Date>()
+
+  interface filtrosType {
+    palabraClave: string
+    categorias: Array<string>
+    fechaInicial?: Date
+    fechaFinal?: Date
+  }
+  interface dataTableType {
+    id: string
+    nombre: string
+    resumen: string
+    fechaPublicacion: string
+    categoria: string
+  }
+
+  function filtrarTabla(dataLibros: Array<dataTableType>, filtro: filtrosType) {
+    if (
+      filtro.palabraClave ||
+      filtro.categorias.length > 0 ||
+      filtro.fechaInicial ||
+      filtro.fechaFinal
+    ) {
+      const contenidoTablaFiltros = dataLibros.filter((solicitud) => {
+        const cumplePalabraClave = solicitud.nombre
+          .toLowerCase()
+          .includes(filtro.palabraClave.toLowerCase())
+        const cumpleCategorias =
+          filtro.categorias.length === 0 ||
+          filtro.categorias.includes(solicitud.categoria)
+        let cumpleRangoFechas = true
+        if (filtro.fechaInicial && filtro.fechaFinal) {
+          cumpleRangoFechas =
+            stringToDate(solicitud.fechaPublicacion, 'YYYY-MM-DD') >=
+              filtro.fechaInicial &&
+            stringToDate(solicitud.fechaPublicacion, 'YYYY-MM-DD') <=
+              filtro.fechaFinal
+        } else if (filtro.fechaInicial) {
+          cumpleRangoFechas =
+            stringToDate(solicitud.fechaPublicacion, 'YYYY-MM-DD') >=
+            filtro.fechaInicial
+        } else if (filtro.fechaFinal) {
+          cumpleRangoFechas =
+            stringToDate(solicitud.fechaPublicacion, 'YYYY-MM-DD') <=
+            filtro.fechaFinal
+        }
+        return cumplePalabraClave && cumpleCategorias && cumpleRangoFechas
+      })
+
+      return contenidoTablaFiltros
+    } else {
+      return solicitudesData
+    }
+  }
+
+  const contenidoTablaFiltros = filtrarTabla(solicitudesData, {
+    palabraClave: filtroPalabraClave,
+    categorias: filtroCategorias,
+    fechaInicial: filtroFechaInicial,
+    fechaFinal: filtroFechaFinal,
+  })
+
+  const TablaFiltrada: Array<Array<ReactNode>> = contenidoTablaFiltros.map(
+    (solicitudData, index) => [
+      <Typography key={`${solicitudData.id}-${index}-nombre`} variant={'body2'}>
+        {`${solicitudData.nombre}`}
+      </Typography>,
+
+      <Typography
+        key={`${solicitudData.id}-${index}-resumen`}
+        variant={'body2'}
+      >
+        {`${solicitudData.resumen}`}
+      </Typography>,
+
+      <Typography
+        key={`${solicitudData.id}-${index}-categoria`}
+        variant={'body2'}
+      >
+        {`${solicitudData.categoria}`}
+      </Typography>,
+      <Typography
+        key={`${solicitudData.id}-${index}-fechaPublicacion`}
+        variant={'body2'}
+      >
+        {solicitudData.fechaPublicacion}
+      </Typography>,
+
+      <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
+        <IconoTooltip
+          id={'editarLibro'}
+          titulo={'Editar libro'}
+          color={'success'}
+          accion={() => {}}
+          icono={'edit'}
+          name={'Editar libro'}
+        />
+        <IconoTooltip
+          id={'verLibro'}
+          titulo={'Ver libro'}
+          color={'info'}
+          accion={() => {}}
+          icono={'visibility'}
+          name={'Ver libro'}
+        />
+        <IconoTooltip
+          id={'eliminarLibro'}
+          titulo={'Eliminar libro'}
+          color={'warning'}
+          accion={() => {}}
+          icono={'delete'}
+          name={'Eliminar libro'}
+        />
+      </Stack>,
+    ]
+  )
+  args.contenidoTabla = TablaFiltrada
+  args.cabeceraPersonalizada = (
+    <FiltrosDatatable
+      titulo="Tabla con filtros"
+      categoriasDisponibles={categorias}
+      filtroFechaInicial={filtroFechaInicial}
+      filtroFechaFinal={filtroFechaFinal}
+      filtroCategorias={filtroCategorias}
+      filtroPalabraClave={filtroPalabraClave}
+      accionCorrecta={(filtros) => {
+        setFiltroCategorias(filtros.categorias)
+        setFiltroPalabraClave(filtros.palabraClave)
+        setFiltroFechaInicial(filtros.fechaInicial)
+        setFiltroFechaFinal(filtros.fechaFinal)
+      }}
+    />
+  )
+
+  return <CustomDataTable {...args} />
+}
+export const FiltrosAdicionales = Template5.bind({})
+
+FiltrosAdicionales.args = {
   ...Columnas.args,
 }
