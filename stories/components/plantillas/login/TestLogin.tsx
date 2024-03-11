@@ -1,53 +1,23 @@
 import type { NextPage } from 'next'
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material'
-import { useAlerts } from '../../../../common/hooks'
-import { useFullScreenLoading } from '../../../../context/ui'
-import { delay, InterpreteMensajes } from '../../../../common/utils'
-import { Constantes } from '../../../../config'
-import { useEffect, useState } from 'react'
-import { Servicios } from '../../../../common/services'
-import { imprimir } from '../../../../common/utils/imprimir'
+import { delay } from '../../../../common/utils'
 import Image from 'next/image'
 import { CustomDialog, Icono } from '../../../../common/components/ui'
 import LoginContainer from '../../../../modules/login/ui/LoginContainer'
 import { useTheme } from '@mui/material'
 import camion from './../../../assets/envio-camion.png'
+import { useState } from 'react'
 const TestLogin: NextPage = () => {
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
 
-  const { Alerta } = useAlerts()
-  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
-
-  const obtenerEstado = async () => {
-    try {
-      mostrarFullScreen()
-      await delay(1000)
-      const respuesta = await Servicios.get({
-        url: `${Constantes.baseUrl}/estado`,
-        body: {},
-        headers: {
-          accept: 'application/json',
-        },
-      })
-      imprimir(`Se obtuvo el estado 🙌`, respuesta)
-    } catch (e) {
-      imprimir(`Error al obtener estado`, e)
-      Alerta({ mensaje: `${InterpreteMensajes(e)}`, variant: 'error' })
-    } finally {
-      ocultarFullScreen()
-    }
-  }
   const [modalLogin, setModalLogin] = useState(false)
   const cerrarModalLogin = async () => {
     setModalLogin(false)
     await delay(500)
   }
-  useEffect(() => {
-    obtenerEstado().then(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+
   return (
     <Box>
       <Grid item xl={6} md={5} xs={12}>
