@@ -10,6 +10,7 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import {
   FormHelperText,
+  IconButton,
   InputLabel,
   TextField,
   Typography,
@@ -19,6 +20,7 @@ import esMX from 'dayjs/locale/es-mx'
 import { validarFechaFormato } from '../../../utils/fechas'
 import { Variant } from '@mui/material/styles/createTypography'
 import { Dayjs } from 'dayjs'
+import { Icono } from '../Icono'
 
 type FormDatePickerProps<T extends FieldValues> = {
   id: string
@@ -34,6 +36,7 @@ type FormDatePickerProps<T extends FieldValues> = {
   maxDate?: Dayjs
   labelVariant?: Variant
   desktopModeMediaQuery?: string
+  clearable?: boolean
 }
 
 export const FormInputDate = <T extends FieldValues>({
@@ -50,6 +53,7 @@ export const FormInputDate = <T extends FieldValues>({
   maxDate,
   labelVariant = 'subtitle2',
   desktopModeMediaQuery = '',
+  clearable,
 }: FormDatePickerProps<T>) => {
   return (
     <div>
@@ -85,6 +89,24 @@ export const FormInputDate = <T extends FieldValues>({
                     size={size}
                     {...params}
                     error={!!error}
+                    // Limpiar campo
+                    InputProps={{
+                      endAdornment:
+                        field.value && clearable ? (
+                          <IconButton
+                            sx={{ marginRight: '-12px' }}
+                            color={'primary'}
+                            onClick={() => {
+                              field.onChange(null)
+                            }}
+                          >
+                            <Icono color={'primary'}>clear</Icono>
+                          </IconButton>
+                        ) : (
+                          <>{params.InputProps?.endAdornment}</>
+                        ),
+                    }}
+                    // Fin limpiar campo
                   />
                   {!!error && (
                     <FormHelperText error>{error?.message}</FormHelperText>
