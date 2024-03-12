@@ -55,7 +55,6 @@
     "react-leaflet": "4.2.1",
     "react-leaflet-draw": "0.20.4",
     "sharp": "0.33.2",
-    "storybook-addon-matomo": "1.0.2",
     "swr": "2.2.5",
     "use-debounce": "10.0.0",
     "xss": "1.0.15",
