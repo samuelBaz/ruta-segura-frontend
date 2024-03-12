@@ -23,8 +23,12 @@ import {
   titleCase,
 } from '../../common/utils'
 import { Constantes } from '../../config'
-
-import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
+import {
+  BotonOrdenar,
+  CriterioOrdenType,
+  ordenFiltrado,
+  Paginacion,
+} from '../../common/components/ui/datatable'
 import { useRouter } from 'next/router'
 import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
@@ -33,9 +37,6 @@ import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensaj
 import { VistaModalRol } from '../../modules/admin/roles/ui/ModalRol'
 import { FiltroRol } from '../../modules/admin/roles/ui/FiltroRol'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
-import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
-import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
-import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 

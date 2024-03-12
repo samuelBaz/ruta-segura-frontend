@@ -35,8 +35,7 @@ const ContenedorPasoFinal = () => {
       border: 0,
     },
   }))
-  
-  
+
   const rows = [
     {
       label: 'Nombre completo:',
@@ -69,9 +68,7 @@ const ContenedorPasoFinal = () => {
                   <StyledTableCell component="th" scope="row">
                     {row.label}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.value}
-                  </StyledTableCell>
+                  <StyledTableCell align="right">{row.value}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

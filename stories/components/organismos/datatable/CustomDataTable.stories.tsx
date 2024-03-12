@@ -3,11 +3,11 @@ import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
 import { Box, InputLabel, Stack, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { Paginacion } from '../../../../common/components/ui/datatable/Paginacion'
 import {
   CriterioOrdenType,
   OrdenEnum,
-} from '../../../../common/components/ui/datatable/ordenTypes'
+  Paginacion,
+} from '../../../../common/components/ui/datatable'
 import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
 import { stringToDate } from '../../../../common/utils/fechas'
@@ -682,6 +682,7 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
     fechaInicial?: Date
     fechaFinal?: Date
   }
+
   interface dataTableType {
     id: string
     nombre: string
