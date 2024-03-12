@@ -3,7 +3,6 @@ import { FromProvider } from './components/FormContext'
 import { HorizontalNonLinearStepper } from './components/HorizontalNonLinearStepper'
 
 export default function StepsFormPageContext() {
-
   return (
     <FromProvider>
       <Grid

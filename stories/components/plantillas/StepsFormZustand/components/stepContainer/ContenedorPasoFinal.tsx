@@ -5,7 +5,6 @@ import { useFormStepStore } from '../StepsForm-store'
 const ContenedorPasoFinal = () => {
   const formData = useFormStepStore((state) => state.formData)
 
-
   const opciones: Array<{
     titulo?: string
     icono: string

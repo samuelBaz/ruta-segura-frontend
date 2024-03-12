@@ -33,7 +33,10 @@ const Ciudadania: NextPage = () => {
 
       if (respuesta?.url) {
         const error = url.parse(respuesta.url, true)
-        Alerta({ mensaje: `${error?.query?.mensaje || 'Error en autenticación'}`, variant: 'error' })
+        Alerta({
+          mensaje: `${error?.query?.mensaje || 'Error en autenticación'}`,
+          variant: 'error',
+        })
         await delay(2000)
         window.location.href = respuesta?.url
       }
