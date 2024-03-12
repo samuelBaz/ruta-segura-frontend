@@ -20,7 +20,12 @@ import {
 } from '../../common/components/ui'
 import { delay, InterpreteMensajes, siteName } from '../../common/utils'
 import { Constantes } from '../../config'
-import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
+import {
+  BotonOrdenar,
+  CriterioOrdenType,
+  ordenFiltrado,
+  Paginacion,
+} from '../../common/components/ui/datatable'
 import { useRouter } from 'next/router'
 import { VistaModalPolitica } from '../../modules/admin/politicas/ui'
 import { useAlerts, useSession } from '../../common/hooks'
@@ -30,9 +35,6 @@ import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTyp
 import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
-import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
-import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
-import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 
 const Politicas: NextPage = () => {

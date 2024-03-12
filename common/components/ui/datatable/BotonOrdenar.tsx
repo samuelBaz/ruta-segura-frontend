@@ -9,8 +9,8 @@ import {
 } from '@mui/material'
 import { Icono } from '../Icono'
 import React, { ReactNode, useState } from 'react'
-import { CriterioOrdenType } from '../datatable/ordenTypes'
-import { ToggleOrden } from '../datatable/utils'
+import { CriterioOrdenType } from './ordenTypes'
+import { ToggleOrden } from './utils'
 
 interface BotonOrdenarParams {
   desactivado?: false

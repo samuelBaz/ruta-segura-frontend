@@ -24,7 +24,12 @@ import {
 } from '../../common/utils'
 import { Constantes } from '../../config'
 
-import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
+import {
+  BotonOrdenar,
+  CriterioOrdenType,
+  ordenFiltrado,
+  Paginacion,
+} from '../../common/components/ui/datatable'
 import { useRouter } from 'next/router'
 import { VistaModalParametro } from '../../modules/admin/parametros/ui'
 import { useAlerts, useSession } from '../../common/hooks'
@@ -33,9 +38,6 @@ import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametr
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
-import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
-import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
-import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 

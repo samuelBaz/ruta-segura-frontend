@@ -26,7 +26,12 @@ import {
   titleCase,
 } from '../../common/utils'
 import { useAuth } from '../../context/auth'
-import { Paginacion } from '../../common/components/ui/datatable/Paginacion'
+import {
+  BotonOrdenar,
+  CriterioOrdenType,
+  ordenFiltrado,
+  Paginacion,
+} from '../../common/components/ui/datatable'
 import { useRouter } from 'next/router'
 import {
   FiltroUsuarios,
@@ -39,10 +44,7 @@ import {
   RolType,
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
-import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
-import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
-import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
