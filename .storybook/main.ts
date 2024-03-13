@@ -10,7 +10,6 @@ const config: StorybookConfig = {
     'storybook-dark-mode',
     '@etchteam/storybook-addon-status',
     'storybook-addon-matomo',
-    '@storybook/addon-mdx-gfm',
   ],
   framework: {
     name: '@storybook/nextjs',
