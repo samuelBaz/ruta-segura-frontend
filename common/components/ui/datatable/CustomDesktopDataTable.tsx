@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -16,8 +16,24 @@ import {
 } from '@mui/material'
 import { TableSkeletonBody } from './CustomSkeleton'
 import { Icono } from '../Icono'
+import { CriterioOrdenType } from './ordenTypes'
 import { ToggleOrden } from './utils'
-import { CustomDataTableType } from './CustomDataTable'
+
+export interface CustomDataTableType {
+  titulo?: string
+  tituloPersonalizado?: ReactNode
+  cabeceraPersonalizada?: ReactNode
+  error?: boolean
+  cargando?: boolean
+  acciones?: Array<ReactNode>
+  cambioOrdenCriterios?: (nuevosCriterios: Array<CriterioOrdenType>) => void
+  columnas: Array<CriterioOrdenType>
+  filtros?: ReactNode
+  contenidoTabla: Array<Array<ReactNode>>
+  paginacion?: ReactNode
+  seleccionable?: boolean
+  seleccionados?: (indices: Array<number>) => void
+}
 
 export const CustomDesktopDataTable = ({
   titulo,
