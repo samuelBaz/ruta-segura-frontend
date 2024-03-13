@@ -12,6 +12,7 @@ import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBusca
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
 import { stringToDate } from '../../../../common/utils/fechas'
 import { FiltrosDatatable } from './FiltrosDataTable'
+import { FiltrosTab } from './FiltrosTab'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
@@ -666,7 +667,6 @@ Filtros.args = {
   ...Columnas.args,
 }
 /// Ejemplo filtros adicionales en cabecera personalizada
-
 const Template5: StoryFn<typeof CustomDataTable> = (args) => {
   const categoriasSet = new Set(solicitudesData.map((libro) => libro.categoria))
   const categorias = Array.from(categoriasSet)
@@ -689,7 +689,6 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
     fechaPublicacion: string
     categoria: string
   }
-
   function filtrarTabla(dataLibros: Array<dataTableType>, filtro: filtrosType) {
     if (
       filtro.palabraClave ||
@@ -722,33 +721,28 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
         }
         return cumplePalabraClave && cumpleCategorias && cumpleRangoFechas
       })
-
       return contenidoTablaFiltros
     } else {
       return solicitudesData
     }
   }
-
   const contenidoTablaFiltros = filtrarTabla(solicitudesData, {
     palabraClave: filtroPalabraClave,
     categorias: filtroCategorias,
     fechaInicial: filtroFechaInicial,
     fechaFinal: filtroFechaFinal,
   })
-
   const TablaFiltrada: Array<Array<ReactNode>> = contenidoTablaFiltros.map(
     (solicitudData, index) => [
       <Typography key={`${solicitudData.id}-${index}-nombre`} variant={'body2'}>
         {`${solicitudData.nombre}`}
       </Typography>,
-
       <Typography
         key={`${solicitudData.id}-${index}-resumen`}
         variant={'body2'}
       >
         {`${solicitudData.resumen}`}
       </Typography>,
-
       <Typography
         key={`${solicitudData.id}-${index}-categoria`}
         variant={'body2'}
@@ -761,7 +755,6 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
       >
         {solicitudData.fechaPublicacion}
       </Typography>,
-
       <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
         <IconoTooltip
           id={'editarLibro'}
@@ -811,7 +804,115 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
   return <CustomDataTable {...args} />
 }
 export const FiltrosAdicionales = Template5.bind({})
-
 FiltrosAdicionales.args = {
+  ...Columnas.args,
+}
+// Ejemplo pestañas con tabla
+const Template6: StoryFn<typeof CustomDataTable> = (args) => {
+  const [pestanaActiva, setPestanaActiva] = useState<number>(0)
+  const pestanas = [
+    'Todos',
+    ...new Set(solicitudesData.map((libro) => libro.categoria)),
+  ]
+  const handlePestanaChange = (indicePestana: number) => {
+    setPestanaActiva(indicePestana)
+    const librosFiltrados =
+      indicePestana == 0
+        ? solicitudesData
+        : solicitudesData.filter(
+            (libro) => libro.categoria === pestanas[indicePestana]
+          )
+
+    const TablaFiltrada: Array<Array<ReactNode>> = librosFiltrados.map(
+      (libro, index) => [
+        <Typography key={`${libro.id}-${index}-nombre`} variant={'body2'}>
+          {`${libro.nombre}`}
+        </Typography>,
+
+        <Typography key={`${libro.id}-${index}-resumen`} variant={'body2'}>
+          {`${libro.resumen}`}
+        </Typography>,
+        <Typography key={`${libro.id}-${index}-categoria`} variant={'body2'}>
+          {libro.categoria}
+        </Typography>,
+
+        <Typography
+          key={`${libro.id}-${index}-fechaPublicacion`}
+          variant={'body2'}
+        >
+          {libro.fechaPublicacion}
+        </Typography>,
+
+        <Stack direction={'row'} key={`${libro.id}-${index}-acciones`}>
+          <IconoTooltip
+            id={'editarLibro'}
+            titulo={'Editar libro'}
+            color={'success'}
+            accion={() => {}}
+            icono={'edit'}
+            name={'Editar libro'}
+          />
+          <IconoTooltip
+            id={'verLibro'}
+            titulo={'Ver libro'}
+            color={'info'}
+            accion={() => {}}
+            icono={'visibility'}
+            name={'Ver libro'}
+          />
+          <IconoTooltip
+            id={'eliminarLibro'}
+            titulo={'Eliminar libro'}
+            color={'warning'}
+            accion={() => {}}
+            icono={'delete'}
+            name={'Eliminar libro'}
+          />
+        </Stack>,
+      ]
+    )
+    args.contenidoTabla = TablaFiltrada
+  }
+  args.cabeceraPersonalizada = (
+    <FiltrosTab
+      titulo="Tabla con pestañas "
+      pestanas={pestanas}
+      pestanaActiva={pestanaActiva}
+      accion={handlePestanaChange}
+      acciones={
+        <Stack direction={'row'}>
+          <IconoTooltip
+            id={'editarLibro'}
+            titulo={'Buscar'}
+            color={'primary'}
+            accion={() => {}}
+            icono={'search'}
+            name={'Editar libro'}
+          />
+          <IconoTooltip
+            id={'eliminarLibro'}
+            titulo={'Actualizar lista'}
+            color={'primary'}
+            accion={() => {}}
+            icono={'refresh'}
+            name={'Eliminar libro'}
+          />
+          <IconoTooltip
+            id={'verLibro'}
+            titulo={'Agregar elementos'}
+            color={'primary'}
+            accion={() => {}}
+            icono={'add_circle_outline'}
+            name={'Ver libro'}
+          />
+        </Stack>
+      }
+    />
+  )
+  return <CustomDataTable {...args} />
+}
+export const DemoTabs = Template6.bind({})
+
+DemoTabs.args = {
   ...Columnas.args,
 }
