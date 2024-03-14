@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
 import { Box, InputLabel, Stack, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
-import React, { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Paginacion } from '../../../../common/components/ui/datatable/Paginacion'
 import {
   CriterioOrdenType,
@@ -800,7 +800,6 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
       }}
     />
   )
-
   return <CustomDataTable {...args} />
 }
 export const FiltrosAdicionales = Template5.bind({})
@@ -810,6 +809,7 @@ FiltrosAdicionales.args = {
 // Ejemplo pestañas con tabla
 const Template6: StoryFn<typeof CustomDataTable> = (args) => {
   const [pestanaActiva, setPestanaActiva] = useState<number>(0)
+
   const pestanas = [
     'Todos',
     ...new Set(solicitudesData.map((libro) => libro.categoria)),
@@ -875,7 +875,8 @@ const Template6: StoryFn<typeof CustomDataTable> = (args) => {
   }
   args.cabeceraPersonalizada = (
     <FiltrosTab
-      titulo="Tabla con pestañas "
+      titulo="Tabla con pestañas"
+      labelSelect="Categorias"
       pestanas={pestanas}
       pestanaActiva={pestanaActiva}
       accion={handlePestanaChange}
