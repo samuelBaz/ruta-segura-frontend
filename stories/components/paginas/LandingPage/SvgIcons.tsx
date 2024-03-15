@@ -1,6 +1,6 @@
 import { useThemeContext } from '../../../../context/ui/ThemeContext'
 
-export const FacebookSVG = ({ domain, color }: any) => {
+export const FacebookSVG = ({ color }: any) => {
   const { themeMode } = useThemeContext()
   return (
     <svg
@@ -21,7 +21,7 @@ export const FacebookSVG = ({ domain, color }: any) => {
     </svg>
   )
 }
-export const InstagramSVG = ({ domain, color }: any) => {
+export const InstagramSVG = ({ color }: any) => {
   const { themeMode } = useThemeContext()
   return (
     <svg
@@ -45,7 +45,7 @@ export const InstagramSVG = ({ domain, color }: any) => {
     </svg>
   )
 }
-export const TikTokSVG = ({ domain, color }: any) => {
+export const TikTokSVG = ({ color }: any) => {
   const { themeMode } = useThemeContext()
   return (
     <svg
