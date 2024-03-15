@@ -1,12 +1,27 @@
 import type { NextPage } from 'next'
-import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import { delay } from '../../../../common/utils'
 import Image from 'next/image'
-import { CustomDialog, Icono } from '../../../../common/components/ui'
-import LoginContainer from '../../../../modules/login/ui/LoginContainer'
+import { Icono } from '../../../../common/components/ui'
 import { useTheme } from '@mui/material'
 import camion from './../../../assets/envio-camion.png'
 import { useState } from 'react'
+import { BotonCiudadania } from '../../../../modules/login/ui/BotonCiudadania'
+import ProgresoLineal from '../../../../common/components/ui/progreso/ProgresoLineal'
+import { FormInputText } from '../../../../common/components/ui/form'
+import { useForm } from 'react-hook-form'
+import { LoginType } from '../../../../modules/login/types/loginTypes'
+
 const TestLogin: NextPage = () => {
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
@@ -17,6 +32,13 @@ const TestLogin: NextPage = () => {
     setModalLogin(false)
     await delay(500)
   }
+  const { control } = useForm<LoginType>({
+    defaultValues: {
+      usuario: 'ADMINISTRADOR-TECNICO',
+      contrasena: '123',
+    },
+  })
+  const progresoLogin = false
 
   return (
     <Box>
@@ -31,8 +53,9 @@ const TestLogin: NextPage = () => {
           <Box
             display="flex"
             flexDirection={'column'}
-            boxShadow={2}
-            width={sm || xs ? '80%' : '40%'}
+            border={1}
+            borderColor={'ActiveCaption'}
+            width={{ xs: '80%', sm: '80%', md: '30%', lg: '25%', xl: '25%' }}
             borderRadius={3}
             paddingY={4}
             paddingX={xs ? 2 : 5}
@@ -187,24 +210,134 @@ const TestLogin: NextPage = () => {
           </Box>
         </Box>
       </Grid>
-      <CustomDialog
-        isOpen={modalLogin}
-        handleClose={cerrarModalLogin}
-        title={''}
+      <Dialog
+        fullWidth={true}
+        open={modalLogin}
+        onClose={cerrarModalLogin}
         maxWidth="xs"
+        scroll="body"
       >
-        <Box>
-          <Box
-            display={'flex'}
-            justifyContent={'space-around'}
-            alignItems={'center'}
-            color={'primary'}
-            padding={2}
+        <DialogTitle>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            p={0}
           >
-            <LoginContainer />
+            <Box />
+            <IconButton onClick={cerrarModalLogin} color={'inherit'}>
+              <Icono color={'inherit'}>close</Icono>
+            </IconButton>
+          </Grid>
+        </DialogTitle>
+        {/* <LoginContainer /> */}
+        <form onSubmit={() => {}}>
+          <Box
+            display={'grid'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            sx={{ borderRadius: 12 }}
+            padding={0}
+            mb={2}
+          >
+            <Typography align={'center'} sx={{ fontWeight: '600' }}>
+              Inicio de Sesión
+            </Typography>
+            <Box sx={{ mt: 2, mb: 2 }}>
+              <Typography
+                fontSize={14}
+                variant={'body1'}
+                color={'text.secondary'}
+              >
+                Ingresa tus credenciales para iniciar sesión
+              </Typography>
+            </Box>
+            <FormInputText
+              id={'usuario'}
+              control={control}
+              name="usuario"
+              label="Usuario"
+              size={'medium'}
+              labelVariant={'subtitle1'}
+              disabled={progresoLogin}
+              rules={{ required: 'Este campo es requerido' }}
+            />
+            <Box sx={{ mt: 1, mb: 1 }}></Box>
+            <FormInputText
+              id={'contrasena'}
+              control={control}
+              name="contrasena"
+              label="Contraseña"
+              size={'medium'}
+              labelVariant={'subtitle1'}
+              type={'password'}
+              disabled={progresoLogin}
+              rules={{
+                required: 'Este campo es requerido',
+                minLength: {
+                  value: 3,
+                  message: 'Mínimo 3 caracteres',
+                },
+              }}
+            />
+            <Box sx={{ mt: 0.5, mb: 0.5 }}>
+              <ProgresoLineal mostrar={progresoLogin} />
+            </Box>
+            <Box display="flex" flex="1" justifyContent="start">
+              <Button
+                onClick={async () => {}}
+                size={'small'}
+                variant={'text'}
+                disabled={progresoLogin}
+                color={'primary'}
+              >
+                <Typography fontSize={'small'} sx={{ fontWeight: '600' }}>
+                  ¿Olvidaste tu contraseña?
+                </Typography>
+              </Button>
+            </Box>
+            <Box sx={{ height: 15 }}></Box>
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              disabled={progresoLogin}
+            >
+              <Typography sx={{ fontWeight: '600' }}>Iniciar sesión</Typography>
+            </Button>
+
+            <Box sx={{ pt: 2, pb: 2 }}>
+              <Divider>
+                <Typography color="text.secondary">O</Typography>
+              </Divider>
+            </Box>
+            <BotonCiudadania
+              fullWidth
+              disabled={progresoLogin}
+              altText={'Ingresar con Ciudadanía'}
+              accion={() => {}}
+            >
+              <Typography sx={{ fontWeight: '600', pl: 1, pr: 1 }}>
+                Ingresa con Ciudadanía
+              </Typography>
+            </BotonCiudadania>
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="body1" textAlign="center" fontSize={14}>
+                ¿No tienes una cuenta?{' '}
+                <Button
+                  variant="text"
+                  sx={{ p: 0 }}
+                  disabled={progresoLogin}
+                  onClick={async () => {}}
+                >
+                  Regístrate
+                </Button>
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      </CustomDialog>
+        </form>
+      </Dialog>
     </Box>
   )
 }
