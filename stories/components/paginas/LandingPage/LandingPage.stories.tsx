@@ -12,7 +12,7 @@ import { NavbarLandingPage } from './NavbarLandingPage'
 import { FooterLandingPage } from './FooterLandingPage'
 
 export default {
-  title: 'Páginas/Landing Page',
+  title: 'Páginas/Landing Page/Landing Page',
   component: LandingPage,
   parameters: {
     docs: {
