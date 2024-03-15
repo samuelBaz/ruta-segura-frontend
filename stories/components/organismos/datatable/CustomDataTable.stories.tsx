@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { CustomDataTable, IconoTooltip } from '../../../../common/components/ui'
 import { Box, InputLabel, Stack, TextField, Typography } from '@mui/material'
 import { ColumnaType } from '../../../../common/types'
-import React, { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Paginacion } from '../../../../common/components/ui/datatable/Paginacion'
 import {
   CriterioOrdenType,
@@ -12,6 +12,7 @@ import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBusca
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
 import { stringToDate } from '../../../../common/utils/fechas'
 import { FiltrosDatatable } from './FiltrosDataTable'
+import { FiltrosTab } from './FiltrosTab'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',
@@ -20,7 +21,7 @@ export default {
     docs: {
       description: {
         component:
-          'El componente `CustomDataTable` es tabla de datos personalizada que acepta varias propiedades (props), como la definición de las columnas, el contenido de la tabla, la paginación, los filtros y las acciones, entre otras',
+          'El componente `CustomDataTable` es tabla de datos personalizada que acepta varias propiedades (props), como la definición de las columnas, el contenido de la tabla, la paginación, los filtros y las acciones, entre otras.',
       },
     },
   },
@@ -184,8 +185,15 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
     </Stack>,
   ]
 )
+/// Columnas
 export const Columnas = Template.bind({})
-
+Columnas.parameters = {
+  docs: {
+    description: {
+      story: 'Componente `CustomDataTable` con datos de libros.',
+    },
+  },
+}
 Columnas.args = {
   titulo: 'Tabla Libros',
   error: false,
@@ -220,6 +228,7 @@ Columnas.args = {
     name={'agregarProyecto'}
   />,
 ] */
+/// Acciones 3
 const Template3: StoryFn<typeof CustomDataTable> = (args) => {
   const [mostrarFiltroRol, setMostrarFiltroRol] = useState(false)
   const acciones: Array<ReactNode> = [
@@ -290,9 +299,17 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
   return <CustomDataTable {...args} />
 }
 export const Acciones3 = Template3.bind({})
-
+Acciones3.storyName = 'Tabla con acciones'
 Acciones3.args = {
   ...Columnas.args,
+}
+Acciones3.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la propiedad `acciones` establecida.',
+    },
+  },
 }
 /// Variable con parámetros de paginación
 const paginacion = (
@@ -311,14 +328,30 @@ SB_PAGINACION.args = {
   ...Columnas.args,
   paginacion: paginacion,
 }
-
+SB_PAGINACION.parameters = {
+  docs: {
+    description: {
+      story: 'Componente `CustomDataTable` con la propiedad de `paginación`.',
+    },
+  },
+}
+// Tabla Cargando
 export const Cargando = Template3.bind({})
+
 Cargando.storyName = 'Tabla cargando'
+Cargando.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la propiedad `cargando` con el valor `true` establecido.',
+    },
+  },
+}
 Cargando.args = {
   ...Columnas.args,
   cargando: true,
 }
-
+/// Orden por columna
 const Template1: StoryFn<typeof CustomDataTable> = (args) => {
   const [datos, setDatos] = useState<any[]>([
     {
@@ -435,12 +468,21 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
 
 export const HeadFiltro = Template1.bind({})
 HeadFiltro.storyName = 'Orden por columna'
+HeadFiltro.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la opción de ordenar los datos por columna.',
+    },
+  },
+}
 HeadFiltro.args = {
   titulo: 'Tabla Libros',
   error: false,
   cargando: false,
 }
 
+/// Selector de filas
 const Template2: StoryFn<typeof CustomDataTable> = (args) => {
   const [datos, setDatos] = useState<any[]>([
     {
@@ -609,15 +651,21 @@ const Template2: StoryFn<typeof CustomDataTable> = (args) => {
   }, [ordenCriterios])
   return <CustomDataTable {...args} />
 }
-
 export const MultiSelector = Template2.bind({})
 MultiSelector.storyName = 'Selector de filas'
+MultiSelector.parameters = {
+  docs: {
+    description: {
+      story: 'Componente `CustomDataTable` con la opción de seleccionar filas.',
+    },
+  },
+}
 MultiSelector.args = {
   titulo: 'Tabla Libros',
   error: false,
   cargando: false,
 }
-///Filtros
+/// Filtros
 const Template4: StoryFn<typeof CustomDataTable> = (args) => {
   const [mostrarFiltroRol, setMostrarFiltroRol] = useState(true)
   const acciones: Array<ReactNode> = [
@@ -661,12 +709,19 @@ const Template4: StoryFn<typeof CustomDataTable> = (args) => {
   return <CustomDataTable {...args} />
 }
 export const Filtros = Template4.bind({})
+Filtros.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la opción de mostrar y ocultar un campo de filtros.',
+    },
+  },
+}
 
 Filtros.args = {
   ...Columnas.args,
 }
-/// Ejemplo filtros adicionales en cabecera personalizada
-
+/// Filtros adicionales en cabecera personalizada
 const Template5: StoryFn<typeof CustomDataTable> = (args) => {
   const categoriasSet = new Set(solicitudesData.map((libro) => libro.categoria))
   const categorias = Array.from(categoriasSet)
@@ -689,7 +744,6 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
     fechaPublicacion: string
     categoria: string
   }
-
   function filtrarTabla(dataLibros: Array<dataTableType>, filtro: filtrosType) {
     if (
       filtro.palabraClave ||
@@ -722,33 +776,28 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
         }
         return cumplePalabraClave && cumpleCategorias && cumpleRangoFechas
       })
-
       return contenidoTablaFiltros
     } else {
       return solicitudesData
     }
   }
-
   const contenidoTablaFiltros = filtrarTabla(solicitudesData, {
     palabraClave: filtroPalabraClave,
     categorias: filtroCategorias,
     fechaInicial: filtroFechaInicial,
     fechaFinal: filtroFechaFinal,
   })
-
   const TablaFiltrada: Array<Array<ReactNode>> = contenidoTablaFiltros.map(
     (solicitudData, index) => [
       <Typography key={`${solicitudData.id}-${index}-nombre`} variant={'body2'}>
         {`${solicitudData.nombre}`}
       </Typography>,
-
       <Typography
         key={`${solicitudData.id}-${index}-resumen`}
         variant={'body2'}
       >
         {`${solicitudData.resumen}`}
       </Typography>,
-
       <Typography
         key={`${solicitudData.id}-${index}-categoria`}
         variant={'body2'}
@@ -761,7 +810,6 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
       >
         {solicitudData.fechaPublicacion}
       </Typography>,
-
       <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
         <IconoTooltip
           id={'editarLibro'}
@@ -807,11 +855,136 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
       }}
     />
   )
-
   return <CustomDataTable {...args} />
 }
 export const FiltrosAdicionales = Template5.bind({})
-
+FiltrosAdicionales.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con filtros adicionales en la propiedad `cabeceraPersonalizada`.',
+    },
+  },
+}
 FiltrosAdicionales.args = {
+  ...Columnas.args,
+}
+/// Pestañas en cabecera personalizada
+const Template6: StoryFn<typeof CustomDataTable> = (args) => {
+  const [pestanaActiva, setPestanaActiva] = useState<number>(0)
+
+  const pestanas = [
+    'Todos',
+    ...new Set(solicitudesData.map((libro) => libro.categoria)),
+  ]
+  const handlePestanaChange = (indicePestana: number) => {
+    setPestanaActiva(indicePestana)
+    const librosFiltrados =
+      indicePestana == 0
+        ? solicitudesData
+        : solicitudesData.filter(
+            (libro) => libro.categoria === pestanas[indicePestana]
+          )
+
+    const TablaFiltrada: Array<Array<ReactNode>> = librosFiltrados.map(
+      (libro, index) => [
+        <Typography key={`${libro.id}-${index}-nombre`} variant={'body2'}>
+          {`${libro.nombre}`}
+        </Typography>,
+
+        <Typography key={`${libro.id}-${index}-resumen`} variant={'body2'}>
+          {`${libro.resumen}`}
+        </Typography>,
+        <Typography key={`${libro.id}-${index}-categoria`} variant={'body2'}>
+          {libro.categoria}
+        </Typography>,
+
+        <Typography
+          key={`${libro.id}-${index}-fechaPublicacion`}
+          variant={'body2'}
+        >
+          {libro.fechaPublicacion}
+        </Typography>,
+
+        <Stack direction={'row'} key={`${libro.id}-${index}-acciones`}>
+          <IconoTooltip
+            id={'editarLibro'}
+            titulo={'Editar libro'}
+            color={'success'}
+            accion={() => {}}
+            icono={'edit'}
+            name={'Editar libro'}
+          />
+          <IconoTooltip
+            id={'verLibro'}
+            titulo={'Ver libro'}
+            color={'info'}
+            accion={() => {}}
+            icono={'visibility'}
+            name={'Ver libro'}
+          />
+          <IconoTooltip
+            id={'eliminarLibro'}
+            titulo={'Eliminar libro'}
+            color={'warning'}
+            accion={() => {}}
+            icono={'delete'}
+            name={'Eliminar libro'}
+          />
+        </Stack>,
+      ]
+    )
+    args.contenidoTabla = TablaFiltrada
+  }
+  args.cabeceraPersonalizada = (
+    <FiltrosTab
+      titulo="Tabla con pestañas"
+      labelSelect="Categorias"
+      pestanas={pestanas}
+      pestanaActiva={pestanaActiva}
+      accion={handlePestanaChange}
+      acciones={
+        <Stack direction={'row'}>
+          <IconoTooltip
+            id={'editarLibro'}
+            titulo={'Buscar'}
+            color={'primary'}
+            accion={() => {}}
+            icono={'search'}
+            name={'Editar libro'}
+          />
+          <IconoTooltip
+            id={'eliminarLibro'}
+            titulo={'Actualizar lista'}
+            color={'primary'}
+            accion={() => {}}
+            icono={'refresh'}
+            name={'Eliminar libro'}
+          />
+          <IconoTooltip
+            id={'verLibro'}
+            titulo={'Agregar elementos'}
+            color={'primary'}
+            accion={() => {}}
+            icono={'add_circle_outline'}
+            name={'Ver libro'}
+          />
+        </Stack>
+      }
+    />
+  )
+  return <CustomDataTable {...args} />
+}
+export const DemoTabs = Template6.bind({})
+DemoTabs.storyName = 'Tabla con pestañas'
+DemoTabs.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con pestañas en la propiedad `cabeceraPersonalizada`.',
+    },
+  },
+}
+DemoTabs.args = {
   ...Columnas.args,
 }
