@@ -5,8 +5,6 @@ import {
   useMapEvents,
   ZoomControl,
 } from 'react-leaflet'
-
-import { Typography } from '@mui/material'
 import { Map } from 'leaflet'
 import { ReactNode, RefObject, useEffect } from 'react'
 import 'leaflet/dist/leaflet.css'
@@ -16,7 +14,8 @@ export interface MapaProps {
   centro?: number[]
   onZoomed?: (zoom: number, center: number[]) => void
   onClick?: (center: number[], zoom: number) => void
-  height?: number
+  height?: number | string
+  width?: number | string
   zoom?: number
   id: string
   children?: ReactNode
@@ -30,7 +29,8 @@ const Mapa = ({
   mapRef,
   markers,
   centro = [-17.405356227442883, -66.15823659326952],
-  height = 500,
+  height = 400,
+  width = '100%',
   onClick,
   id,
   zoom = 6,
@@ -69,7 +69,7 @@ const Mapa = ({
           zoom={zoom}
           scrollWheelZoom={scrollWheelZoom}
           zoomControl={zoomControl}
-          style={{ height: height, width: '100%' }}
+          style={{ height: height, width: width }}
         >
           <ChangeMapView />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -80,7 +80,7 @@ const Mapa = ({
           />
           {markers}
         </MapContainer>
-        <Typography>{`${[Number(centro[0]), Number(centro[1])]}`}</Typography>
+        {/* <Typography>{`${[Number(centro[0]), Number(centro[1])]}`}</Typography> */}
       </div>
     </>
   )
