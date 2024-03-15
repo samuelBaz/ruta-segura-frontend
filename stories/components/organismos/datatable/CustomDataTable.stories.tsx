@@ -21,7 +21,7 @@ export default {
     docs: {
       description: {
         component:
-          'El componente `CustomDataTable` es tabla de datos personalizada que acepta varias propiedades (props), como la definición de las columnas, el contenido de la tabla, la paginación, los filtros y las acciones, entre otras',
+          'El componente `CustomDataTable` es tabla de datos personalizada que acepta varias propiedades (props), como la definición de las columnas, el contenido de la tabla, la paginación, los filtros y las acciones, entre otras.',
       },
     },
   },
@@ -185,8 +185,15 @@ const contenidoTabla: Array<Array<ReactNode>> = solicitudesData.map(
     </Stack>,
   ]
 )
+/// Columnas
 export const Columnas = Template.bind({})
-
+Columnas.parameters = {
+  docs: {
+    description: {
+      story: 'Componente `CustomDataTable` con datos de libros.',
+    },
+  },
+}
 Columnas.args = {
   titulo: 'Tabla Libros',
   error: false,
@@ -221,6 +228,7 @@ Columnas.args = {
     name={'agregarProyecto'}
   />,
 ] */
+/// Acciones 3
 const Template3: StoryFn<typeof CustomDataTable> = (args) => {
   const [mostrarFiltroRol, setMostrarFiltroRol] = useState(false)
   const acciones: Array<ReactNode> = [
@@ -291,9 +299,17 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
   return <CustomDataTable {...args} />
 }
 export const Acciones3 = Template3.bind({})
-
+Acciones3.storyName = 'Tabla con acciones'
 Acciones3.args = {
   ...Columnas.args,
+}
+Acciones3.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la propiedad `acciones` establecida.',
+    },
+  },
 }
 /// Variable con parámetros de paginación
 const paginacion = (
@@ -312,14 +328,30 @@ SB_PAGINACION.args = {
   ...Columnas.args,
   paginacion: paginacion,
 }
-
+SB_PAGINACION.parameters = {
+  docs: {
+    description: {
+      story: 'Componente `CustomDataTable` con la propiedad de `paginación`.',
+    },
+  },
+}
+// Tabla Cargando
 export const Cargando = Template3.bind({})
+
 Cargando.storyName = 'Tabla cargando'
+Cargando.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la propiedad `cargando` con el valor `true` establecido.',
+    },
+  },
+}
 Cargando.args = {
   ...Columnas.args,
   cargando: true,
 }
-
+/// Orden por columna
 const Template1: StoryFn<typeof CustomDataTable> = (args) => {
   const [datos, setDatos] = useState<any[]>([
     {
@@ -436,12 +468,21 @@ const Template1: StoryFn<typeof CustomDataTable> = (args) => {
 
 export const HeadFiltro = Template1.bind({})
 HeadFiltro.storyName = 'Orden por columna'
+HeadFiltro.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la opción de ordenar los datos por columna.',
+    },
+  },
+}
 HeadFiltro.args = {
   titulo: 'Tabla Libros',
   error: false,
   cargando: false,
 }
 
+/// Selector de filas
 const Template2: StoryFn<typeof CustomDataTable> = (args) => {
   const [datos, setDatos] = useState<any[]>([
     {
@@ -610,15 +651,21 @@ const Template2: StoryFn<typeof CustomDataTable> = (args) => {
   }, [ordenCriterios])
   return <CustomDataTable {...args} />
 }
-
 export const MultiSelector = Template2.bind({})
 MultiSelector.storyName = 'Selector de filas'
+MultiSelector.parameters = {
+  docs: {
+    description: {
+      story: 'Componente `CustomDataTable` con la opción de seleccionar filas.',
+    },
+  },
+}
 MultiSelector.args = {
   titulo: 'Tabla Libros',
   error: false,
   cargando: false,
 }
-///Filtros
+/// Filtros
 const Template4: StoryFn<typeof CustomDataTable> = (args) => {
   const [mostrarFiltroRol, setMostrarFiltroRol] = useState(true)
   const acciones: Array<ReactNode> = [
@@ -662,11 +709,19 @@ const Template4: StoryFn<typeof CustomDataTable> = (args) => {
   return <CustomDataTable {...args} />
 }
 export const Filtros = Template4.bind({})
+Filtros.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con la opción de mostrar y ocultar un campo de filtros.',
+    },
+  },
+}
 
 Filtros.args = {
   ...Columnas.args,
 }
-/// Ejemplo filtros adicionales en cabecera personalizada
+/// Filtros adicionales en cabecera personalizada
 const Template5: StoryFn<typeof CustomDataTable> = (args) => {
   const categoriasSet = new Set(solicitudesData.map((libro) => libro.categoria))
   const categorias = Array.from(categoriasSet)
@@ -803,10 +858,18 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
   return <CustomDataTable {...args} />
 }
 export const FiltrosAdicionales = Template5.bind({})
+FiltrosAdicionales.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con filtros adicionales en la propiedad `cabeceraPersonalizada`.',
+    },
+  },
+}
 FiltrosAdicionales.args = {
   ...Columnas.args,
 }
-// Ejemplo pestañas con tabla
+/// Pestañas en cabecera personalizada
 const Template6: StoryFn<typeof CustomDataTable> = (args) => {
   const [pestanaActiva, setPestanaActiva] = useState<number>(0)
 
@@ -913,7 +976,15 @@ const Template6: StoryFn<typeof CustomDataTable> = (args) => {
   return <CustomDataTable {...args} />
 }
 export const DemoTabs = Template6.bind({})
-
+DemoTabs.storyName = 'Tabla con pestañas'
+DemoTabs.parameters = {
+  docs: {
+    description: {
+      story:
+        'Componente `CustomDataTable` con pestañas en la propiedad `cabeceraPersonalizada`.',
+    },
+  },
+}
 DemoTabs.args = {
   ...Columnas.args,
 }
