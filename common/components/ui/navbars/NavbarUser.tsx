@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
   DialogContent,
@@ -237,30 +238,26 @@ export const NavbarUser = () => {
           />
           {!xs && <ThemeSwitcherButton />}
           <ToggleButton
-            sx={{ px: 1.5, minWidth: 0, borderWidth: 0 }}
+            sx={{ px: 1.2, minWidth: 0, borderWidth: 0 }}
             size="small"
             onClick={desplegarMenu}
             color="primary"
             value={''}
             selected={!!anchorEl}
           >
-            <Icono color={'action'}>account_circle</Icono>
-            {!xs && (
-              <Box
-                sx={{ p: 1 }}
-                display={'flex'}
-                flexDirection={'column'}
-                alignItems={'start'}
-              >
-                <Typography
-                  variant={'body2'}
-                  color="text.primary"
-                  fontWeight={'500'}
-                >
-                  {`${titleCase(usuario?.persona.nombres ?? '')}`}
-                </Typography>
-              </Box>
-            )}
+            <Avatar
+              sx={{
+                fontSize: '0.82rem',
+                width: 30,
+                height: 30,
+                bgcolor: 'secondary.main',
+              }}
+            >
+              {usuario?.persona.nombres[0] ?? ''}
+              {usuario?.persona.primerApellido[0] ??
+                usuario?.persona.segundoApellido[0] ??
+                ''}
+            </Avatar>
           </ToggleButton>
           <Menu
             id="menu-appbar"
@@ -277,7 +274,7 @@ export const NavbarUser = () => {
             onClose={cerrarMenu}
             autoFocus={false}
           >
-            <MenuItem onClick={abrirPerfil}>
+            <MenuItem onClick={abrirPerfil} sx={{ mb: 1, mt: 0.5 }}>
               <Icono color={'inherit'} fontSize={'small'}>
                 person
               </Icono>
