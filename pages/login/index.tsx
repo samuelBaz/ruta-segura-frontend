@@ -10,7 +10,7 @@ import { useFullScreenLoading } from '../../context/ui'
 import { useEffect } from 'react'
 import { useAlerts } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
-import LoginRegistroTabContainer from '../../modules/login/ui/LoginRegistroContainer'
+import LoginContainer from '../../modules/login/ui/LoginContainer'
 
 const Index: NextPage = () => {
   const theme = useTheme()
@@ -64,6 +64,7 @@ const Index: NextPage = () => {
               <Typography
                 variant={'h4'}
                 component="h1"
+                fontWeight={'500'}
                 align={sm || xs ? 'center' : 'left'}
               >
                 Frontend base con Next.js, MUI v5 y TypeScript
@@ -73,6 +74,9 @@ const Index: NextPage = () => {
         </Grid>
         <Grid
           item
+          xl={0}
+          md={0}
+          xs={0}
           sx={{
             display: {
               sm: 'none',
@@ -100,12 +104,11 @@ const Index: NextPage = () => {
           <Box display="flex" justifyContent="center" alignItems="center">
             <Box
               display={'flex'}
-              justifyContent={'center'}
+              justifyContent={'space-around'}
               alignItems={'center'}
               color={'primary'}
             >
-              {/*<LoginNormalContainer />*/}
-              <LoginRegistroTabContainer />
+              <LoginContainer />
             </Box>
           </Box>
         </Grid>

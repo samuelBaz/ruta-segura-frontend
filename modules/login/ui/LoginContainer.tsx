@@ -7,9 +7,16 @@ import { Constantes } from '../../../config'
 import { useAuth } from '../../../context/auth'
 import { useForm } from 'react-hook-form'
 import { LoginType } from '../types/loginTypes'
+import { useRouter } from 'next/router'
+import { useFullScreenLoading } from '../../../context/ui'
+import { delay } from '../../../common/utils'
 
-const LoginNormalContainer = () => {
+const LoginContainer = () => {
+  const router = useRouter()
+
   const { ingresar, progresoLogin } = useAuth()
+
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   const { handleSubmit, control } = useForm<LoginType>({
     defaultValues: {
@@ -23,7 +30,13 @@ const LoginNormalContainer = () => {
   }
 
   return (
-    <Card sx={{ borderRadius: 4, p: 4, maxWidth: '450px' }}>
+    <Card
+      sx={{
+        borderRadius: 4,
+        p: 3,
+        px: 4,
+      }}
+    >
       <form onSubmit={handleSubmit(iniciarSesion)}>
         <Box
           display={'grid'}
@@ -31,14 +44,18 @@ const LoginNormalContainer = () => {
           alignItems={'center'}
           sx={{ borderRadius: 12 }}
         >
-          <Typography
-            align={'center'}
-            color={'primary'}
-            sx={{ flexGrow: 1, fontWeight: 'medium' }}
-          >
-            Iniciar Sesión
+          <Typography align={'center'} sx={{ fontWeight: '600' }}>
+            Inicio de Sesión
           </Typography>
-          <Box sx={{ mt: 1, mb: 1 }}></Box>
+          <Box sx={{ mt: 2, mb: 2 }}>
+            <Typography
+              fontSize={14}
+              variant={'body1'}
+              color={'text.secondary'}
+            >
+              Ingresa tus credenciales para iniciar sesión
+            </Typography>
+          </Box>
           <FormInputText
             id={'usuario'}
             control={control}
@@ -67,8 +84,28 @@ const LoginNormalContainer = () => {
               },
             }}
           />
-          <Box sx={{ mt: 1, mb: 1 }}>
+          <Box sx={{ mt: 0.5, mb: 0.5 }}>
             <ProgresoLineal mostrar={progresoLogin} />
+          </Box>
+          <Box display="flex" flex="1" justifyContent="start">
+            <Button
+              onClick={async () => {
+                mostrarFullScreen()
+                await delay(500)
+                await router.push({
+                  pathname: '/recuperacion',
+                })
+                ocultarFullScreen()
+              }}
+              size={'small'}
+              variant={'text'}
+              disabled={progresoLogin}
+              color={'primary'}
+            >
+              <Typography fontSize={'small'} sx={{ fontWeight: '600' }}>
+                ¿Olvidaste tu contraseña?
+              </Typography>
+            </Button>
           </Box>
           <Box sx={{ height: 15 }}></Box>
           <Button
@@ -77,12 +114,10 @@ const LoginNormalContainer = () => {
             fullWidth
             disabled={progresoLogin}
           >
-            <Typography sx={{ fontWeight: 'medium' }}>
-              Iniciar sesión
-            </Typography>
+            <Typography sx={{ fontWeight: '600' }}>Iniciar sesión</Typography>
           </Button>
 
-          <Box sx={{ pt: 1, pb: 2 }}>
+          <Box sx={{ pt: 2, pb: 2 }}>
             <Divider>
               <Typography color="text.secondary">O</Typography>
             </Divider>
@@ -95,14 +130,29 @@ const LoginNormalContainer = () => {
               window.location.href = `${Constantes.baseUrl}/ciudadania-auth`
             }}
           >
-            <Typography sx={{ fontWeight: 'medium', pl: 1, pr: 1 }}>
+            <Typography sx={{ fontWeight: '600', pl: 1, pr: 1 }}>
               Ingresa con Ciudadanía
             </Typography>
           </BotonCiudadania>
+          <Box sx={{ mt: 3 }}>
+            <Typography variant="body1" textAlign="center" fontSize={14}>
+              ¿No tienes una cuenta?{' '}
+              <Button
+                variant="text"
+                sx={{ p: 0 }}
+                disabled={progresoLogin}
+                onClick={async () => {
+                  await router.push('registro')
+                }}
+              >
+                Regístrate
+              </Button>
+            </Typography>
+          </Box>
         </Box>
       </form>
     </Card>
   )
 }
 
-export default LoginNormalContainer
+export default LoginContainer

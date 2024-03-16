@@ -14,9 +14,9 @@ const ThemeSwitcherButton = ({ ...rest }: ThemeSwitcherButtonProps) => {
     >
       <IconButton {...rest} onClick={toggleTheme}>
         {themeMode === 'light' ? (
-          <Icono color={'primary'}>light_mode</Icono>
+          <Icono color={'action'}>light_mode</Icono>
         ) : (
-          <Icono color={'primary'}>dark_mode</Icono>
+          <Icono color={'action'}>dark_mode</Icono>
         )}
       </IconButton>
     </Tooltip>

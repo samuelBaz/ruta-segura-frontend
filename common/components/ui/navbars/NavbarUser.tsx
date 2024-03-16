@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   DialogContent,
+  Divider,
   FormControlLabel,
   IconButton,
   List,
@@ -10,6 +11,7 @@ import {
   Menu,
   MenuItem,
   Radio,
+  ToggleButton,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -32,7 +34,9 @@ import { imprimir } from '../../../utils/imprimir'
 import { RoleType } from '../../../../modules/login/types/loginTypes'
 import { useThemeContext } from '../../../../context/ui/ThemeContext'
 import { useSession } from '../../../hooks'
-import { alpha } from '@mui/material/styles'
+import Grid from '@mui/material/Grid'
+import Image from 'next/image'
+import { Constantes } from '../../../../config'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -123,6 +127,7 @@ export const NavbarUser = () => {
         texto={`¿Está seguro de cerrar sesión?`}
       >
         <Button
+          variant={'outlined'}
           onClick={() => {
             setMostrarAlertaCerrarSesion(false)
           }}
@@ -130,7 +135,7 @@ export const NavbarUser = () => {
           Cancelar
         </Button>
         <Button
-          sx={{ fontWeight: 'medium' }}
+          variant={'contained'}
           onClick={async () => {
             setMostrarAlertaCerrarSesion(false)
             await cerrarMenuSesion()
@@ -155,8 +160,6 @@ export const NavbarUser = () => {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: alpha(theme.palette.background.paper, 0.8),
-          backdropFilter: 'blur(12px)',
         }}
       >
         <Toolbar>
@@ -166,7 +169,7 @@ export const NavbarUser = () => {
             aria-label="Menu lateral"
             name={sideMenuOpen ? 'Cerrar menú lateral' : 'Abrir menú lateral'}
             edge="start"
-            color={'primary'}
+            color={'inherit'}
             onClick={() => {
               if (sideMenuOpen) {
                 closeSideMenu()
@@ -174,21 +177,54 @@ export const NavbarUser = () => {
                 openSideMenu()
               }
             }}
-            sx={{ mr: 1 }}
+            sx={{ mr: 0 }}
           >
             {sideMenuOpen ? (
-              <Icono color={'primary'}>menu_open</Icono>
+              <Icono color={'action'}>menu_open</Icono>
             ) : (
-              <Icono color={'primary'}>menu</Icono>
+              <Icono color={'action'}>menu</Icono>
             )}
           </IconButton>
-          <Typography
-            color={'text.primary'}
-            component="div"
-            sx={{ flexGrow: 1, fontWeight: 'medium' }}
+          <Grid
+            container
+            alignItems={'center'}
+            flexDirection={'row'}
+            sx={{ flexGrow: 1 }}
           >
-            {siteName()}
-          </Typography>
+            <Box display={'inline-flex'}>
+              <Grid
+                container
+                alignItems={'center'}
+                flexDirection={'row'}
+                justifyContent={'flex-start'}
+                onClick={async () => {
+                  await router.replace({
+                    pathname: '/admin/home',
+                  })
+                }}
+                sx={{ cursor: 'pointer' }}
+              >
+                <Image
+                  src={`${Constantes.sitePath}/icono.png`}
+                  alt={''}
+                  width="30"
+                  height="30"
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
+                />
+                <Box sx={{ px: 0.5 }} />
+                <Typography
+                  color={'text.primary'}
+                  component="div"
+                  sx={{ fontWeight: '600' }}
+                >
+                  {siteName()}
+                </Typography>
+              </Grid>
+            </Box>
+          </Grid>
           <IconoTooltip
             id={'ayudaUser'}
             name={'Ayuda'}
@@ -196,24 +232,36 @@ export const NavbarUser = () => {
             accion={() => {
               abrirModalAyuda()
             }}
+            color={'action'}
             icono={'help_outline'}
           />
           {!xs && <ThemeSwitcherButton />}
-          <Button size="small" onClick={desplegarMenu} color="primary">
-            <Icono color={'primary'}>account_circle</Icono>
+          <ToggleButton
+            sx={{ px: 1.5, minWidth: 0, borderWidth: 0 }}
+            size="small"
+            onClick={desplegarMenu}
+            color="primary"
+            value={''}
+            selected={!!anchorEl}
+          >
+            <Icono color={'action'}>account_circle</Icono>
             {!xs && (
               <Box
-                sx={{ pl: 1 }}
+                sx={{ p: 1 }}
                 display={'flex'}
                 flexDirection={'column'}
                 alignItems={'start'}
               >
-                <Typography variant={'body2'} color="text.primary">
+                <Typography
+                  variant={'body2'}
+                  color="text.primary"
+                  fontWeight={'500'}
+                >
                   {`${titleCase(usuario?.persona.nombres ?? '')}`}
                 </Typography>
               </Box>
             )}
-          </Button>
+          </ToggleButton>
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -229,15 +277,21 @@ export const NavbarUser = () => {
             onClose={cerrarMenu}
             autoFocus={false}
           >
-            <MenuItem sx={{ p: 2 }} onClick={abrirPerfil}>
-              <Icono>person</Icono>
-              <Box width={'20px'} />
+            <MenuItem onClick={abrirPerfil}>
+              <Icono color={'inherit'} fontSize={'small'}>
+                person
+              </Icono>
+              <Box width={'15px'} />
               <Box
                 display={'flex'}
                 flexDirection={'column'}
                 alignItems={'start'}
               >
-                <Typography variant={'body2'} color="text.primary">
+                <Typography
+                  variant={'body2'}
+                  color="text.primary"
+                  fontWeight={'500'}
+                >
                   {titleCase(usuario?.persona?.nombres ?? '')}{' '}
                   {titleCase(
                     usuario?.persona?.primerApellido ??
@@ -252,20 +306,25 @@ export const NavbarUser = () => {
             </MenuItem>
             {roles.length > 1 && (
               <Box>
+                <Divider />
                 <MenuItem
                   sx={{
-                    p: 2,
                     ml: 0,
+                    pt: 1.5,
                     '&.MuiButtonBase-root:hover': {
                       bgcolor: 'transparent',
                     },
                   }}
                 >
-                  <Icono>switch_account</Icono>
-                  <Box width={'20px'} />
-                  <Typography variant={'body2'}>Roles </Typography>
+                  <Icono color={'inherit'} fontSize={'small'}>
+                    switch_account
+                  </Icono>
+                  <Box width={'15px'} />
+                  <Typography variant={'body2'} fontWeight={'500'}>
+                    Roles
+                  </Typography>
                 </MenuItem>
-                <List key={`roles`} sx={{ p: 0 }}>
+                <List key={`roles`} sx={{ p: 0, pl: 2 }}>
                   {roles.map((rol, indexRol) => (
                     <ListItem key={`rol-${indexRol}`}>
                       <Box
@@ -274,6 +333,7 @@ export const NavbarUser = () => {
                           flexDirection: 'row',
                           borderRadius: 1,
                           alignItems: 'center',
+                          cursor: 'pointer',
                         }}
                       >
                         <Box width={'20px'} />
@@ -298,22 +358,35 @@ export const NavbarUser = () => {
                 </List>
               </Box>
             )}
-            <MenuItem sx={{ p: 2 }} onClick={toggleTheme}>
+            <Divider />
+            <MenuItem sx={{ px: 2.5, py: 1.5, mt: 1 }} onClick={toggleTheme}>
               {themeMode === 'light' ? (
-                <Icono>dark_mode</Icono>
+                <Icono color={'inherit'} fontSize={'small'}>
+                  dark_mode
+                </Icono>
               ) : (
-                <Icono>light_mode</Icono>
+                <Icono color={'inherit'} fontSize={'small'}>
+                  light_mode
+                </Icono>
               )}
 
-              <Box width={'20px'} />
-              <Typography variant={'body2'}>
+              <Box width={'15px'} />
+              <Typography variant={'body2'} fontWeight={'500'}>
                 {themeMode === 'light' ? `Modo oscuro` : `Modo claro`}{' '}
               </Typography>
             </MenuItem>
-            <MenuItem sx={{ p: 2 }} onClick={accionMostrarAlertaCerrarSesion}>
-              <Icono>logout</Icono>
-              <Box width={'20px'} />
-              <Typography variant={'body2'}>Cerrar sesión</Typography>
+            <Divider />
+            <MenuItem
+              sx={{ px: 2.5, py: 1.5, mt: 1 }}
+              onClick={accionMostrarAlertaCerrarSesion}
+            >
+              <Icono color={'error'} fontSize={'small'}>
+                logout
+              </Icono>
+              <Box width={'15px'} />
+              <Typography variant={'body2'} fontWeight={'600'} color={'error'}>
+                Cerrar sesión
+              </Typography>
             </MenuItem>
           </Menu>
         </Toolbar>

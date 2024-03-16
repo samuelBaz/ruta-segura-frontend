@@ -13,8 +13,6 @@ import { SnackbarProvider } from 'notistack'
 import { init } from '@socialgouv/matomo-next'
 import { useEffect } from 'react'
 
-import 'material-icons/iconfont/outlined.css'
-
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 

@@ -1,22 +1,27 @@
-import { useSnackbar, VariantType } from 'notistack'
+import { SnackbarOrigin, useSnackbar, VariantType } from 'notistack'
 import { IconButton } from '@mui/material'
 import { Icono } from '../components/ui'
 
 export interface AlertType {
   mensaje: string
   variant?: VariantType
+  anchorOrigin?: SnackbarOrigin
 }
 
 export const useAlerts = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
-  const Alerta = ({ mensaje, variant = 'info' }: AlertType) => {
+  const Alerta = ({
+    mensaje,
+    variant = 'info',
+    anchorOrigin = {
+      vertical: 'top',
+      horizontal: 'center',
+    },
+  }: AlertType) => {
     enqueueSnackbar(mensaje, {
       variant,
-      anchorOrigin: {
-        vertical: 'top',
-        horizontal: 'right',
-      },
+      anchorOrigin,
       action: (key) => (
         <IconButton
           color="inherit"

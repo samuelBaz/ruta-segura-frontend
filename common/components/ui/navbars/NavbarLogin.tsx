@@ -1,20 +1,12 @@
-import {
-  AppBar,
-  DialogContent,
-  Toolbar,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { AppBar, DialogContent, Toolbar, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { CustomDialog } from '../modales/CustomDialog'
 import React, { useState } from 'react'
 import ThemeSwitcherButton from '../botones/ThemeSwitcherButton'
 import { IconoTooltip } from '../botones/IconoTooltip'
-import { alpha } from '@mui/material/styles'
 
 export const NavbarLogin = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
-  const theme = useTheme()
   const abrirModalAyuda = () => {
     setModalAyuda(true)
   }
@@ -39,7 +31,6 @@ export const NavbarLogin = () => {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: alpha(theme.palette.background.paper, 0.8),
           backdropFilter: 'blur(12px)',
         }}
       >
@@ -49,6 +40,7 @@ export const NavbarLogin = () => {
             id={'ayudaLogin'}
             name={'Ayuda'}
             titulo={'Ayuda'}
+            color={'action'}
             accion={() => {
               abrirModalAyuda()
             }}

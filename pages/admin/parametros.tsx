@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import {
   Button,
-  Grid,
+  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -33,15 +33,15 @@ import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametr
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
-import { CriterioOrdenType } from '../../common/types/ordenTypes'
-import { ordenFiltrado } from '../../common/utils/orden'
+import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
+import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
+import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
   const [errorParametrosData, setErrorParametrosData] = useState<any>()
@@ -104,7 +104,7 @@ const Parametros: NextPage = () => {
     parametro: ParametroCRUDType
   ) => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros/${parametro.id}/${
           parametro.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
@@ -173,42 +173,41 @@ const Parametros: NextPage = () => {
               : 'info'
         }
       />,
-
-      <Grid key={`${parametroData.id}-${indexParametro}-acciones`}>
+      <Stack
+        key={`${parametroData.id}-${indexParametro}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
+      >
         {permisos.update && (
-          <IconoTooltip
+          <CustomSwitch
             id={`cambiarEstadoParametro-${parametroData.id}`}
             titulo={parametroData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-            color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
             accion={async () => {
               await editarEstadoParametroModal(parametroData)
             }}
-            desactivado={parametroData.estado == 'PENDIENTE'}
-            icono={
-              parametroData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'
-            }
             name={
               parametroData.estado == 'ACTIVO'
                 ? 'Inactivar Parámetro'
                 : 'Activar Parámetro'
             }
+            color={parametroData.estado == 'ACTIVO' ? 'success' : 'error'}
+            marcado={parametroData.estado == 'ACTIVO'}
+            desactivado={parametroData.estado == 'PENDIENTE'}
           />
         )}
-
         {permisos.update && (
           <IconoTooltip
             id={`editarParametros-${parametroData.id}`}
             name={'Parámetros'}
             titulo={'Editar'}
             color={'primary'}
-            accion={() => {
-              imprimir(`Editaremos`, parametroData)
-              editarParametroModal(parametroData)
-            }}
             icono={'edit'}
+            accion={async () => {
+              await editarParametroModal(parametroData)
+            }}
           />
         )}
-      </Grid>,
+      </Stack>,
     ]
   )
 
@@ -256,7 +255,6 @@ const Parametros: NextPage = () => {
   const obtenerParametrosPeticion = async () => {
     try {
       setLoading(true)
-
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/parametros`,
         params: {
@@ -343,8 +341,12 @@ const Parametros: NextPage = () => {
           parametroEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
         } el parámetro: ${titleCase(parametroEdicion?.nombre ?? '')} ?`}
       >
-        <Button onClick={cancelarAlertaEstadoParametro}>Cancelar</Button>
-        <Button onClick={aceptarAlertaEstadoParametro}>Aceptar</Button>
+        <Button variant={'outlined'} onClick={cancelarAlertaEstadoParametro}>
+          Cancelar
+        </Button>
+        <Button variant={'contained'} onClick={aceptarAlertaEstadoParametro}>
+          Aceptar
+        </Button>
       </AlertDialog>
       <CustomDialog
         isOpen={modalParametro}

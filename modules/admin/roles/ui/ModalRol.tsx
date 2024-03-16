@@ -34,6 +34,7 @@ export const VistaModalRol = ({
       id: rol?.id,
       rol: rol?.rol,
       nombre: rol?.nombre,
+      descripcion: rol?.descripcion,
     },
   })
 
@@ -70,7 +71,7 @@ export const VistaModalRol = ({
       <DialogContent dividers>
         <Grid container direction={'column'} justifyContent="space-evenly">
           <Grid container direction="row" spacing={{ xs: 2, sm: 1, md: 2 }}>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={12}>
               <FormInputText
                 id={'rol'}
                 control={control}
@@ -80,7 +81,7 @@ export const VistaModalRol = ({
                 rules={{ required: 'Este campo es requerido' }}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={12}>
               <FormInputText
                 id={'nombre'}
                 control={control}
@@ -88,6 +89,18 @@ export const VistaModalRol = ({
                 label="Nombre"
                 disabled={loadingModal}
                 rules={{ required: 'Este campo es requerido' }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <FormInputText
+                id={'descripcion'}
+                control={control}
+                name="descripcion"
+                label="Descripción"
+                multiline
+                disabled={loadingModal}
+                rules={{ required: 'Este campo es requerido' }}
+                rows={3}
               />
             </Grid>
           </Grid>

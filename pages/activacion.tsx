@@ -68,7 +68,8 @@ const Activacion: NextPage = () => {
     <Grid
       container
       justifyContent="center"
-      alignItems={'center'}
+      alignItems={'start'}
+      mt={3}
       style={{ minHeight: '100vh' }}
     >
       <Card
@@ -89,7 +90,7 @@ const Activacion: NextPage = () => {
                 check_circle
               </Icono>
               <Box height={'20px'} />
-              <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
+              <Typography sx={{ fontWeight: '600' }} variant={'subtitle2'}>
                 Cuenta Activa
               </Typography>
               <Box height={'20px'} />
@@ -109,7 +110,7 @@ const Activacion: NextPage = () => {
                 cancel
               </Icono>
               <Box height={'20px'} />
-              <Typography sx={{ fontWeight: 'medium' }} variant={'subtitle2'}>
+              <Typography sx={{ fontWeight: '600' }} variant={'subtitle2'}>
                 Error al activar cuenta
               </Typography>
               <Box height={'20px'} />

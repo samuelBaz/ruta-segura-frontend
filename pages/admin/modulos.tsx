@@ -1,7 +1,7 @@
 import {
   Box,
   Button,
-  Grid,
+  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -35,9 +35,10 @@ import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensaj
 import { BotonAcciones } from '../../common/components/ui/botones/BotonAcciones'
 import { useAlerts, useSession } from '../../common/hooks'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
-import { CriterioOrdenType } from '../../common/types/ordenTypes'
+import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
-import { ordenFiltrado } from '../../common/utils/orden'
+import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
+import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -224,7 +225,7 @@ const Modulos: NextPage = () => {
   /// Petición que cambia el estado de un módulo
   const cambiarEstadoModuloPeticion = async (modulo: ModuloCRUDType) => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/modulos/${modulo.id}/${
           modulo.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
@@ -369,47 +370,48 @@ const Modulos: NextPage = () => {
               : 'info'
         }
       />,
-      <Grid key={`${moduloData.id}-${indexModulo}-accion`}>
-        <Grid key={`${moduloData.id}-${indexModulo}-acciones`}>
-          {permisos.update && (
-            <IconoTooltip
-              id={`cambiarEstadoModulo-${moduloData.id}`}
-              titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
-              color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
-              accion={() => {
-                editarEstadoModuloModal({
-                  ...moduloData,
-                  ...{ esSeccion: moduloData?.modulo == null },
-                })
-              }}
-              desactivado={moduloData.estado == 'PENDIENTE'}
-              icono={moduloData.estado == 'ACTIVO' ? 'toggle_on' : 'toggle_off'}
-              name={
-                moduloData.estado == 'ACTIVO'
-                  ? 'Inactivar Módulo'
-                  : 'Activar Módulo'
-              }
-            />
-          )}
-
-          {permisos.update && (
-            <IconoTooltip
-              id={`editarModulo-${moduloData.id}`}
-              titulo={'Editar'}
-              color={'primary'}
-              accion={() => {
-                imprimir(`Editaremos :`, moduloData)
-                editarModuloModal({
-                  ...moduloData,
-                  ...{ esSeccion: moduloData?.modulo == null },
-                })
-              }}
-              icono={'edit'}
-              name={'Editar módulo'}
-            />
-          )}
-        </Grid>
-      </Grid>,
+      <Stack
+        key={`${moduloData.id}-${indexModulo}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
+      >
+        {permisos.update && (
+          <CustomSwitch
+            id={`cambiarEstadoModulo-${moduloData.id}`}
+            titulo={moduloData.estado == 'ACTIVO' ? 'Inactivar' : 'Activar'}
+            accion={() => {
+              editarEstadoModuloModal({
+                ...moduloData,
+                ...{ esSeccion: moduloData?.modulo == null },
+              })
+            }}
+            desactivado={moduloData.estado == 'PENDIENTE'}
+            color={moduloData.estado == 'ACTIVO' ? 'success' : 'error'}
+            marcado={moduloData.estado == 'ACTIVO'}
+            name={
+              moduloData.estado == 'ACTIVO'
+                ? 'Inactivar Módulo'
+                : 'Activar Módulo'
+            }
+          />
+        )}
+        {permisos.update && (
+          <IconoTooltip
+            id={`editarModulo-${moduloData.id}`}
+            titulo={'Editar'}
+            color={'primary'}
+            accion={() => {
+              imprimir(`Editaremos :`, moduloData)
+              editarModuloModal({
+                ...moduloData,
+                ...{ esSeccion: moduloData?.modulo == null },
+              })
+            }}
+            icono={'edit'}
+            name={'Editar módulo'}
+          />
+        )}
+      </Stack>,
     ]
   )
   return (
@@ -421,8 +423,12 @@ const Modulos: NextPage = () => {
           moduloEdicion?.estado == 'ACTIVO' ? 'inactivar' : 'activar'
         } el módulo: ${titleCase(moduloEdicion?.nombre ?? '')} ?`}
       >
-        <Button onClick={cancelarAlertaEstadoModulo}>Cancelar</Button>
-        <Button onClick={aceptarAlertaEstadoModulo}>Aceptar</Button>
+        <Button variant={'outlined'} onClick={cancelarAlertaEstadoModulo}>
+          Cancelar
+        </Button>
+        <Button variant={'contained'} onClick={aceptarAlertaEstadoModulo}>
+          Aceptar
+        </Button>
       </AlertDialog>
       <CustomDialog
         isOpen={modalModulo}

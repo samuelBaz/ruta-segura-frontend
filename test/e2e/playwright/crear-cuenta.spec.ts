@@ -4,6 +4,8 @@ import { Servicios } from '../../../common/services'
 
 test('Registro y activación de cuenta', async ({ page }) => {
   await page.goto('/login')
+  // await page.getByRole('button', { name: 'Registrarse', exact: true }).click()
+  await page.getByRole('button', { name: 'Regístrate', exact: true }).click()
   const randomNumber = numeroAleatorio(0, 1000)
   const password = [
     palabraAleatoria(),
@@ -11,15 +13,13 @@ test('Registro y activación de cuenta', async ({ page }) => {
     numeroAleatorio(1000, 9999),
   ].join('-')
 
-  await page.getByRole('tab', { name: 'Regístrate' }).click()
+  //await page.getByRole('tab', { name: 'Regístrate' }).click()
   await page.getByLabel('Nombre de usuario').fill(String(randomNumber))
   await page
     .getByLabel('Correo electrónico')
     .fill(`${password}${randomNumber}@yopmail.com`)
-  await page
-    .getByLabel('Nueva contraseña', { exact: true })
-    .fill(String(password))
-  await page.getByLabel('Repita su nueva contraseña').fill(String(password))
+  await page.getByLabel('Contraseña', { exact: true }).fill(String(password))
+  await page.getByLabel('Repita su contraseña').fill(String(password))
   await page.getByRole('button', { name: 'Crear cuenta' }).click()
 
   const response = await page.waitForResponse((response1) =>

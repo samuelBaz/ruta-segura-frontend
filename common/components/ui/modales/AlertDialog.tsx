@@ -33,10 +33,20 @@ export const AlertDialog: FC<PropsWithChildren<Props>> = ({
       disablePortal={disablePortal}
       disableScrollLock={disableScrollLock}
     >
-      <DialogTitle sx={{ m: 1, p: 2 }}>{titulo}</DialogTitle>
+      <DialogTitle sx={{ m: 1, px: 2, py: 1, fontWeight: '600' }}>
+        {titulo}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography component={'span'}>{texto}</Typography>
+          <Typography
+            component={'span'}
+            fontWeight={'400'}
+            fontSize={'medium'}
+            variant="body2"
+            color="text.secondary"
+          >
+            {texto}
+          </Typography>
         </DialogContentText>
       </DialogContent>
       <DialogActions>{children}</DialogActions>

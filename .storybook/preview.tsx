@@ -11,7 +11,6 @@ import React, {
 } from 'react'
 import { DARK_MODE_EVENT_NAME, useDarkMode } from 'storybook-dark-mode'
 import { DocsContainer, DocsContainerProps } from '@storybook/blocks'
-import 'material-icons/iconfont/outlined.css'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 // get channel to listen to event emitter
 const channel = addons.getChannel()

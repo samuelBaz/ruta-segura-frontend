@@ -1,9 +1,10 @@
 import Image from 'next/image'
-import { Button, ButtonProps } from '@mui/material'
+import { Box, Button, ButtonProps } from '@mui/material'
 import { FC, MouseEventHandler, PropsWithChildren } from 'react'
 import { styled } from '@mui/system'
 import { Constantes } from '../../../config'
 import { useThemeContext } from '../../../context/ui/ThemeContext'
+import { useTheme } from '@mui/material'
 
 export interface BotonCiudadaniaType {
   altText: string
@@ -15,9 +16,11 @@ export interface BotonCiudadaniaType {
 const ColorButton = styled(Button)<ButtonProps>(({}) => {
   const { themeMode } = useThemeContext()
   return {
-    backgroundColor: themeMode == 'light' ? '#3C5BA9' : '#B3C5FF',
+    backgroundColor: themeMode == 'light' ? '#fff' : '#2a2928',
+    borderColor: '#949493',
     '&:hover': {
-      backgroundColor: themeMode == 'light' ? '#334c8d' : '#8e9dcc',
+      backgroundColor: themeMode == 'light' ? '#e9e9e9' : '#3f3e3d',
+      borderColor: themeMode == 'light' ? '#696968' : '#fff',
     },
   }
 })
@@ -29,15 +32,16 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
   altText,
   fullWidth,
 }) => {
+  const { palette } = useTheme()
+  const { themeMode } = useThemeContext()
   return (
     <ColorButton
       type="button"
       sx={{ borderRadius: 2 }}
-      variant="contained"
+      variant="outlined"
       fullWidth={fullWidth}
       disabled={disabled}
       onClick={accion}
-      color={'primary'}
     >
       <Image
         src={`${Constantes.sitePath}/logo_ciudadania_redondo.png`}
@@ -47,9 +51,18 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
         style={{
           maxWidth: '100%',
           height: 'auto',
+          // border: '1px solid #a9a8a8',
+          borderRadius: 20,
         }}
       />
-      {children}
+      <Box
+        sx={{
+          px: 0,
+          color: themeMode == 'light' ? palette.grey[800] : '#fff',
+        }}
+      >
+        {children}
+      </Box>
     </ColorButton>
   )
 }

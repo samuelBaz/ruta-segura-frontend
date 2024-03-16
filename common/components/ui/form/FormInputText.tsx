@@ -69,7 +69,10 @@ export const FormInputText = <T extends FieldValues>({
   return (
     <div>
       <InputLabel htmlFor={id}>
-        <Typography variant={labelVariant} sx={{ color: 'text.primary' }}>
+        <Typography
+          variant={labelVariant}
+          sx={{ color: 'text.primary', fontWeight: '500' }}
+        >
           {label}
         </Typography>
       </InputLabel>

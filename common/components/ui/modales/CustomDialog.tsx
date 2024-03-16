@@ -82,14 +82,14 @@ export const CustomDialog: FC<PropsWithChildren<Props>> = ({
             alignItems="center"
           >
             {title ? (
-              <Typography sx={{ fontWeight: 'medium', fontSize: 18 }}>
+              <Typography sx={{ fontWeight: '600', fontSize: 18 }}>
                 {title}
               </Typography>
             ) : (
               <Box />
             )}
-            <IconButton onClick={handleClose} color={'primary'}>
-              <Icono color={'primary'}>close</Icono>
+            <IconButton onClick={handleClose} color={'inherit'}>
+              <Icono color={'inherit'}>close</Icono>
             </IconButton>
           </Grid>
         </DialogTitle>

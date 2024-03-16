@@ -52,7 +52,7 @@ export const FormInputWysiwyg = <T extends FieldValues>({
       <InputLabel htmlFor={id}>
         <Typography
           variant={labelVariant}
-          sx={{ pb: 1, fontWeight: 'fontWeightMedium', color: 'text.primary' }}
+          sx={{ color: 'text.primary', fontWeight: '500' }}
         >
           {label}
         </Typography>

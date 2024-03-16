@@ -5,7 +5,7 @@ import { BotonOrdenar } from '../../../../common/components/ui/botones/BotonOrde
 import {
   CriterioOrdenType,
   OrdenEnum,
-} from '../../../../common/types/ordenTypes'
+} from '../../../../common/components/ui/datatable/ordenTypes'
 import { useState } from 'react'
 
 export default {

@@ -3,6 +3,7 @@ import {
   Button,
   Chip,
   Grid,
+  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -30,8 +31,8 @@ import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
-import { CriterioOrdenType } from '../../common/types/ordenTypes'
-import { ordenFiltrado } from '../../common/utils/orden'
+import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
+import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 
 const Politicas: NextPage = () => {
@@ -110,8 +111,11 @@ const Politicas: NextPage = () => {
         key={`${politicaData.accion}-${indexPolitica}-app`}
         variant={'body2'}
       >{`${politicaData.app}`}</Typography>,
-
-      <Grid key={`${politicaData.accion}-${indexPolitica}-acciones`}>
+      <Stack
+        key={`${politicaData.accion}-${indexPolitica}-acciones`}
+        direction={'row'}
+        alignItems={'center'}
+      >
         {permisos.update && (
           <IconoTooltip
             id={`editarPolitica-${indexPolitica}`}
@@ -139,7 +143,7 @@ const Politicas: NextPage = () => {
             name={'Eliminar política'}
           />
         )}
-      </Grid>,
+      </Stack>,
     ]
   )
 
@@ -326,8 +330,12 @@ const Politicas: NextPage = () => {
         titulo={'Alerta'}
         texto={`¿Está seguro de eliminar la política ${politicaEdicion?.app}-${politicaEdicion?.objeto}-${politicaEdicion?.sujeto}-${politicaEdicion?.accion} ?`}
       >
-        <Button onClick={cancelarAlertaEliminarPolitica}>Cancelar</Button>
-        <Button onClick={aceptarAlertaEliminarPoliticas}>Aceptar</Button>
+        <Button variant={'outlined'} onClick={cancelarAlertaEliminarPolitica}>
+          Cancelar
+        </Button>
+        <Button variant={'contained'} onClick={aceptarAlertaEliminarPoliticas}>
+          Aceptar
+        </Button>
       </AlertDialog>
       <CustomDialog
         isOpen={modalPolitica}
