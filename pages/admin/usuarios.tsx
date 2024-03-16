@@ -165,6 +165,7 @@ const Usuarios: NextPage = () => {
           <Chip
             key={`usuario-rol-${indexUsuarioRol}`}
             label={itemUsuarioRol.rol.rol}
+            sx={{ m: 0.1 }}
           />
         ))}
       </Grid>,
