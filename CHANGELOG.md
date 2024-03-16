@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.8...v1.11.0) (2024-03-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* será necesesario cambiar las importaciones de las utilidades de ordenación
+
+### Features
+
+* adición del componente sidebar en storybook ([74689ea](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/74689ea7584edc6b845547b650d436deaaf7eee9))
+* agregación del componente badge en sidebar ([4b04d9e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/4b04d9ea0535dd6ac74f2203019e1e236eee16a8))
+* agregación del componente dashboard en storybook ([a0af7d3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a0af7d3381247bb94b55867079425b6cad8bff4b))
+* añadido avatar con letras iniciales de nombre y apellido de usuario ([1682866](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/16828665977e1f8c2669a3ee12b986bb371bf690))
+* añadido componente para mostrar acciones en horizontal sin importar la dimensión ([98384bd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/98384bd8ccf078d1a2ab31427375c854af56af75))
+* añadido parámetro 'anchorOrigin' para cambiar ubicación de SnackBar que por defecto es arriba ([9ad4a95](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9ad4a95d004c12bf3b24f235746e55685d864498))
+* añadido soporte para cabeceras personalizadas en CustomDataTable ([49daabc](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/49daabc90153f68c8bdd6ffc146e519f2c7ff561))
+* añadido ToggleButton para mostrar estado presionado en botón perfil y separación con Dividers ([e4ed755](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e4ed75584d64026d2b56eed772a4bdcd901d92e1))
+* añadido Tooltip en Sidebar para describir módulos y cambio de estilo para ítems seleccionados ([8434ba3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/8434ba3c622febe5a8dd1376405ad87dfaf2afc3))
+* cambio de tipografía a OpenSans y ajustes necesarios en formularios y otros elementos 🎨 ([dcf694b](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/dcf694bf13e19e02f864d5fa5cc38248326159a5))
+* de agregó demo de Item Card y Card Table ([d37752e](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d37752ebad657331dabd624aeed42bd92bd94a02))
+* migracion de Storybook 7 a 8 ([a6baa57](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a6baa57ca2baa59bc27ef7ce5da45a42b6f70f50))
+* plantilla del componente Login ([6a2c1b2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6a2c1b2e6875d42d4a9e9cbe6e6148cf296f7a67))
+* plantilla LandingPage ([66abf79](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/66abf796eddb98e7602b8f3dcb99e15486b0f08c))
+* plantilla login ([df3d763](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/df3d7636837d36e0c527778d2511858f0082a444))
+* se agregó componente CustomSwitch y se reemplazó por el IconoTooltip para cambiar estado ([88fe508](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/88fe508ef21bb0225ac1a5145d2f6474efad1748))
+* se agregó demo de filtros con tabla y datos de ejemplo en Storybook ([10d3328](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/10d3328974c86dfb8d4232d4388267b4e1ac5bd5))
+* se agregó demo de pestañas con DataTable ([a197a6c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a197a6cae8cdfb0fd7f4dcc6f6b309207e3cc130))
+* se agregó demo de tabla con CardItem ([3735d47](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/3735d470d9fea63894bbf5ed648686efd9bb4ee1))
+* se agregó la columna descripcion a la tabla rol ([86231c1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/86231c1c0c3ee10710084a74c343ead8aaeaa88b))
+* se agrego plantilla de LandingPage ([c079172](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c07917226b3ed99fe2a3118de0169959bd82fe69))
+* se agrego plantilla de Login ([e34ec51](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/e34ec51a71f15ce5739e439fc3bc66ce97e81bbf))
+* se añade logo en AppBar como plantilla para otros logos y mejora en espacio de botón de perfil ([36c01aa](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/36c01aab9c019a93596ae04d4e9534d6ae1d3aa2))
+* se añadió ejemplo de formulario formato 'Wizard' (paso a paso) en Storybook ([95b726c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/95b726c64f8b27fc827299163b556add90d538b4))
+* se añadió ejemplo de formulario formato 'Wizard' (paso a paso) en Storybook con Zustand ([65a8423](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/65a8423160204fa24368fdcba1d76694d256873a))
+* separado Drawer de Sidebar en CustomDrawer para facilitar su documentación y mantenimiento ([fe759dd](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/fe759dd69dfc2a396a5978668aaf0581d8f1958e))
+
+
+### Bug Fixes
+
+*  ajustes en la parametrización y coordenadas del mapa ([d572cd7](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d572cd79fa12014090d145056268187832259859))
+* agregado id en CustomDrawer y corrección en los test de Playwright ([524caa2](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/524caa293cfbcd85e11938433fbaaa90c71b91cc))
+* ajuste de estilo en formato de alertas ([b8999a3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/b8999a3174517e2421eebfee6a0bd13a8f5a3bf5))
+* añadido archivo barrel para sección de compomente Datatable, para simplificar la importación ([30a5758](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/30a5758efdca436ecb405ee27287c6b8bda640c9))
+* arreglos de estilo en los formularios de recuperación de contraseña ([cd9a3f8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/cd9a3f80a14227a15f04b1613a59c6645609e49f))
+* cambio de estilos en el botón de ciudadanía ([c5f7006](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c5f7006fd4ffd16914cb3419c32063ab0306ff7c))
+* corrección de estilo de ítems e iconos en SideBar ([a3bb3f6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a3bb3f6b212ee20ce58ce2ff1d0c2f8b2e2b39fb))
+* corrección de tipado del componente CustomBadge ([992dace](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/992dace53ea4d5524e08257490b50f1fd53c519a))
+* correcciones en temas claro y oscuro para MuiToggleButton, MuiIcon y MuiMenu ([678c214](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/678c2148b49804789ddd8b1cf9caaf0b84e83fb8))
+* corregido Story de Backdrop que ocasionaba que no se pudiera observar ejemplos correctamente ([aa6b699](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/aa6b699e87870b4c2eef348ae1c00b16cd3b2866))
+* corregido tamaño de fuente en vista /Login ([eae86c5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/eae86c5a41b73be24c17f0f4b1a1f3128c794e55))
+* eliminación de fragment en navbar menu-rol ([6cc9565](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6cc9565e91757fb9a8d072f8c892e4bb0208777c))
+* eliminado componente de acciones, reemplazado con Stack nativo en dirección horizontal ([436f92f](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/436f92f88b0832e696a6d5bca3e1ddb9da47e679))
+* las utilidades de ordenación se mueven a carpeta de componente DataTable ([a367b30](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a367b3096beb34ab74481e2752c05153ac3a3d27))
+* mejora en grosor de fuente de componente de estado ([41cc524](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/41cc52412d29fb13cec8f1febb69c0fea4bfe11d))
+* opción "arrow" de Tooltip activado por defecto ([aba0798](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/aba079889e5716a41907a4051ffa5424f775a4a4))
+* refactorización del formulario de registro ([7fbad6d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/7fbad6d7019919ac538862fca5e9dbc3ada2f63e))
+* separada lógica de CustomDatatable en componentes independientes para mejorar su mantenibilidad ([a72e1e6](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/a72e1e674acdf3b7c0d41768f023bd3aba10f786))
+
 ### [1.10.8](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.7...v1.10.8) (2024-03-10)
 
 
