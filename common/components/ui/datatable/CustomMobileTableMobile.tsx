@@ -116,7 +116,7 @@ export const CustomMobileTableMobile = ({
           alignItems="center"
         >
           {titulo ? (
-            <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
+            <Typography variant={'h5'} sx={{ fontWeight: '600' }}>
               {`${titulo}`}
             </Typography>
           ) : tituloPersonalizado ? (
