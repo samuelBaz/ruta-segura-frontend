@@ -128,7 +128,7 @@ export const CustomDesktopDataTable = ({
           alignItems="center"
         >
           {titulo ? (
-            <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
+            <Typography variant={'h5'} sx={{ fontWeight: '600' }}>
               {`${titulo}`}
             </Typography>
           ) : tituloPersonalizado ? (
@@ -175,8 +175,8 @@ export const CustomDesktopDataTable = ({
         sx={{
           borderRadius: 3,
           pt: 0,
-          pl: { sm: 3, md: 3, xl: 3 },
-          pr: { sm: 3, md: 3, xl: 3 },
+          // pl: { sm: 3, md: 3, xl: 3 },
+          // pr: { sm: 3, md: 3, xl: 3 },
           pb: { sm: 2, md: 2, xl: 2 },
           mb: { sm: 3, md: 3, xl: 3 },
           backgroundColor: {},
@@ -279,7 +279,11 @@ export const CustomDesktopDataTable = ({
                           {columnas.map((columna, index) => (
                             <TableCell
                               key={`cabecera-id-${index}`}
-                              sx={{ p: 1.2 }}
+                              sx={{
+                                p: 1.2,
+                                pl: { sm: 3, md: 3, xl: 3 },
+                                pr: { sm: 3, md: 3, xl: 3 },
+                              }}
                             >
                               {columna.ordenar ? (
                                 <Button
@@ -384,7 +388,11 @@ export const CustomDesktopDataTable = ({
                                   (contenido, indexContenidoFila) => (
                                     <TableCell
                                       key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
-                                      sx={{ p: 1.2 }}
+                                      sx={{
+                                        p: 1.2,
+                                        pl: { sm: 3, md: 3, xl: 3 },
+                                        pr: { sm: 3, md: 3, xl: 3 },
+                                      }}
                                     >
                                       <Fade in={!cargando} timeout={1000}>
                                         <Box>{contenido}</Box>
