@@ -118,7 +118,7 @@ export const DemoNavbarUser: FC<DemoNavbarUserType> = ({
         </Grid>
         {buscador && !xs && (
           <Grid
-            container={xs ? false : true}
+            container={!xs}
             alignItems={'center'}
             flexDirection={'row'}
             justifyContent={'center'}
@@ -146,7 +146,7 @@ export const DemoNavbarUser: FC<DemoNavbarUserType> = ({
         )}
 
         <Grid
-          container={xs ? false : true}
+          container={!xs}
           alignItems={'center'}
           flexDirection={'row'}
           justifyContent={'flex-end'}

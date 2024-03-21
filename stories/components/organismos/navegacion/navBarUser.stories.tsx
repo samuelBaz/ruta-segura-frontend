@@ -101,7 +101,7 @@ const Template6: StoryFn<typeof NavbarUser> = () => {
       nombres={'Manuel'}
       primerApellido={'Espada'}
       segundoApellido={'Ramos'}
-      rol={'Cliente'}
+      rol={'Administrador'}
       sistema={'Consume lo Nuestro'}
       buscador={true}
     />
