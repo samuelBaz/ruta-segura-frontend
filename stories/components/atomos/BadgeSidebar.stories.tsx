@@ -16,7 +16,7 @@ export default {
     docs: {
       description: {
         component:
-          'El componente BadgeSidebar es una envoltura del componente Badge del framework MUI (Material-UI), diseñado específicamente para mostrar un contador de elementos en el Sidebar. Las opciones de personalización incluyen varias variantes predefinidas, como "primary", "secondary", "opacity", "outline", "gradient", "error", "success" y "alert". Este componente se utiliza para proporcionar una indicación visual en el sidebar de un ítem específico. Se utiliza junto con una función que recibe un identificador id y un contenido valor, los cuales se utilizan para agregar un mensaje al Sidebar. Esta función se invoca mediante el uso del contexto useSidebar en un módulo determinado.',
+          'El componente BadgeSidebar es una envoltura del componente Badge del framework MUI (Material-UI), diseñado específicamente para mostrar un contador de elementos en el Sidebar. Las opciones de personalización incluyen varias variantes predefinidas, como "primary", "secondary", "neutro", "opacity", "outline", "gradient", "error", "success" y "alert". Este componente se utiliza para proporcionar una indicación visual en el sidebar de un ítem específico. Se utiliza junto con una función que recibe un identificador id y un contenido valor, los cuales se utilizan para agregar un mensaje al Sidebar. Esta función se invoca mediante el uso del contexto useSidebar en un módulo determinado.',
       },
     },
   },
@@ -146,6 +146,12 @@ Secondary.storyName = 'Grey'
 Secondary.args = {
   content: '44',
   variante: 'secondary',
+}
+export const Neutro = Template.bind({})
+Neutro.storyName = 'Neutro Color'
+Neutro.args = {
+  content: '44',
+  variante: 'neutro',
 }
 export const Opacity = Template.bind({})
 Opacity.storyName = 'Opacity Color'
