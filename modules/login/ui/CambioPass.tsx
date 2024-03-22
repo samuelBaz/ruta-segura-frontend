@@ -155,21 +155,33 @@ export const CambioPass = ({ code }: CambioPassParams) => {
             </Grid>
             <ProgresoLineal mostrar={loadingModal} />
             <Box height={'15px'} />
-            <Grid container justifyContent="space-evenly" alignItems={'center'}>
-              <Button
-                variant={'outlined'}
-                onClick={redireccionarInicio}
-                disabled={loadingModal}
-              >
-                Cancelar
-              </Button>
-              <Button
-                variant={'contained'}
-                disabled={loadingModal}
-                type={'submit'}
-              >
-                Modificar
-              </Button>
+            <Grid
+              container
+              spacing={'10'}
+              display={'flex'}
+              flexDirection={'column'}
+              alignItems={'center'}
+            >
+              <Grid item sx={{ width: '100%' }}>
+                <Button
+                  variant={'contained'}
+                  disabled={loadingModal}
+                  type={'submit'}
+                  fullWidth
+                >
+                  Modificar
+                </Button>
+              </Grid>
+              <Grid item sx={{ width: '100%' }}>
+                <Button
+                  variant={'outlined'}
+                  onClick={redireccionarInicio}
+                  disabled={loadingModal}
+                  fullWidth
+                >
+                  Cancelar
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </form>
