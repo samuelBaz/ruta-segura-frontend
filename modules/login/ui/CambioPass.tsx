@@ -108,7 +108,12 @@ export const CambioPass = ({ code }: CambioPassParams) => {
               <AlertTitle>Crea una nueva contraseña</AlertTitle>
             </Grid>
             <Box height={'15px'} />
-            <Typography variant="body2" color="text.secondary" align="inherit">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              align="inherit"
+              paddingLeft={2}
+            >
               <li>Las contraseñas deben tener 8 caracteres o más.</li>
               <li>
                 Las buenas contraseñas son dificiles de adivinar y usan
