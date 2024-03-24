@@ -116,7 +116,7 @@ export const CambioPass = ({ code }: CambioPassParams) => {
             >
               <li>Las contraseñas deben tener 8 caracteres o más.</li>
               <li>
-                Las buenas contraseñas son dificiles de adivinar y usan
+                Las buenas contraseñas son difíciles de adivinar y usan
                 palabras, números, símbolos y letras mayúsculas poco comunes.
               </li>
             </Typography>

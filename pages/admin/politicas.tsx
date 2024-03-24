@@ -355,6 +355,7 @@ const Politicas: NextPage = () => {
       <LayoutUser title={`Políticas - ${siteName()}`}>
         <CustomDataTable
           titulo={'Políticas'}
+          descripcion={'Definición de permisos por roles, módulos y acciones'}
           error={!!errorData}
           cargando={loading}
           acciones={acciones}
