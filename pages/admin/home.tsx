@@ -98,7 +98,7 @@ const Home: NextPage = () => {
                             >
                               <CardContent>
                                 <Grid container direction="row">
-                                  <Icono color={'inherit'}>
+                                  <Icono color={'primary'}>
                                     {subModulo.propiedades.icono}
                                   </Icono>
                                   <Box height={'30px'} width={'10px'} />
