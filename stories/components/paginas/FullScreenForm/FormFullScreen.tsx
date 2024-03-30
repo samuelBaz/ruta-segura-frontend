@@ -3,7 +3,7 @@ import {
   CustomDrawer,
   SidebarModuloType,
 } from '../../../../common/components/ui/sidebar/CustomDrawer'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { MensajeType } from '../../../../context/ui'
 import { NavbarLandingForm } from './NavbarLandingForm'
 import FormularioLandingForm from './FormularioLandingForm'
@@ -17,7 +17,7 @@ interface TableLandingProps {
   textoBar2?: string
 }
 
-const LandingForm = ({
+const FormFullScreen = ({
   modulosProp,
   mensajeProp,
   imagenProp,
@@ -30,7 +30,7 @@ const LandingForm = ({
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
   const md = useMediaQuery(theme.breakpoints.only('md'))
 
-  const [sideMenuOpen, setSideMenuOpen] = useState<boolean>(true)
+  const [sideMenuOpen, setSideMenuOpen] = useState<boolean>(false)
   const [modulos, setModulos] = useState<SidebarModuloType[]>(
     modulosProp
       ? modulosProp
@@ -137,18 +137,18 @@ const LandingForm = ({
   const closeSideMenu = () => {
     setSideMenuOpen(false)
   }
-  useEffect(() => {
-    if (sm || xs || md) {
-      closeSideMenu()
-    } else {
-      openSideMenu()
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sm, xs, md])
+  // useEffect(() => {
+  //   if (sm || xs || md) {
+  //     closeSideMenu()
+  //   } else {
+  //     openSideMenu()
+  //   }
+  //
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [sm, xs, md])
 
   return (
-    <Box bgcolor={theme.palette.background.paper}>
+    <Box>
       <NavbarLandingForm
         sideMenuOpen={sideMenuOpen}
         closeSideMenu={closeSideMenu}
@@ -158,13 +158,8 @@ const LandingForm = ({
         textoBar1={textoBar1}
         textoBar2={textoBar2}
       />
-      <Box component="main" bgcolor={theme.palette.background.paper}>
-        <Box
-          paddingX={sm || xs ? 2 : 6}
-          paddingRight={2}
-          mt={7}
-          bgcolor={theme.palette.background.paper}
-        >
+      <Box component="main" bgcolor={theme.palette.background.default}>
+        <Box paddingX={sm || xs ? 2 : 6} paddingRight={2} mt={7}>
           <Box paddingBottom={4}>
             <CustomDrawer
               open={sideMenuOpen}
@@ -186,27 +181,24 @@ const LandingForm = ({
               badgeVariant={'neutro'}
               checkContentBadge={checkContentBadge}
             />
-            <Box>
-              <Box
-                component="main"
-                sx={{
-                  width:
-                    sm || xs || md ? '100%' : sideMenuOpen ? '80%' : '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  ml: sm || xs || md ? '0%' : sideMenuOpen ? '200px' : '0%',
-                  transition: 'all 0.2s ease-out !important',
-                }}
+            <Box
+              component="main"
+              sx={{
+                width: sm || xs || md ? '100%' : sideMenuOpen ? '80%' : '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                ml: sm || xs || md ? '0%' : sideMenuOpen ? '200px' : '0%',
+                transition: 'all 0.2s ease-out !important',
+              }}
+            >
+              <Grid
+                container
+                spacing={0}
+                direction="column"
+                style={{ minHeight: '80vh' }}
               >
-                <Grid
-                  container
-                  spacing={0}
-                  direction="column"
-                  style={{ minHeight: '80vh' }}
-                >
-                  <FormularioLandingForm />
-                </Grid>
-              </Box>
+                <FormularioLandingForm />
+              </Grid>
             </Box>
           </Box>
         </Box>
@@ -215,4 +207,4 @@ const LandingForm = ({
   )
 }
 
-export default LandingForm
+export default FormFullScreen

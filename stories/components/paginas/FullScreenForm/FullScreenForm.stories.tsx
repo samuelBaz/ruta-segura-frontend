@@ -7,12 +7,12 @@ import {
   ThemeProvider,
   useTheme,
 } from '@mui/material/styles'
-import LandingForm from './LandingForm'
+import FormFullScreen from './FormFullScreen'
 import queso from '../../../assets/queso.png'
 
 export default {
-  title: 'Páginas/Landing Páginas/Landing Form/Landing Form',
-  component: LandingForm,
+  title: 'Páginas/Formularios/Formulario a pantalla completa',
+  component: FormFullScreen,
   parameters: {
     docs: {
       description: {
@@ -20,9 +20,9 @@ export default {
       },
     },
   },
-} as Meta<typeof LandingForm>
+} as Meta<typeof FormFullScreen>
 
-const Template: StoryFn<typeof LandingForm> = (args) => {
+const Template: StoryFn<typeof FormFullScreen> = (args) => {
   const themeP = useTheme()
   const colorMain = '#F86F03'
   const colorContrast = alpha(colorMain, 0.7)
@@ -42,7 +42,7 @@ const Template: StoryFn<typeof LandingForm> = (args) => {
   return (
     <ThemeProvider theme={theme}>
       <Box>
-        <LandingForm
+        <FormFullScreen
           imagenProp={args.imagenProp}
           textoNav={args.textoNav}
           textoBar1={args.textoBar1}
@@ -59,7 +59,7 @@ Ejemplo.storyName = 'Ejemplo 1'
 Ejemplo.parameters = {
   docs: {
     description: {
-      story: 'Ejemplo del Landing Page Form',
+      story: 'Ejemplo del formulario a pantalla completa',
     },
   },
 }
@@ -67,7 +67,7 @@ Ejemplo.args = {
   imagenProp: queso,
   textoNav: 'Tienda Teoría del Queso',
   textoBar1: 'Armando Paredes',
-  textoBar2: 'Jefe de almacen',
+  textoBar2: 'Jefe de almacén',
   mensajeProp: { id: '/admin/productos', valor: '10' },
   modulosProp: [
     {

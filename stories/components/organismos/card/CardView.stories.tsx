@@ -67,7 +67,7 @@ interface CardDataTableType {
 
 const CardView = ({ titulo, contenidoTabla }: CardDataTableType) => {
   return (
-    <Box sx={{ pb: 2 }}>
+    <Box sx={{ p: 2 }}>
       <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
         {`${titulo}`}
       </Typography>

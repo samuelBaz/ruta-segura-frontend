@@ -10,7 +10,7 @@ import { Box } from '@mui/material'
 import { MensajeType } from '../../../context/ui'
 
 export default {
-  title: 'Atomos/Elementos/BadgeSidebar',
+  title: 'Moléculas/Elementos/BadgeSidebar',
   component: BadgeVariant,
   parameters: {
     docs: {

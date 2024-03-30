@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Divider,
   Grid,
   Paper,
   Typography,
@@ -26,24 +25,16 @@ const FormularioLandingForm = () => {
   const { Alerta } = useAlerts()
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
   return (
-    <Box>
+    <Box sx={{ pt: 2 }}>
       <form
         onSubmit={() => {
           Alerta({
-            mensaje: 'Producto registrado con exito',
+            mensaje: 'Producto registrado con éxito',
             variant: 'success',
           })
         }}
       >
-        <Box
-          display={'flex'}
-          alignItems={'center'}
-          position={'fixed'}
-          bgcolor={theme.palette.background.paper}
-          paddingY={2}
-          width={'100%'}
-          zIndex={1000}
-        >
+        <Box display={'flex'} alignItems={'center'} width={'100%'}>
           <IconoTooltip
             id={'atras-landingForm'}
             titulo={'Atrás'}
@@ -62,7 +53,7 @@ const FormularioLandingForm = () => {
             Agregar Producto
           </Typography>
         </Box>
-        <Grid container spacing={2} paddingTop={7}>
+        <Grid container spacing={2} paddingTop={2}>
           <Grid item xs={12} md={8}>
             <Box>
               <Paper variant="outlined" sx={{ padding: 2, marginBottom: 2 }}>
@@ -398,7 +389,6 @@ const FormularioLandingForm = () => {
             </Paper>
           </Grid>
         </Grid>
-        <Divider flexItem orientation="horizontal" sx={{ marginBottom: 2 }} />
 
         <Grid container spacing={2} marginBottom={6}>
           <Grid item xs={12} md={8}>
