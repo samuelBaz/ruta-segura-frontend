@@ -25,6 +25,11 @@ const CustomBadge = ({
       background: palette.secondary.main,
       color: palette.primary.contrastText,
     },
+    neutro: {
+      ...sx,
+      background: palette.grey[500],
+      color: palette.primary.contrastText,
+    },
     opacity: {
       ...sx,
       background: palette.primary.main,
