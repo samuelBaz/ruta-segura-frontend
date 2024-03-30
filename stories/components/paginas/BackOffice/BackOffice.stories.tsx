@@ -1,14 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react'
-import LandingPage2 from './LandingPage_2'
+import BackOfficeStory from './BackOfficeSample'
 import {
-  createTheme,
   alpha,
+  createTheme,
   getContrastRatio,
+  Theme,
   ThemeProvider,
   useTheme,
-  Theme,
 } from '@mui/material/styles'
-import { CustomFrame } from '../../../utils/CustomFrame'
 import { ColumnaType } from '../../../../common/types'
 import { MensajeType } from '../../../../context/ui'
 import hospital from '../../../assets/hospital.png'
@@ -83,20 +82,20 @@ interface ThemeType {
 }
 
 export default {
-  title: 'Páginas/Landing Page-2/Landing Page-2',
-  component: LandingPage2,
+  title: 'Páginas/BackOffice/Back Office',
+  component: BackOfficeStory,
   parameters: {
     docs: {
       description: {
         component:
-          'La plantilla `Landing Page-2` ofrece una estructura estándar compuesta por componentes desarrollados, que incluyen, `navbar`,`footer`, sidebar`,`customDataTable` y una estructura básica para el landing page',
+          'La plantilla `Back Office` ofrece una estructura estándar compuesta por componentes desarrollados, que incluyen, `navbar`,`footer`, sidebar`,`customDataTable` y una estructura básica para el landing page',
       },
     },
   },
   argTypes: {
     themeVariant: { control: 'object' },
   },
-} as Meta<typeof LandingPage2>
+} as Meta<typeof BackOfficeStory>
 
 export const Template: StoryFn<ThemeType> = (args: ThemeType) => {
   const themeP = useTheme()
@@ -215,30 +214,28 @@ export const Template: StoryFn<ThemeType> = (args: ThemeType) => {
   }
   const theme = createCustomTheme(themeP, args.themeVariant)
   return (
-    <CustomFrame height="150vh" padding={'10px'}>
-      <ThemeProvider theme={theme}>
-        <LandingPage2
-          columnas={args.columnas}
-          solicitudesData={args.solicitudesData}
-          titulo={args.titulo}
-          modulosProp={args.modulos}
-          mensajeProp={args.mensajeProp}
-          imagenProp={args.imagenProp}
-          textoNav={args.textoNav}
-          textoBar1={args.textoBar1}
-          textoBar2={args.textoBar2}
-          textFooter={args.textFooter}
-          editAccion={args.editAccion}
-          showAccion={args.showAccion}
-          deleteAccion={args.deleteAccion}
-        />
-      </ThemeProvider>
-    </CustomFrame>
+    <ThemeProvider theme={theme}>
+      <BackOfficeStory
+        columnas={args.columnas}
+        solicitudesData={args.solicitudesData}
+        titulo={args.titulo}
+        modulosProp={args.modulos}
+        mensajeProp={args.mensajeProp}
+        imagenProp={args.imagenProp}
+        textoNav={args.textoNav}
+        textoBar1={args.textoBar1}
+        textoBar2={args.textoBar2}
+        textFooter={args.textFooter}
+        editAccion={args.editAccion}
+        showAccion={args.showAccion}
+        deleteAccion={args.deleteAccion}
+      />
+    </ThemeProvider>
   )
 }
 
 export const Contenido_1 = Template.bind({})
-Contenido_1.storyName = 'Página-Variante 1'
+Contenido_1.storyName = 'Ejemplo - Tienda de quesos'
 Contenido_1.args = {
   themeVariant: {
     palette: {
@@ -265,20 +262,16 @@ Contenido_1.args = {
         secondary: '#4F200D',
         disabled: '#fff',
       },
-      background: {
-        paper: '#F6F1E9',
-        default: '#401F71',
-      },
     },
     tableBodyStyle: {
-      backgroundColor: '#F6F1E9',
+      // backgroundColor: '#F6F1E9',
     },
     tableHeadStyle: {
       backgroundColor: '#FFEAA7',
     },
     cardStyle: {
-      border: '1px solid #ffecaf',
-      backgroundColor: '#F6F1E9',
+      // border: '1px solid #ffecaf',
+      backgroundColor: '#fafafa',
     },
     iconStyle: {
       color: '#4F200D',
@@ -390,7 +383,7 @@ Contenido_1.args = {
       fechaPublicacion: '2023-08-22',
     },
   ],
-  titulo: 'Inventario',
+  titulo: 'Inventario de quesos',
   textoNav: 'Teoría del Queso',
   imagenProp: queso,
   textoBar1: 'Esteban Quito',
@@ -400,10 +393,13 @@ Contenido_1.args = {
   deleteAccion: false,
 }
 export const Contenido_2 = Template.bind({})
-Contenido_2.storyName = 'Página-Variante 2'
+Contenido_2.storyName = 'Ejemplo - Centro de salud'
 Contenido_2.args = {
   themeVariant: {
     palette: {
+      primary: {
+        main: '#006878',
+      },
       secondary: {
         main: '#EAE3D2',
         light: alpha('#EAE3D2', 0.5),
@@ -420,11 +416,11 @@ Contenido_2.args = {
       },
     },
     appBarStyle: {
-      backgroundColor: alpha('#164863', 0.2),
+      backgroundColor: alpha('#fbfcfd', 0.8),
     },
     drawerStyle: {
       paper: {
-        backgroundColor: alpha('#164863', 0.2),
+        backgroundColor: alpha('#fbfcfd', 0.8),
       },
       color: '#fff',
     },
@@ -610,187 +606,4 @@ Contenido_2.args = {
   textoBar1: 'Armando Lios',
   textoBar2: 'Recepcionista',
   textFooter: 'Centro de Salud',
-}
-
-export const ColorDiferente = Template.bind({})
-ColorDiferente.storyName = 'Página-Variante 3'
-ColorDiferente.args = {
-  themeVariant: {
-    palette: {
-      primary: {
-        main: '#76885B',
-        light: alpha('#76885B', 0.5),
-        dark: alpha('#76885B', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#76885B', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-      secondary: {
-        main: '#DDDDDD',
-        light: alpha('#DDDDDD', 0.5),
-        dark: alpha('#DDDDDD', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#DDDDDD', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-    },
-    tableBodyStyle: {
-      backgroundColor: '#DDDDDD',
-    },
-    tableHeadStyle: {
-      backgroundColor: '#a1bab5',
-    },
-  },
-}
-export const Card = Template.bind({})
-Card.storyName = 'Página-Variante 4'
-Card.args = {
-  themeVariant: {
-    palette: {
-      primary: {
-        main: '#606C5D',
-        light: alpha('#606C5D', 0.5),
-        dark: alpha('#606C5D', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#606C5D', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-      secondary: {
-        main: '#DDDDDD',
-        light: alpha('#DDDDDD', 0.5),
-        dark: alpha('#DDDDDD', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#DDDDDD', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-      text: {
-        primary: '#000',
-        secondary: '#240A34',
-        disabled: '#fff',
-      },
-    },
-    tableBodyStyle: {
-      backgroundColor: '#FFEEF4',
-    },
-    tableHeadStyle: {
-      backgroundColor: '#E4E4D0',
-    },
-    appBarStyle: {
-      backgroundColor: alpha('#DDDDDD', 0.4),
-    },
-    drawerStyle: {
-      paper: {
-        backgroundColor: alpha('#DDDDDD', 0.9),
-      },
-    },
-    cardStyle: {
-      border: '1px solid #8b9c8b',
-      backgroundColor: '#606C5D',
-    },
-  },
-}
-
-export const Background_1 = Template.bind({})
-Background_1.storyName = 'Página-Variante 5'
-Background_1.args = {
-  themeVariant: {
-    palette: {
-      primary: {
-        main: '#FF6868',
-        light: alpha('#FF6868', 0.5),
-        dark: alpha('#FF6868', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#FF6868', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-      secondary: {
-        main: '#FFEAA7',
-        light: alpha('#FFEAA7', 0.5),
-        dark: alpha('#FFEAA7', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#FFEAA7', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-      text: {
-        primary: '#000',
-        secondary: '#240A34',
-        disabled: '#fff',
-      },
-      background: {
-        paper: '#DCFFB7',
-        default: '#401F71',
-      },
-    },
-    tableBodyStyle: {
-      backgroundColor: '#FFEEF4',
-    },
-    tableHeadStyle: {
-      backgroundColor: '#E4E4D0',
-    },
-    appBarStyle: {
-      backgroundColor: alpha('#E72929', 0.5),
-    },
-    iconStyle: {
-      color: '#747264',
-    },
-    cardStyle: {
-      border: '1px solid #e3ffc5',
-      backgroundColor: '#FFEAA7',
-    },
-  },
-}
-
-export const Background_2 = Template.bind({})
-Background_2.storyName = 'Página-Variante 6'
-Background_2.args = {
-  themeVariant: {
-    palette: {
-      primary: {
-        main: '#114232',
-        light: alpha('#114232', 0.5),
-        dark: alpha('#114232', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#114232', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-      secondary: {
-        main: '#FFB534',
-        light: alpha('#FFB534', 0.5),
-        dark: alpha('#FFB534', 0.9),
-        contrastText:
-          getContrastRatio(alpha('#FFB534', 0.7), '#fff') > 4.5
-            ? '#fff'
-            : '#111',
-      },
-      text: {
-        primary: '#555843',
-        secondary: '#555843',
-        disabled: '#fff',
-      },
-      background: {
-        paper: '#FBF6EE',
-        default: '#401F71',
-      },
-    },
-
-    iconStyle: {
-      color: '#fff',
-    },
-    drawerStyle: {
-      paper: {
-        backgroundColor: alpha('#65B741', 0.9),
-      },
-      color: '#fff',
-    },
-    appBarStyle: {
-      backgroundColor: alpha('#65B741', 0.8),
-    },
-  },
 }

@@ -21,6 +21,7 @@ import { ToggleOrden } from './utils'
 
 export interface CustomDataTableType {
   titulo?: string
+  descripcion?: string
   tituloPersonalizado?: ReactNode
   cabeceraPersonalizada?: ReactNode
   error?: boolean
@@ -37,6 +38,7 @@ export interface CustomDataTableType {
 
 export const CustomDesktopDataTable = ({
   titulo,
+  descripcion,
   tituloPersonalizado,
   cabeceraPersonalizada,
   error = false,
@@ -128,9 +130,16 @@ export const CustomDesktopDataTable = ({
           alignItems="center"
         >
           {titulo ? (
-            <Typography variant={'h5'} sx={{ fontWeight: '600' }}>
-              {`${titulo}`}
-            </Typography>
+            <Grid>
+              <Typography variant={'h5'} sx={{ fontWeight: '600' }}>
+                {`${titulo}`}
+              </Typography>
+              {descripcion && (
+                <Typography sx={{ pt: 1 }} fontSize={15}>
+                  {`${descripcion}`}
+                </Typography>
+              )}
+            </Grid>
           ) : tituloPersonalizado ? (
             tituloPersonalizado
           ) : (
@@ -164,8 +173,7 @@ export const CustomDesktopDataTable = ({
       {/* filtros */}
       <Box
         sx={{
-          pt: filtros ? 1 : 2,
-          pb: filtros ? 3 : 1,
+          py: 1,
         }}
       >
         {filtros}
@@ -281,8 +289,7 @@ export const CustomDesktopDataTable = ({
                               key={`cabecera-id-${index}`}
                               sx={{
                                 p: 1.2,
-                                pl: { sm: 3, md: 3, xl: 3 },
-                                pr: { sm: 3, md: 3, xl: 3 },
+                                pl: { md: 2, xl: 2 },
                               }}
                             >
                               {columna.ordenar ? (
@@ -341,6 +348,9 @@ export const CustomDesktopDataTable = ({
                                   fontWeight={'600'}
                                   align={'left'}
                                   noWrap
+                                  sx={{
+                                    pl: { md: 2, xl: 2 },
+                                  }}
                                 >
                                   {columna.nombre}
                                 </Typography>
@@ -389,9 +399,8 @@ export const CustomDesktopDataTable = ({
                                     <TableCell
                                       key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
                                       sx={{
-                                        p: 1.2,
-                                        pl: { sm: 3, md: 3, xl: 3 },
-                                        pr: { sm: 3, md: 3, xl: 3 },
+                                        p: 1,
+                                        pl: { md: 3, xl: 3 },
                                       }}
                                     >
                                       <Fade in={!cargando} timeout={1000}>

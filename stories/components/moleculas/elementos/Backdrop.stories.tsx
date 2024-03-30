@@ -3,7 +3,7 @@ import { BackdropVista } from '../../../../common/components/ui/Backdrop'
 import { CustomFrame } from '../../../utils/CustomFrame'
 
 export default {
-  title: 'Moleculas/Elementos/Backdrop',
+  title: 'Moléculas/Elementos/Backdrop',
   component: BackdropVista,
   parameters: {
     docs: {

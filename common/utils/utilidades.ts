@@ -40,6 +40,10 @@ export const versionNumber = () => {
   return packageJson.version
 }
 
+export const serviceName = () => {
+  return packageJson.name
+}
+
 export const siteName = () => {
   return Constantes.siteName ?? ''
 }

@@ -9,7 +9,7 @@ import {
   useTheme,
 } from '@mui/material'
 import Box from '@mui/material/Box'
-import { IconoTooltip } from '../../../../common/components/ui/botones/IconoTooltip'
+import { IconoTooltip } from '../../../../common/components/ui'
 import { Icono } from '../../../../common/components/ui'
 import Image from 'next/image'
 
@@ -23,7 +23,7 @@ interface Props {
   textoBar2?: string
 }
 
-export const NavbarLandingPage2 = ({
+export const NavbarSample = ({
   sideMenuOpen,
   closeSideMenu,
   openSideMenu,

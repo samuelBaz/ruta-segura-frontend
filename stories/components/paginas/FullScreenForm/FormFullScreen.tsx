@@ -1,51 +1,36 @@
-import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Grid, useMediaQuery, useTheme } from '@mui/material'
 import {
   CustomDrawer,
   SidebarModuloType,
 } from '../../../../common/components/ui/sidebar/CustomDrawer'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { MensajeType } from '../../../../context/ui'
-import TableLanding from './TableLanding'
-import { NavbarLandingPage2 } from './NavbarLandingPage2'
-import { ColumnaType } from '../../../../common/types'
+import { NavbarLandingForm } from './NavbarLandingForm'
+import FormularioLandingForm from './FormularioLandingForm'
 
 interface TableLandingProps {
-  columnas?: Array<ColumnaType>
-  solicitudesData?: Array<any>
-  titulo?: string
   modulosProp?: Array<any>
   mensajeProp?: MensajeType
   imagenProp?: any
   textoNav?: string
   textoBar1?: string
   textoBar2?: string
-  textFooter?: string
-  editAccion?: boolean
-  showAccion?: boolean
-  deleteAccion?: boolean
 }
 
-const LandingPage2 = ({
-  columnas,
-  solicitudesData,
-  titulo,
+const FormFullScreen = ({
   modulosProp,
   mensajeProp,
   imagenProp,
   textoNav,
   textoBar1,
   textoBar2,
-  textFooter,
-  editAccion,
-  showAccion,
-  deleteAccion,
 }: TableLandingProps) => {
   const theme = useTheme()
   const sm = useMediaQuery(theme.breakpoints.only('sm'))
   const xs = useMediaQuery(theme.breakpoints.only('xs'))
   const md = useMediaQuery(theme.breakpoints.only('md'))
 
-  const [sideMenuOpen, setSideMenuOpen] = useState<boolean>(true)
+  const [sideMenuOpen, setSideMenuOpen] = useState<boolean>(false)
   const [modulos, setModulos] = useState<SidebarModuloType[]>(
     modulosProp
       ? modulosProp
@@ -152,19 +137,19 @@ const LandingPage2 = ({
   const closeSideMenu = () => {
     setSideMenuOpen(false)
   }
-  useEffect(() => {
-    if (sm || xs || md) {
-      closeSideMenu()
-    } else {
-      openSideMenu()
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sm, xs, md])
+  // useEffect(() => {
+  //   if (sm || xs || md) {
+  //     closeSideMenu()
+  //   } else {
+  //     openSideMenu()
+  //   }
+  //
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [sm, xs, md])
 
   return (
-    <Box bgcolor={theme.palette.background.paper}>
-      <NavbarLandingPage2
+    <Box>
+      <NavbarLandingForm
         sideMenuOpen={sideMenuOpen}
         closeSideMenu={closeSideMenu}
         openSideMenu={openSideMenu}
@@ -173,13 +158,9 @@ const LandingPage2 = ({
         textoBar1={textoBar1}
         textoBar2={textoBar2}
       />
-      <Box component="main" bgcolor={theme.palette.background.paper}>
-        <Box
-          paddingX={sm || xs ? 2 : 6}
-          mt={7}
-          bgcolor={theme.palette.background.paper}
-        >
-          <Box paddingY={4}>
+      <Box component="main" bgcolor={theme.palette.background.default}>
+        <Box paddingX={sm || xs ? 2 : 6} paddingRight={2} mt={7}>
+          <Box paddingBottom={4}>
             <CustomDrawer
               open={sideMenuOpen}
               variant={sm || xs || md ? 'temporary' : 'persistent'}
@@ -200,58 +181,24 @@ const LandingPage2 = ({
               badgeVariant={'neutro'}
               checkContentBadge={checkContentBadge}
             />
-            <Box>
-              <Box
-                component="main"
-                sx={{
-                  width:
-                    sm || xs || md ? '100%' : sideMenuOpen ? '80%' : '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  ml: sm || xs || md ? '0%' : sideMenuOpen ? '200px' : '0%',
-                  transition: 'all 0.2s ease-out !important',
-                }}
+            <Box
+              component="main"
+              sx={{
+                width: sm || xs || md ? '100%' : sideMenuOpen ? '80%' : '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                ml: sm || xs || md ? '0%' : sideMenuOpen ? '200px' : '0%',
+                transition: 'all 0.2s ease-out !important',
+              }}
+            >
+              <Grid
+                container
+                spacing={0}
+                direction="column"
+                style={{ minHeight: '80vh' }}
               >
-                <Grid
-                  container
-                  spacing={0}
-                  direction="column"
-                  alignItems="center"
-                  justifyContent="initial"
-                  justifyItems={'center'}
-                  style={{ minHeight: '80vh' }}
-                >
-                  <div
-                    style={{
-                      width: xs || sm ? '90%' : '95%',
-                    }}
-                  >
-                    <TableLanding
-                      columnas={columnas}
-                      solicitudesData={solicitudesData}
-                      titulo={titulo}
-                      editAccion={editAccion}
-                      showAccion={showAccion}
-                      deleteAccion={deleteAccion}
-                    />
-                  </div>
-                </Grid>
-                <Box
-                  paddingY={4}
-                  justifyContent={'center'}
-                  alignContent={'center'}
-                  bgcolor={theme.palette.secondary.dark}
-                >
-                  <Typography
-                    variant="body1"
-                    fontWeight={'bold'}
-                    color={theme.palette.secondary.contrastText}
-                    align="center"
-                  >
-                    © 2024{' - ' + (textFooter || 'Landing Page')}
-                  </Typography>
-                </Box>
-              </Box>
+                <FormularioLandingForm />
+              </Grid>
             </Box>
           </Box>
         </Box>
@@ -260,4 +207,4 @@ const LandingPage2 = ({
   )
 }
 
-export default LandingPage2
+export default FormFullScreen
