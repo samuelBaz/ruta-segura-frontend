@@ -58,9 +58,15 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        method: 'alphabetical',
-        order: ['Principal'],
-        locales: '',
+        order: [
+          'Principal',
+          'Átomos',
+          'Moléculas',
+          'Organismos',
+          'Plantillas',
+          'Páginas',
+        ],
+        locales: 'es',
       },
     },
     backgrounds: {
