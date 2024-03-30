@@ -183,8 +183,8 @@ export const CustomDesktopDataTable = ({
         sx={{
           borderRadius: 3,
           pt: 0,
-          pl: { sm: 3, md: 3, xl: 3 },
-          pr: { sm: 3, md: 3, xl: 3 },
+          // pl: { sm: 3, md: 3, xl: 3 },
+          // pr: { sm: 3, md: 3, xl: 3 },
           pb: { sm: 2, md: 2, xl: 2 },
           mb: { sm: 3, md: 3, xl: 3 },
           backgroundColor: {},
@@ -289,6 +289,7 @@ export const CustomDesktopDataTable = ({
                               key={`cabecera-id-${index}`}
                               sx={{
                                 p: 1.2,
+                                pl: { md: 2, xl: 2 },
                               }}
                             >
                               {columna.ordenar ? (
@@ -347,6 +348,9 @@ export const CustomDesktopDataTable = ({
                                   fontWeight={'600'}
                                   align={'left'}
                                   noWrap
+                                  sx={{
+                                    pl: { md: 2, xl: 2 },
+                                  }}
                                 >
                                   {columna.nombre}
                                 </Typography>
@@ -395,7 +399,8 @@ export const CustomDesktopDataTable = ({
                                     <TableCell
                                       key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
                                       sx={{
-                                        p: 1.2,
+                                        p: 1,
+                                        pl: { md: 3, xl: 3 },
                                       }}
                                     >
                                       <Fade in={!cargando} timeout={1000}>

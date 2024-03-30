@@ -55,7 +55,7 @@ const TestLogin: NextPage = () => {
             flexDirection={'column'}
             border={1}
             borderColor={'ActiveCaption'}
-            width={{ xs: '80%', sm: '80%', md: '30%', lg: '25%', xl: '25%' }}
+            width={{ xs: '85%', sm: '320px'}}
             borderRadius={3}
             paddingY={4}
             paddingX={xs ? 2 : 5}

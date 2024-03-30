@@ -365,7 +365,6 @@ const Parametros: NextPage = () => {
       <LayoutUser title={`Parámetros - ${siteName()}`}>
         <CustomDataTable
           titulo={'Parámetros'}
-          descripcion={'Configuraciones editables para personalizar el sistema'}
           error={!!errorParametrosData}
           cargando={loading}
           acciones={acciones}

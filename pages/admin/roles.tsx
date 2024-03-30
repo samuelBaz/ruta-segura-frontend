@@ -350,9 +350,6 @@ const Roles: NextPage = () => {
       <LayoutUser title={`Rol - ${siteName()}`}>
         <CustomDataTable
           titulo={'Roles'}
-          descripcion={
-            'Configuración y administración de los roles del sistema'
-          }
           error={!!errorRolData}
           cargando={loading}
           acciones={acciones}

@@ -606,7 +606,6 @@ const Usuarios: NextPage = () => {
       <LayoutUser title={`Usuarios - ${siteName()}`}>
         <CustomDataTable
           titulo={'Usuarios'}
-          descripcion={'Gestión y control de los usuarios del sistema'}
           error={!!errorData}
           cargando={loading}
           acciones={acciones}

@@ -459,9 +459,6 @@ const Modulos: NextPage = () => {
       <LayoutUser title={`Módulos - ${siteName()}`}>
         <CustomDataTable
           titulo={'Módulos'}
-          descripcion={
-            'Administración de módulos y secciones que componen el sistema'
-          }
           error={!!errorModulosData}
           cargando={loading}
           acciones={acciones}

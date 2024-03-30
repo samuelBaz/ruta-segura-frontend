@@ -236,9 +236,8 @@ export const LandingPage = () => {
                       src={card.url}
                       height={200}
                       alt="ImageCard"
-                      objectFit="cover"
+                      style={{ objectFit: 'cover', width: '100%' }}
                       layout={xs || sm ? 'responsive' : 'cover'}
-                      style={{ width: '100%' }}
                     />
                   </CardMedia>
                   <CardContent>
