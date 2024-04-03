@@ -225,7 +225,7 @@ const Modulos: NextPage = () => {
   /// Petición que cambia el estado de un módulo
   const cambiarEstadoModuloPeticion = async (modulo: ModuloCRUDType) => {
     try {
-      // setLoading(true)
+      setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/modulos/${modulo.id}/${
           modulo.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
