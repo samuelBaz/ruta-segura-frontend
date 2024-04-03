@@ -77,7 +77,8 @@ test('Ciudadanía - Inicio de sesión', async ({ page, isMobile }) => {
   if (isMobile) {
     await page.getByRole('banner').getByRole('button').nth(2).click()
   } else {
-    await page.getByRole('button', { name: `${algunCiudadano.nombre}` }).click()
+    await page.getByRole('banner').getByRole('button').nth(3).click()
+    //await page.getByRole('button', { name: `${algunCiudadano.nombre}` }).click()
   }
   await page.getByText('Cerrar sesión').click()
   await page.getByRole('button', { name: 'Aceptar' }).click()
