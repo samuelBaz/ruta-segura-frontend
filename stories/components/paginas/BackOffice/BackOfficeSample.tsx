@@ -3,7 +3,7 @@ import {
   CustomDrawer,
   SidebarModuloType,
 } from '../../../../common/components/ui/sidebar/CustomDrawer'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { MensajeType } from '../../../../context/ui'
 import TableLanding from './TableLanding'
 import { NavbarSample } from './NavbarSample'
