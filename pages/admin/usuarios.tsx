@@ -40,11 +40,11 @@ import {
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
-import { CustomToggleButton } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
+import { CustomToggleButton } from '../../common/components/ui/botones/CustomToogleButton'
 
 const Usuarios: NextPage = () => {
   // data de usuarios

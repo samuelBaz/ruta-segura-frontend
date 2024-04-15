@@ -8,11 +8,11 @@ import {
   CriterioOrdenType,
   OrdenEnum,
 } from '../../../../common/components/ui/datatable/ordenTypes'
-import { CustomToggleButton } from '../../../../common/components/ui/botones/BotonBuscar'
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
 import { stringToDate } from '../../../../common/utils/fechas'
 import { FiltrosDatatable } from './FiltrosDataTable'
 import { FiltrosTab } from './FiltrosTab'
+import { CustomToggleButton } from '../../../../common/components/ui/botones/CustomToogleButton'
 
 export default {
   title: 'Organismos/Datatable/CustomDataTable',

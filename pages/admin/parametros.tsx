@@ -31,13 +31,13 @@ import { useAlerts, useSession } from '../../common/hooks'
 import { imprimir } from '../../common/utils/imprimir'
 import { ParametroCRUDType } from '../../modules/admin/parametros/types/parametrosCRUDTypes'
 import { FiltroParametros } from '../../modules/admin/parametros/ui/FiltroParametros'
-import { CustomToggleButton } from '../../common/components/ui/botones/BotonBuscar'
 import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
 import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
+import { CustomToggleButton } from '../../common/components/ui/botones/CustomToogleButton'
 
 const Parametros: NextPage = () => {
   const [parametrosData, setParametrosData] = useState<ParametroCRUDType[]>([])
