@@ -29,7 +29,7 @@ import { PoliticaCRUDType } from '../../modules/admin/politicas/PoliticasCRUDTyp
 
 import { FiltroPolitica } from '../../modules/admin/politicas/ui/FiltroPoliticas'
 import { RolType } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
-import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
+import { CustomToggleButton } from '../../common/components/ui/botones/BotonBuscar'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
@@ -148,7 +148,7 @@ const Politicas: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <BotonBuscar
+    <CustomToggleButton
       id={'accionFiltrarPoliticasToggle'}
       key={'accionFiltrarPoliticasToggle'}
       seleccionado={mostrarFiltroPolitica}

@@ -40,7 +40,7 @@ import {
   UsuarioCRUDType,
 } from '../../modules/admin/usuarios/types/usuariosCRUDTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
-import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
+import { CustomToggleButton } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
@@ -257,7 +257,7 @@ const Usuarios: NextPage = () => {
 
   /// Acciones para data table
   const acciones: Array<ReactNode> = [
-    <BotonBuscar
+    <CustomToggleButton
       id={'accionFiltrarUsuarioToggle'}
       key={'accionFiltrarUsuarioToggle'}
       seleccionado={mostrarFiltroUsuarios}

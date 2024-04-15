@@ -2,10 +2,10 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
+import { CustomToggleButton } from '../../../../common/components/ui/botones/BotonBuscar'
 export default {
   title: 'Moléculas/Botones/BotonBuscar',
-  component: BotonBuscar,
+  component: CustomToggleButton,
   argTypes: {
     accion: {
       type: 'function',
@@ -19,10 +19,10 @@ export default {
       },
     },
   },
-} as Meta<typeof BotonBuscar>
+} as Meta<typeof CustomToggleButton>
 
-const Template: StoryFn<typeof BotonBuscar> = (args) => (
-  <BotonBuscar {...args} />
+const Template: StoryFn<typeof CustomToggleButton> = (args) => (
+  <CustomToggleButton {...args} />
 )
 
 export const Default = Template.bind({})

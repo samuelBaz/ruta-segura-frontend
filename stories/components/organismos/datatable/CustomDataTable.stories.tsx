@@ -8,7 +8,7 @@ import {
   CriterioOrdenType,
   OrdenEnum,
 } from '../../../../common/components/ui/datatable/ordenTypes'
-import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
+import { CustomToggleButton } from '../../../../common/components/ui/botones/BotonBuscar'
 import { BotonAcciones } from '../../../../common/components/ui/botones/BotonAcciones'
 import { stringToDate } from '../../../../common/utils/fechas'
 import { FiltrosDatatable } from './FiltrosDataTable'
@@ -232,7 +232,7 @@ Columnas.args = {
 const Template3: StoryFn<typeof CustomDataTable> = (args) => {
   const [mostrarFiltroRol, setMostrarFiltroRol] = useState(false)
   const acciones: Array<ReactNode> = [
-    <BotonBuscar
+    <CustomToggleButton
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
       seleccionado={mostrarFiltroRol}
@@ -669,7 +669,7 @@ MultiSelector.args = {
 const Template4: StoryFn<typeof CustomDataTable> = (args) => {
   const [mostrarFiltroRol, setMostrarFiltroRol] = useState(true)
   const acciones: Array<ReactNode> = [
-    <BotonBuscar
+    <CustomToggleButton
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
       seleccionado={mostrarFiltroRol}

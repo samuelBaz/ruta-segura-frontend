@@ -2,6 +2,7 @@ import { Button } from '@mui/material'
 import { IconoTooltip } from './IconoTooltip'
 import { OverridableStringUnion } from '@mui/types'
 import { ButtonPropsVariantOverrides } from '@mui/material/Button/Button'
+import { Icono } from '../Icono'
 
 interface IconoBotonParams {
   id: string
@@ -34,6 +35,7 @@ export const IconoBoton = ({
       onClick={() => {
         accion()
       }}
+      startIcon={<Icono color='inherit'>{icono}</Icono>}
     >
       {texto}
     </Button>

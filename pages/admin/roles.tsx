@@ -32,7 +32,7 @@ import { RolCRUDType } from '../../modules/admin/roles/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/roles/ui/ModalRol'
 import { FiltroRol } from '../../modules/admin/roles/ui/FiltroRol'
-import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
+import { CustomToggleButton } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
@@ -172,7 +172,7 @@ const Roles: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <BotonBuscar
+    <CustomToggleButton
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
       seleccionado={mostrarFiltroRol}
