@@ -72,7 +72,7 @@ export const LandingPage = () => {
         <Grid
           container
           height={sm || xs ? 'auto' : '70vh'}
-          spacing={0}
+          spacing={sm || xs ? '5' : 10}
           display={'flex'}
           justifyContent={'space-between'}
         >
@@ -236,9 +236,8 @@ export const LandingPage = () => {
                       src={card.url}
                       height={200}
                       alt="ImageCard"
-                      objectFit="cover"
+                      style={{ objectFit: 'cover', width: '100%' }}
                       layout={xs || sm ? 'responsive' : 'cover'}
-                      style={{ width: '100%' }}
                     />
                   </CardMedia>
                   <CardContent>
@@ -350,6 +349,7 @@ export const LandingPage = () => {
               style={{ borderRadius: '20px' }}
             />
           </Grid>
+          <Box sx={{ mt: 10 }} />
           <Grid
             item
             lg={8}

@@ -52,6 +52,7 @@ interface TipTapProps {
   mostrarOpcionesURL?: boolean
   mostrarOpcionesTabla?: boolean
   mostrarOpcionesHistorial?: boolean
+  rows?: string
 }
 
 interface TableType {
@@ -587,6 +588,7 @@ const Tiptap = ({
   mostrarOpcionesURL,
   mostrarOpcionesTabla,
   mostrarOpcionesHistorial,
+  rows = '200px',
 }: TipTapProps) => {
   const { palette } = useTheme()
 
@@ -668,7 +670,8 @@ const Tiptap = ({
           .custom_tiptap .ProseMirror {
             padding-left: 20px;
             padding-right: 20px;
-            border: 1px solid ${palette.primary.main};
+            border: 1px solid ${palette.action.disabled};
+            height: ${rows};
             border-radius: 5px;
           }
 

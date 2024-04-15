@@ -6,6 +6,7 @@ import { CustomMobileTableMobile } from './CustomMobileTableMobile'
 
 export interface CustomDataTableType {
   titulo?: string
+  descripcion?: string
   tituloPersonalizado?: ReactNode
   cabeceraPersonalizada?: ReactNode
   error?: boolean
@@ -22,6 +23,7 @@ export interface CustomDataTableType {
 
 export const CustomDataTable = ({
   titulo,
+  descripcion,
   tituloPersonalizado,
   cabeceraPersonalizada,
   error = false,
@@ -42,6 +44,7 @@ export const CustomDataTable = ({
   return sm || xs
     ? CustomMobileTableMobile({
         titulo,
+        descripcion,
         tituloPersonalizado,
         cabeceraPersonalizada,
         error,
@@ -57,6 +60,7 @@ export const CustomDataTable = ({
       })
     : CustomDesktopDataTable({
         titulo,
+        descripcion,
         tituloPersonalizado,
         cabeceraPersonalizada,
         error,

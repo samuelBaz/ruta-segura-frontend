@@ -90,7 +90,7 @@ export const CambioPassModal = ({
           <Typography variant="body2" color="text.secondary" align="inherit">
             <li>Las contraseñas deben tener 8 caracteres o más.</li>
             <li>
-              Las buenas contraseñas son dificiles de adivinar y usan palabras,
+              Las buenas contraseñas son difíciles de adivinar y usan palabras,
               números, símbolos y letras mayúsculas poco comunes.
             </li>
           </Typography>

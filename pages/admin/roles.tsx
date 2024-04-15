@@ -214,7 +214,7 @@ const Roles: NextPage = () => {
 
   const cambiarEstadoRolPeticion = async (rol: RolCRUDType) => {
     try {
-      // setLoading(true)
+      setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/roles/${rol.id}/${
           rol.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'

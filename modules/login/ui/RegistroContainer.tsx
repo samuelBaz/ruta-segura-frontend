@@ -14,6 +14,7 @@ import { Icono } from '../../../common/components/ui'
 import { NivelSeguridadPass } from '../../../common/components/ui/utils/NivelSeguridadPass'
 import { CrearCuentaType } from '../types/nuevaPassPeticionTypes'
 import { useRouter } from 'next/router'
+import { useFullScreenLoading } from '../../../context/ui'
 
 const RegistroContainer = () => {
   const [indicadorCarga, setIndicadorCarga] = useState<boolean>(false)
@@ -22,6 +23,8 @@ const RegistroContainer = () => {
     useState<boolean>(false)
 
   const router = useRouter()
+
+  const { mostrarFullScreen, ocultarFullScreen } = useFullScreenLoading()
 
   // Hook para mostrar alertas
   const { Alerta } = useAlerts()
@@ -53,6 +56,14 @@ const RegistroContainer = () => {
     } finally {
       setIndicadorCarga(false)
     }
+  }
+  const redireccionarInicio = async () => {
+    mostrarFullScreen()
+    await delay(500)
+    await router.replace({
+      pathname: '/login',
+    })
+    ocultarFullScreen()
   }
 
   return (
@@ -188,6 +199,16 @@ const RegistroContainer = () => {
             disabled={indicadorCarga}
           >
             <Typography sx={{ fontWeight: '600' }}>Crear cuenta</Typography>
+          </Button>
+          <Box height={'10px'} />
+          <Button
+            type="button"
+            variant="outlined"
+            disabled={indicadorCarga}
+            onClick={redireccionarInicio}
+            fullWidth
+          >
+            <Typography sx={{ fontWeight: '400' }}>Cancelar</Typography>
           </Button>
         </form>
       )}

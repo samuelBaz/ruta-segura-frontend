@@ -124,7 +124,7 @@ const Recuperacion: NextPage = () => {
             borderRadius: 4,
             m: 3,
             p: 3,
-            maxWidth: '450px',
+            maxWidth: '400px',
           }}
         >
           {!code && (
@@ -200,24 +200,32 @@ const Recuperacion: NextPage = () => {
                     <Box height={'15px'} />
                     <ProgresoLineal mostrar={indicadorCarga} />
                     <Box height={'15px'} />
-                    <Grid container spacing={'2'} justifyContent={'flex-end'}>
+                    <Grid
+                      container
+                      spacing={'10'}
+                      display={'flex'}
+                      flexDirection={'column'}
+                      justifyContent={'center'}
+                    >
+                      <Grid item>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          disabled={indicadorCarga}
+                          fullWidth
+                        >
+                          Enviar enlace
+                        </Button>
+                      </Grid>
                       <Grid item>
                         <Button
                           type="button"
                           variant="outlined"
                           disabled={indicadorCarga}
                           onClick={redireccionarInicio}
+                          fullWidth
                         >
                           Cancelar
-                        </Button>
-                      </Grid>
-                      <Grid item>
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          disabled={indicadorCarga}
-                        >
-                          Enviar enlace
                         </Button>
                       </Grid>
                     </Grid>

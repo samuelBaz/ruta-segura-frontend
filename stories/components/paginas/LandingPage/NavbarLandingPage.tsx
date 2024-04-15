@@ -16,7 +16,7 @@ export const NavbarLandingPage = () => {
           backgroundColor: alpha(theme.palette.background.paper, 0.8),
           backdropFilter: 'blur(12px)',
           boxShadow: 0,
-          borderBottom: 1,
+          borderBottom: 0.5,
           borderColor: 'ActiveCaption',
         }}
       >

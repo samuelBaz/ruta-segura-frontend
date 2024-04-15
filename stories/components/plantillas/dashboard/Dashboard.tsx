@@ -1,11 +1,19 @@
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import ChartPie from './ui/ChartPie'
 import ChartBar from './ui/ChartBar'
 import { Icono } from '../../../../common/components/ui'
 
 export const Dashboard = () => {
+  const theme = useTheme()
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} bgcolor={theme.palette.background.default}>
       <Grid item xs={12}>
         <Box height={'5px'} />
         <Typography sx={{ fontSize: 18, fontWeight: '600' }}>
@@ -122,7 +130,6 @@ export const Dashboard = () => {
           </CardContent>
         </Card>
       </Grid>
-
       <Grid item xs={12} sm={6} md={7}>
         <Card
           sx={{
