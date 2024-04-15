@@ -1,10 +1,8 @@
 import Image from 'next/image'
-import { Box, Button, ButtonProps } from '@mui/material'
+import { Box, Button, ButtonProps, useTheme } from '@mui/material'
 import { FC, MouseEventHandler, PropsWithChildren } from 'react'
 import { styled } from '@mui/system'
-import { Constantes } from '../../../config'
 import { useThemeContext } from '../../../context/ui/ThemeContext'
-import { useTheme } from '@mui/material'
 
 export interface BotonCiudadaniaType {
   altText: string
@@ -44,7 +42,7 @@ export const BotonCiudadania: FC<PropsWithChildren<BotonCiudadaniaType>> = ({
       onClick={accion}
     >
       <Image
-        src={`${Constantes.sitePath}/logo_ciudadania_redondo.png`}
+        src={`/logo_ciudadania_redondo.png`}
         alt={altText}
         width="35"
         height="35"
