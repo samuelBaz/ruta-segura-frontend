@@ -160,13 +160,21 @@ export const CustomMobileTableMobile = ({
 
       {cabeceraPersonalizada && cabeceraPersonalizada}
       {/* filtros */}
-      <Box
-        sx={{
-          py: 1,
-        }}
-      >
-        {filtros}
-      </Box>
+      {filtros ? (
+        <Box
+          sx={{
+            py: 2,
+          }}
+        >
+          {filtros}
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            py: 1,
+          }}
+        />
+      )}
       {/*Contenedor de la tabla*/}
       {
         <Box>

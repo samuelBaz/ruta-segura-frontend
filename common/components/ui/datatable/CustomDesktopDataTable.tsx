@@ -171,13 +171,21 @@ export const CustomDesktopDataTable = ({
       )}
       {cabeceraPersonalizada && cabeceraPersonalizada}
       {/* filtros */}
-      <Box
-        sx={{
-          py: 1,
-        }}
-      >
-        {filtros}
-      </Box>
+      {filtros ? (
+        <Box
+          sx={{
+            py: 2,
+          }}
+        >
+          {filtros}
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            py: 1,
+          }}
+        />
+      )}
       {/*Contenedor de la tabla*/}
       <Card
         sx={{
@@ -399,8 +407,8 @@ export const CustomDesktopDataTable = ({
                                     <TableCell
                                       key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
                                       sx={{
-                                        p: 1,
-                                        px: { md: 3, xl: 3 },
+                                        p: '10px',
+                                        px: { md: 2.5, xl: 2.5 },
                                       }}
                                     >
                                       <Fade in={!cargando} timeout={1000}>
