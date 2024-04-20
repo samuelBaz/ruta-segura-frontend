@@ -400,7 +400,7 @@ export const CustomDesktopDataTable = ({
                                       key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
                                       sx={{
                                         p: 1,
-                                        pl: { md: 3, xl: 3 },
+                                        px: { md: 3, xl: 3 },
                                       }}
                                     >
                                       <Fade in={!cargando} timeout={1000}>
