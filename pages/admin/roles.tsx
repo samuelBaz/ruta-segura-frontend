@@ -175,6 +175,7 @@ const Roles: NextPage = () => {
     <CustomToggleButton
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
+      icono="search"
       seleccionado={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,

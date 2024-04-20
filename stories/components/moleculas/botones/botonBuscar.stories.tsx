@@ -3,6 +3,7 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { CustomToggleButton } from '../../../../common/components/ui/botones/CustomToogleButton'
+
 export default {
   title: 'Moléculas/Botones/CustomToggleButton',
   component: CustomToggleButton,
@@ -30,6 +31,7 @@ Default.storyName = 'Botón de Alternancia'
 Default.args = {
   id: 'idbtnBuscar',
   seleccionado: false,
+  icono: 'search',
   cambiar: action('()=>{console.log("Click en IconoTooltip")}'),
 }
 
@@ -38,5 +40,6 @@ Presionado.storyName = 'Botón presionado'
 Presionado.args = {
   id: 'idbtnBuscar',
   seleccionado: true,
+  icono: 'search',
   cambiar: action('()=>{console.log("Click en IconoTooltip")}'),
 }

@@ -260,6 +260,7 @@ const Usuarios: NextPage = () => {
     <CustomToggleButton
       id={'accionFiltrarUsuarioToggle'}
       key={'accionFiltrarUsuarioToggle'}
+      icono="search"
       seleccionado={mostrarFiltroUsuarios}
       cambiar={setMostrarFiltroUsuarios}
     />,

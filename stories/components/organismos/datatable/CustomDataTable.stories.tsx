@@ -235,6 +235,7 @@ const Template3: StoryFn<typeof CustomDataTable> = (args) => {
     <CustomToggleButton
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
+      icono="search"
       seleccionado={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
@@ -672,6 +673,7 @@ const Template4: StoryFn<typeof CustomDataTable> = (args) => {
     <CustomToggleButton
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
+      icono="search"
       seleccionado={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
@@ -737,6 +739,7 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
     fechaInicial?: Date
     fechaFinal?: Date
   }
+
   interface dataTableType {
     id: string
     nombre: string
@@ -744,14 +747,18 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
     fechaPublicacion: string
     categoria: string
   }
-  function filtrarTabla(dataLibros: Array<dataTableType>, filtro: filtrosType) {
+
+  const filtrarTabla = (
+    dataLibros: Array<dataTableType>,
+    filtro: filtrosType
+  ) => {
     if (
       filtro.palabraClave ||
       filtro.categorias.length > 0 ||
       filtro.fechaInicial ||
       filtro.fechaFinal
     ) {
-      const contenidoTablaFiltros = dataLibros.filter((solicitud) => {
+      return dataLibros.filter((solicitud) => {
         const cumplePalabraClave = solicitud.nombre
           .toLowerCase()
           .includes(filtro.palabraClave.toLowerCase())
@@ -776,69 +783,63 @@ const Template5: StoryFn<typeof CustomDataTable> = (args) => {
         }
         return cumplePalabraClave && cumpleCategorias && cumpleRangoFechas
       })
-      return contenidoTablaFiltros
     } else {
       return solicitudesData
     }
   }
+
   const contenidoTablaFiltros = filtrarTabla(solicitudesData, {
     palabraClave: filtroPalabraClave,
     categorias: filtroCategorias,
     fechaInicial: filtroFechaInicial,
     fechaFinal: filtroFechaFinal,
   })
-  const TablaFiltrada: Array<Array<ReactNode>> = contenidoTablaFiltros.map(
-    (solicitudData, index) => [
-      <Typography key={`${solicitudData.id}-${index}-nombre`} variant={'body2'}>
-        {`${solicitudData.nombre}`}
-      </Typography>,
-      <Typography
-        key={`${solicitudData.id}-${index}-resumen`}
-        variant={'body2'}
-      >
-        {`${solicitudData.resumen}`}
-      </Typography>,
-      <Typography
-        key={`${solicitudData.id}-${index}-categoria`}
-        variant={'body2'}
-      >
-        {`${solicitudData.categoria}`}
-      </Typography>,
-      <Typography
-        key={`${solicitudData.id}-${index}-fechaPublicacion`}
-        variant={'body2'}
-      >
-        {solicitudData.fechaPublicacion}
-      </Typography>,
-      <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
-        <IconoTooltip
-          id={'editarLibro'}
-          titulo={'Editar libro'}
-          color={'success'}
-          accion={() => {}}
-          icono={'edit'}
-          name={'Editar libro'}
-        />
-        <IconoTooltip
-          id={'verLibro'}
-          titulo={'Ver libro'}
-          color={'info'}
-          accion={() => {}}
-          icono={'visibility'}
-          name={'Ver libro'}
-        />
-        <IconoTooltip
-          id={'eliminarLibro'}
-          titulo={'Eliminar libro'}
-          color={'warning'}
-          accion={() => {}}
-          icono={'delete'}
-          name={'Eliminar libro'}
-        />
-      </Stack>,
-    ]
-  )
-  args.contenidoTabla = TablaFiltrada
+  args.contenidoTabla = contenidoTablaFiltros.map((solicitudData, index) => [
+    <Typography key={`${solicitudData.id}-${index}-nombre`} variant={'body2'}>
+      {`${solicitudData.nombre}`}
+    </Typography>,
+    <Typography key={`${solicitudData.id}-${index}-resumen`} variant={'body2'}>
+      {`${solicitudData.resumen}`}
+    </Typography>,
+    <Typography
+      key={`${solicitudData.id}-${index}-categoria`}
+      variant={'body2'}
+    >
+      {`${solicitudData.categoria}`}
+    </Typography>,
+    <Typography
+      key={`${solicitudData.id}-${index}-fechaPublicacion`}
+      variant={'body2'}
+    >
+      {solicitudData.fechaPublicacion}
+    </Typography>,
+    <Stack direction={'row'} key={`${solicitudData.id}-${index}-acciones`}>
+      <IconoTooltip
+        id={'editarLibro'}
+        titulo={'Editar libro'}
+        color={'success'}
+        accion={() => {}}
+        icono={'edit'}
+        name={'Editar libro'}
+      />
+      <IconoTooltip
+        id={'verLibro'}
+        titulo={'Ver libro'}
+        color={'info'}
+        accion={() => {}}
+        icono={'visibility'}
+        name={'Ver libro'}
+      />
+      <IconoTooltip
+        id={'eliminarLibro'}
+        titulo={'Eliminar libro'}
+        color={'warning'}
+        accion={() => {}}
+        icono={'delete'}
+        name={'Eliminar libro'}
+      />
+    </Stack>,
+  ])
   args.cabeceraPersonalizada = (
     <FiltrosDatatable
       titulo="Tabla con filtros"
@@ -886,55 +887,52 @@ const Template6: StoryFn<typeof CustomDataTable> = (args) => {
             (libro) => libro.categoria === pestanas[indicePestana]
           )
 
-    const TablaFiltrada: Array<Array<ReactNode>> = librosFiltrados.map(
-      (libro, index) => [
-        <Typography key={`${libro.id}-${index}-nombre`} variant={'body2'}>
-          {`${libro.nombre}`}
-        </Typography>,
+    args.contenidoTabla = librosFiltrados.map((libro, index) => [
+      <Typography key={`${libro.id}-${index}-nombre`} variant={'body2'}>
+        {`${libro.nombre}`}
+      </Typography>,
 
-        <Typography key={`${libro.id}-${index}-resumen`} variant={'body2'}>
-          {`${libro.resumen}`}
-        </Typography>,
-        <Typography key={`${libro.id}-${index}-categoria`} variant={'body2'}>
-          {libro.categoria}
-        </Typography>,
+      <Typography key={`${libro.id}-${index}-resumen`} variant={'body2'}>
+        {`${libro.resumen}`}
+      </Typography>,
+      <Typography key={`${libro.id}-${index}-categoria`} variant={'body2'}>
+        {libro.categoria}
+      </Typography>,
 
-        <Typography
-          key={`${libro.id}-${index}-fechaPublicacion`}
-          variant={'body2'}
-        >
-          {libro.fechaPublicacion}
-        </Typography>,
+      <Typography
+        key={`${libro.id}-${index}-fechaPublicacion`}
+        variant={'body2'}
+      >
+        {libro.fechaPublicacion}
+      </Typography>,
 
-        <Stack direction={'row'} key={`${libro.id}-${index}-acciones`}>
-          <IconoTooltip
-            id={'editarLibro'}
-            titulo={'Editar libro'}
-            color={'success'}
-            accion={() => {}}
-            icono={'edit'}
-            name={'Editar libro'}
-          />
-          <IconoTooltip
-            id={'verLibro'}
-            titulo={'Ver libro'}
-            color={'info'}
-            accion={() => {}}
-            icono={'visibility'}
-            name={'Ver libro'}
-          />
-          <IconoTooltip
-            id={'eliminarLibro'}
-            titulo={'Eliminar libro'}
-            color={'warning'}
-            accion={() => {}}
-            icono={'delete'}
-            name={'Eliminar libro'}
-          />
-        </Stack>,
-      ]
-    )
-    args.contenidoTabla = TablaFiltrada
+      <Stack direction={'row'} key={`${libro.id}-${index}-acciones`}>
+        <IconoTooltip
+          id={'editarLibro'}
+          titulo={'Editar libro'}
+          color={'success'}
+          accion={() => {}}
+          icono={'edit'}
+          name={'Editar libro'}
+        />
+        <IconoTooltip
+          id={'verLibro'}
+          titulo={'Ver libro'}
+          color={'info'}
+          accion={() => {}}
+          icono={'visibility'}
+          name={'Ver libro'}
+        />
+        <IconoTooltip
+          id={'eliminarLibro'}
+          titulo={'Eliminar libro'}
+          color={'warning'}
+          accion={() => {}}
+          icono={'delete'}
+          name={'Eliminar libro'}
+        />
+      </Stack>,
+    ])
   }
   args.cabeceraPersonalizada = (
     <FiltrosTab

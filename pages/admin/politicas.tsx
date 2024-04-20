@@ -151,6 +151,7 @@ const Politicas: NextPage = () => {
     <CustomToggleButton
       id={'accionFiltrarPoliticasToggle'}
       key={'accionFiltrarPoliticasToggle'}
+      icono="search"
       seleccionado={mostrarFiltroPolitica}
       cambiar={setMostrarFiltroPolitica}
     />,

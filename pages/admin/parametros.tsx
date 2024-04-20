@@ -215,6 +215,7 @@ const Parametros: NextPage = () => {
     <CustomToggleButton
       id={'accionFiltrarParametrosToggle'}
       key={'accionFiltrarParametrosToggle'}
+      icono="search"
       seleccionado={mostrarFiltroParametros}
       cambiar={setMostrarFiltroParametros}
     />,

@@ -5,7 +5,7 @@ interface BotonFiltroParams {
   id: string
   seleccionado: boolean
   size?: 'small' | 'medium' | 'large'
-  icono?: string
+  icono: string
   cambiar: (mostrar: boolean) => void
 }
 
@@ -13,7 +13,7 @@ export const CustomToggleButton = ({
   id,
   seleccionado,
   size = 'small',
-  icono = 'search',
+  icono,
   cambiar,
 }: BotonFiltroParams) => {
   return (

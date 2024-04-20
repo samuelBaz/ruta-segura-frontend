@@ -250,6 +250,7 @@ const Modulos: NextPage = () => {
     <CustomToggleButton
       id={'accionFiltrarModuloToggle'}
       key={'accionFiltrarModuloToggle'}
+      icono="search"
       seleccionado={mostrarFiltroModulo}
       cambiar={setMostrarFiltroModulo}
     />,
