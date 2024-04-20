@@ -21,6 +21,7 @@ import { ToggleOrden } from './utils'
 
 export interface CustomDataTableType {
   titulo?: string
+  descripcion?: string
   tituloPersonalizado?: ReactNode
   cabeceraPersonalizada?: ReactNode
   error?: boolean
@@ -37,6 +38,7 @@ export interface CustomDataTableType {
 
 export const CustomDesktopDataTable = ({
   titulo,
+  descripcion,
   tituloPersonalizado,
   cabeceraPersonalizada,
   error = false,
@@ -128,9 +130,16 @@ export const CustomDesktopDataTable = ({
           alignItems="center"
         >
           {titulo ? (
-            <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
-              {`${titulo}`}
-            </Typography>
+            <Grid>
+              <Typography variant={'h5'} sx={{ fontWeight: '600' }}>
+                {`${titulo}`}
+              </Typography>
+              {descripcion && (
+                <Typography sx={{ pt: 1 }} fontSize={15}>
+                  {`${descripcion}`}
+                </Typography>
+              )}
+            </Grid>
           ) : tituloPersonalizado ? (
             tituloPersonalizado
           ) : (
@@ -162,21 +171,28 @@ export const CustomDesktopDataTable = ({
       )}
       {cabeceraPersonalizada && cabeceraPersonalizada}
       {/* filtros */}
-      <Box
-        sx={{
-          pt: filtros ? 1 : 2,
-          pb: filtros ? 3 : 1,
-        }}
-      >
-        {filtros}
-      </Box>
+      {filtros ? (
+        <Box
+          sx={{
+            py: 2,
+          }}
+        >
+          {filtros}
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            py: 1,
+          }}
+        />
+      )}
       {/*Contenedor de la tabla*/}
       <Card
         sx={{
           borderRadius: 3,
           pt: 0,
-          pl: { sm: 3, md: 3, xl: 3 },
-          pr: { sm: 3, md: 3, xl: 3 },
+          // pl: { sm: 3, md: 3, xl: 3 },
+          // pr: { sm: 3, md: 3, xl: 3 },
           pb: { sm: 2, md: 2, xl: 2 },
           mb: { sm: 3, md: 3, xl: 3 },
           backgroundColor: {},
@@ -279,7 +295,10 @@ export const CustomDesktopDataTable = ({
                           {columnas.map((columna, index) => (
                             <TableCell
                               key={`cabecera-id-${index}`}
-                              sx={{ p: 1.2 }}
+                              sx={{
+                                p: 1.2,
+                                pl: { md: 2, xl: 2 },
+                              }}
                             >
                               {columna.ordenar ? (
                                 <Button
@@ -337,6 +356,9 @@ export const CustomDesktopDataTable = ({
                                   fontWeight={'600'}
                                   align={'left'}
                                   noWrap
+                                  sx={{
+                                    pl: { md: 2, xl: 2 },
+                                  }}
                                 >
                                   {columna.nombre}
                                 </Typography>
@@ -384,7 +406,10 @@ export const CustomDesktopDataTable = ({
                                   (contenido, indexContenidoFila) => (
                                     <TableCell
                                       key={`celda-id-${indexContenidoTabla}-${indexContenidoFila}`}
-                                      sx={{ p: 1.2 }}
+                                      sx={{
+                                        p: '10px',
+                                        px: { md: 2.5, xl: 2.5 },
+                                      }}
                                     >
                                       <Fade in={!cargando} timeout={1000}>
                                         <Box>{contenido}</Box>

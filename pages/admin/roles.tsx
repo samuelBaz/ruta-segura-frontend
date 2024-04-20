@@ -32,12 +32,12 @@ import { RolCRUDType } from '../../modules/admin/roles/types/rolCRUDType'
 import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
 import { VistaModalRol } from '../../modules/admin/roles/ui/ModalRol'
 import { FiltroRol } from '../../modules/admin/roles/ui/FiltroRol'
-import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { IconoBoton } from '../../common/components/ui/botones/IconoBoton'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
+import { CustomToggleButton } from '../../common/components/ui/botones/CustomToogleButton'
 
 const Roles: NextPage = () => {
   const [rolesData, setRolesData] = useState<RolCRUDType[]>([])
@@ -172,9 +172,10 @@ const Roles: NextPage = () => {
   )
 
   const acciones: Array<ReactNode> = [
-    <BotonBuscar
+    <CustomToggleButton
       id={'accionFiltrarRolToggle'}
       key={'accionFiltrarRolToggle'}
+      icono="search"
       seleccionado={mostrarFiltroRol}
       cambiar={setMostrarFiltroRol}
     />,
@@ -214,7 +215,7 @@ const Roles: NextPage = () => {
 
   const cambiarEstadoRolPeticion = async (rol: RolCRUDType) => {
     try {
-      // setLoading(true)
+      setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/roles/${rol.id}/${
           rol.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'

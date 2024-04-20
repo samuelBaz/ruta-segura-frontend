@@ -21,7 +21,7 @@ interface SidebarProps {
 }
 
 const badgeVariantMap: { [key in SidebarProps['variantBadge']]: string } = {
-  PorDefecto: 'primary',
+  PorDefecto: 'neutro',
   Secondary: 'secondary',
   Opacity: 'opacity',
   Outline: 'outline',

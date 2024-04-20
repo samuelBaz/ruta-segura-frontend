@@ -34,11 +34,11 @@ import { FiltroModulos } from '../../modules/admin/modulos/ui/FiltroModulos'
 import CustomMensajeEstado from '../../common/components/ui/estados/CustomMensajeEstado'
 import { BotonAcciones } from '../../common/components/ui/botones/BotonAcciones'
 import { useAlerts, useSession } from '../../common/hooks'
-import { BotonBuscar } from '../../common/components/ui/botones/BotonBuscar'
 import { CriterioOrdenType } from '../../common/components/ui/datatable/ordenTypes'
 import { BotonOrdenar } from '../../common/components/ui/botones/BotonOrdenar'
 import { ordenFiltrado } from '../../common/components/ui/datatable/utils'
 import { CustomSwitch } from '../../common/components/ui/botones/CustomSwitch'
+import { CustomToggleButton } from '../../common/components/ui/botones/CustomToogleButton'
 
 const Modulos: NextPage = () => {
   const router = useRouter()
@@ -225,7 +225,7 @@ const Modulos: NextPage = () => {
   /// Petición que cambia el estado de un módulo
   const cambiarEstadoModuloPeticion = async (modulo: ModuloCRUDType) => {
     try {
-      // setLoading(true)
+      setLoading(true)
       const respuesta = await sesionPeticion({
         url: `${Constantes.baseUrl}/autorizacion/modulos/${modulo.id}/${
           modulo.estado == 'ACTIVO' ? 'inactivacion' : 'activacion'
@@ -247,9 +247,10 @@ const Modulos: NextPage = () => {
   }
 
   const acciones: Array<ReactNode> = [
-    <BotonBuscar
+    <CustomToggleButton
       id={'accionFiltrarModuloToggle'}
       key={'accionFiltrarModuloToggle'}
+      icono="search"
       seleccionado={mostrarFiltroModulo}
       cambiar={setMostrarFiltroModulo}
     />,

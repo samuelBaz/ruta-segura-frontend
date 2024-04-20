@@ -37,7 +37,6 @@ import { useThemeContext } from '../../../../context/ui/ThemeContext'
 import { useSession } from '../../../hooks'
 import Grid from '@mui/material/Grid'
 import Image from 'next/image'
-import { Constantes } from '../../../../config'
 
 export const NavbarUser = () => {
   const [modalAyuda, setModalAyuda] = useState(false)
@@ -206,7 +205,7 @@ export const NavbarUser = () => {
                 sx={{ cursor: 'pointer' }}
               >
                 <Image
-                  src={`${Constantes.sitePath}/icono.png`}
+                  src={`/icono.png`}
                   alt={''}
                   width="30"
                   height="30"

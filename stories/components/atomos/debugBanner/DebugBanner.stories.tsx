@@ -6,7 +6,7 @@ import DebugBanner from '../../../../common/components/ui/utils/DebugBanner'
 import { Constantes } from '../../../../config'
 
 export default {
-  title: 'Atomos/Utils/DebugBanner',
+  title: 'Átomos/Utils/DebugBanner',
   component: DebugBanner,
   argTypes: {
     accion: {

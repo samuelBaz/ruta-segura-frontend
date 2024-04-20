@@ -44,7 +44,7 @@ export const FiltrosTab: FC<TabFiltrosType> = ({
     <Box>
       <Grid container direction="row" justifyContent="space-between">
         <Grid item xs={acciones ? 8 : 12} md={6}>
-          <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
+          <Typography variant={'h5'} sx={{ fontWeight: '600'}}>
             {`${titulo}`}
           </Typography>
         </Grid>

@@ -108,10 +108,15 @@ export const CambioPass = ({ code }: CambioPassParams) => {
               <AlertTitle>Crea una nueva contraseña</AlertTitle>
             </Grid>
             <Box height={'15px'} />
-            <Typography variant="body2" color="text.secondary" align="inherit">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              align="inherit"
+              paddingLeft={2}
+            >
               <li>Las contraseñas deben tener 8 caracteres o más.</li>
               <li>
-                Las buenas contraseñas son dificiles de adivinar y usan
+                Las buenas contraseñas son difíciles de adivinar y usan
                 palabras, números, símbolos y letras mayúsculas poco comunes.
               </li>
             </Typography>
@@ -155,21 +160,33 @@ export const CambioPass = ({ code }: CambioPassParams) => {
             </Grid>
             <ProgresoLineal mostrar={loadingModal} />
             <Box height={'15px'} />
-            <Grid container justifyContent="space-evenly" alignItems={'center'}>
-              <Button
-                variant={'outlined'}
-                onClick={redireccionarInicio}
-                disabled={loadingModal}
-              >
-                Cancelar
-              </Button>
-              <Button
-                variant={'contained'}
-                disabled={loadingModal}
-                type={'submit'}
-              >
-                Modificar
-              </Button>
+            <Grid
+              container
+              spacing={'10'}
+              display={'flex'}
+              flexDirection={'column'}
+              alignItems={'center'}
+            >
+              <Grid item sx={{ width: '100%' }}>
+                <Button
+                  variant={'contained'}
+                  disabled={loadingModal}
+                  type={'submit'}
+                  fullWidth
+                >
+                  Modificar
+                </Button>
+              </Grid>
+              <Grid item sx={{ width: '100%' }}>
+                <Button
+                  variant={'outlined'}
+                  onClick={redireccionarInicio}
+                  disabled={loadingModal}
+                  fullWidth
+                >
+                  Cancelar
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </form>

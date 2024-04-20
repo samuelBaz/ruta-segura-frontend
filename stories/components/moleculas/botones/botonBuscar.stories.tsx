@@ -2,10 +2,11 @@
 
 import { Meta, StoryFn } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { BotonBuscar } from '../../../../common/components/ui/botones/BotonBuscar'
+import { CustomToggleButton } from '../../../../common/components/ui/botones/CustomToogleButton'
+
 export default {
-  title: 'Moléculas/Botones/BotonBuscar',
-  component: BotonBuscar,
+  title: 'Moléculas/Botones/CustomToggleButton',
+  component: CustomToggleButton,
   argTypes: {
     accion: {
       type: 'function',
@@ -15,28 +16,30 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Componente que devuelve un botón de alternancia con un icono de búsqueda dentro. La función toma como argumentos un id, un valor booleano llamado "seleccionado" que indica si el botón está seleccionado o no, y una función llamada "cambiar" que se llama cuando se hace clic en el botón para cambiar su estado. Cuando se hace clic en el botón, la función "cambiar" se llama con el valor opuesto de "seleccionado". El botón tiene un atributo aria-label de "search".`,
+        component: `Componente que devuelve un botón de alternancia. La función toma como argumentos un id, un valor booleano llamado "seleccionado" que indica si el botón está seleccionado o no, y una función llamada "cambiar" que se llama cuando se hace clic en el botón para cambiar su estado. Cuando se hace clic en el botón, la función "cambiar" se llama con el valor opuesto de "seleccionado". El botón tiene un atributo "icono", encargado de implementar un Icono .`,
       },
     },
   },
-} as Meta<typeof BotonBuscar>
+} as Meta<typeof CustomToggleButton>
 
-const Template: StoryFn<typeof BotonBuscar> = (args) => (
-  <BotonBuscar {...args} />
+const Template: StoryFn<typeof CustomToggleButton> = (args) => (
+  <CustomToggleButton {...args} />
 )
 
 export const Default = Template.bind({})
-Default.storyName = 'Botón buscar'
+Default.storyName = 'Botón de Alternancia'
 Default.args = {
   id: 'idbtnBuscar',
   seleccionado: false,
+  icono: 'search',
   cambiar: action('()=>{console.log("Click en IconoTooltip")}'),
 }
 
 export const Presionado = Template.bind({})
-Presionado.storyName = 'Botón buscar presionado'
+Presionado.storyName = 'Botón presionado'
 Presionado.args = {
   id: 'idbtnBuscar',
   seleccionado: true,
+  icono: 'search',
   cambiar: action('()=>{console.log("Click en IconoTooltip")}'),
 }

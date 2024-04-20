@@ -17,6 +17,7 @@ import { CriterioOrdenType } from './ordenTypes'
 
 export interface CustomDataTableTypeMobile {
   titulo?: string
+  descripcion?: string
   tituloPersonalizado?: ReactNode
   cabeceraPersonalizada?: ReactNode
   error?: boolean
@@ -33,6 +34,7 @@ export interface CustomDataTableTypeMobile {
 
 export const CustomMobileTableMobile = ({
   titulo,
+  descripcion,
   tituloPersonalizado,
   cabeceraPersonalizada,
   error = false,
@@ -109,55 +111,70 @@ export const CustomMobileTableMobile = ({
     <Box sx={{ pb: 2 }}>
       {/*título y acciones*/}
       {!cabeceraPersonalizada && (
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          {titulo ? (
-            <Typography variant={'h5'} sx={{ fontWeight: '600', pl: 1 }}>
-              {`${titulo}`}
+        <Box>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="start"
+          >
+            {titulo ? (
+              <Typography variant={'h5'} sx={{ fontWeight: '600' }}>
+                {`${titulo}`}
+              </Typography>
+            ) : tituloPersonalizado ? (
+              tituloPersonalizado
+            ) : (
+              <Box />
+            )}
+            <Box>
+              <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                {seleccionable &&
+                  indicesSeleccionados.filter((value) => value).length > 0 && (
+                    <Box sx={{ mx: 1 }}>
+                      <Typography key={'contador'} variant={'subtitle2'}>
+                        {`${
+                          indicesSeleccionados.filter((value) => value).length
+                        } seleccionados`}
+                      </Typography>
+                    </Box>
+                  )}
+                {acciones.map((accion, index) => (
+                  <div key={`accion-id-${index}`}>{accion}</div>
+                ))}
+              </Grid>
+            </Box>
+          </Grid>
+          {descripcion && (
+            <Typography sx={{ pt: 1 }} fontSize={15}>
+              {`${descripcion}`}
             </Typography>
-          ) : tituloPersonalizado ? (
-            tituloPersonalizado
-          ) : (
-            <Box />
           )}
-          <Box>
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              {seleccionable &&
-                indicesSeleccionados.filter((value) => value).length > 0 && (
-                  <Box sx={{ mx: 1 }}>
-                    <Typography key={'contador'} variant={'subtitle2'}>
-                      {`${
-                        indicesSeleccionados.filter((value) => value).length
-                      } seleccionados`}
-                    </Typography>
-                  </Box>
-                )}
-              {acciones.map((accion, index) => (
-                <div key={`accion-id-${index}`}>{accion}</div>
-              ))}
-            </Grid>
-          </Box>
-        </Grid>
+        </Box>
       )}
+
       {cabeceraPersonalizada && cabeceraPersonalizada}
       {/* filtros */}
-      <Box
-        sx={{
-          pt: filtros ? 1 : 2,
-          pb: filtros ? 3 : 1,
-        }}
-      >
-        {filtros}
-      </Box>
+      {filtros ? (
+        <Box
+          sx={{
+            py: 2,
+          }}
+        >
+          {filtros}
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            py: 1,
+          }}
+        />
+      )}
       {/*Contenedor de la tabla*/}
       {
         <Box>
