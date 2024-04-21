@@ -1,6 +1,6 @@
 {
   "name": "nextjs-typescript",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Frontend base con Next.js, MUI v5 y TypeScript",
   "author": "Imanol",
   "private": true,

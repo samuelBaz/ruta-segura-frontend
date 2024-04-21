@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.11.0...v1.11.1) (2024-04-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* Se reemplaza el botón buscar por el componente CustomToggleButton
+
+### Features
+
+* actualización de dependencias NextJS 14.2 ([2289cd4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/2289cd41ffae0c711333ec41b9258cb3f7adf0f1))
+* agregación de una nueva variante para el componente CustomBadge ([6efd2a3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6efd2a3d6a03eb5991889cd26bd6ed74e1c32a6d))
+* agregación de una nueva variante para el componente CustomBadge ([aeaabb1](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/aeaabb19ba156e87bbdb2dc3a2808b914493e0c3))
+* añadida descripción opcional para diferentes módulos del sistema en CustomDataTable ([4fcab32](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/4fcab325e59c6912de984619adf2cd3a4f7bb47d))
+* ejemplo de Landing Page con variaciones en colores y contextos de uso diferentes ([48711f3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/48711f35c84676a990b0e853e408e280b1aafbb9))
+* se agregaron demos de NavbarUser en Storybook ([bbcfc7c](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/bbcfc7c5e7d5ab65110f14e6676d88bda6ced2b3))
+* se agregó el componnete CustomToggleButton ([75e5fc5](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/75e5fc5b74e06a4e098e0243909c7dc9aa4a0eb4))
+* se agregó prop clearable a FormInputDate ([18007c4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/18007c462940a5e93e4420386136c037f3edad8a))
+* se añadio versión y nombre de servicio y entorno para API de estado ([5407cac](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/5407cac305b8bb48e64ecbbc296b08edf16f91c3))
+* se implementó el componente LandingForm en Storybook ([6f77f61](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/6f77f616ac06cfb5ea458c976e7b1b7bd6a81e4f))
+
+
+### Bug Fixes
+
+* agregando variable de entorno para buscador nominatim ([c3671ed](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c3671ed59c77b2244a201bde845255acb9e35a8f))
+* agregando variable de entorno para buscador nominatim ([aa54584](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/aa54584fbf5612eac71c234fda72aa580bae30e4))
+* ajuste del ancho del componente para adaptarse al manejo responsive ([079bfa4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/079bfa4de88880269ba068bdabc2bac47e32a387))
+* ajuste en el redimensionamiento de imágenes en las cards ([5e36e66](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/5e36e665d2d977b8632422c97d64cea7581a186c))
+* ajustes en los estilos del título y el contenido del componente tabla ([ed91a0d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ed91a0d31e28ebdf1407d1824d48d22a2348e0c3))
+* ajustes en los estilos del título y el contenido del componente tabla ([dda16bf](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/dda16bfef528527ddbe655e952110ebb84d4aac3))
+* corregido orden de componentes en documentación StoryBook ([d7f23d3](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/d7f23d33a7ac5579969f4b53f02a496959075a13))
+* mejorando descripción de variable de entorno ([ef68bf4](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/ef68bf4a091a07aade2a68ec293db29adc8aef45))
+* se agregó y ajustó el botón de cancelar para redirigir a la vista de login ([de5b69d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/de5b69def9fa2fd723782311e42d435f48e9e536))
+* se ajustó el padding de la lista ([9e2f81d](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9e2f81da12396d907a70cd8ffd110f430e045e4d))
+* se elimina uso de URL en imágenes de carpeta /public ([c99fe11](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/c99fe1132f5681009f9de58f1c5924422bb0049f))
+* se implementó la parametrización del tamaño del componente EditorContent y ajustes en su borde ([9638258](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/commit/9638258873181b68e92f333cc89dccc247675359))
+
 ## [1.11.0](https://gitlab.agetic.gob.bo/agetic/agetic/proyectos-base/agetic-next-base-frontend/compare/v1.10.8...v1.11.0) (2024-03-16)
 
 
