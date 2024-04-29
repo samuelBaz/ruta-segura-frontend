@@ -31,7 +31,7 @@ interface TipoAccion {
 }
 
 interface BotonAccionesParams {
-  desactivado?: false
+  desactivado?: boolean
   color?:
     | 'inherit'
     | 'action'
@@ -103,6 +103,7 @@ export const BotonAcciones = ({
               desplegarMenu(event)
             }}
             color="primary"
+            disabled={desactivado}
           >
             {texto}
           </Button>
@@ -117,6 +118,7 @@ export const BotonAcciones = ({
               desplegarMenu(event)
             }}
             color="primary"
+            disabled={desactivado}
           >
             <Icono color={desactivado ? 'disabled' : color}>{icono}</Icono>
           </IconButton>
